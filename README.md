@@ -1,6 +1,4 @@
-# synapse
-
-# MLA Study Toolkit
+# Synapse
 
 ## 📌 Overview
 MLA Study Toolkit is a web-based application designed to help candidates prepare for the **MLA exam** with structured study resources. Users can access **practice questions, notes, mock exams, and an all-in-one package** to enhance their learning experience.
