@@ -1,4 +1,4 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -27,6 +27,16 @@ header.header-main {
     background-image: linear-gradient(109.6deg, #869AA233 20%, #869AA2 100.6%);
 }
 
+header.header-main .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-left-logo img {
+    width: 120px;
+}
+
 .nav-items ul {
     display: flex;
     align-items: center;
@@ -50,9 +60,234 @@ header.header-main {
 /********** Header Main End **********/
 
 
+/********** Home Page CSS Start **********/
+
+
+section.homepg-sec {
+    padding: 104px 0px 0px 0px;
+}
+
+.home-headLogo img {
+    padding: 0px 0px 29px 0px;
+}
+
+.home-headLogo p {
+    font-style: italic;
+    color: #6D6E71;
+}
+
+.home-headLogo {
+    margin: 0px 0px 96px 0px;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(186.79px, 1fr));
+    /* Default: 4 cards */
+    gap: 53px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.homemock-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    border-radius: 40px;
+    position: relative;
+    box-shadow: 0px 15px 10px -15px #111; 
+}
+
+/* .cardbottom-shadow {
+    position: absolute;
+    left: -85px;
+    bottom: -43px;
+    z-index: -1;
+}
+
+.cardbottom-shadow img {
+    width: 420px;
+} */
+
+.card-container .homemock-card:nth-child(1) {
+    background: #67BDEA;
+    border: 1px solid #0276BA;
+}
+
+.card-container .homemock-card:nth-child(2) {
+    background: #FFF057;
+    border: 1px solid #FBAD18;
+}
+
+.card-container .homemock-card:nth-child(3) {
+    background: #F6958E;
+    border: 1px solid #ED2724;
+}
+
+.card-container .homemock-card:nth-child(4) {
+    background: #9CCB40;
+    border: 1px solid #20B14B;
+}
+
+.card-container .homemock-card:nth-child(1) .cardtop-content {
+    background: #0276BA;
+}
+
+.card-container .homemock-card:nth-child(2) .cardtop-content {
+    background: #FBAD18;
+}
+
+.card-container .homemock-card:nth-child(3) .cardtop-content {
+    background: #ED2724;
+}
+
+.card-container .homemock-card:nth-child(4) .cardtop-content {
+    background: #20B14B;
+}
+
+/* .homemock-card:hover {
+    transform: translateY(-5px);
+} */
+
+.cardtop-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 21px 0px 11px 0px;
+    border-radius: 40px;
+}
+
+.cardbottem-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 29px 28px 20px 29px;
+}
+
+.cardtop-content img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 13px;
+}
+
+.cardtop-content h2 {
+    font-size: 30px;
+    margin: 0px 0px 14px 0px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.cardtop-content h6 {
+    font-size: 18px;
+    color: #fff;
+}
+
+
+.cardbottem-content h4 {
+    padding: 0px 0px 26px 0px;
+    font-size: 21px;
+}
+
+
+.cardbottem-content p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.4;
+}
+
+
+section.login-signup-sec {
+    padding: 110px 0px 97px 0px;
+}
+
+
+.loginSignup-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+
+
+section.login-signup-sec {
+    padding: 108px 0px 97px 0px;
+}
+
+.loginSignup-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+
+.loginSignup-btn a {
+    text-decoration-line: none;
+    color: #8698A2;
+    font-weight: 600;
+    padding: 7px 21px;
+    border: 2px solid #8698A2;
+    border-radius: 20px;
+    background: transparent;
+}
+
+.loginSignup-btn .loginBtn {
+    background: transparent;
+    transition: all .6s ease;
+}
+
+.loginSignup-btn .loginBtn:hover {
+    background: #8698a278;
+    color: #fff;
+}
+
+.loginSignup-btn .signupBtn {
+    background: #8698a278;
+    color: #fff;
+    transition: all .6s ease;
+}
+
+.loginSignup-btn .signupBtn:hover {
+    background: transparent;
+    color: #8698A2;
+}
+
+
+/********** Home Page CSS End **********/
+
+
+/********** Footer CSS Start **********/
+
+
+.footer-copyright p {
+    padding: 0px 0px 5px 0px;
+    color: #BCBEC0;
+    font-style: italic;
+}
+
+
+/********** Footer CSS End **********/
+
+
+@media (max-width: 1024px) {
+    .card-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+
+
 @media (min-width: 1200px) {
     .container {
         max-width: 1170px;
     }
 }
-
