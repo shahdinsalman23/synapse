@@ -4,3 +4,55 @@
     box-sizing: border-box;
 }
 
+
+
+/********** Container CSS Start **********/
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+/********** Container CSS End **********/
+
+
+/********** Header Main Start **********/
+
+header.header-main {
+    padding: 14px 0px 10px 0px;
+    background-image: linear-gradient(109.6deg, #869AA233 20%, #869AA2 100.6%);
+}
+
+.nav-items ul {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 20px;
+}
+
+.nav-items ul li {
+    list-style: none;
+}
+
+.nav-items ul li a {
+    text-decoration-line: none;
+}
+
+.nav-items ul li a {
+    text-decoration-line: none;
+    color: #fff;
+}
+
+/********** Header Main End **********/
+
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1170px;
+    }
+}
+
