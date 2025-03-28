@@ -1,24 +1,24 @@
 # synapse
 
-## Project setup
-```
-npm install
-```
+# MLA Study Toolkit
 
-### Compiles and hot-reloads for development
-```
-npm run dev
-```
+## 📌 Overview
+MLA Study Toolkit is a web-based application designed to help candidates prepare for the **MLA exam** with structured study resources. Users can access **practice questions, notes, mock exams, and an all-in-one package** to enhance their learning experience.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## 🚀 Features
+- 📖 **Practice Questions** – 3800+ questions based on the MLA content map.
+- 📝 **Notes** – Visual aids covering all MLA content map conditions.
+- 🧠 **Mock Exams** – Five carefully designed mocks that mirror the MLA.
+- 🎯 **All-in-One Package** – Access to all resources for the best exam preparation.
 
-### Lints and fixes files
-```
-npm run lint
-```
+## 🛠️ Tech Stack
+- **Frontend:** Vue.js (Vue 2)
+- **Styling:** CSS
+- **Data Handling:** JSON-based card system
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 📜 License
+This project is licensed under the [MIT License](LICENSE).
+
+---
+🚀 **Enhance your MLA exam preparation with the best study resources!**
+
