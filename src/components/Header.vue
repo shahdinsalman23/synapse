@@ -1,11 +1,11 @@
 <template>
   <header class="header-main">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="header-left">
-          <div class="header-left-logo">
+          <!-- <div class="header-left-logo">
             <img src="/images/logo.png" alt="Logo" />
-          </div>
+          </div> -->
         </div>
         
         <!-- Desktop Navigation -->

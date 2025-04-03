@@ -19,6 +19,11 @@
     margin-left: auto;
 }
 
+.container-fluid {
+    width: 100%;
+    padding: 0px 30px;
+}
+
 
 /********** Container CSS End **********/
 
@@ -63,8 +68,12 @@ header.header-main .row {
 /********** Home Page CSS Start **********/
 
 
-section.homepg-sec {
+/* section.homepg-sec {
     padding: 104px 0px 0px 0px;
+} */
+
+section.homepg-sec {
+    padding: 75px 0px 0px 0px;
 }
 
 .home-headLogo img {
@@ -78,8 +87,13 @@ section.homepg-sec {
     font-size: 13px;
 }
 
+/* 
 .home-headLogo {
     margin: 0px 0px 96px 0px;
+} */
+
+.home-headLogo {
+    margin: 0px 0px 90px 0px;
 }
 
 .card-container {
@@ -191,7 +205,7 @@ section.homepg-sec {
 
 .cardbottem-content h4 {
     padding: 0px 0px 26px 0px;
-    font-size: 21px;
+    font-size: 20px;
 }
 
 
@@ -202,9 +216,14 @@ section.homepg-sec {
 }
 
 
-section.login-signup-sec {
+/* section.login-signup-sec {
     padding: 110px 0px 97px 0px;
+} */
+
+section.login-signup-sec {
+    padding: 85px 0px 75px 0px;
 }
+
 
 
 .loginSignup-btn {
@@ -234,6 +253,7 @@ section.login-signup-sec {
     border: 2px solid #8698A2;
     border-radius: 20px;
     background: transparent;
+    width: 110px;
 }
 
 .loginSignup-btn .loginBtn {
@@ -261,11 +281,61 @@ section.login-signup-sec {
 /********** Home Page CSS End **********/
 
 
+/********** UserLogin Page CSS Start **********/
+
+.mocksection-pg {
+    padding: 140px 0px 100px 0px;
+}
+
+
+.userlogin-sec .card-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(186.79px, 1fr));
+    max-width: 875px;
+    margin: 0 auto;
+}
+
+.userlogin-sec .card-container .homemock-card .cardbottem-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 29px 28px 50px 29px;
+}
+
+.mock-container {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(100px, 1fr));
+    max-width: 1050px;
+    margin: 0 auto;
+    gap: 50px;
+}
+
+
+.mock-image img {
+    border: 1px solid #00000059;
+    padding: 15px;
+    width: 100%;
+}
+
+
+.progress-btn button {
+    margin: 15px 5px 0px 5px;
+    background: #D1D3D4;
+    border: 1px solid #D1D3D4;
+    padding: 8px 24px;
+    border-radius: 40px;
+}
+
+
+/********** UserLogin Page CSS End **********/
+
+
 /********** Footer CSS Start **********/
 
 
 .footer-copyright p {
-    padding: 0px 0px 5px 0px;
+    padding: 0px 0px 15px 0px;
     color: #BCBEC0;
     font-style: italic;
 }
@@ -278,6 +348,19 @@ section.login-signup-sec {
     .card-container {
         grid-template-columns: repeat(3, 1fr);
     }
+
+    .mock-container {
+        grid-template-columns: repeat(4, minmax(100px, 1fr));
+        max-width: 900px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .mock-container {   
+        grid-template-columns: repeat(4, minmax(100px, 1fr));
+        max-width: 800px;
+        gap: 40px;
+    }
 }
 
 
@@ -285,11 +368,46 @@ section.login-signup-sec {
     .card-container {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .homemock-card {
+        margin: 0 auto;
+        max-width: 270px;
+    }
+
+    .cardbottem-content {
+        padding: 29px 28px 30px 29px;
+    }
+
+    .cardtop-content {
+        padding: 21px 0px 15px 0px;
+    }
+
+    .mock-container {
+        grid-template-columns: repeat(3, minmax(100px, 1fr));
+        max-width: 600px;
+        gap: 40px;
+    }
+    
 }
 
 @media only screen and (max-width: 600px) {
     .card-container {
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    .mock-container {
+        grid-template-columns: repeat(2, minmax(100px, 1fr));
+        max-width: 450px;
+        gap: 50px;
+    }
+}
+
+
+@media only screen and (max-width: 425px) {
+    .mock-container {
+        grid-template-columns: repeat(1, minmax(100px, 1fr));
+        max-width: 250px;
+        gap: 50px;
     }
 }
 

@@ -34,7 +34,7 @@
     <section class="login-signup-sec">
       <div class="container">
         <div class="loginSignup-btn">
-          <router-link to="/" class="loginBtn">Login</router-link>
+          <router-link to="/userlogin" class="loginBtn">Login</router-link>
           <router-link to="/" class="signupBtn">Sign up</router-link>
         </div>
       </div>
@@ -59,7 +59,7 @@ export default {
         {
           title: "Notes",
           price: "£9.99/mo.",
-          question: "Practice questions",
+          question: "Read notes",
           description:
             "Notes the visual aids for all MLA content map conditions",
           image: "/images/file.png",
@@ -67,14 +67,14 @@ export default {
         {
           title: "Mocks",
           price: "£9.99/mo.",
-          question: "Practice questions",
+          question: "Test yourself",
           description: "Five mocks carefully designed to mirror the MLA",
           image: "/images/brain.png",
         },
         {
           title: "All in done",
           price: "£19.99/mo.",
-          question: "Practice questions",
+          question: "Get all in one",
           description:
             "Get all three products candidates who choose this highest chance of passinh the MLA",
           image: "/images/bag.png",
