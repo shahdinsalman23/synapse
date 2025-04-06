@@ -1,20 +1,27 @@
 <template>
   <div id="app">
-    <HeaderComponent />
-    <router-view />  
-    <FooterComponent/>
-  </div>  
+    <!-- Landing Page Header -->
+    <HeaderComponent v-if="$route.path === '/'" />
+    
+    <!-- All Other Pages Header -->
+    <HeaderMain v-else />
+    
+    <router-view />
+    <FooterComponent />
+  </div>
 </template>
 
 <script>
 import HeaderComponent from "@/components/Header.vue";
 import FooterComponent from "@/components/Footer.vue";
+import HeaderMain from "./components/HeaderMain.vue";
 
 export default {
   name: 'App',
   components: {
     HeaderComponent,
     FooterComponent,
+    HeaderMain
   }
 }
 </script>

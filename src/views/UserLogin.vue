@@ -1,46 +1,46 @@
 <template>
-    <div>
-      <section class="homepg-sec">
-        <div class="container">
-          <div class="home-headLogo">
-            <img src="/images/logo.png" alt="logo" />
-            <p>The only resource you need for MLA</p>
-          </div>
+  <div>
+    <section class="homepg-sec">
+      <div class="container">
+        <div class="home-headLogo">
+          <img src="/images/logo.png" alt="logo" />
+          <p>The only resource you need for MLA</p>
         </div>
-      </section>
-  
-      <section class="homepg-card-sec userlogin-sec">
-        <div class="container">
-          <div class="row">
-            <div class="card-container">
-              <div v-for="(card, index) in cards" :key="index" class="homemock-card">
-                <div class="cardtop-content">
-                  <img :src="card.image" alt="Card Image" />
-                  <h2>{{ card.title }}</h2>
-                  <h6>{{ card.price }}</h6>
-                </div>
-                <div class="cardbottem-content">
-                  <h4>{{ card.question }}</h4>
-                  <p>{{ card.description }}</p>
-                </div>
-                <!-- <div class="cardbottom-shadow">
-                  <img src="/images/cardboxshadow.png" alt="">
-                </div> -->
+      </div>
+    </section>
+
+    <section class="homepg-card-sec userlogin-sec">
+      <div class="container">
+        <div class="row">
+          <div class="card-container">
+            <div v-for="(card, index) in cards" :key="index" class="homemock-card">
+              <div class="cardtop-content">
+                <img :src="card.image" alt="Card Image" />
+                <h2>{{ card.title }}</h2>
+                <h6>{{ card.price }}</h6>
+              </div>
+              <div class="cardbottem-content">
+                <h4>{{ card.question }}</h4>
+                <p>{{ card.description }}</p>
+              </div>
+              <div class="cardbottom-shadow">
+                <img src="/images/cardshadow.png" alt="">
               </div>
             </div>
           </div>
         </div>
-      </section>
-      <section class="login-signup-sec">
+      </div>
+    </section>
+    <!-- <section class="login-signup-sec">
         <div class="container">
           <div class="loginSignup-btn">
             <router-link to="/userlogin" class="loginBtn">Login</router-link>
             <router-link to="/" class="signupBtn">Sign up</router-link>
           </div>
         </div>
-      </section>
-    </div>
-  </template>
+      </section> -->
+  </div>
+</template>
 
 
 <script>

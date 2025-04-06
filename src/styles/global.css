@@ -1,11 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+@font-face {
+    font-family: Helvetica;
+    src: url(../../public/Fonts/Fonts/HelveticaLT57Condensed.ttf);
+}
+
 
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
+
 
 
 
@@ -28,10 +34,10 @@
 /********** Container CSS End **********/
 
 
-/********** Header Main Start **********/
+/********** Header Login Start **********/
 
 header.header-main {
-    padding: 14px 0px 10px 0px;
+    padding: 10px 0px 8px 0px;
     background-image: linear-gradient(109.6deg, #869AA233 20%, #869AA2 100.6%);
 }
 
@@ -59,7 +65,52 @@ header.header-main .row {
 .nav-items ul li a {
     text-decoration-line: none;
     color: #fff;
-    font-family: "Poppins", sans-serif;
+    font-family: Helvetica;
+}
+
+/********** Header Login End **********/
+
+
+/********** Header Main Start **********/
+
+
+
+.headerlogo {
+    text-align: end;
+    padding: 10px 13px 10px 0px;
+}
+
+.headerlogo img {
+    width: 86.99px;
+}
+
+.headermock {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(30%, 1fr));
+    text-align: start;
+    background: #ED1C24;
+    color: #fff;
+    border-radius: 15px;
+    padding: 5px 10px 5px 20px;
+}
+
+.mockhead-hamburger {
+    display: flex;
+    align-items: center;
+}
+
+.mocktxt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 24px;
+    justify-content: center;
+}
+
+.mocktxt img {
+    width: 37.48px;
 }
 
 /********** Header Main End **********/
@@ -68,9 +119,10 @@ header.header-main .row {
 /********** Home Page CSS Start **********/
 
 
-/* section.homepg-sec {
-    padding: 104px 0px 0px 0px;
-} */
+section.homepg-card-sec {
+    overflow: hidden;
+    padding: 20px 0px;
+}
 
 section.homepg-sec {
     padding: 75px 0px 0px 0px;
@@ -87,13 +139,9 @@ section.homepg-sec {
     font-size: 13px;
 }
 
-/* 
-.home-headLogo {
-    margin: 0px 0px 96px 0px;
-} */
-
 .home-headLogo {
     margin: 0px 0px 90px 0px;
+    text-align: center;
 }
 
 .card-container {
@@ -115,19 +163,18 @@ section.homepg-sec {
     box-shadow: 0px 15px 10px -15px #111; 
 }
 
-/* .cardbottom-shadow {
+.cardbottom-shadow img {
     position: absolute;
-    left: -85px;
-    bottom: -43px;
-    z-index: -1;
+    content: "";
+    left: -70px;
+    width: 390px;
+    height: 50px;
+    bottom: -26px;
+    z-index: -111;
 }
 
-.cardbottom-shadow img {
-    width: 420px;
-} */
-
 .card-container .homemock-card:nth-child(1) {
-    background: #67BDEA;
+    background: #55C6FF;
     border: 1px solid #0276BA;
 }
 
@@ -138,16 +185,17 @@ section.homepg-sec {
 
 .card-container .homemock-card:nth-child(3) {
     background: #F6958E;
-    border: 1px solid #ED2724;
+    border: 1px solid #ED1C24;
 }
 
 .card-container .homemock-card:nth-child(4) {
-    background: #9CCB40;
+    background: #9DED6C;
     border: 1px solid #20B14B;
 }
 
 .card-container .homemock-card:nth-child(1) .cardtop-content {
-    background: #0276BA;
+    background: #1A90FF;
+    border: 1px solid #0276BA;
 }
 
 .card-container .homemock-card:nth-child(2) .cardtop-content {
@@ -161,10 +209,6 @@ section.homepg-sec {
 .card-container .homemock-card:nth-child(4) .cardtop-content {
     background: #20B14B;
 }
-
-/* .homemock-card:hover {
-    transform: translateY(-5px);
-} */
 
 .cardtop-content {
     display: flex;
@@ -206,19 +250,15 @@ section.homepg-sec {
 .cardbottem-content h4 {
     padding: 0px 0px 26px 0px;
     font-size: 20px;
+    color: #58595B;
 }
 
 
 .cardbottem-content p {
     font-size: 16px;
-    color: #666;
+    color: #58595B;
     line-height: 1.4;
 }
-
-
-/* section.login-signup-sec {
-    padding: 110px 0px 97px 0px;
-} */
 
 section.login-signup-sec {
     padding: 85px 0px 75px 0px;
@@ -306,9 +346,9 @@ section.login-signup-sec {
 .mock-container {
     display: grid;
     grid-template-columns: repeat(5, minmax(100px, 1fr));
-    max-width: 1050px;
+    max-width: 930px;
     margin: 0 auto;
-    gap: 50px;
+    gap: 40px;
 }
 
 
@@ -323,12 +363,458 @@ section.login-signup-sec {
     margin: 15px 5px 0px 5px;
     background: #D1D3D4;
     border: 1px solid #D1D3D4;
-    padding: 8px 24px;
+    padding: 8px 21px;
     border-radius: 40px;
+    font-size: 12px;
+}
+
+.userlogin-sec {
+    padding: 0px 0px 150px 0px !important;
 }
 
 
 /********** UserLogin Page CSS End **********/
+
+
+/********** Mock Section Page CSS Start **********/
+
+.question-box {
+    background: #1A90FF;
+    border: 1px solid #0276BA;
+    padding: 20px 15px;
+    width: 215.72px;
+    border-radius: 25px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.question-box h3 {
+    font-size: 26px;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 0px 0px 17px 0px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.question-box h3 img {
+    width: 28.62px;
+}
+
+.question-score h6 {
+    color: #231F20;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.question-score {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.question-box .cardbottom-shadow img {
+    left: -70px;
+    width: 350px;
+}
+
+
+.note-box {
+    background: #D1D3D4;
+    border: 1px solid #6D6E71;
+    padding: 20px 15px;
+    width: 215.72px;
+    border-radius: 25px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.note-box h3 {
+    font-size: 23px;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 0px 0px 17px 0px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+}
+
+.note-box h3 img {
+    width: 21.76px;
+}
+
+.note-score {
+    display: flex;
+    gap: 8px;
+    position: relative;
+    align-items: center;
+}
+
+.note-score h6 {
+    color: #939598;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.lock-img {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.mock-box {
+    background: #ED1C24;
+    border: 1px solid #BE1E2D;
+    padding: 20px 15px;
+    width: 215.72px;
+    border-radius: 25px;
+    margin: 0 auto;
+    position: relative;
+}
+
+
+.mock-box h3 {
+    font-size: 23px;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 0px 0px 17px 0px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+}
+
+.mock-box h3 img {
+    width: 37.79px;
+}
+
+
+.note-score .progress-bar {
+    background: #E6E7E8;
+    border: none;
+}
+
+
+.mock-box .cardbottom-shadow img {
+    left: -70px;
+    width: 350px;
+}
+
+.note-box .cardbottom-shadow img {
+    left: -70px;
+    width: 350px;
+}
+
+.question-note-boxes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(186.79px, 1fr));
+    margin: 0 auto;
+    max-width: 900px;
+}
+
+
+.questions-notes-mock-sec {
+    padding: 0px 0px 100px 0px;
+}
+
+
+/********** Mock Section Page CSS End **********/
+
+
+/********** Mock Selection Page CSS Start **********/
+
+
+section.mockselection-sec {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 150px 0px;
+}
+
+.mockselection-btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    gap: 87px;
+}
+
+
+.mock-timer-btn {
+    background: #ED1C24;
+    border: 1px solid #BE1E2D;
+    box-shadow: 0 0 17px #0000004D;
+    border-radius: 30px;
+    padding: 23px 70px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 230.80px;
+    cursor: pointer;
+}
+
+button.mock-timer-btn img {
+    width: 34.79px;
+    margin: 0px 0px 16px 0px;
+}
+
+
+.begin-btn {
+    border: 1px solid #00A14B;
+    border-radius: 30px;
+    padding: 41px 77px;
+    color: #231F20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #9DED6C;
+    font-size: 26px;
+    font-weight: bold;
+    position: relative;
+    cursor: pointer;
+}
+
+.begin-btn .cardbottom-shadow img {
+    left: -62px;
+    width: 350px;
+}
+
+button.begin-btn a {
+    text-decoration-line: none;
+    color: #231F20;
+}
+
+/********** Mock Selection Page CSS End **********/
+
+
+/********** Mock Question Page CSS Start **********/
+
+
+/* Previous CSS styles remain same */
+.questionnumber-slide-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    max-width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+  
+  .slider-wrapper {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .questionnumber-slide {
+    display: flex;
+    gap: 1px;
+    will-change: transform;
+    position: relative;
+    padding: 40px 0px;
+}
+  
+  .questionnumber {
+    min-width: 23.26px;
+    text-align: center;
+    padding: 15px 0px;
+    border: 1px solid #231f2040;
+    border-radius: 4px;
+    flex-shrink: 0;
+    font-size: 16px;
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+}
+
+.questionnumber.selected {
+    background-color: #D1D3D4;
+  }
+
+  /* .questionnumber::before {
+    position: absolute;
+    content: "";
+    background: url(../../public/images/redflag.png) no-repeat top center;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+}
+   */
+
+   .red-flag {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+
+  .questionleft-arrow,
+  .questionright-arrow {
+    cursor: pointer;
+    font-size: 24px;
+    user-select: none;
+    transition: all 0.2s ease;
+    background: transparent;
+    border-radius: 4px;
+    color: #939598;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .questiontext-box {
+    background: #F1F2F2;
+    padding: 20px 64px 20px 35px;
+    text-align: left;
+    border: 1px solid #bcbec075;
+    border-radius: 30px;
+    position: relative;
+    margin: 0px 25px 29px 0px;
+}
+
+.questionflag {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+}
+
+.questionflag svg {
+    width: 18.67px;
+}
+
+.questiontext-box p {
+    font-size: 15px;
+    line-height: 22px;
+    color: #231F20;
+}
+
+.question-option h4 {
+    text-align: left;
+    border: 1px solid #D1D3D4;
+    border-radius: 20px;
+    padding: 10px 35px;
+    color: #231F20;
+}
+
+.question-option {
+    margin: 0px 0px 22px 0px;
+}
+
+.selected {
+    background: #D1D3D4;
+}
+
+.questionsoptions-arrows {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(40%, 1fr));
+    gap: 38px;
+    padding: 14px 0px 0px 0px;
+}
+
+.questionoption-leftarrow {
+    background: #F1F2F2;
+    border-radius: 15px;
+    border: 1px solid #bcbec070;
+    padding: 8px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.questionoption-rightarrow {
+    background: #F1F2F2;
+    border-radius: 15px;
+    border: 1px solid #bcbec070;
+    padding: 8px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.questiontext-sec {
+    padding: 0px 0px 100px 0px;
+}
+
+
+.mockquestion-navigate {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+
+.mockquestion-navigate ul {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: end;
+    height: 100%;
+    width: 63%;
+}
+
+.mockquestion-navigate ul li {
+    list-style: none;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    font-size: 15px;
+}
+
+
+.mockquestion-navigate ul li span {
+    position: absolute;
+    width: auto;
+    right: -50px;
+    top: -30px;
+    font-size: 10px;
+    background-color: #9DED6C;
+    padding: 3px 6px;
+    border-radius: 6px;
+    visibility: hidden;
+    opacity: 0;
+    color: #000000;
+}
+
+.mockquestion-navigate ul li span::before {
+    position: absolute;
+    content: "";
+    background: #9DED6C;
+    width: 10px;
+    height: 10px;
+    bottom: -9px;
+    clip-path: polygon(0 0, 0% 100%, 100% 0);
+    left: 14px;
+}
+
+span.pausemock {
+    right: -40px !important;
+    top: -25px !important;
+}
+
+.mockquestion-navigate ul li:hover span {
+    visibility: visible;
+    opacity: 1;
+}
+
+/********** Mock Question Page CSS End **********/
 
 
 /********** Footer CSS Start **********/
@@ -347,12 +833,15 @@ section.login-signup-sec {
 @media only screen and (max-width: 1024px) {
     .card-container {
         grid-template-columns: repeat(3, 1fr);
+        max-width: 850px;
+        margin: 0 auto;
     }
 
     .mock-container {
         grid-template-columns: repeat(4, minmax(100px, 1fr));
         max-width: 900px;
     }
+    
 }
 
 @media only screen and (max-width: 992px) {
@@ -363,15 +852,26 @@ section.login-signup-sec {
     }
 }
 
-
 @media only screen and (max-width: 768px) {
     .card-container {
         grid-template-columns: repeat(2, 1fr);
+        max-width: 650px;
     }
+
+    .userlogin-sec .card-container {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 650px;
+    }
+    
 
     .homemock-card {
         margin: 0 auto;
         max-width: 270px;
+    }
+
+    .cardbottom-shadow img {
+        left: -75px;
+        width: 420px;
     }
 
     .cardbottem-content {
@@ -387,6 +887,47 @@ section.login-signup-sec {
         max-width: 600px;
         gap: 40px;
     }
+
+    .question-box {
+        width: 200px;
+    }
+    
+    .question-box h3 {
+        font-size: 24px;
+    }
+    
+    .note-box {
+        width: 200px;
+    }
+    
+    .mock-box{
+        width: 200px;
+    }
+    
+    .question-box .cardbottom-shadow img {
+        left: -60px;
+        width: 320px;
+    }
+    
+    .note-box .cardbottom-shadow img {
+        left: -65px;
+        width: 330px;
+    }
+    
+    .mock-box .cardbottom-shadow img {
+        left: -65px;
+        width: 330px;
+    }
+
+    .question-note-boxes {
+        max-width: 700px;
+        grid-template-columns: repeat(2, minmax(186.79px, 1fr));
+        gap: 50px;
+    }
+    
+    .headermock {
+        grid-template-columns: repeat(3, minmax(40%, 1fr));
+    }
     
 }
 
@@ -395,13 +936,29 @@ section.login-signup-sec {
         grid-template-columns: repeat(1, 1fr);
     }
 
+    .userlogin-sec .card-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
     .mock-container {
         grid-template-columns: repeat(2, minmax(100px, 1fr));
         max-width: 450px;
         gap: 50px;
     }
-}
 
+    .question-note-boxes {
+        grid-template-columns: repeat(1, minmax(186.79px, 1fr));
+        gap: 40px;
+    }
+    
+    .questions-notes-mock-sec {
+        overflow: hidden;
+    }
+
+    .headermock {
+        grid-template-columns: repeat(3, minmax(25%, 1fr));
+    }
+}
 
 @media only screen and (max-width: 425px) {
     .mock-container {
@@ -409,9 +966,16 @@ section.login-signup-sec {
         max-width: 250px;
         gap: 50px;
     }
+    .questiontext-box {
+        padding: 20px 54px 20px 15px;
+    }
+    .questionsoptions-arrows {
+        gap: 20px;
+    }
+    
 }
 
-
+@media only screen and (max-width: 425px) {}
 
 @media (min-width: 1200px) {
     .container {

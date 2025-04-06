@@ -57,7 +57,7 @@ export default {
 
 .progress-button {
     position: relative;
-    height: 32px;
+    height: 30px;
     background: #D1D3D4;
     border-radius: 25px;
     cursor: pointer;
@@ -74,7 +74,7 @@ export default {
     height: 100%;
     font-weight: bold;
     color: #231F20;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .progress-content {
@@ -87,9 +87,11 @@ export default {
     left: 0;
     top: 0;
     height: 100%;
-    background: #66BB6A;
+    background: #9DED6C;
     /* Medium Green */
     transition: width 0.1s linear;
+    border-radius: 40px;
+    border: 1px solid #6D6E71;
 }
 
 .progress-text {
@@ -103,7 +105,7 @@ export default {
 }
 
 .completed {
-    background: #66BB6A !important;
+    background: #9DED6C !important;
     /* Solid Green */
 }
 
