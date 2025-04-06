@@ -45,12 +45,11 @@
                         tests reveal raised Bilirubin, ALT, AST, Alkaline phosphatase, and Gamma GT. Computer records
                         show that she has not lost any weight and her BMI is 31. What is the most probable underlying
                         diagnosis?</p>
-                    <span class="questionflag"><svg width="19" height="17" viewBox="0 0 19 17" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z"
-                                fill="#ED1C24" />
+                    <span class="questionflag">
+                        <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z" fill="#ED1C24" />
                         </svg>
+                        <span class="flag-hover-text">Flag Question</span>
                     </span>
                 </div>
                 <div class="question-alloptions">

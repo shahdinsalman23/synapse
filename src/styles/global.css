@@ -687,6 +687,7 @@ button.begin-btn a {
     position: absolute;
     right: 30px;
     top: 20px;
+    cursor: pointer;
 }
 
 .questionflag svg {
@@ -776,6 +777,7 @@ button.begin-btn a {
     justify-content: center;
     gap: 3px;
     font-size: 15px;
+    cursor: pointer;
 }
 
 
@@ -813,6 +815,38 @@ span.pausemock {
     visibility: visible;
     opacity: 1;
 }
+
+
+.flag-hover-text {
+    position: absolute;
+    width: 75px;
+    right: -10px;
+    top: -30px;
+    font-size: 10px;
+    background-color: #9DED6C;
+    padding: 3px 6px;
+    border-radius: 6px;
+    color: #000000;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.flag-hover-text::before {
+    position: absolute;
+    content: "";
+    background: #9DED6C;
+    width: 10px;
+    height: 10px;
+    bottom: -9px;
+    clip-path: polygon(0 0, 0% 100%, 100% 0);
+    right: 10px;
+}
+
+.questionflag:hover .flag-hover-text {
+    visibility: visible;
+    opacity: 1;
+}
+
 
 /********** Mock Question Page CSS End **********/
 
