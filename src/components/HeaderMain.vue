@@ -61,7 +61,8 @@
             </div>
             <div class="mockquestion-navigate">
               <ul>
-                <li><span>Bird's eye view</span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <li><router-link to="/mockbirdseye">
+                <span>Bird's eye view</span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6.32001 17.6184H1.82001C0.930007 17.6184 0.210022 16.8984 0.210022 16.0084V11.5084C0.210022 10.6184 0.930007 9.89844 1.82001 9.89844H6.32001C7.21001 9.89844 7.92999 10.6184 7.92999 11.5084V16.0084C7.92999 16.8984 7.21001 17.6184 6.32001 17.6184ZM1.82001 10.5284C1.28001 10.5284 0.830017 10.9684 0.830017 11.5184V16.0184C0.830017 16.5584 1.27001 17.0084 1.82001 17.0084H6.32001C6.86001 17.0084 7.31 16.5684 7.31 16.0184V11.5184C7.31 10.9784 6.87001 10.5284 6.32001 10.5284H1.82001Z" fill="#D1D3D4"/>
                 <path d="M15.42 17.6184H10.92C10.03 17.6184 9.31 16.8984 9.31 16.0084V11.5084C9.31 10.6184 10.03 9.89844 10.92 9.89844H15.42C16.31 9.89844 17.03 10.6184 17.03 11.5084V16.0084C17.03 16.8984 16.31 17.6184 15.42 17.6184ZM10.92 10.5284C10.38 10.5284 9.92999 10.9684 9.92999 11.5184V16.0184C9.92999 16.5584 10.37 17.0084 10.92 17.0084H15.42C15.96 17.0084 16.41 16.5684 16.41 16.0184V11.5184C16.41 10.9784 15.97 10.5284 15.42 10.5284H10.92Z" fill="#D1D3D4"/>
                 <path d="M6.32001 8.58914H1.82001C0.930007 8.58914 0.210022 7.86914 0.210022 6.97914V2.47914C0.210022 1.58914 0.930007 0.869141 1.82001 0.869141H6.32001C7.21001 0.869141 7.92999 1.58914 7.92999 2.47914V6.97914C7.92999 7.86914 7.21001 8.58914 6.32001 8.58914ZM1.82001 1.49914C1.28001 1.49914 0.830017 1.93914 0.830017 2.48914V6.98914C0.830017 7.52914 1.27001 7.97914 1.82001 7.97914H6.32001C6.86001 7.97914 7.31 7.53914 7.31 6.98914V2.48914C7.31 1.94914 6.87001 1.49914 6.32001 1.49914H1.82001Z" fill="#D1D3D4"/>
@@ -69,13 +70,13 @@
                 <path d="M6.40002 8.58914H1.90002C1.01002 8.58914 0.289978 7.86914 0.289978 6.97914V2.47914C0.289978 1.58914 1.01002 0.869141 1.90002 0.869141H6.40002C7.29002 0.869141 8.01001 1.58914 8.01001 2.47914V6.97914C8.01001 7.86914 7.29002 8.58914 6.40002 8.58914ZM2.17999 1.89914C1.69999 1.89914 1.32001 2.28914 1.32001 2.75914V6.68914C1.32001 7.16914 1.70999 7.54914 2.17999 7.54914H6.10999C6.57999 7.54914 6.96997 7.15914 6.96997 6.68914V2.75914C6.96997 2.27914 6.57999 1.89914 6.10999 1.89914H2.17999Z" fill="#D1D3D4"/>
                 <path d="M15.42 17.4993H10.92C10.03 17.4993 9.31 16.7793 9.31 15.8893V11.3893C9.31 10.4993 10.03 9.7793 10.92 9.7793H15.42C16.31 9.7793 17.03 10.4993 17.03 11.3893V15.8893C17.03 16.7793 16.31 17.4993 15.42 17.4993ZM11.2 10.8093C10.72 10.8093 10.34 11.1993 10.34 11.6693V15.5993C10.34 16.0793 10.73 16.4593 11.2 16.4593H15.13C15.6 16.4593 15.99 16.0693 15.99 15.5993V11.6693C15.99 11.1893 15.6 10.8093 15.13 10.8093H11.2Z" fill="#D1D3D4"/>
                 <path d="M6.40002 17.4993H1.90002C1.01002 17.4993 0.289978 16.7793 0.289978 15.8893V11.3893C0.289978 10.4993 1.01002 9.7793 1.90002 9.7793H6.40002C7.29002 9.7793 8.01001 10.4993 8.01001 11.3893V15.8893C8.01001 16.7793 7.29002 17.4993 6.40002 17.4993ZM2.17999 10.8093C1.69999 10.8093 1.32001 11.1993 1.32001 11.6693V15.5993C1.32001 16.0793 1.70999 16.4593 2.17999 16.4593H6.10999C6.57999 16.4593 6.96997 16.0693 6.96997 15.5993V11.6693C6.96997 11.1893 6.57999 10.8093 6.10999 10.8093H2.17999Z" fill="#D1D3D4"/>
-                </svg>
+                </svg></router-link>
                 </li>
                 <li><span>Flagged questions</span><svg width="14.52" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z" fill="#D1D3D4" />
                 </svg> 5</li>
                 <li class="timer"><span>Time remaining</span> 148:00</li>
-                <li class="pause"><span class="pausemock">Pause mock</span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <li class="pause" @click="showPauseModal = true"><span class="pausemock">Pause mock</span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12.9699 0.359375C13.2399 0.429375 13.5399 0.419373 13.8199 0.459373C24.4099 1.91937 27.81 15.7194 19.06 21.9394C11.8 27.0994 1.58998 22.6594 0.389978 13.8894C0.349978 13.6094 0.360002 13.3094 0.290002 13.0394C0.310002 12.5194 0.260002 11.9794 0.290002 11.4594C0.630002 5.61937 5.54997 0.699375 11.38 0.359375H12.9599H12.9699ZM11.6099 2.27937C3.50995 2.75937 -0.740047 12.3094 4.48995 18.6094C8.86995 23.8894 17.11 23.2794 20.68 17.4394C24.87 10.5994 19.5599 1.79937 11.5999 2.26937L11.6099 2.27937Z" fill="#D1D3D4"/>
                 <path d="M14.49 6.44939C15.37 6.29939 15.8799 6.94939 15.9399 7.75939C16.1499 10.5994 15.7799 13.7094 15.9399 16.5794C15.7999 18.2894 13.66 18.2194 13.53 16.6794V7.57939C13.56 7.06939 13.98 6.53939 14.49 6.44939Z" fill="#D1D3D4"/>
                 <path d="M10.8199 6.77901C10.9999 6.95901 11.14 7.26901 11.16 7.52901V16.819C10.9 18.169 9.08004 18.199 8.79004 16.859V7.48901C8.88004 6.50901 10.1201 6.08901 10.8101 6.78901L10.8199 6.77901Z" fill="#D1D3D4"/>
@@ -86,23 +87,39 @@
           </div>
         </div>
       </section>
+
+      <transition name="slide-modal">
+      <PauseMockModal 
+        v-if="showPauseModal"
+        @close="showPauseModal = false"
+        @resume="showPauseModal = false"
+        @exit="handleExitMock"
+      />
+    </transition>
     </div>
   </template>
 
 
 <script>
 
+
+import PauseMockModal from './PauseMockModal.vue';
+
+
 export default {
+  components: {
+    PauseMockModal
+  },
   data() {
     return {
       isMainDropdownOpen: false,
-      isNestedDropdownOpen: false
+      isNestedDropdownOpen: false,
+      showPauseModal: false
     }
   },
   methods: {
     toggleMainDropdown() {
       this.isMainDropdownOpen = !this.isMainDropdownOpen;
-      // Agar dropdown khula hai to click listener add karo
       if(this.isMainDropdownOpen) {
         document.addEventListener('click', this.handleOutsideClick);
       }
@@ -111,11 +128,14 @@ export default {
       this.isNestedDropdownOpen = !this.isNestedDropdownOpen;
     },
     handleOutsideClick(event) {
-      // Check karo click dropdown ke bahar hua hai ya nahi
       if (!this.$refs.dropdown.contains(event.target)) {
         this.isMainDropdownOpen = false;
         document.removeEventListener('click', this.handleOutsideClick);
       }
+    },
+    handleExitMock() {
+      this.showPauseModal = false;
+      this.$router.push('/mocksection'); 
     }
   }
 }
@@ -232,7 +252,12 @@ export default {
     gap: 10px;
     font-size: 14px;
     font-weight: 500;
+    font-family: Helvetica;
   }
+
+  .main-dropdown li a:hover {
+    color: #ed1c24;
+}
   
   .nested-dropdown li {
     padding: 8px 15px;
@@ -242,6 +267,38 @@ export default {
     cursor: pointer;
   }
 
+
+
+
+  .slide-modal-enter-active {
+  animation: slide-in 0.3s ease-out;
+}
+
+.slide-modal-leave-active {
+  animation: slide-out 0.3s ease-in;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
 
 
   </style>

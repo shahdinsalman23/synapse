@@ -166,7 +166,7 @@ section.homepg-sec {
 .cardbottom-shadow img {
     position: absolute;
     content: "";
-    left: -70px;
+    left: -75px;
     width: 390px;
     height: 50px;
     bottom: -26px;
@@ -372,6 +372,9 @@ section.login-signup-sec {
     padding: 0px 0px 150px 0px !important;
 }
 
+.userlogin-sec .cardbottom-shadow img {
+    left: -70px !important;
+}
 
 /********** UserLogin Page CSS End **********/
 
@@ -597,8 +600,6 @@ button.begin-btn a {
 
 /********** Mock Question Page CSS Start **********/
 
-
-/* Previous CSS styles remain same */
 .questionnumber-slide-container {
     display: flex;
     align-items: center;
@@ -851,6 +852,89 @@ span.pausemock {
 /********** Mock Question Page CSS End **********/
 
 
+/********** Mock Birds Eye Page CSS Start **********/
+
+
+.mockbirdseye-sec {
+    padding: 42px 0px;
+    text-align: left;
+}
+
+.mockbirdseye-boxes h4 a {
+    text-decoration-line: none;
+    color: #000000;
+    border-radius: 10px;
+    background: #BCBEC0;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 57.13px;
+    height: 49.27px;
+    font-size: 14px;
+}
+
+
+.mockbirdseye-boxes h4 a:hover {
+    background: #939598;
+    color: #fff;
+}
+
+.birdsaeye-head {
+    padding: 0px 0px 42px 0px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.birdsaeye-head h6 {
+    background: #ED1C24;
+    color: #fff;
+    padding: 8px 23px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+.mockbirdseye-boxes h4:nth-last-child(-n+3) a {
+    background: #F1F2F2 !important;
+}
+
+.mockbirdseye-boxes h4:nth-last-child(-n+3) a:hover {
+    background: #F1F2F2 !important;
+    color: #000000;
+}
+
+
+.mockbird-submitbtn {
+    padding: 43px 0px 78px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.mockbird-submitbtn a {
+    text-decoration-line: none;
+    color: #231F20;
+    background: #9DED6C;
+    border: 1px solid #00A14B;
+    padding: 13px 22px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    width: 154.77px;
+    text-align: center;
+    height: 40.97px;
+    line-height: 15px;
+}
+
+/********** Mock Birds Eye Page CSS End **********/
+
+
 /********** Footer CSS Start **********/
 
 
@@ -859,6 +943,21 @@ span.pausemock {
     color: #BCBEC0;
     font-style: italic;
 }
+
+.mockbird-submitbtn .cardbottom-shadow img {
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 54px;
+    width: auto;
+}
+
+button.modal-exit-btn .cardbottom-shadow img {
+    left: 50%;
+    transform: translate(-50%);
+    width: auto;
+    bottom: -25px;
+}
+
 
 
 /********** Footer CSS End **********/
@@ -960,7 +1059,11 @@ span.pausemock {
     }
     
     .headermock {
-        grid-template-columns: repeat(3, minmax(40%, 1fr));
+        grid-template-columns: repeat(3, minmax(20%, 1fr));
+    }
+
+    .mockquestion-navigate ul {
+        width: 75%;
     }
     
 }
@@ -990,7 +1093,15 @@ span.pausemock {
     }
 
     .headermock {
-        grid-template-columns: repeat(3, minmax(25%, 1fr));
+        grid-template-columns:  30px calc((100% - 30px)/2) calc((100% - 30px)/2);
+    }
+
+    .mockquestion-navigate ul {
+        width: 80%;
+    }
+
+    .mocktxt {
+        justify-content: end;
     }
 }
 
@@ -1000,16 +1111,45 @@ span.pausemock {
         max-width: 250px;
         gap: 50px;
     }
+
     .questiontext-box {
         padding: 20px 54px 20px 15px;
     }
+
     .questionsoptions-arrows {
         gap: 20px;
+    }
+
+    .mocktxt {
+        gap: 4px;
+        font-size: 18px;
+        justify-content: center;
     }
     
 }
 
-@media only screen and (max-width: 425px) {}
+@media only screen and (max-width: 375px) {
+    .headermock {
+        display: grid;
+        grid-template-columns: 20% 80%;
+        gap: 1rem; 
+    }
+
+    .headermock > :nth-child(3) {
+        grid-column: 1 / -1; 
+        justify-content: center;
+    }
+
+    .mocktxt {
+        justify-content: start;
+        padding: 0px 0px 0px 20px;
+    }
+
+    .mockquestion-navigate ul {
+        width: 70%;
+        margin: 0px 30px 0px 0px;
+    }
+}
 
 @media (min-width: 1200px) {
     .container {
