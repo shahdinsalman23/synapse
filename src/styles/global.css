@@ -113,6 +113,8 @@ header.header-main .row {
     width: 37.48px;
 }
 
+
+
 /********** Header Main End **********/
 
 
@@ -917,19 +919,50 @@ span.pausemock {
     position: relative;
 }
 
-.mockbird-submitbtn a {
+.mockbird-submitbtn button {
     text-decoration-line: none;
     color: #231F20;
     background: #9DED6C;
     border: 1px solid #00A14B;
     padding: 13px 22px;
     border-radius: 30px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     width: 154.77px;
     text-align: center;
     height: 40.97px;
     line-height: 15px;
+    cursor: pointer;
+}
+
+.unanswered-btn {
+    background: #ED1C24;
+    color: #fff;
+    border-radius: 40px !important;
+    padding: 13px 20px !important;
+    width: 156.83px;
+    height: 40.57px;
+    line-height: 15px;
+    font-weight: bold;
+}
+
+.submitmock-btn {
+    background: #9DED6C;
+    width: 156.83px;
+    height: 40.57px;
+    border: 1px solid #00A14B !important;
+    color: #000000;
+    border-radius: 40px !important;
+    line-height: 15px;
+    font-weight: bold;
+    position: relative;
+}
+
+.submitmock-btn .cardbottom-shadow img {
+    left: 50%;
+    transform: translate(-50%);
+    width: auto;
+    bottom: -26px;
 }
 
 /********** Mock Birds Eye Page CSS End **********/
@@ -947,7 +980,7 @@ span.pausemock {
 .mockbird-submitbtn .cardbottom-shadow img {
     left: 50%;
     transform: translate(-50%);
-    bottom: 54px;
+    bottom: 53px;
     width: auto;
 }
 
@@ -974,6 +1007,10 @@ button.modal-exit-btn .cardbottom-shadow img {
         grid-template-columns: repeat(4, minmax(100px, 1fr));
         max-width: 900px;
     }
+
+    .mockbirdseye-boxes {
+        grid-template-columns: repeat(15, 1fr);
+    }
     
 }
 
@@ -982,6 +1019,10 @@ button.modal-exit-btn .cardbottom-shadow img {
         grid-template-columns: repeat(4, minmax(100px, 1fr));
         max-width: 800px;
         gap: 40px;
+    }
+
+    .mockbirdseye-boxes {
+        grid-template-columns: repeat(12, 1fr);
     }
 }
 
@@ -1065,6 +1106,10 @@ button.modal-exit-btn .cardbottom-shadow img {
     .mockquestion-navigate ul {
         width: 75%;
     }
+
+    .mockbirdseye-boxes {
+        grid-template-columns: repeat(9, 1fr);
+    }
     
 }
 
@@ -1103,6 +1148,10 @@ button.modal-exit-btn .cardbottom-shadow img {
     .mocktxt {
         justify-content: end;
     }
+
+    .mockbirdseye-boxes {
+        grid-template-columns: repeat(8, minmax(40px, 1fr));
+    }
 }
 
 @media only screen and (max-width: 425px) {
@@ -1124,6 +1173,10 @@ button.modal-exit-btn .cardbottom-shadow img {
         gap: 4px;
         font-size: 18px;
         justify-content: center;
+    }
+
+    .mockbirdseye-boxes {
+        grid-template-columns: repeat(6, minmax(40px, 1fr));
     }
     
 }
@@ -1149,6 +1202,17 @@ button.modal-exit-btn .cardbottom-shadow img {
         width: 70%;
         margin: 0px 30px 0px 0px;
     }
+
+    .mockbirdseye-boxes {
+        grid-template-columns: repeat(5, minmax(40px, 1fr));
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .mockbirdseye-boxes {
+        grid-template-columns: repeat(4, minmax(40px, 1fr));
+    }
+
 }
 
 @media (min-width: 1200px) {

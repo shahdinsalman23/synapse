@@ -18,20 +18,35 @@
                     </h4>
                 </div>
                 <div class="mockbird-submitbtn">
-                    <router-link to="">Submit Mock</router-link>
+                    <button @click="showPauseModal = true">Submit Mock</button>
                     <div class="cardbottom-shadow">
                 <img src="/images/cardshadow.png" alt="">
               </div>
                 </div>
             </div>
         </section>
+
+        <transition name="slide-modal">
+        <SubmittingMockModal 
+            v-if="showPauseModal"
+            @close="showPauseModal = false"
+            @resume="showPauseModal = false"
+            @exit="handleExitMock"
+        />
+        </transition>
     </div>
 </template>
 
 <script>
+import SubmittingMockModal from '@/components/SubmittingMockModal.vue';
+
 export default {
+    components: {
+        SubmittingMockModal
+    },
     data() {
         return {
+            showPauseModal: false,
             selectedNumbers: []
         }
     },
@@ -42,6 +57,10 @@ export default {
             } else {
                 this.selectedNumbers.push(num)
             }
+        },
+        handleExitMock() {
+            this.showPauseModal = false;
+            // this.$router.push('/mocksection'); 
         }
     }
 }
@@ -61,6 +80,9 @@ export default {
     margin: 0;
     position: relative;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -78,9 +100,6 @@ export default {
 }
 
 @media (max-width: 768px) {
-    .mockbirdseye-boxes {
-        grid-template-columns: repeat(20, minmax(40px, 1fr));
-    }
     .mockbirdseye-boxes h4 a {
         width: 45px;
         height: 40px;

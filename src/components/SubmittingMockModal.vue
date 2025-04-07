@@ -2,8 +2,8 @@
     <div class="modal-overlay" @click.self="closeModal">
       <div class="modal-content">
         <div class="modal-buttons">
-          <button class="modal-resume-btn" @click="handleResume">Resume Mock</button>
-          <button class="modal-exit-btn" @click="handleExit">Exit Mock
+          <button class="unanswered-btn" @click="handleResume">3 unanswered</button>
+          <button class="submitmock-btn" @click="handleExit">Submit Mock
             <div class="cardbottom-shadow">
                 <img src="/images/cardshadow.png" alt="">
               </div>
@@ -32,7 +32,7 @@
   <style scoped>
   .modal-overlay {
     position: fixed;
-    top: 100px;
+    top: 80px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -51,7 +51,7 @@
     border-radius: 12px;
     text-align: center;
     width: 1200px;
-    height: 500px;
+    height: 550px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
