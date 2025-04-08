@@ -1,10 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 @font-face {
-    font-family: Helvetica;
-    src: url(../../public/Fonts/Fonts/HelveticaLT57Condensed.ttf);
+    font-family: Helveticacondensed;
+    src: url(../../public/Fonts/Fonts/fonnts.com-Helvetica_Condensed_Light.ttf);
 }
 
+@font-face {
+    font-family: HelveticaBoldcont;
+    src: url(../../public/Fonts/Fonts/HelveticaLTStd-BoldCond.otf);
+}
+
+@font-face {
+    font-family: HelveticaMyriadlight;
+    src: url(../../public/Fonts/Fonts/MyriadPro-Light.otf);
+}
+
+@font-face {
+    font-family: Helveticamyriadregular;
+    src: url(../../public/Fonts/Fonts/MyriadPro-Regular.otf);
+}
 
 *{
     padding: 0;
@@ -605,7 +619,7 @@ button.begin-btn a {
 .questionnumber-slide-container {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 0px;
     max-width: 100%;
     margin: 0 auto;
     position: relative;
@@ -626,32 +640,24 @@ button.begin-btn a {
 }
   
   .questionnumber {
-    min-width: 23.26px;
+    min-width: 21.484px;
     text-align: center;
     padding: 15px 0px;
     border: 1px solid #231f2040;
     border-radius: 4px;
     flex-shrink: 0;
-    font-size: 16px;
+    font-size: 12px;
     background-color: transparent;
     cursor: pointer;
     position: relative;
+    font-family: Helveticacondensed;
+    color: #000;
 }
 
 .questionnumber.selected {
     background-color: #D1D3D4;
   }
 
-  /* .questionnumber::before {
-    position: absolute;
-    content: "";
-    background: url(../../public/images/redflag.png) no-repeat top center;
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-}
-   */
 
    .red-flag {
     position: absolute;
@@ -683,7 +689,7 @@ button.begin-btn a {
     border: 1px solid #bcbec075;
     border-radius: 30px;
     position: relative;
-    margin: 0px 25px 29px 0px;
+    margin: 0px 0px 29px 0px;
 }
 
 .questionflag {
@@ -701,12 +707,11 @@ button.begin-btn a {
     font-size: 15px;
     line-height: 22px;
     color: #231F20;
+    text-align: justify;
 }
 
 .question-option h4 {
     text-align: left;
-    border: 1px solid #D1D3D4;
-    border-radius: 20px;
     padding: 10px 35px;
     color: #231F20;
 }
@@ -783,13 +788,24 @@ button.begin-btn a {
     cursor: pointer;
 }
 
+.flaggedquestions {
+    top: -25px !important;
+    width: 110px !important;
+    right: -67px !important;
+}
+
+
+.mockquestion-navigate ul li a:focus {
+    outline: none;
+}
+
 
 .mockquestion-navigate ul li span {
     position: absolute;
     width: auto;
-    right: -50px;
-    top: -30px;
-    font-size: 10px;
+    right: -45px;
+    top: -27px;
+    font-size: 11px;
     background-color: #9DED6C;
     padding: 3px 6px;
     border-radius: 6px;
@@ -874,6 +890,7 @@ span.pausemock {
     width: 57.13px;
     height: 49.27px;
     font-size: 14px;
+    font-family: Helveticacondensed;
 }
 
 
@@ -968,14 +985,32 @@ span.pausemock {
 /********** Mock Birds Eye Page CSS End **********/
 
 
-/********** Footer CSS Start **********/
+/********** Mock Score Page CSS Start **********/
 
-
-.footer-copyright p {
-    padding: 0px 0px 15px 0px;
-    color: #BCBEC0;
-    font-style: italic;
+.mockscore-progress-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    gap: 86px;
 }
+
+.mockscore-sec {
+    width: 100%;
+    height: 100vh;
+}
+
+.progress-text-score {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    gap: 80px;
+    margin: 0px 0px 8px 0px;
+}
+
 
 .mockbird-submitbtn .cardbottom-shadow img {
     left: 50%;
@@ -991,6 +1026,50 @@ button.modal-exit-btn .cardbottom-shadow img {
     bottom: -25px;
 }
 
+.reviewmock-btn a {
+    background: #9DED6C;
+    border: 1px solid #20B14B;
+    text-decoration-line: none;
+    padding: 11px 26px;
+    width: 172.41px;
+    height: 40.58px;
+    border-radius: 40px;
+    display: block;
+    color: #231F20;
+    font-weight: bold;
+}
+
+.reviewmock-btn {
+    position: relative;
+}
+
+.reviewmock-btn .cardbottom-shadow img {
+    left: 50%;
+    transform: translate(-50%);
+    width: 300px;
+    bottom: -24px;
+}
+
+/********** Mock Score Page CSS End **********/
+
+
+/********** Review Scroll Page CSS Start **********/
+
+
+
+
+
+/********** Review Scroll Page CSS End **********/
+
+
+/********** Footer CSS Start **********/
+
+
+.footer-copyright p {
+    padding: 0px 0px 15px 0px;
+    color: #BCBEC0;
+    font-size: 14px;
+}
 
 
 /********** Footer CSS End **********/
@@ -1009,7 +1088,7 @@ button.modal-exit-btn .cardbottom-shadow img {
     }
 
     .mockbirdseye-boxes {
-        grid-template-columns: repeat(15, 1fr);
+        grid-template-columns: repeat(15, 1fr) !important;
     }
     
 }
@@ -1022,7 +1101,7 @@ button.modal-exit-btn .cardbottom-shadow img {
     }
 
     .mockbirdseye-boxes {
-        grid-template-columns: repeat(12, 1fr);
+        grid-template-columns: repeat(12, 1fr) !important;
     }
 }
 
@@ -1108,7 +1187,7 @@ button.modal-exit-btn .cardbottom-shadow img {
     }
 
     .mockbirdseye-boxes {
-        grid-template-columns: repeat(9, 1fr);
+        grid-template-columns: repeat(11, 1fr) !important;
     }
     
 }
@@ -1150,7 +1229,11 @@ button.modal-exit-btn .cardbottom-shadow img {
     }
 
     .mockbirdseye-boxes {
-        grid-template-columns: repeat(8, minmax(40px, 1fr));
+        grid-template-columns: repeat(9, minmax(40px, 1fr)) !important;
+    }
+
+    .questiontext-box {
+        margin: 0px 0px 29px 0px;
     }
 }
 
@@ -1163,6 +1246,7 @@ button.modal-exit-btn .cardbottom-shadow img {
 
     .questiontext-box {
         padding: 20px 54px 20px 15px;
+        margin: 0px 0px 29px 0px;
     }
 
     .questionsoptions-arrows {
@@ -1176,7 +1260,7 @@ button.modal-exit-btn .cardbottom-shadow img {
     }
 
     .mockbirdseye-boxes {
-        grid-template-columns: repeat(6, minmax(40px, 1fr));
+        grid-template-columns: repeat(7, minmax(40px, 1fr)) !important;
     }
     
 }
@@ -1204,13 +1288,13 @@ button.modal-exit-btn .cardbottom-shadow img {
     }
 
     .mockbirdseye-boxes {
-        grid-template-columns: repeat(5, minmax(40px, 1fr));
+        grid-template-columns: repeat(6, minmax(40px, 1fr)) !important;
     }
 }
 
 @media only screen and (max-width: 320px) {
     .mockbirdseye-boxes {
-        grid-template-columns: repeat(4, minmax(40px, 1fr));
+        grid-template-columns: repeat(5, minmax(40px, 1fr)) !important;
     }
 
 }
@@ -1218,5 +1302,13 @@ button.modal-exit-btn .cardbottom-shadow img {
 @media (min-width: 1200px) {
     .container {
         max-width: 1170px;
+    }
+
+    .questionnumber-sec .container {
+        max-width: 1200px;
+    }
+
+    .reviewscroll-sec .container {
+        max-width: 1200px;
     }
 }

@@ -20,8 +20,8 @@
                 <div class="mockbird-submitbtn">
                     <button @click="showPauseModal = true">Submit Mock</button>
                     <div class="cardbottom-shadow">
-                <img src="/images/cardshadow.png" alt="">
-              </div>
+                        <img src="/images/cardshadow.png" alt="">
+                    </div>
                 </div>
             </div>
         </section>
@@ -60,13 +60,28 @@ export default {
         },
         handleExitMock() {
             this.showPauseModal = false;
-            // this.$router.push('/mocksection'); 
+            this.$router.push('/mockscore'); 
         }
+    },
+    watch: {
+        showPauseModal(newVal) {
+            // Toggle body overflow when modal state changes
+            if (newVal) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+    },
+    beforeDestroy() {
+        // Ensure scroll is restored if component is destroyed
+        document.body.style.overflow = '';
     }
 }
+
 </script>
 
-<style>
+<style scoped>
 .mockbirdseye-boxes {
     display: grid;
     grid-template-columns: repeat(18, 1fr);

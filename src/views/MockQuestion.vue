@@ -102,7 +102,7 @@ export default {
             selectedNumber: null,
             selectedNumbers: [],
             scrollSpeed: 300,
-            numberWidth: 24,
+            numberWidth: 22,
             gap: 1
         }
     },

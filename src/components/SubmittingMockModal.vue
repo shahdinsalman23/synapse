@@ -1,5 +1,5 @@
 <template>
-    <div class="modal-overlay" @click.self="closeModal">
+    <div class="modal-overlay submittingmock-overlay" @click.self="closeModal">
       <div class="modal-content">
         <div class="modal-buttons">
           <button class="unanswered-btn" @click="handleResume">3 unanswered</button>
@@ -30,6 +30,7 @@
   </script>
   
   <style scoped>
+
   .modal-overlay {
     position: fixed;
     top: 80px;
@@ -42,6 +43,10 @@
     z-index: 1000;
     margin: 0px 20px;
   }
+
+  .submittingmock-overlay {
+    top: -100px !important;
+}
   
   .modal-content {
     background: #ffffff94; 
@@ -51,7 +56,7 @@
     border-radius: 12px;
     text-align: center;
     width: 1200px;
-    height: 550px;
+    height: 650px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
