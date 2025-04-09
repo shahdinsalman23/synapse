@@ -640,7 +640,7 @@ button.begin-btn a {
 }
   
   .questionnumber {
-    min-width: 21.484px;
+    min-width: 21.83px;
     text-align: center;
     padding: 15px 0px;
     border: 1px solid #231f2040;
@@ -1056,8 +1056,103 @@ button.modal-exit-btn .cardbottom-shadow img {
 /********** Review Scroll Page CSS Start **********/
 
 
+.question-option-tabsbox-scroll {
+    height: 640px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 0px 12px 0px 25px;
+    /* Firefox support */
+    scrollbar-width: thin;
+    scrollbar-color: #B5B7B9 transparent;
+  }
+  
+  /* Chrome, Edge, Safari (Webkit-based) */
+  .question-option-tabsbox-scroll::-webkit-scrollbar {
+    width: 5.83px;
+  }
+  
+  .question-option-tabsbox-scroll::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 10px;
+  }
+  
+  .question-option-tabsbox-scroll::-webkit-scrollbar-track {
+    background-color: #BCBEC0;
+    border-radius: 10px;
+  }
+  
+
+.brake-border {
+    border-top: 4px solid #D1D3D4;
+    width: 65%;
+    margin: 40px auto;
+}
+
+.mockreviewdetail-text p {
+    line-height: 22px;
+    padding: 0px 0px 15px 0px;
+    color: #231F20;
+    text-align: justify;
+}
 
 
+.mockreviewdetail-text table tbody tr th {
+    padding: 4px 30px 4px 0px;
+    color: #231F20;
+}
+
+.mockreviewdetail-text table tbody tr td {
+    color: #231F20;
+    padding: 7px 0px;
+}
+
+.mockreviewdetail-text ul {
+    padding: 0px 0px 0px 20px;
+}
+
+.mockreviewdetail-text ul li {
+    padding: 4px 0px;
+    color: #231F20;
+}
+
+.mockreviewdetail-text table {
+    margin: 0px 0px 20px 0px;
+}
+
+.mockreviewdetail-text table tbody tr {
+    position: relative;
+}
+
+/* .mockreviewdetail-text table tbody tr:first-child::before {
+    position: absolute;
+    content: "";
+    background: #58595b3b;
+    width: 100%;
+    top: 0px;
+    height: 1px;
+    left: 0px;
+} */
+
+.mockreviewdetail-text table tbody tr::after {
+    position: absolute;
+    content: "";
+    background: #58595b3b;
+    width: 100%;
+    bottom: 0px;
+    height: 1px;
+    left: 0px;
+}
+
+.body-scroll-lock {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+
+  .questiontext-sec .container {
+    max-width: 1220px;
+}
 
 /********** Review Scroll Page CSS End **********/
 
@@ -1235,6 +1330,13 @@ button.modal-exit-btn .cardbottom-shadow img {
     .questiontext-box {
         margin: 0px 0px 29px 0px;
     }
+
+    .mockreview-accordion-tabs {
+        display: flex;
+        gap: 24px;
+        margin-bottom: 10px;
+        flex-direction: column;
+    }
 }
 
 @media only screen and (max-width: 425px) {
@@ -1309,6 +1411,6 @@ button.modal-exit-btn .cardbottom-shadow img {
     }
 
     .reviewscroll-sec .container {
-        max-width: 1200px;
+        max-width: 1220px;
     }
 }

@@ -114,7 +114,8 @@ export default {
     return {
       isMainDropdownOpen: false,
       isNestedDropdownOpen: false,
-      showPauseModal: false
+      showPauseModal: false,
+      scrollPosition: 0 
     }
   },
   methods: {
@@ -136,6 +137,31 @@ export default {
     handleExitMock() {
       this.showPauseModal = false;
       this.$router.push('/mocksection'); 
+    },
+    lockBodyScroll() {
+      this.scrollPosition = window.pageYOffset;
+      document.body.classList.add('body-scroll-lock');
+      document.body.style.top = `-${this.scrollPosition}px`;
+    },
+
+    unlockBodyScroll() {
+      document.body.classList.remove('body-scroll-lock');
+      window.scrollTo(0, this.scrollPosition);
+      document.body.style.top = '';
+    },
+  },
+  watch: {
+    showPauseModal(newVal) {
+      if (newVal) {
+        this.lockBodyScroll();
+      } else {
+        this.unlockBodyScroll();
+      }
+    }
+  },
+  beforeUnmount() {
+    if (this.showPauseModal) {
+      this.unlockBodyScroll();
     }
   }
 }

@@ -13,7 +13,7 @@
       <div class="container">
         <div class="row">
           <div class="card-container">
-            <div v-for="(card, index) in cards" :key="index" class="homemock-card">
+            <div v-for="(card, index) in cards" :key="index" class="homemock-card" data-aos="fade-up" :data-aos-delay="index * 100"  data-aos-duration="800">
               <div class="cardtop-content">
                 <img :src="card.image" alt="Card Image" />
                 <h2>{{ card.title }}</h2>
