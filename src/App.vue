@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- Landing Page Header -->
-    <HeaderComponent v-if="$route.path === '/'" />
+    <HeaderComponent v-if="$route.path === '/' || $route.path === '/userlogin'" />
     
     <!-- All Other Pages Header -->
     <HeaderMain v-else />
