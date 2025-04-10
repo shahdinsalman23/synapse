@@ -3,13 +3,13 @@
         <section class="mocksection-pg">
             <div class="container">
                 <div class="mock-container">
-                    <div class="mock-card" data-aos="fade-up" :data-aos-delay="index * 100"  data-aos-duration="400">
+                    <div class="mock-card" data-aos="fade-up" data-aos-delay="0" data-aos-duration="800">
                         <div class="mock-image">
                             <router-link to="/mockselection"><img src="/images/mock1.png" alt=""></router-link>
                             <attempt-progress-button />
                         </div>
                     </div>
-                    <div class="mock-card" data-aos="fade-up" :data-aos-delay="index * 100"  data-aos-duration="600">
+                    <div class="mock-card" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800">
                         <div class="mock-image">
                             <router-link to="/mockselection"><img src="/images/mock2.png" alt=""></router-link>
                             <div class="progress-btn">
@@ -17,7 +17,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mock-card" data-aos="fade-up" :data-aos-delay="index * 100"  data-aos-duration="800">
+                    <div class="mock-card" data-aos="fade-up" data-aos-delay="200" data-aos-duration="800">
                         <div class="mock-image">
                             <router-link to="/mockselection"><img src="/images/mock3.png" alt=""></router-link>
                             <div class="progress-btn">
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mock-card" data-aos="fade-up" :data-aos-delay="index * 100"  data-aos-duration="1000">
+                    <div class="mock-card" data-aos="fade-up" data-aos-delay="300" data-aos-duration="800">
                         <div class="mock-image">
                             <router-link to="/mockselection"><img src="/images/mock4.png" alt=""></router-link>
                             <div class="progress-btn">
@@ -33,7 +33,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mock-card" data-aos="fade-up" :data-aos-delay="index * 100"  data-aos-duration="1200">
+                    <div class="mock-card" data-aos="fade-up" data-aos-delay="400" data-aos-duration="800">
                         <div class="mock-image">
                             <router-link to="/mockselection"><img src="/images/mock5.png" alt=""></router-link>
                             <div class="progress-btn">
@@ -48,7 +48,7 @@
         <div class="questions-notes-mock-sec">
             <div class="container">
                 <div class="question-note-boxes">
-                    <div class="question-box" data-aos="fade-right" :data-aos-delay="index * 100"  data-aos-duration="800">
+                    <div class="question-box" data-aos="fade-right" data-aos-delay="0" data-aos-duration="800">
                         <h3><img src="/images/questionmark.png" alt=""> Question</h3>
                         <div class="question-score">
                             <h6>score</h6>
@@ -63,7 +63,7 @@
                             <img src="/images/cardshadow.png" alt="">
                         </div>
                     </div>
-                    <div class="note-box"  data-aos="fade-up" :data-aos-delay="index * 100"  data-aos-duration="800">
+                    <div class="note-box" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800">
                         <h3><img src="/images/file.png" alt=""> Notes</h3>
                         <img src="/images/lock.png" class="lock-img" alt="">
                         <div class="note-score">
@@ -79,7 +79,7 @@
                             <img src="/images/cardshadow.png" alt="">
                         </div>
                     </div>
-                    <div class="mock-box"  data-aos="fade-left" :data-aos-delay="index * 100"  data-aos-duration="800">
+                    <div class="mock-box" data-aos="fade-left" data-aos-delay="200" data-aos-duration="800">
                         <h3><img src="/images/brain.png" alt=""> Mocks</h3>
                         <div class="question-score">
                             <h6>score</h6>
@@ -163,6 +163,15 @@ export default {
     gap: 8px;
     position: relative;
     align-items: center;
+}
+
+
+[data-aos] {
+    visibility: hidden;
+}
+
+[data-aos].aos-animate {
+    visibility: visible;
 }
 
 

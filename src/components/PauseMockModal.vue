@@ -51,8 +51,7 @@
     border-radius: 12px;
     text-align: center;
     width: 1200px;
-    height: 500px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    height: 560px;
     display: flex;
     align-items: center;
     justify-content: center;
