@@ -4,7 +4,10 @@
     <HeaderComponent v-if="$route.path === '/' || $route.path === '/userlogin'" />
     
     <!-- All Other Pages Header -->
-    <HeaderMain v-else />
+    <!-- <HeaderMain v-else /> -->
+    <HeaderMain
+    v-else-if="$route.path !== '/mocksquestion'"
+  />
     
     <router-view />
     <FooterComponent />

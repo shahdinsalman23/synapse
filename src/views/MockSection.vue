@@ -1,17 +1,20 @@
 <template>
     <div>
+        <div v-if="!showing">
+
+       
         <section class="mocksection-pg">
             <div class="container">
                 <div class="mock-container">
                     <div class="mock-card" data-aos="fade-up" data-aos-delay="0" data-aos-duration="800">
                         <div class="mock-image">
-                            <router-link to="/mockselection"><img src="/images/mock1.png" alt=""></router-link>
+                            <img src="/images/mock1.png" alt="" @click="showselections(1)">
                             <attempt-progress-button />
                         </div>
                     </div>
                     <div class="mock-card" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800">
                         <div class="mock-image">
-                            <router-link to="/mockselection"><img src="/images/mock2.png" alt=""></router-link>
+                            <img src="/images/mock2.png" alt="" @click="showselections(2)">
                             <div class="progress-btn">
                                 <button>Not attempted yet</button>
                             </div>
@@ -19,7 +22,7 @@
                     </div>
                     <div class="mock-card" data-aos="fade-up" data-aos-delay="200" data-aos-duration="800">
                         <div class="mock-image">
-                            <router-link to="/mockselection"><img src="/images/mock3.png" alt=""></router-link>
+                            <img src="/images/mock3.png" alt="" @click="showselections(3)">
                             <div class="progress-btn">
                                 <button>Not attempted yet</button>
                             </div>
@@ -27,7 +30,7 @@
                     </div>
                     <div class="mock-card" data-aos="fade-up" data-aos-delay="300" data-aos-duration="800">
                         <div class="mock-image">
-                            <router-link to="/mockselection"><img src="/images/mock4.png" alt=""></router-link>
+                            <img src="/images/mock4.png" alt="" @click="showselections(4)">
                             <div class="progress-btn">
                                 <button>Not attempted yet</button>
                             </div>
@@ -35,7 +38,7 @@
                     </div>
                     <div class="mock-card" data-aos="fade-up" data-aos-delay="400" data-aos-duration="800">
                         <div class="mock-image">
-                            <router-link to="/mockselection"><img src="/images/mock5.png" alt=""></router-link>
+                            <img src="/images/mock5.png" alt="" @click="showselections(5)">
                             <div class="progress-btn">
                                 <button>Not attempted yet</button>
                             </div>
@@ -97,6 +100,26 @@
                 </div>
             </div>
         </div>
+         </div>
+
+
+         <!-- <div v-else>
+            <section class="mockselection-sec">
+                <div class="container">
+                    <div class="mockselection-btns" >
+                        <button class="mock-timer-btn" data-aos="fade-right" data-aos-delay="100" data-aos-duration="800" ><img src="/images/timer.png" alt="">180 minutes</button>
+                        <button class="begin-btn"  data-aos="fade-left" data-aos-delay="100" data-aos-duration="800"><router-link to="/mocksquestion">Begin
+                            <div class="cardbottom-shadow">
+                                <img src="/images/cardshadow.png" alt="">
+                            </div>
+                        </router-link>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div> -->
+
+         <MockSelection v-else :indexing="indexing"/>
 
     </div>
 </template>
@@ -104,11 +127,30 @@
 
 <script>
 import AttemptProgressButton from '@/components/AttemptProgressButton.vue';
+import MockSelection from './MockSelection.vue';
 
 export default {
     name: "MockSection",
     components: {
         AttemptProgressButton,
+        MockSelection
+    },
+
+    data() {
+        return {
+            showing:false,
+            indexing:0
+           
+        }
+    },
+
+
+    methods: {
+
+        showselections(e){
+            this.indexing = e
+            this.showing = true
+        }
     }
 };
 </script>
@@ -116,6 +158,12 @@ export default {
 
 
 <style scoped>
+
+img{
+    cursor:pointer;
+ 
+
+}
 
 .progress-container {
     position: relative;

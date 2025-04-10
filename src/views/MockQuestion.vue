@@ -1,5 +1,6 @@
 <template>
     <div>
+        <HeaderQuestion />
         <section class="questionnumber-sec">
             <div class="container">
                 <div class="questionnumber-slide-container" ref="container">
@@ -100,16 +101,23 @@
 
 
 <script>
+
+import HeaderQuestion from '@/components/HeaderQuestion.vue';
+
 export default {
+    components: {
+   
+        HeaderQuestion
+  },
     data() {
         return {
             currentIndex: 0,
-            numbers: Array.from({ length: 50 }, (_, i) => i + 1),
+            numbers: Array.from({ length: 150 }, (_, i) => i + 1),
             scrollInterval: null,
             scrollDirection: null,
             selectedNumber: null,
             selectedNumbers: [],
-            scrollSpeed: 300,
+            scrollSpeed: 100,
             numberWidth: 22,
             gap: 1
         }
