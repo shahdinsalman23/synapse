@@ -220,7 +220,7 @@
   }
   
   input:checked + .slider {
-    background-color: #4CAF50;
+    background-color: #20B14B;
   }
   
   input:checked + .slider::before {
