@@ -61,20 +61,16 @@
                         </span>
                     </div>
                     <div class="question-alloptions">
-                        <div class="question-option">
-                            <h4>A. Primary billiary cholangitis</h4>
-                        </div>
-                        <div class="question-option">
-                            <h4>B. Pancreatic cancer</h4>
-                        </div>
-                        <div class="question-option">
-                            <h4 class="selected">C. Cholecystitis</h4>
-                        </div>
-                        <div class="question-option">
-                            <h4>D. Alcoholic liver disease</h4>
-                        </div>
-                        <div class="question-option">
-                            <h4>E. Acute cholangitis</h4>
+                        <div v-for="(option) in options" 
+                             :key="option.id" 
+                             class="question-option"
+                             :class="{ selected: selectedOption === option.id }"
+                             @click="selectOption(option.id)"
+                             role="button"
+                             tabindex="0"
+                             @keydown.enter.space="selectOption(option.id)">
+                            <span class="option-letter">{{ option.id }}.</span>
+                            {{ option.text }}
                         </div>
                     </div>
                     <div class="questionsoptions-arrows">
@@ -119,7 +115,15 @@ export default {
             selectedNumbers: [],
             scrollSpeed: 100,
             numberWidth: 22,
-            gap: 1
+            gap: 1,
+            selectedOption: null,
+            options: [
+                { id: 'A', text: 'Primary billiary cholangitis' },
+                { id: 'B', text: 'Pancreatic cancer' },
+                { id: 'C', text: 'Cholecystitis' },
+                { id: 'D', text: 'Alcoholic liver disease' },
+                { id: 'E', text: 'Acute cholangitis' }
+            ]
         }
     },
     mounted() {
@@ -143,6 +147,9 @@ export default {
         }
     },
     methods: {
+        selectOption(optionId) {
+            this.selectedOption = optionId
+        },
         toggleNumber(number) {
             const index = this.selectedNumbers.indexOf(number);
             if (index > -1) {
@@ -186,19 +193,42 @@ export default {
 
 
 <style scoped>
-.question-option h4 {
-    text-align: left;
-    padding: 10px 35px;
+.question-option {
+    padding: 12px 35px;
     color: #231F20;
     border: 1px solid #d1d3d482;
     border-radius: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    background: white;
+    margin: 0px 0px 22px 0px;
 }
 
+.question-option.selected {
+    border-color: #D1D3D4;
+    background-color: #D1D3D4;
+}
+
+
+.question-option input:focus {
+    outline: none;
+}
+
+.question-option:focus {
+    outline: none;
+}
 
 .question-option-arrows-wrapper {
     margin: 0px 25px;
 }
 
+.question-option span {
+    margin: 0px 5px 0px 0px;
+}
 
 
 </style>
