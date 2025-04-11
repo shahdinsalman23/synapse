@@ -34,20 +34,29 @@
       <section class="login-signup-sec">
         <div class="container">
           <div class="loginSignup-btn">
-            <router-link to="/userlogin" class="loginBtn">Login</router-link>
+            <button class="loginBtn" @click="showLoginModal = true">Login</button>
             <router-link to="/" class="signupBtn">Sign up</router-link>
           </div>
         </div>
       </section>
+      <LoginModal v-if="showLoginModal" @close="showLoginModal = false" />
     </div>
   </template>
 
 
   <script>
+
+import LoginModal from '@/components/LoginModal.vue'
+
+
   export default {
     name: "HomePage",
+    components: {
+      LoginModal
+    },
     data() {
       return {
+        showLoginModal: false,
         cards: [
           {
             title: "Questions",

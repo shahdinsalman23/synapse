@@ -100,7 +100,7 @@
 </template>
 
 
-<script>
+<script>    
 
 import HeaderQuestion from '@/components/HeaderQuestion.vue';
 
