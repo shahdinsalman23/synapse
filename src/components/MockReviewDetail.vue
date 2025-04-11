@@ -3,7 +3,7 @@
         <section class="mockreviewdetail-sec">
             <div class="tabs-container">
                 <div class="mockreview-accordion-tabs">
-                    <div v-for="(tab, index) in tabs" :key="index" class="mock-review-accordion-tab"
+                    <div v-for="(tab, index) in tabs" :key="index" class="mock-review-accordion-tab" :data-tab-type="tab.title === 'Notes' || tab.title === 'Journal' ? 'orange' : 'red'"
                         :class="{ 'active': activeIndex === index }" @click="toggleAccordion(index)">
                         <div class="mocktab-maintext"
                             :style="{ background: tab.title === 'Notes' || tab.title === 'Journal' ? '#FBAD18' : '#ED1C24' }">
@@ -180,6 +180,7 @@ section.mockreviewdetail-sec {
 }
 
 .mock-review-accordion-tab {
+    position: relative;
     flex: 1;
     cursor: pointer;
 }
@@ -303,4 +304,33 @@ section.mockreviewdetail-sec {
 .comment-input-container input:focus {
     outline: none;
 }
+
+
+.mock-review-accordion-tab.active::before {
+    position: absolute;
+    content: "";
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    left: 120px;
+    top: 19px;
+    z-index: 99999;
+}
+
+.mock-review-accordion-tab.active:not([data-tab-type="orange"])::before {
+    background: #ED1C24;
+}
+
+/* Orange tabs (Notes/Journal) */
+.mock-review-accordion-tab.active[data-tab-type="orange"]::before {
+    background: #FBAD18;
+}
+
+.mocktab-maintext {
+    position: relative;
+    z-index: 1;
+}
+
+
+
 </style>

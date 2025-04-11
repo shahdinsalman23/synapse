@@ -9,12 +9,20 @@
                     <div class="mock-card" data-aos="fade-up" data-aos-delay="0" data-aos-duration="800">
                         <div class="mock-image">
                             <img src="/images/mock1.png" alt="" @click="showselections(1)">
+                            <div class="mock-imageabslt-btn">
+                                <button class="pause-mockabslt"><i class="fa-solid fa-pause"></i></button>
+                                <button class="replay-mockabslt"><img src="images/replay-icon.png" alt=""></button>
+                            </div>
                             <attempt-progress-button />
                         </div>
                     </div>
                     <div class="mock-card" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800">
                         <div class="mock-image">
                             <img src="/images/mock2.png" alt="" @click="showselections(2)">
+                            <div class="mock-imageabslt-btn">
+                                <button class="pause-mockabslt"><i class="fa-solid fa-pause"></i></button>
+                                <button class="replay-mockabslt"><img src="images/replay-icon.png" alt=""></button>
+                            </div>
                             <div class="progress-btn">
                                 <button>Not attempted yet</button>
                             </div>
@@ -23,6 +31,10 @@
                     <div class="mock-card" data-aos="fade-up" data-aos-delay="200" data-aos-duration="800">
                         <div class="mock-image">
                             <img src="/images/mock3.png" alt="" @click="showselections(3)">
+                            <div class="mock-imageabslt-btn">
+                                <button class="pause-mockabslt"><i class="fa-solid fa-pause"></i></button>
+                                <button class="replay-mockabslt"><img src="images/replay-icon.png" alt=""></button>
+                            </div>
                             <div class="progress-btn">
                                 <button>Not attempted yet</button>
                             </div>
@@ -31,6 +43,10 @@
                     <div class="mock-card" data-aos="fade-up" data-aos-delay="300" data-aos-duration="800">
                         <div class="mock-image">
                             <img src="/images/mock4.png" alt="" @click="showselections(4)">
+                            <div class="mock-imageabslt-btn">
+                                <button class="pause-mockabslt"><i class="fa-solid fa-pause"></i></button>
+                                <button class="replay-mockabslt"><img src="images/replay-icon.png" alt=""></button>
+                            </div>
                             <div class="progress-btn">
                                 <button>Not attempted yet</button>
                             </div>
@@ -39,6 +55,10 @@
                     <div class="mock-card" data-aos="fade-up" data-aos-delay="400" data-aos-duration="800">
                         <div class="mock-image">
                             <img src="/images/mock5.png" alt="" @click="showselections(5)">
+                            <div class="mock-imageabslt-btn">
+                                <button class="pause-mockabslt"><i class="fa-solid fa-pause"></i></button>
+                                <button class="replay-mockabslt"><img src="images/replay-icon.png" alt=""></button>
+                            </div>
                             <div class="progress-btn">
                                 <button>Not attempted yet</button>
                             </div>
@@ -222,5 +242,45 @@ img{
     visibility: visible;
 }
 
+
+.mock-image {
+    position: relative;
+}
+
+.mock-imageabslt-btn {
+    position: absolute;
+    top: 57%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.mock-imageabslt-btn .replay-mockabslt img {
+    width: 25px;
+    height: 25px;
+    border: none;
+    padding: 0px;
+}
+
+.mock-imageabslt-btn .replay-mockabslt {
+    background: transparent;
+    border: none;
+}
+
+
+.mock-imageabslt-btn .pause-mockabslt {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    border-radius: 20px;
+    background: #f8f800;
+    border: none;
+    line-height: 10px;
+}
 
 </style>
