@@ -9,12 +9,12 @@
               <button @click.prevent="toggleOptions('question')"
               :class="{ 'active-btn': activeButton === 'question' }">Question</button>
               <div class="feeback-question-options" v-show="activeButton === 'question'">
-                <div class="feeback-question-option">
-                  <input type="radio">
+                <div class="feeback-question-option" :class="{ 'selected': selectedOptions[activeButton] === 'incorrect' }">
+                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
                   <p>incorrect</p>
                 </div>
                 <div class="feeback-question-option">
-                  <input type="radio">
+                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
                   <p>Needs improvement</p>
                 </div>
               </div>
@@ -23,12 +23,12 @@
               <button  @click.prevent="toggleOptions('answer')"
               :class="{ 'active-btn': activeButton === 'answer' }">Answer</button>
               <div class="feeback-question-options" v-show="activeButton === 'answer'">
-                <div class="feeback-question-option">
-                  <input type="radio">
+                <div class="feeback-question-option" :class="{ 'selected': selectedOptions[activeButton] === 'incorrect' }">
+                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
                   <p>incorrect</p>
                 </div>
                 <div class="feeback-question-option">
-                  <input type="radio">
+                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
                   <p>Needs improvement</p>
                 </div>
               </div>
@@ -37,12 +37,12 @@
               <button @click.prevent="toggleOptions('ruling')"
               :class="{ 'active-btn': activeButton === 'ruling' }">Rulling Out</button>
               <div class="feeback-question-options" v-show="activeButton === 'ruling'">
-                <div class="feeback-question-option">
-                  <input type="radio">
+                <div class="feeback-question-option" :class="{ 'selected': selectedOptions[activeButton] === 'incorrect' }">
+                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
                   <p>incorrect</p>
                 </div>
                 <div class="feeback-question-option">
-                  <input type="radio">
+                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
                   <p>Needs improvement</p>
                 </div>
               </div>
@@ -51,12 +51,12 @@
               <button @click.prevent="toggleOptions('condition')"
               :class="{ 'active-btn': activeButton === 'condition' }">Condition</button>
               <div class="feeback-question-options" v-show="activeButton === 'condition'">
-                <div class="feeback-question-option">
-                  <input type="radio">
+                <div class="feeback-question-option" :class="{ 'selected': selectedOptions[activeButton] === 'incorrect' }">
+                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
                   <p>incorrect</p>
                 </div>
                 <div class="feeback-question-option">
-                  <input type="radio">
+                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
                   <p>Needs improvement</p>
                 </div>
               </div>
@@ -65,12 +65,12 @@
               <button @click.prevent="toggleOptions('explanation')"
               :class="{ 'active-btn': activeButton === 'explanation' }">Explanation</button>
               <div class="feeback-question-options" v-show="activeButton === 'explanation'">
-                <div class="feeback-question-option">
-                  <input type="radio">
+                <div class="feeback-question-option" :class="{ 'selected': selectedOptions[activeButton] === 'incorrect' }">
+                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
                   <p>incorrect</p>
                 </div>
                 <div class="feeback-question-option">
-                  <input type="radio">
+                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
                   <p>Needs improvement</p>
                 </div>
               </div>
@@ -79,12 +79,12 @@
               <button @click.prevent="toggleOptions('notes')"
               :class="{ 'active-btn': activeButton === 'notes' }">Notes</button>
               <div class="feeback-question-options" v-show="activeButton === 'notes'">
-                <div class="feeback-question-option">
-                  <input type="radio">
+                <div class="feeback-question-option" :class="{ 'selected': selectedOptions[activeButton] === 'incorrect' }">
+                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
                   <p>incorrect</p>
                 </div>
                 <div class="feeback-question-option">
-                  <input type="radio">
+                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
                   <p>Needs improvement</p>
                 </div>
               </div>
@@ -112,7 +112,12 @@
 export default {
   data() {
     return {
-      activeButton: null
+      activeButton: null,
+      selectedOptions: {
+        question: null,
+        answer: null,
+        ruling: null,
+      }
     }
   },
   methods: {
@@ -134,7 +139,10 @@ export default {
     },
     beforeUnmount() {
       this.unlockScroll();
-    }
+    },
+    updateStyle() {
+      this.$forceUpdate(); 
+    },
   
 }
 </script>
@@ -248,6 +256,17 @@ export default {
 
 .feeback-question-option input:focus {
     outline: none;
+}
+
+
+.feeback-question-option.selected {
+  background: #FFF9C4; 
+  border-radius: 15px;
+  padding: 2px 8px;
+}
+
+.feeback-question-option input[type="radio"]:checked {
+  accent-color: #6B7280; 
 }
 
 
