@@ -60,7 +60,7 @@
                             <span class="flag-hover-text">Flag Question</span>
                         </span>
                         <div class="questioncomment">
-                            <button><svg width="20" height="21" viewBox="0 0 20 21" fill="none"
+                            <button @click="showPauseModal = true"><svg width="20" height="21" viewBox="0 0 20 21" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M3.75 20.8584C3.69 20.8584 3.62006 20.8485 3.56006 20.8185C3.35006 20.7385 3.20996 20.5385 3.20996 20.3185V15.9185H2.41003C1.20003 15.9185 0.209961 14.9284 0.209961 13.7184V2.59845C0.209961 1.38845 1.20003 0.398438 2.41003 0.398438H17.26C18.47 0.398438 19.46 1.38845 19.46 2.59845V13.7184C19.46 14.9284 18.47 15.9185 17.26 15.9185H8.40002L4.15002 20.6784C4.05002 20.7984 3.9 20.8584 3.75 20.8584ZM2.42004 1.48843C1.80004 1.48843 1.30005 1.98843 1.30005 2.60843V13.7285C1.30005 14.3485 1.80004 14.8484 2.42004 14.8484H3.75C4.05 14.8484 4.29004 15.0885 4.29004 15.3885V18.9185L7.76001 15.0284C7.86001 14.9184 8.01003 14.8484 8.16003 14.8484H17.26C17.88 14.8484 18.38 14.3485 18.38 13.7285V2.60843C18.38 1.98843 17.88 1.48843 17.26 1.48843H2.41003H2.42004Z"
@@ -120,6 +120,15 @@
             </div>
         </section>
 
+
+        <transition name="slide-modal">
+        <FeedbackFormModal 
+            v-if="showPauseModal"
+            @close="showPauseModal = false"
+            @resume="showPauseModal = false"
+            @exit="handleExitMock"
+        />
+        </transition>
     </div>
 </template>
 
@@ -128,10 +137,12 @@
 <script>
 
 import MockReviewDetail from "../components/MockReviewDetail.vue"
+import FeedbackFormModal from "../components/FeedbackFormModal.vue"
 
 export default {
     components: {
         MockReviewDetail,
+        FeedbackFormModal,
     },
     data() {
         return {
@@ -140,6 +151,7 @@ export default {
             scrollInterval: null,
             scrollDirection: null,
             selectedNumber: null,
+            showPauseModal: false,
             selectedNumbers: [],
             specialNumbers: [],
             scrollSpeed: 300,
@@ -272,7 +284,11 @@ export default {
                     el.addEventListener('transitionend', done);
                 });
             });
-        }
+        },
+        handleExitMock() {
+            this.showPauseModal = false;
+            this.$router.push('/mocksection'); 
+        },
     }
 }
 </script>
