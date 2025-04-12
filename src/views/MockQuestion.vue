@@ -164,6 +164,7 @@
         </div>
     </div>
 
+    
         <MockBirdsEye v-else   :currentQuestionIndex="currentQuestionIndex"
         :allquestions="allquestions"
         :igonreunanswer="igonreunanswer"

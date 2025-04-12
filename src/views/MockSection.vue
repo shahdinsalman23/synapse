@@ -18,7 +18,7 @@
                                 <attempt-progress-button v-if="items.score && items.score.length > 0 && !items.exit"  :item='items' />
 
                                     <div class="progress-btn" v-else-if="items.exit">
-                                        <button > Resume at {{ Math.round(items.exit.remaining_time / 60) }} min</button>
+                                        <button style="background:#FFF057" > Resume at {{ Math.round(items.exit.remaining_time / 60) }} min</button>
                                     </div>
 
                                     <div class="progress-btn"  v-else>
@@ -382,7 +382,7 @@ img {
     height: 40px;
     font-size: 24px;
     border-radius: 20px;
-    background: #f8f800;
+    background: #FFF057;
     border: none;
     line-height: 10px;
 }
