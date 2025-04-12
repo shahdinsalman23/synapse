@@ -1,0 +1,280 @@
+<template>
+  <div class="modal-overlay" @click.self="closeModal">
+    <div class="modal-content">
+      <div class="feedback-form-box">
+        <h4>Share feedback</h4>
+        <form action="">
+          <div class="feedbackform-button">
+            <div class="feedbackform-button">
+              <button @click.prevent="toggleOptions('question')"
+              :class="{ 'active-btn': activeButton === 'question' }">Question</button>
+              <div class="feeback-question-options" v-show="activeButton === 'question'">
+                <div class="feeback-question-option">
+                  <input type="radio">
+                  <p>incorrect</p>
+                </div>
+                <div class="feeback-question-option">
+                  <input type="radio">
+                  <p>Needs improvement</p>
+                </div>
+              </div>
+            </div>
+            <div class="feedbackform-button">
+              <button  @click.prevent="toggleOptions('answer')"
+              :class="{ 'active-btn': activeButton === 'answer' }">Answer</button>
+              <div class="feeback-question-options" v-show="activeButton === 'answer'">
+                <div class="feeback-question-option">
+                  <input type="radio">
+                  <p>incorrect</p>
+                </div>
+                <div class="feeback-question-option">
+                  <input type="radio">
+                  <p>Needs improvement</p>
+                </div>
+              </div>
+            </div>
+            <div class="feedbackform-button">
+              <button @click.prevent="toggleOptions('ruling')"
+              :class="{ 'active-btn': activeButton === 'ruling' }">Rulling Out</button>
+              <div class="feeback-question-options" v-show="activeButton === 'ruling'">
+                <div class="feeback-question-option">
+                  <input type="radio">
+                  <p>incorrect</p>
+                </div>
+                <div class="feeback-question-option">
+                  <input type="radio">
+                  <p>Needs improvement</p>
+                </div>
+              </div>
+            </div>
+            <div class="feedbackform-button">
+              <button @click.prevent="toggleOptions('condition')"
+              :class="{ 'active-btn': activeButton === 'condition' }">Condition</button>
+              <div class="feeback-question-options" v-show="activeButton === 'condition'">
+                <div class="feeback-question-option">
+                  <input type="radio">
+                  <p>incorrect</p>
+                </div>
+                <div class="feeback-question-option">
+                  <input type="radio">
+                  <p>Needs improvement</p>
+                </div>
+              </div>
+            </div>
+            <div class="feedbackform-button">
+              <button @click.prevent="toggleOptions('explanation')"
+              :class="{ 'active-btn': activeButton === 'explanation' }">Explanation</button>
+              <div class="feeback-question-options" v-show="activeButton === 'explanation'">
+                <div class="feeback-question-option">
+                  <input type="radio">
+                  <p>incorrect</p>
+                </div>
+                <div class="feeback-question-option">
+                  <input type="radio">
+                  <p>Needs improvement</p>
+                </div>
+              </div>
+            </div>
+            <div class="feedbackform-button">
+              <button @click.prevent="toggleOptions('notes')"
+              :class="{ 'active-btn': activeButton === 'notes' }">Notes</button>
+              <div class="feeback-question-options" v-show="activeButton === 'notes'">
+                <div class="feeback-question-option">
+                  <input type="radio">
+                  <p>incorrect</p>
+                </div>
+                <div class="feeback-question-option">
+                  <input type="radio">
+                  <p>Needs improvement</p>
+                </div>
+              </div>
+            </div>
+            <div class="feedbackform-button">
+              <button @click.prevent="toggleOptions('other')"
+              :class="{ 'active-btn': activeButton === 'other' }">Other</button>
+              <div class="feeback-question-options" v-show="activeButton === 'other'">
+                <div class="feeback-question-option">
+                    <input type="text" placeholder="Optional text...">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="feedbackform-submitbtn">
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      activeButton: null
+    }
+  },
+  methods: {
+    closeModal() {
+      this.$emit('close');
+    },
+    toggleOptions(buttonType) {
+      this.activeButton = this.activeButton === buttonType ? null : buttonType;
+    }
+  }
+}
+</script>
+
+<style scoped>
+.modal-overlay {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  margin: 0px 20px;
+}
+
+.modal-content {
+  background: #ffffff94;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  width: 1200px;
+  height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feedback-form-box {
+  border: 1px solid #93959875;
+  width: 250px;
+  border-radius: 50px;
+  background: #fff;
+  box-shadow: 0 0 11.34px #00000080;
+  padding: 16px 20px 29px 20px;
+}
+
+.feedback-form-box h4 {
+  padding: 0px 0px 19px 0px;
+  color: #231F20;
+}
+
+.feedbackform-button button {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  border: 1px solid #808285;
+  padding: 3px 20px;
+  width: 115px;
+  margin: 0px 0px 10px 0px;
+  border-radius: 30px;
+  color: #2F292B;
+  cursor: pointer;
+  
+}
+
+.feedbackform-submitbtn {
+  margin: 12px 0px 0px 0px;
+}
+
+.feedbackform-submitbtn button {
+  border: 1px solid #20b14b82;
+  background: #9DED6C;
+  padding: 4px 10px;
+  width: 81.96px;
+  height: 23.02px;
+  border-radius: 30px;
+  color: #2F292B;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.feeback-question-options {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0px 0px 10px 0px;	
+}
+
+.feeback-question-option p {
+    font-size: 11px;
+}
+
+.feeback-question-option {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.active-btn {
+  background-color: #9DED6C !important;
+  border-color: #20b14b !important;
+  font-weight: bold;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+
+
+.feeback-question-option input {
+    border: 1px solid #8082857d;
+    background: #EAEBEC;
+    padding: 3px 25px 3px 10px;
+    border-radius: 30px;
+    font-size: 12px;
+}
+
+.feeback-question-option input:focus {
+    outline: none;
+}
+
+
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  transform-origin: top center;
+  animation: modal-slide 0.3s ease-out;
+}
+
+@keyframes modal-slide {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* For leave transition */
+.leaving .modal-content {
+  animation: modal-slide-up 0.3s ease-in;
+}
+
+
+@keyframes modal-slide-up {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-100%);
+  }
+}
+</style>
