@@ -121,15 +121,28 @@ export default {
     },
     toggleOptions(buttonType) {
       this.activeButton = this.activeButton === buttonType ? null : buttonType;
+    },
+    lockScroll() {
+      document.body.style.overflow = 'hidden';
+    },
+    unlockScroll() {
+      document.body.style.overflow = '';
+    },
+    },
+    mounted() {
+      this.lockScroll();
+    },
+    beforeUnmount() {
+      this.unlockScroll();
     }
-  }
+  
 }
 </script>
 
 <style scoped>
 .modal-overlay {
   position: fixed;
-  top: 100px;
+  top: 200px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -148,10 +161,12 @@ export default {
   border-radius: 12px;
   text-align: center;
   width: 1200px;
-  height: 560px;
+  height: 460px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transform-origin: top center;
+  animation: modal-slide 0.3s ease-out;
 }
 
 .feedback-form-box {
@@ -247,10 +262,6 @@ export default {
   }
 }
 
-.modal-content {
-  transform-origin: top center;
-  animation: modal-slide 0.3s ease-out;
-}
 
 @keyframes modal-slide {
   from {
