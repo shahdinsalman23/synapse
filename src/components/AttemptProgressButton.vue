@@ -6,20 +6,26 @@
         </div>
 
         <!-- Progress State -->
-        <div v-if="isStarted && !isCompleted" class="progress-content">
+        <div v-if="isStarted || isCompleted" class="progress-content">
             <div class="progress-fill" :style="{ width: progress + '%' }"></div>
             <span class="progress-text">{{ progress }}%</span>
         </div>
 
         <!-- Completed State -->
-        <div v-if="isCompleted" class="completed-content">
+        <!-- <div v-if="isCompleted" class="completed-content">
             Attempted
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script>
 export default {
+
+    props: {
+    item: {
+      
+    },
+  },
     data() {
         return {
             isStarted: false,
@@ -30,16 +36,20 @@ export default {
     },
     methods: {
         startProgress() {
+
+            const data =  this.item.score.filter(s => s.correct === 1).length * 100 / this.item.quest.length;
+
+            console.log('item', data)
             if (this.isStarted) return;
 
             this.isStarted = true;
             this.interval = setInterval(() => {
-                if (this.progress >= 100) {
+                if (this.progress >= data) {
                     clearInterval(this.interval);
                     this.isCompleted = true;
                     return;
                 }
-                this.progress += 2; // 2% per interval (total 50 steps)
+                this.progress += 1; // 2% per interval (total 50 steps)
             }, 50); // Update every 50ms (total ~2500ms)
         }
     },
@@ -105,7 +115,7 @@ export default {
 }
 
 .completed {
-    background: #9DED6C !important;
+    background: #D1D3D4 !important;
     /* Solid Green */
 }
 

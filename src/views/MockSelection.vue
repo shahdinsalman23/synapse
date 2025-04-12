@@ -29,8 +29,10 @@ export default {
 
   methods:{
     questionpage(){
-        this.$router.push('/mocksquestion')
-        console.log(this.indexing)
+        // this.$router.push('/mocksquestion')
+
+        this.$router.push({ path: `/mocksquestion/${this.indexing.id}` });
+        console.log('id',this.indexing)
     }
   }
 }

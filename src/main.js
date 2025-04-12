@@ -4,6 +4,10 @@ import router from "./router";
 import "./styles/global.css";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import store from './views/lib/vuex';
+import './axios';
+import Toast from 'vue-toastification'
+import 'vue-toastification/dist/index.css'
 
 // AOS initialization
 AOS.init({
@@ -15,6 +19,7 @@ AOS.init({
 });
 
 Vue.config.productionTip = false;
+Vue.use(Toast)
 
 
 Vue.mixin({
@@ -27,5 +32,6 @@ Vue.mixin({
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app');

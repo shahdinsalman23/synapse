@@ -47,6 +47,25 @@
 
 /********** Container CSS End **********/
 
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.activeindex {
+    border: 3px solid #939393 !important
+}
+
+
+.activeindexborder {
+    border: 3px solid #939393 !important;
+    border-radius: 13px;
+}
 
 /********** Header Login Start **********/
 
@@ -537,7 +556,7 @@ ul.social-login-icons li img {
     margin: 15px 5px 0px 5px;
     background: #D1D3D4;
     border: 1px solid #D1D3D4;
-    padding: 8px 21px;
+    padding: 8px 15px;
     border-radius: 40px;
     font-size: 12px;
 }
@@ -1076,14 +1095,14 @@ span.pausemock {
 }
 
 
-.mockbirdseye-boxes h4:nth-last-child(-n+3) a {
+/* .mockbirdseye-boxes h4:nth-last-child(-n+3) a {
     background: #F1F2F2 !important;
 }
 
 .mockbirdseye-boxes h4:nth-last-child(-n+3) a:hover {
     background: #F1F2F2 !important;
     color: #000000;
-}
+} */
 
 
 .mockbird-submitbtn {

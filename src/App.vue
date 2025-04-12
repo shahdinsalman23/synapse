@@ -5,9 +5,11 @@
     
     <!-- All Other Pages Header -->
     <!-- <HeaderMain v-else /> -->
-    <HeaderMain
-    v-else-if="$route.path !== '/mocksquestion'"
-  />
+    <!-- <HeaderMain
+    v-else-if="$route.path !== '/mocksquestion/:id'"
+  /> -->
+
+  <HeaderMain v-else-if="$route.name !== 'MockQuestion'" />
     
     <router-view />
     <FooterComponent />

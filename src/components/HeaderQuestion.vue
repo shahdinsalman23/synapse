@@ -66,7 +66,7 @@
             </div>
             <div class="mockquestion-navigate">
               <ul>
-                <li><router-link to="/mockbirdseye">
+                <li @click="notifyParent()"><router-link to="">
                 <span>Bird's eye view</span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6.32001 17.6184H1.82001C0.930007 17.6184 0.210022 16.8984 0.210022 16.0084V11.5084C0.210022 10.6184 0.930007 9.89844 1.82001 9.89844H6.32001C7.21001 9.89844 7.92999 10.6184 7.92999 11.5084V16.0084C7.92999 16.8984 7.21001 17.6184 6.32001 17.6184ZM1.82001 10.5284C1.28001 10.5284 0.830017 10.9684 0.830017 11.5184V16.0184C0.830017 16.5584 1.27001 17.0084 1.82001 17.0084H6.32001C6.86001 17.0084 7.31 16.5684 7.31 16.0184V11.5184C7.31 10.9784 6.87001 10.5284 6.32001 10.5284H1.82001Z" fill="#D1D3D4"/>
                 <path d="M15.42 17.6184H10.92C10.03 17.6184 9.31 16.8984 9.31 16.0084V11.5084C9.31 10.6184 10.03 9.89844 10.92 9.89844H15.42C16.31 9.89844 17.03 10.6184 17.03 11.5084V16.0084C17.03 16.8984 16.31 17.6184 15.42 17.6184ZM10.92 10.5284C10.38 10.5284 9.92999 10.9684 9.92999 11.5184V16.0184C9.92999 16.5584 10.37 17.0084 10.92 17.0084H15.42C15.96 17.0084 16.41 16.5684 16.41 16.0184V11.5184C16.41 10.9784 15.97 10.5284 15.42 10.5284H10.92Z" fill="#D1D3D4"/>
@@ -79,10 +79,10 @@
                 </li>
                 <li><span class="flaggedquestions">Flagged questions</span><svg width="14.52" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z" fill="#D1D3D4" />
-                </svg> 5</li>
-                <li class="timer"><span>Time remaining</span> 148:00</li>
-                <li class="pause" @click="showPauseModal = true"><span class="pausemock">Pause mock</span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12.9699 0.359375C13.2399 0.429375 13.5399 0.419373 13.8199 0.459373C24.4099 1.91937 27.81 15.7194 19.06 21.9394C11.8 27.0994 1.58998 22.6594 0.389978 13.8894C0.349978 13.6094 0.360002 13.3094 0.290002 13.0394C0.310002 12.5194 0.260002 11.9794 0.290002 11.4594C0.630002 5.61937 5.54997 0.699375 11.38 0.359375H12.9599H12.9699ZM11.6099 2.27937C3.50995 2.75937 -0.740047 12.3094 4.48995 18.6094C8.86995 23.8894 17.11 23.2794 20.68 17.4394C24.87 10.5994 19.5599 1.79937 11.5999 2.26937L11.6099 2.27937Z" fill="#D1D3D4"/>
+                </svg>{{flagcounts}}</li>
+                <li class="timer" :style="{ color: remainingTimeInSeconds <= 600 ? 'yellow' : 'white'}"><span>Time remaining</span> {{formattedTime}}</li>
+                <li class="pause" @click="PauseModal"><span class="pausemock">Pause mock</span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.9699 0.359375C13.2399 0.429375 13.5399 0.419373 13.8199 0.45973C24.4099 1.91937 27.81 15.7194 19.06 21.9394C11.8 27.0994 1.58998 22.6594 0.389978 13.8894C0.349978 13.6094 0.360002 13.3094 0.290002 13.0394C0.310002 12.5194 0.260002 11.9794 0.290002 11.4594C0.630002 5.61937 5.54997 0.699375 11.38 0.359375H12.9599H12.9699ZM11.6099 2.27937C3.50995 2.75937 -0.740047 12.3094 4.48995 18.6094C8.86995 23.8894 17.11 23.2794 20.68 17.4394C24.87 10.5994 19.5599 1.79937 11.5999 2.26937L11.6099 2.27937Z" fill="#D1D3D4"/>
                 <path d="M14.49 6.44939C15.37 6.29939 15.8799 6.94939 15.9399 7.75939C16.1499 10.5994 15.7799 13.7094 15.9399 16.5794C15.7999 18.2894 13.66 18.2194 13.53 16.6794V7.57939C13.56 7.06939 13.98 6.53939 14.49 6.44939Z" fill="#D1D3D4"/>
                 <path d="M10.8199 6.77901C10.9999 6.95901 11.14 7.26901 11.16 7.52901V16.819C10.9 18.169 9.08004 18.199 8.79004 16.859V7.48901C8.88004 6.50901 10.1201 6.08901 10.8101 6.78901L10.8199 6.77901Z" fill="#D1D3D4"/>
                 </svg>
@@ -95,9 +95,9 @@
 
       <transition name="slide-modal">
       <PauseMockModal 
-        v-if="showPauseModal"
-        @close="showPauseModal = false"
-        @resume="showPauseModal = false"
+        v-if="showPauseModal || stoptimerpopup"
+        @close="Resuming"
+        @resume="Resuming"
         @exit="handleExitMock"
       />
     </transition>
@@ -115,15 +115,45 @@ export default {
   components: {
     PauseMockModal
   },
+
+  props: {
+    flagcounts: {
+      
+    },
+    remainingTimeInSeconds: {
+     
+    },
+    formattedTime: {
+      
+    },
+    stoptimerpopup:{}
+  },
   data() {
     return {
       isMainDropdownOpen: false,
       isNestedDropdownOpen: false,
       showPauseModal: false,
-      scrollPosition: 0 
+      scrollPosition: 0,
+
     }
   },
   methods: {
+
+    PauseModal(){
+      this.$emit('showstoptimer')
+      this.showPauseModal = true
+
+    },
+
+    Resuming(){
+      this.$emit('startagain')
+      this.showPauseModal = false
+    },
+
+    notifyParent() {
+      console.log('hello')
+      this.$emit('birdseye');
+    },
     toggleMainDropdown() {
       this.isMainDropdownOpen = !this.isMainDropdownOpen;
       if(this.isMainDropdownOpen) {
@@ -134,14 +164,22 @@ export default {
       this.isNestedDropdownOpen = !this.isNestedDropdownOpen;
     },
     handleOutsideClick(event) {
-      if (!this.$refs.dropdown.contains(event.target)) {
+      // if (!this.$refs.dropdown.contains(event.target)) {
+      //   this.isMainDropdownOpen = false;
+      //   document.removeEventListener('click', this.handleOutsideClick);
+      // }
+
+      const dropdown = this.$refs.dropdown;
+      if (dropdown && !dropdown.contains(event.target)) {
         this.isMainDropdownOpen = false;
         document.removeEventListener('click', this.handleOutsideClick);
       }
     },
     handleExitMock() {
       this.showPauseModal = false;
-      this.$router.push('/mocksection'); 
+      this.$emit('exitmock')
+
+      // this.$router.push('/mocksection'); 
     },
     lockBodyScroll() {
       this.scrollPosition = window.pageYOffset;
