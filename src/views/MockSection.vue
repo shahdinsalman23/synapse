@@ -249,7 +249,7 @@ export default {
                     localStorage.setItem('mockObject', JSON.stringify(e));
                     localStorage.setItem('question', 'normal');
                     localStorage.setItem("remainingsec", null);
-                    this.$router.push({ path: `/reviewmock/${e.id}` });
+                    // this.$router.push({ path: `/reviewmock/${e.id}` });
 
                 }
                 else if (e.exit) {
