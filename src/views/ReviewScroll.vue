@@ -644,7 +644,7 @@ export default {
         },
 
         gotonewpage() {
-            this.$router.push('/mocks')
+            this.$router.push('/mocksection')
 
         },
 
@@ -836,9 +836,9 @@ export default {
                 } else {
                     if (option.correct == 1) {
                         return {
-                            border: '2px solid #63b045',
-                            background: '#63b045',
-                            color: 'white'
+                          
+                            background: '#9DED6C',
+                          
                         };
                     }
                 }
