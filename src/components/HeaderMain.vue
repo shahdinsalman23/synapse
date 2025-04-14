@@ -12,7 +12,7 @@
               <div class="hamburger-icon" @click.stop="toggleMainDropdown">
                 <svg width="24" height="24" viewBox="0 0 24 24">
                   <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" fill="currentColor" />
-                </svg><span>menu</span>
+                </svg><span>Menu</span>
               </div>
             </div>
             <!-- Main Dropdown -->

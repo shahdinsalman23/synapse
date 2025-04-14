@@ -12,8 +12,8 @@
                             <div class="progress-bar" :style="{ width: total * 100 / totalquestions + '%' }"></div>
                         </div>
                     </div>
-                    <div class="reviewmock-btn">
-                        <router-link to="/reviewmockbirdseye">Review mock 1
+                    <div class="reviewmock-btn" @click="reviewMock">
+                        <router-link to="">Review mock 1
                             <div class="cardbottom-shadow">
                                 <img src="/images/cardshadow.png" alt="">
                             </div>
@@ -123,7 +123,7 @@ export default {
     computed: {
         roundedPercent() {
             // return Math.round(this.correctpercent);
-            return Math.round(this.correct);
+            return Math.round(this.correct) * 100 / this.totalquestions;
 
         },
 
@@ -149,7 +149,7 @@ export default {
 
 
         reviewMock() {
-            this.$router.push({ path: `/reviewmock/${this.id}` });
+            this.$router.push({ path: `/reviewscroll/${this.id}` });
 
         },
 

@@ -12,7 +12,7 @@
               <div class="hamburger-icon" @click.stop="toggleMainDropdown">
                 <svg width="24" height="24" viewBox="0 0 24 24">
                   <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" fill="currentColor"/>
-                </svg><span>menu</span>
+                </svg><span>Menu</span>
               </div>
             </div>
               <!-- Main Dropdown -->
@@ -50,11 +50,11 @@
                     User ▸</router-link>
                   <!-- Nested Dropdown -->
                   <ul class="nested-dropdown" v-show="isNestedDropdownOpen">
-                    <li><router-link to="">Alex hales</router-link></li>
-                    <li><router-link to="">Smith Henry</router-link></li>
+                    <li><router-link to="">{{ user.fullname }}</router-link></li>
+                   
                   </ul>
                 </li>
-                <li><router-link to=""><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <li @click="logout"><router-link to=""><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7.57986 15.9902C3.41986 15.9902 0.109863 12.6902 0.109863 8.52019C0.109863 5.95019 1.32986 3.62018 3.53986 2.28018C3.90986 2.04018 4.26987 2.16019 4.51987 2.52019C4.76987 2.88019 4.63986 3.25018 4.27986 3.50018C2.56986 4.60018 1.58986 6.44019 1.58986 8.52019C1.58986 11.8202 4.27986 14.5202 7.58986 14.5202C10.8999 14.5202 13.5899 11.8302 13.5899 8.52019C13.5899 6.44019 12.6099 4.60018 10.8999 3.50018C10.5299 3.26018 10.4099 2.77019 10.6599 2.52019C10.8999 2.15019 11.3899 2.03018 11.6399 2.28018C13.7199 3.63018 15.0699 5.95019 15.0699 8.52019C15.0699 12.6802 11.7699 15.9902 7.59987 15.9902H7.57986Z" fill="#231F20"/>
                     <path d="M7.58009 8.04092C7.21009 8.04092 6.8501 7.67093 6.8501 7.31093V1.19093C6.8501 0.820933 7.22009 0.460938 7.58009 0.460938C7.94009 0.460938 8.31009 0.830933 8.31009 1.19093V7.31093C8.31009 7.68093 7.94009 8.04092 7.58009 8.04092Z" fill="#231F20"/>
                     </svg>
@@ -66,7 +66,7 @@
             </div>
             <div class="mockquestion-navigate">
               <ul>
-                <li @click="notifyParent()"><router-link to="">
+                <li @click="notifyParent()" class="fontsizing"><router-link to="">
                 <span>Bird's eye view</span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6.32001 17.6184H1.82001C0.930007 17.6184 0.210022 16.8984 0.210022 16.0084V11.5084C0.210022 10.6184 0.930007 9.89844 1.82001 9.89844H6.32001C7.21001 9.89844 7.92999 10.6184 7.92999 11.5084V16.0084C7.92999 16.8984 7.21001 17.6184 6.32001 17.6184ZM1.82001 10.5284C1.28001 10.5284 0.830017 10.9684 0.830017 11.5184V16.0184C0.830017 16.5584 1.27001 17.0084 1.82001 17.0084H6.32001C6.86001 17.0084 7.31 16.5684 7.31 16.0184V11.5184C7.31 10.9784 6.87001 10.5284 6.32001 10.5284H1.82001Z" fill="#D1D3D4"/>
                 <path d="M15.42 17.6184H10.92C10.03 17.6184 9.31 16.8984 9.31 16.0084V11.5084C9.31 10.6184 10.03 9.89844 10.92 9.89844H15.42C16.31 9.89844 17.03 10.6184 17.03 11.5084V16.0084C17.03 16.8984 16.31 17.6184 15.42 17.6184ZM10.92 10.5284C10.38 10.5284 9.92999 10.9684 9.92999 11.5184V16.0184C9.92999 16.5584 10.37 17.0084 10.92 17.0084H15.42C15.96 17.0084 16.41 16.5684 16.41 16.0184V11.5184C16.41 10.9784 15.97 10.5284 15.42 10.5284H10.92Z" fill="#D1D3D4"/>
@@ -80,7 +80,55 @@
                 <li><span class="flaggedquestions">Flagged questions</span><svg width="14.52" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z" fill="#D1D3D4" />
                 </svg>{{flagcounts}}</li>
-                <li class="timer" :style="{ color: remainingTimeInSeconds <= 600 ? 'yellow' : 'white'}"><span>Time remaining</span> {{formattedTime}}</li>
+                
+                <li style="position:relative">
+                  <!-- <svg v-if="showclock" @click="showclock = false" width="25" height="25" class="circle_svg">
+                    <circle cx="12" cy="12" r="9" class="circle cpath"></circle>
+                    <circle cx="12" cy="12" r="4" class="circle cfill" stroke-mitterlimit="20"
+                        stroke-dasharray="360">
+                        <animate attributeName="stroke-dashoffset" from="360" to="350" dur="10s"
+                            repeatCount="indefinite"></animate>
+                    </circle>
+                </svg> -->
+                <svg v-if="showclock" @click="showclock = false" width="27" height="27" viewBox="0 0 120 160">
+                  <!-- Straight top button moved down -->
+                  <rect x="40" y="10" width="40" height="20" rx="2" fill="#D1D3D4" />
+                
+                  <!-- Line connecting button to clock, also moved down -->
+                  <line x1="60" y1="20" x2="60" y2="68" stroke="#D1D3D4" stroke-width="10" />
+                
+                  <!-- Main clock body -->
+                  <circle cx="60" cy="100" r="52" fill="#D1D3D4" />
+                
+                  <!-- Countdown stroke animation -->
+                  <circle
+                    cx="60"
+                    cy="100"
+                    r="52"
+                    fill="none"
+                    stroke="black"
+                    stroke-width="10"
+                    stroke-dasharray="326.72"
+                    stroke-dashoffset="0"
+                    transform="rotate(-90 60 100)"
+                  >
+                    <animate
+                      attributeName="stroke-dashoffset"
+                      from="0"
+                      to="326.72"
+                      dur="10800s"
+                      repeatCount="1"
+                      fill="freeze"
+                    />
+                  </circle>
+                </svg>
+                
+                
+                
+                  <span  >Time remaining</span> <p v-if="!showclock"  @click="showclock = true" class="timer" :style="{ color: remainingTimeInSeconds <= 600 ? 'yellow' : 'white'}">{{formattedTime}}</p> 
+                
+                
+                </li>
                 <li class="pause" @click="PauseModal"><span class="pausemock">Pause mock</span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12.9699 0.359375C13.2399 0.429375 13.5399 0.419373 13.8199 0.45973C24.4099 1.91937 27.81 15.7194 19.06 21.9394C11.8 27.0994 1.58998 22.6594 0.389978 13.8894C0.349978 13.6094 0.360002 13.3094 0.290002 13.0394C0.310002 12.5194 0.260002 11.9794 0.290002 11.4594C0.630002 5.61937 5.54997 0.699375 11.38 0.359375H12.9599H12.9699ZM11.6099 2.27937C3.50995 2.75937 -0.740047 12.3094 4.48995 18.6094C8.86995 23.8894 17.11 23.2794 20.68 17.4394C24.87 10.5994 19.5599 1.79937 11.5999 2.26937L11.6099 2.27937Z" fill="#D1D3D4"/>
                 <path d="M14.49 6.44939C15.37 6.29939 15.8799 6.94939 15.9399 7.75939C16.1499 10.5994 15.7799 13.7094 15.9399 16.5794C15.7999 18.2894 13.66 18.2194 13.53 16.6794V7.57939C13.56 7.06939 13.98 6.53939 14.49 6.44939Z" fill="#D1D3D4"/>
@@ -109,6 +157,7 @@
 
 
 import PauseMockModal from './PauseMockModal.vue';
+import { mapGetters } from "vuex";
 
 
 export default {
@@ -134,10 +183,21 @@ export default {
       isNestedDropdownOpen: false,
       showPauseModal: false,
       scrollPosition: 0,
+      showclock: false,
 
     }
   },
+
+  computed: {
+    ...mapGetters(["user"]), // your getter is named "user"
+  },
   methods: {
+
+    logout() {
+      localStorage.removeItem("token");
+      this.$store.dispatch("user", null);
+      this.$router.push("/");
+    },
 
     PauseModal(){
       this.$emit('showstoptimer')
@@ -214,6 +274,14 @@ export default {
 
   
   <style scoped>
+
+  svg.circle_svg {
+    position: absolute;
+
+    top: 1px;
+    right: 12px;
+
+}
 
 
 .header-icon-wrapper {

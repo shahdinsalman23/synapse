@@ -67,6 +67,10 @@
     border-radius: 13px;
 }
 
+.isselected {
+    background: #20B14B !important;
+}
+
 /********** Header Login Start **********/
 
 header.header-main {
@@ -99,6 +103,11 @@ header.header-main .row {
     text-decoration-line: none;
     color: #fff;
     font-family: Helvetica;
+    
+
+
+   
+
 }
 
 /********** Header Login End **********/
@@ -963,6 +972,11 @@ button.begin-btn a {
     gap: 3px;
     font-size: 15px;
     cursor: pointer;
+    
+}
+
+.fontsizing {
+    font-size: 0px !important;
 }
 
 .flaggedquestions {

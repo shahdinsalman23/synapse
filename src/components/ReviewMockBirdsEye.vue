@@ -6,11 +6,37 @@
                     <h6>Bird's Eye View</h6>
                 </div>
                 <div class="reviewmockbirdseye-boxes">
-                    <h4 v-for="num in 180" :key="num" 
-                        :class="{ 'selecteds': selectedNumbers.includes(num) }"
-                        @click="toggleNumber(num)">
-                        <router-link to="" :class="{ 'special-box': specialNumbers.includes(num) }">{{ num }}</router-link>
-                        <span v-if="selectedNumbers.includes(num)" class="flag-icon">
+                    <h4 v-for="(nav, indexnav) in allquestions" :key="indexnav"
+                       
+                        @click="toggleNumber(indexnav)">
+                        <router-link to="" :class="{ 'isselected': isPresentIndexs(indexnav) }"
+                        
+                        :style="{
+                            background: nav.score
+                                ? (nav.score.correct === 1
+                                    ? '#9DED6C'
+                                    : (nav.score.correct === 0
+                                        ? '#FFBABE'
+                                        : 'white'))
+                                : (nav.flag
+                                    ? '#d2cbcb'
+                                    : (nav.skip
+                                        ? '#d2cbcb'
+                                        : 'white')),
+
+                                        color: nav.flag
+                                        ? 'black'
+                                        : (nav.score
+                                            ? 'black'
+                                            : (nav.skip
+                                                ? 'black'
+                                                : 'black')),
+                                       
+
+
+                        }"
+                        >{{ indexnav + 1 }}</router-link>
+                        <span v-if="nav.flag" class="flag-icon">
                             <svg width="14.52" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z" fill="#ED1C24"/>
                             </svg>
@@ -18,7 +44,7 @@
                     </h4>
                 </div>
                 <div class="mockbird-submitbtn">
-                    <router-link to="/reviewscroll"><button @click="showPauseModal = true">Start review</button></router-link>
+                    <button @click="startMock">Start review</button>
                     <div class="cardbottom-shadow">
                         <img src="/images/cardshadow.png" alt="">
                     </div>
@@ -32,6 +58,17 @@
 <script>
 
 export default {
+
+    props: {
+        currentQuestionIndex: {
+      
+    },
+    allquestions: {
+     
+    },
+  
+    
+  },
     data() {
         return {
             selectedNumbers: [],
@@ -39,12 +76,28 @@ export default {
         }
     },
     methods: {
-        toggleNumber(num) {
-            if (this.selectedNumbers.includes(num)) {
-                this.selectedNumbers = this.selectedNumbers.filter(n => n !== num)
-            } else {
-                this.selectedNumbers.push(num)
-            }
+
+        isPresentIndexs(indexnav) {
+            //   const presentindex = localStorage.getItem('presentindex');
+            const presentindex = this.currentQuestionIndex
+            console.log(presentindex);
+
+            // If presentindex is in local storage, compare it with indexnav
+            return presentindex !== null && parseInt(presentindex, 10) === indexnav;
+        },
+        toggleNumber(indexnav) {
+            this.$emit('getBackindex' , indexnav);
+            // if (this.selectedNumbers.includes(num)) {
+            //     this.selectedNumbers = this.selectedNumbers.filter(n => n !== num)
+            // } else {
+            //     this.selectedNumbers.push(num)
+            // }
+        },
+
+        startMock(){
+
+            console.log('yyyyyyyyyyyyy')
+            this.$emit('startMocks');
         },
         generateSpecialNumbers() {
             const specialCount = 12; // Change to 10 if you want exactly 10

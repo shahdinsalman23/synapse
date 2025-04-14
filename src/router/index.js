@@ -22,7 +22,7 @@ const routes = [
   { path: "/mockbirdseye", component: MockBirdsEye , meta: { requiresAuth: true } },
   { path: "/mockscore/:id", component: MockScore , meta: { requiresAuth: true } },
   { path: "/reviewmockbirdseye", component: ReviewMockBirdsEye , meta: { requiresAuth: true } },
-  { path: "/reviewscroll", component: ReviewScroll , meta: { requiresAuth: true } },
+  { path: "/reviewscroll/:id", component: ReviewScroll , meta: { requiresAuth: true } },
 ];
 
 const router = new VueRouter({

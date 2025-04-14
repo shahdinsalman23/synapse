@@ -28,31 +28,50 @@
                         <div v-if="tabs[activeIndex].title === 'Comments'" class="comments-section">
                             <!-- Comments List -->
                             <ul class="comments-list">
-                                <li v-for="(comment, index) in tabs[3].content" :key="index" class="comment-item">
+                                <li v-for="(comment) in currentQuestion.comments" :key="comment.id" class="comment-item">
                                     <div class="user-avatar">
                                         <img src="https://static.vecteezy.com/system/resources/previews/047/733/682/non_2x/grey-avatar-icon-user-avatar-photo-icon-social-media-user-icon-vector.jpg"
                                             alt="User Avatar">
                                     </div>
                                     <div class="comment-content">
                                         <div class="comment-header">
-                                            <span class="user-name">Alex Hales</span>
+                                            <span class="user-name">{{ comment.user.username }}</span>
                                             <span class="comment-time">2 hours ago</span>
                                         </div>
-                                        <p class="comment-text">{{ comment }}</p>
+                                        <p class="comment-text">  {{ comment ? comment.comments : 'No Details' }}</p>
                                     </div>
                                 </li>
                             </ul>
                             <!-- Comment Input -->
                             <div class="comment-input-container">
-                                <input type="text" v-model="newComment" placeholder="Write your comment..."
-                                    @keyup.enter="addComment">
-                                <button class="send-button" @click="addComment">
+                                <input type="text"  v-model="form.comments" placeholder="Write your comment..."
+                                    @keyup.enter="commentsave(currentQuestion.id)">
+                                <button class="send-button"  @click="commentsave(currentQuestion.id)">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="#ED1C24" />
                                     </svg>
                                 </button>
                             </div>
+                        </div>
+
+
+                        <div v-else-if="tabs[activeIndex].title === 'Explanation'" class="comments-section">
+                            <div 
+                            class="content-block mockreviewdetail-text" >
+                            {{ currentQuestion.explanation }}
+                        </div>
+                        
+                            
+                        </div>
+
+                        <div v-else-if="tabs[activeIndex].title === 'Notes'" class="comments-section">
+                            <div 
+                            class="content-block mockreviewdetail-text" >
+                            {{ currentQuestion.books }}
+                        </div>
+                        
+                            
                         </div>
 
                         <!-- Other Tabs Content -->
@@ -70,9 +89,18 @@
 
 <script>
 export default {
+
+    props: {
+        currentQuestion: {
+      
+    },
+   
+  
+},
     data() {
         return {
             activeIndex: null,
+            form: {},
             tabs: [
                 {
                     title: 'Explanation',
@@ -150,6 +178,11 @@ export default {
         }
     },
     methods: {
+
+        commentsave(e){
+            this.$emit('commentsave' , e , this.form.comments);
+
+        },
         addComment() {
             if (this.newComment.trim()) {
                 this.tabs[3].content.push(this.newComment.trim());

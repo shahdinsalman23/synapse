@@ -1,112 +1,57 @@
 <template>
     <div>
-        <section class="reviewscroll-sec">
-            <div class="container">
-                <div class="questionnumber-slide-container" ref="container">
-                    <div class="questionleft-arrow" @mouseenter="startScroll('left')" @mouseleave="stopScroll"><svg
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-chevron-left-icon lucide-chevron-left">
-                            <path d="m15 18-6-6 6-6" />
-                        </svg></div>
 
-                    <div class="slider-wrapper">
-                        <div class="questionnumber-slide" :style="slideStyle">
-                            <span v-for="number in numbers" :key="number" class="questionnumber"
-                                :class="{ 'questionnumber': true, selected: selectedNumbers.includes(number), 'special': specialNumbers.includes(number) }"
-                                @click="toggleNumber(number)">
-                                {{ number }}
-                                <!-- Ye flag sirf selected numbers pe dikhega -->
-                                <svg v-if="selectedNumbers.includes(number)" class="red-flag" width="11"
-                                    viewBox="0 0 19 17">
-                                    <path
-                                        d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
-                                        fill="#ED1C24" />
-                                </svg>
-                            </span>
-                        </div>
-                    </div>
+        <div v-if="reviewfirst">
 
-                    <div class="questionright-arrow" @mouseenter="startScroll('right')" @mouseleave="stopScroll"><svg
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-chevron-right-icon lucide-chevron-right">
-                            <path d="m9 18 6-6-6-6" />
-                        </svg></div>
-                </div>
-            </div>
-        </section>
 
-        <section class="questiontext-sec">
-            <div class="container">
-                <div class="question-option-tabsbox-scroll">
-                    <div class="questiontext-box">
-                        <p>A 39-year-old female has presented to A&E with right sided abdominal pain for three days. She
-                            reports nausea and decreased appetite. Her background includes alcohol excess and polycystic
-                            ovarian syndrome. On examination she is noted to be jaundiced, tachypnoeic and febrile.
-                            Blood
-                            tests reveal raised Bilirubin, ALT, AST, Alkaline phosphatase, and Gamma GT. Computer
-                            records
-                            show that she has not lost any weight and her BMI is 31. What is the most probable
-                            underlying
-                            diagnosis?</p>
-                        <span class="questionflag">
-                            <svg width="19" height="17" viewBox="0 0 19 17" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z"
-                                    fill="#ED1C24" />
-                            </svg>
-                            <span class="flag-hover-text">Flag Question</span>
-                        </span>
-                        <div class="questioncomment">
-                            <button @click="showPauseModal = true"><svg width="20" height="21" viewBox="0 0 20 21" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M3.75 20.8584C3.69 20.8584 3.62006 20.8485 3.56006 20.8185C3.35006 20.7385 3.20996 20.5385 3.20996 20.3185V15.9185H2.41003C1.20003 15.9185 0.209961 14.9284 0.209961 13.7184V2.59845C0.209961 1.38845 1.20003 0.398438 2.41003 0.398438H17.26C18.47 0.398438 19.46 1.38845 19.46 2.59845V13.7184C19.46 14.9284 18.47 15.9185 17.26 15.9185H8.40002L4.15002 20.6784C4.05002 20.7984 3.9 20.8584 3.75 20.8584ZM2.42004 1.48843C1.80004 1.48843 1.30005 1.98843 1.30005 2.60843V13.7285C1.30005 14.3485 1.80004 14.8484 2.42004 14.8484H3.75C4.05 14.8484 4.29004 15.0885 4.29004 15.3885V18.9185L7.76001 15.0284C7.86001 14.9184 8.01003 14.8484 8.16003 14.8484H17.26C17.88 14.8484 18.38 14.3485 18.38 13.7285V2.60843C18.38 1.98843 17.88 1.48843 17.26 1.48843H2.41003H2.42004Z"
-                                        fill="#8698A2" />
-                                    <path
-                                        d="M14.7601 10.2285H5.66016C5.36016 10.2285 5.12012 9.98845 5.12012 9.68845C5.12012 9.38845 5.36016 9.14844 5.66016 9.14844H14.7601C15.0601 9.14844 15.3002 9.38845 15.3002 9.68845C15.3002 9.98845 15.0601 10.2285 14.7601 10.2285Z"
-                                        fill="#8698A2" />
-                                    <path
-                                        d="M14.7601 6.72845H5.66016C5.36016 6.72845 5.12012 6.48845 5.12012 6.18845C5.12012 5.88845 5.36016 5.64844 5.66016 5.64844H14.7601C15.0601 5.64844 15.3002 5.88845 15.3002 6.18845C15.3002 6.48845 15.0601 6.72845 14.7601 6.72845Z"
-                                        fill="#8698A2" />
-                                </svg></button>
-                        </div>
-                    </div>
-                    <div class="question-alloptions">
-                        <div v-for="(option, index) in options" :key="option.id" class="question-option"
-                            :class="{ active: activeOption === index, 'special-option': option.id === 4, 'first-option': option.id === 1 }">
-                            <div class="option-header" @click="toggleAccordion(index)">
-                                <h4>{{ option.text }}</h4>
-                                <div class="accordion-icon">
-                                    <svg v-if="activeOption === index" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5 12H19" stroke="#231F20" stroke-width="2" stroke-linecap="round" />
-                                    </svg>
-                                    <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12 5V19" stroke="#231F20" stroke-width="2" stroke-linecap="round" />
-                                        <path d="M5 12H19" stroke="#231F20" stroke-width="2" stroke-linecap="round" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <transition @enter="enter" @leave="leave" :css="false">
-                                <div v-if="activeOption === index" class="option-content">
-                                    <p>{{ option.content }}</p>
-                                </div>
-                            </transition>
-                        </div>
-                    </div>
-                    <div class="questionsoptions-arrows">
-                        <div class="questionoption-leftarrow">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+            <ReviewMockBirdsEye :currentQuestionIndex="currentQuestionIndex" :allquestions="allquestions"
+                @getBackindex="getBackindex" @startMocks="getBackindex(0)" />
+
+        </div>
+        <div v-else>
+
+
+            <section class="reviewscroll-sec">
+                <div class="container">
+                    <div class="questionnumber-slide-container" ref="container">
+                        <div class="questionleft-arrow" @mouseenter="startScroll('left')" @mouseleave="stopScroll"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left">
                                 <path d="m15 18-6-6 6-6" />
-                            </svg>
+                            </svg></div>
+
+                        <div class="slider-wrapper">
+                            <div class="questionnumber-slide" :style="slideStyle">
+                                <span v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber"
+                                :style="{
+                                    background: nav.score
+                                        ? (nav.score.correct === 1
+                                            ? 'lightgreen'
+                                            : (nav.score.correct === 0
+                                                ? '#fc00006e'
+                                                : 'white'))
+                                        : (nav.flag
+                                            ? '#d2cbcb'
+                                            : (nav.skip
+                                                ? '#d2cbcb'
+                                                : 'white')),
+
+                                }"
+                                :class="{ 'activeindex': isPresentIndexs(indexnav) }" @click="getBackindex(indexnav)">
+                                    {{ indexnav + 1 }}
+                                    <!-- Ye flag sirf selected numbers pe dikhega -->
+                                    <svg v-if="nav.flag" class="red-flag" width="11"
+                                        viewBox="0 0 19 17">
+                                        <path
+                                            d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
+                                            fill="#ED1C24" />
+                                    </svg>
+                                </span>
+                            </div>
                         </div>
-                        <div class="questionoption-rightarrow">
+
+                        <div class="questionright-arrow" @mouseenter="startScroll('right')" @mouseleave="stopScroll">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right">
@@ -114,21 +59,126 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="brake-border"></div>
-                    <MockReviewDetail/>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <section class="questiontext-sec">
+                <div class="container">
+                    <div class="question-option-tabsbox-scroll">
+                        <transition name="fade" mode="out-in">
+                        
+                        <div class="questiontext-box" v-if="currentQuestion" :key="currentQuestion.id" >
+                            <p> {{
+                                currentQuestion ? currentQuestion.title : "No questions available."
+                            }}</p>
+                            <span class="questionflag">
+                                <svg v-if="flg || currentQuestion.flag"
+                                width="19" height="17"
+                                viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z"
+                                    fill="#ED1C24" />
+                            </svg>
 
 
-        <transition name="slide-modal">
-        <FeedbackFormModal 
-            v-if="showPauseModal"
-            @close="showPauseModal = false"
-            @resume="showPauseModal = false"
-            @exit="handleExitMock"
-        />
-        </transition>
+                            <svg  v-if="!flg && !currentQuestion.flag"
+                                 width="19" height="16" viewBox="0 0 19 16"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M8.49385 2.26427L8.72443 2.39603H8.74116C11.6548 3.96951 14.7462 4.01469 17.67 2.53156V13.8189C16.2175 14.6116 14.7714 14.996 13.3301 14.996C11.8326 14.996 10.3221 14.5811 8.82642 13.7279C6.28896 12.273 3.59969 12.0096 1 12.9068V1.56338C3.47425 0.631129 6.01882 0.849963 8.49385 2.26427Z"
+                                    fill="#FAF8ED" stroke="#9A9898" stroke-width="2" />
+                            </svg>
+                                <span class="flag-hover-text">Flag Question</span>
+                            </span>
+                            <div class="questioncomment">
+                                <button @click="showPauseModal = true"><svg width="20" height="21" viewBox="0 0 20 21"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M3.75 20.8584C3.69 20.8584 3.62006 20.8485 3.56006 20.8185C3.35006 20.7385 3.20996 20.5385 3.20996 20.3185V15.9185H2.41003C1.20003 15.9185 0.209961 14.9284 0.209961 13.7184V2.59845C0.209961 1.38845 1.20003 0.398438 2.41003 0.398438H17.26C18.47 0.398438 19.46 1.38845 19.46 2.59845V13.7184C19.46 14.9284 18.47 15.9185 17.26 15.9185H8.40002L4.15002 20.6784C4.05002 20.7984 3.9 20.8584 3.75 20.8584ZM2.42004 1.48843C1.80004 1.48843 1.30005 1.98843 1.30005 2.60843V13.7285C1.30005 14.3485 1.80004 14.8484 2.42004 14.8484H3.75C4.05 14.8484 4.29004 15.0885 4.29004 15.3885V18.9185L7.76001 15.0284C7.86001 14.9184 8.01003 14.8484 8.16003 14.8484H17.26C17.88 14.8484 18.38 14.3485 18.38 13.7285V2.60843C18.38 1.98843 17.88 1.48843 17.26 1.48843H2.41003H2.42004Z"
+                                            fill="#8698A2" />
+                                        <path
+                                            d="M14.7601 10.2285H5.66016C5.36016 10.2285 5.12012 9.98845 5.12012 9.68845C5.12012 9.38845 5.36016 9.14844 5.66016 9.14844H14.7601C15.0601 9.14844 15.3002 9.38845 15.3002 9.68845C15.3002 9.98845 15.0601 10.2285 14.7601 10.2285Z"
+                                            fill="#8698A2" />
+                                        <path
+                                            d="M14.7601 6.72845H5.66016C5.36016 6.72845 5.12012 6.48845 5.12012 6.18845C5.12012 5.88845 5.36016 5.64844 5.66016 5.64844H14.7601C15.0601 5.64844 15.3002 5.88845 15.3002 6.18845C15.3002 6.48845 15.0601 6.72845 14.7601 6.72845Z"
+                                            fill="#8698A2" />
+                                    </svg></button>
+                            </div>
+                        </div> 
+                        </transition>
+                        <transition name="fade" mode="out-in">
+                            <div :key="currentQuestion.id">
+
+                            
+                        <div class="question-alloptions" v-if="currentQuestion">
+                            <div  v-for="(option, index) in currentQuestion.options"
+                            :key="option" class="question-option"
+                            :for="option.id" :style="getLabelStyle(option)">
+                                
+                                <div class="option-header" @click="toggleAccordion(index)">
+                                    <h4>{{ option.title }}</h4>
+                                    <div class="accordion-icon">
+                                        <svg v-if="activeOption === index" width="24" height="24" viewBox="0 0 24 24"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M5 12H19" stroke="#231F20" stroke-width="2"
+                                                stroke-linecap="round" />
+                                        </svg>
+                                        <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 5V19" stroke="#231F20" stroke-width="2"
+                                                stroke-linecap="round" />
+                                            <path d="M5 12H19" stroke="#231F20" stroke-width="2"
+                                                stroke-linecap="round" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <transition @enter="enter" @leave="leave" :css="false">
+                                    <div v-if="activeOption === index" class="option-content">
+                                        <p>{{ option.rollingout ? option.rollingout : option.explanation }}</p>
+                                    </div>
+                                </transition>
+                            </div>
+                        </div>
+                    </div>
+                    </transition>
+                        <div class="questionsoptions-arrows">
+                            <div class="questionoption-leftarrow" @click="previousQuestion">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left">
+                                    <path d="m15 18-6-6 6-6" />
+                                </svg>
+                            </div>
+
+                            <div v-if="currentQuestionIndex === questions.length - 1" class="questionoption-rightarrow"  @click="gotonewpage()">
+                                Finish Review
+                            </div>
+                            <div v-else class="questionoption-rightarrow" @click="nextQuestion()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-chevron-right-icon lucide-chevron-right">
+                                    <path d="m9 18 6-6-6-6" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="brake-border"></div>
+                        <MockReviewDetail :currentQuestion="currentQuestion"  @commentsave="commentsave" />
+                    </div>
+                </div>
+            </section>
+
+
+            <transition name="slide-modal">
+                <FeedbackFormModal v-if="showPauseModal" @close="showPauseModal = false"
+                    @resume="showPauseModal = false" @exit="handleExitMock" />
+
+
+            </transition>
+        </div>
+
+
+
     </div>
 </template>
 
@@ -138,14 +188,18 @@
 
 import MockReviewDetail from "../components/MockReviewDetail.vue"
 import FeedbackFormModal from "../components/FeedbackFormModal.vue"
+import ReviewMockBirdsEye from "@/components/ReviewMockBirdsEye.vue";
+import { get, byMethod } from "./lib/api";
 
 export default {
     components: {
         MockReviewDetail,
         FeedbackFormModal,
+        ReviewMockBirdsEye
     },
     data() {
         return {
+            reviewfirst: true,
             currentIndex: 0,
             numbers: Array.from({ length: 50 }, (_, i) => i + 1),
             scrollInterval: null,
@@ -189,18 +243,240 @@ export default {
                     content: 'Detailed explanation about Acute cholangitis...',
                     selected: false
                 }
-            ]
+            ],
+
+
+            isRowFixed: false,     // To toggle the fixed class
+            rowOffsetTop: 0,       // To store the initial offset of the row
+            lastScrollPosition: 0, // To track the last scroll position
+            isScrollingUp: false,
+
+            loadershow: true,
+            rollingindex: null,
+            feedbackpop: false,
+
+            firstindex: "explanation",
+            secondindex: "books",
+            thirdindex: null,
+            fourthindex: null,
+
+
+
+            reviewquest: false,
+            showwarning: false,
+            playagain: false,
+            // showflagelist:'',s
+            startingpoint: true,
+            showflagelist: false,
+            showunanswerlist: false,
+
+            showreviewlist: false,
+            showanswered: false,
+            showbegin: false,
+            startbeging: false,
+
+            review: true,
+            starts: false,
+            currentscore: false,
+            email: "",
+            activeIndex: null,
+            password: "",
+            heading: "",
+            heading2: "",
+            heading3: "",
+            counts: 0,
+            duration: 0,
+            selectedflag: 0,
+            selectedanswered: 0,
+            flagedid: 0,
+            flg: false,
+            stoptimerpopup: false,
+            playicon: false,
+
+
+            id: null,
+            form: {},
+            method: "POST",
+            questions: [],
+            allquestions: [],
+
+            currentQuestionIndex: 0,
+            selectedOption: null,
+            verificationStatus: this.$route.query.verification_status ? true : false,
+            verificationMessage: "",
+            imageUrl: null,
+            file: null,
+            verificationAlertClasses: {
+                "alert-success": false,
+                "alert-danger": false,
+            },
+            correct: 0,
+            wrong: 0,
+            correctanswer: 0,
+            wronganswer: 0,
+            remainingtime: 0,
+            timer: null,
+            remainingTimeInSeconds: 0,
+            flagcounts: 0,
+            unansweredquestionsdata: [],
+            showansweredlist: false,
+            showreview: false,
+            reviewquestionsdata: [],
+            indexnow: 0,
+            tooltipVisible: false,
+            tooltipText: '',
+            tooltipTop: 0,
+            tooltipLeft: 0,
+            selectedOptions: null,
+            loadingflag: false,
+
+            openIndexes: [],
+
+            feedbackCategories: [
+                { name: "Question", selectedOption: null },
+                { name: "Answer", selectedOption: null },
+                { name: "Rullingout", selectedOption: null },
+                { name: "Condition", selectedOption: null },
+                { name: "Explanation", selectedOption: null },
+                { name: "Notes", selectedOption: null },
+            ],
+            // Track which category's options are currently visible
+            showOptionsIndex: null,
+            scores: [
+                {
+                    text: "Score",
+                    options: ["Paris", "London", "Berlin", "Madrid"],
+                },
+            ],
         }
     },
+
+    created() {
+        this.id = this.$route.params.id;
+        this.form.subcategory_id = this.id;
+        console.log("ID:", this.id);
+        const parentObject = JSON.parse(localStorage.getItem("mockObject"));
+        const getabout = localStorage.getItem("question");
+        const getquestionid = localStorage.getItem("questionid");
+
+        console.log("getabout:", getabout);
+
+        console.log("mockObject:", parentObject);
+        this.duration = parentObject.duration;
+        this.form.parent_id = parentObject.id;
+
+        this.heading = parentObject.title;
+
+        this.showflagelist = localStorage.getItem('breadcrumps');
+        this.showunanswerlist = localStorage.getItem('breadcrumps');
+
+
+        if (getabout == "normal") {
+            get("/getmockquestion?id=" + this.id).then((res) => {
+                this.setData(res);
+                this.loadingflag = true;
+            });
+        }
+
+        if (getabout == "flaged") {
+            get("/getflagedquestion?id=" + this.id).then((res) => {
+                this.setData(res);
+                this.loadingflag = true;
+
+            });
+        }
+
+        if (getabout == "unanswer") {
+            get("/getunaswerquestion?id=" + this.id).then((res) => {
+                this.setData(res);
+                this.loadingflag = true;
+            });
+        }
+
+
+        if (getabout == "unanswersolo") {
+            get("/getunaswersoloquestion?id=" + getquestionid).then((res) => {
+                this.setData(res);
+                this.loadingflag = true;
+            });
+        }
+
+
+        if (getabout == "unflagsolo") {
+            get("/getflagedsoloquestion?id=" + getquestionid).then((res) => {
+                this.setData(res);
+                this.loadingflag = true;
+            });
+        }
+
+
+        if (getabout == "exitmock") {
+            get("/getmockquestion?id=" + this.id).then((res) => {
+                this.setData(res);
+                this.loadingflag = true;
+            });
+        }
+
+
+
+        this.getReviewsss()
+        // this.startTimer();
+    },
+
+    watch: {
+        currentQuestion: {
+            handler(newVal) {
+                if (!this.loading && newVal) {
+
+                    this.setInitialSelectedOption();
+                }
+            },
+            deep: true,
+            immediate: true,
+        },
+    },
+
     mounted() {
+
+        // window.addEventListener("scroll", this.handleScroll);
+        this.setInitialSelectedOption();
+        if (this.currentQuestion.score && this.currentQuestion.score.option_id) {
+            this.selectedOptions = this.currentQuestion.score.option_id;
+        }
+
         this.generateSpecialNumbers();
         this.calculateVisibleNumbers();
         window.addEventListener('resize', this.calculateVisibleNumbers);
     },
     beforeDestroy() {
+        // window.removeEventListener("scroll", this.handleScroll);s
+        this.stopTimer();
         window.removeEventListener('resize', this.calculateVisibleNumbers);
     },
     computed: {
+
+        currentQuestion() {
+            return this.questions[this.currentQuestionIndex];
+        },
+
+        formattedTime() {
+            const hours = Math.floor(this.remainingTimeInSeconds / 3600);
+            const minutes = Math.floor((this.remainingTimeInSeconds % 3600) / 60);
+            const seconds = this.remainingTimeInSeconds % 60;
+
+            return `${hours.toString().padStart(2, "0")}:${minutes
+                .toString()
+                .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+        },
+
+
+        buttonText() {
+            // Check if it's the last question
+            return this.currentQuestionIndex === this.questions.length - 1
+                ? "Finish Review"
+                : "Next Question";
+        },
+
         maxIndex() {
             const totalWidth = (this.numberWidth + this.gap) * this.numbers.length;
             const containerWidth = this.$refs.container?.offsetWidth || 0;
@@ -213,7 +489,18 @@ export default {
             };
         }
     },
+
+
+
+
     methods: {
+
+        // startMock(){
+        //     console.log('hello');
+        //     this.reviewfirst = false
+
+        // },
+
         toggleNumber(number) {
             const index = this.selectedNumbers.indexOf(number);
             if (index > -1) {
@@ -287,9 +574,1005 @@ export default {
         },
         handleExitMock() {
             this.showPauseModal = false;
-            this.$router.push('/mocksection'); 
+            this.$router.push('/mocksection');
         },
-    }
+
+        handleScroll() {
+            const row = document.getElementById('scroll-row');
+            if (!this.rowOffsetTop) {
+                this.rowOffsetTop = row.offsetTop; // Store the initial position of the row
+            }
+
+            const currentScrollPosition = window.scrollY;
+
+            console.log('Row Offset:', this.rowOffsetTop);
+            console.log('Page Scroll:', currentScrollPosition);
+
+            // Determine if the user is scrolling up
+            this.isScrollingUp = currentScrollPosition < this.lastScrollPosition;
+
+            console.log('Scrolling Up:', this.isScrollingUp);
+
+            // Set row to fixed if scrolling up and past the row's initial position
+            if (currentScrollPosition > 800 && this.isScrollingUp) {
+                this.isRowFixed = true;
+            } else if (currentScrollPosition < 800 || !this.isScrollingUp) {
+                this.isRowFixed = false;
+            }
+
+            // Update the last scroll position
+            this.lastScrollPosition = currentScrollPosition;
+        },
+
+
+        birdseyeView() {
+            this.starts = false
+            this.review = true
+
+        },
+
+
+        startreview() {
+            this.review = false
+            this.starts = true
+
+        },
+
+
+        setrollingindex(e) {
+
+            // this.rollingindex = e
+            this.rollingindex = this.rollingindex === e ? null : e;
+            console.log("setrollingindex", e, this.rollingindex)
+
+        },
+
+        toggleRollingIndex(index) {
+            if (this.openIndexes.includes(index)) {
+                // If already open, remove from array (close it)
+                this.openIndexes = this.openIndexes.filter(i => i !== index);
+            } else {
+                // If closed, add to array (open it)
+                this.openIndexes.push(index);
+            }
+        },
+
+        selectOption(index, option) {
+            // If the same option is selected again, deselect it
+            this.feedbackCategories[index].selectedOption =
+                this.feedbackCategories[index].selectedOption === option ? null : option;
+        },
+
+        gotonewpage() {
+            this.$router.push('/mocks')
+
+        },
+
+        openfeedbackpop() {
+            const response = this.currentQuestion.feedback ? this.currentQuestion.feedback : ''
+
+
+            this.feedbackCategories = this.feedbackCategories.map(category => {
+                const key = category.name.toLowerCase().replace(" ", "_");
+                if (response[key]) {
+                    category.selectedOption = response[key];
+                }
+                return category;
+            });
+            this.form.optionfeedback = this.currentQuestion.feedback ? this.currentQuestion.feedback.optionfeedback : ''
+            // $('#exampleModalCenters').modal('show');
+
+            // this.feedbackpop = true
+
+        },
+
+
+
+        exit() {
+            this.$router.push('/mocks')
+        },
+
+
+        toggleOptions(index) {
+            this.showOptionsIndex = this.showOptionsIndex === index ? null : index;
+
+        },
+        // Method to send selected values to the backend
+        submitFeedback() {
+
+            console.log('Sending feedback')
+            const selectedFeedback = this.feedbackCategories.map((category) => ({
+                name: category.name,
+                selectedOption: category.selectedOption,
+            }));
+            console.log(selectedFeedback);
+
+            this.form.selectedFeedback = selectedFeedback
+            this.form.question_id = this.currentQuestion.id;
+
+
+            byMethod(this.method, "/savefeedback", this.form).then((res) => {
+                if (res.data.saved) {
+                    console.log(res.data.saved);
+                    // this.$toast.success("Saved feedback successfully")
+
+                    this.$toast.success("Saved feedback successfully", {
+                        timeout: 100,
+                    });
+                    // this.feedbackpop = false
+
+
+                    // this.selectedOptions = null
+
+                    // this.feedbackCategories = [
+                    //     { name: "Question", selectedOption: null },
+                    //     { name: "Answer", selectedOption: null },
+                    //     { name: "Rullingout", selectedOption: null },
+                    //     { name: "Condition", selectedOption: null },
+                    //     { name: "Explanation", selectedOption: null },
+                    //     { name: "Notes", selectedOption: null },
+                    // ]
+
+                    // this.showOptionsIndex = null
+
+
+
+                    // $("#exampleModalCenters").modal("hide");
+
+
+                }
+
+
+                get("/getmockquestion?id=" + this.id).then((res) => {
+                    this.setData(res);
+                });
+            });
+
+
+        },
+
+
+        setindexes(e) {
+            if (e === 1) {
+
+                this.firstindex = this.firstindex === 'condition' ? null : 'condition';
+
+            }
+
+            if (e === 2) {
+
+                console.log('here');
+
+                this.firstindex = this.firstindex === 'explanation' ? null : 'explanation';
+
+                console.log(this.firstindex)
+
+                this.$nextTick(() => {
+                    const explanationContent = document.getElementById('explanation-content');
+                    if (explanationContent) {
+                        explanationContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+
+
+            }
+
+
+            if (e === 3) {
+
+                this.fourthindex = this.fourthindex === 'comments' ? null : 'comments';
+
+                this.$nextTick(() => {
+                    const explanationContent = document.getElementById('comment-content');
+                    if (explanationContent) {
+                        explanationContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+
+            }
+
+            if (e === 4) {
+
+
+
+                this.secondindex = this.secondindex === 'books' ? null : 'books';
+
+                this.$nextTick(() => {
+                    const explanationContent = document.getElementById('scroll-row');
+                    if (explanationContent) {
+                        explanationContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+
+            }
+
+            if (e === 5) {
+
+                this.thirdindex = this.thirdindex === 'journals' ? null : 'journals';
+
+                this.$nextTick(() => {
+                    const explanationContent = document.getElementById('journal-content');
+                    if (explanationContent) {
+                        explanationContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+
+            }
+
+
+        },
+
+        reviewquestioncheck() {
+
+            get("/getmockquestion?id=" + this.id).then((res) => {
+                this.setData(res);
+            });
+
+        },
+
+        getLabelStyle(option) {
+
+
+
+            if (this.currentQuestion.score) {
+                console.log("getLabelStyle")
+
+
+                if (option.id == this.currentQuestion.score.option_id) {
+                    console.log("now")
+                    if (option.correct == 1) {
+                        return {
+                           
+                            background: '#9DED6C',
+                            
+                        };
+                    } else {
+                        return {
+                           
+                            background: '#FFBABE',
+                           
+                        };
+                    }
+                } else {
+                    if (option.correct == 1) {
+                        return {
+                            border: '2px solid #63b045',
+                            background: '#63b045',
+                            color: 'white'
+                        };
+                    }
+                }
+            }
+            else {
+                return {}
+            }
+        },
+
+
+        scrollForward() {
+            this.$refs.scrollContainer.scrollLeft += 200; // Scroll forward by 200px
+        },
+        scrollBackward() {
+            this.$refs.scrollContainer.scrollLeft -= 200; // Scroll backward by 200px
+        },
+
+        handleMouseMove(event) {
+            const bounds = event.currentTarget.getBoundingClientRect();
+            const hoverZone = 300; // Define hover zone in pixels
+            const mouseX = event.clientX;
+
+            if (mouseX > bounds.right - hoverZone) {
+                // Mouse is on the right side
+                this.startScrolling(8); // Adjust speed as necessary
+            } else if (mouseX < bounds.left + hoverZone) {
+                // Mouse is on the left side
+                this.startScrolling(-8); // Adjust speed as necessary
+            } else {
+                // Stop scrolling when mouse is not in hover zones
+                this.stopScrolling();
+            }
+        },
+        startScrolling(speed) {
+            if (!this.scrollInterval) {
+                this.scrollInterval = setInterval(() => {
+                    this.$refs.scrollContainer.scrollLeft += speed;
+                }, 20); // Adjust interval as necessary
+            }
+        },
+        stopScrolling() {
+            clearInterval(this.scrollInterval);
+            this.scrollInterval = null;
+        },
+
+
+        cancelwarning() {
+            this.showwarning = false
+
+        },
+
+
+        cancelPlatpop() {
+            this.playagain = false
+
+        },
+
+        stoptimernow() {
+
+            this.playicon = true
+            this.stoptimerpopup = false;
+
+            this.stopTimerAndSaveDuration()
+
+
+        },
+
+
+        showstoptime() {
+
+
+            localStorage.setItem("pauseindex", this.currentQuestionIndex);
+
+
+
+            this.stoptimerpopup = true;
+
+            this.reviewquest = true
+
+        },
+
+        isPresentIndex(indexnav) {
+            const presentindex = localStorage.getItem('presentindex');
+            console.log(presentindex);
+
+            // If presentindex is in local storage, compare it with indexnav
+            return presentindex !== null && parseInt(presentindex, 10) === indexnav;
+        },
+
+
+        isPresentIndexs(indexnav) {
+            //   const presentindex = localStorage.getItem('presentindex');
+            const presentindex = this.currentQuestionIndex
+            console.log(presentindex);
+
+            // If presentindex is in local storage, compare it with indexnav
+            return presentindex !== null && parseInt(presentindex, 10) === indexnav;
+        },
+
+        showTooltip(event, nav) {
+            this.tooltipText = this.getTooltipText(nav);
+            this.tooltipVisible = true;
+            this.tooltipTop = event.clientY + 10; // Adjust for tooltip positioning
+            this.tooltipLeft = event.clientX + 10; // Adjust for tooltip positioning
+        },
+        hideTooltip() {
+            this.tooltipVisible = false;
+        },
+        getTooltipText(nav) {
+            if (nav.flag) {
+                return 'Flagged';
+            } else if (nav.score) {
+                return 'Attempted';
+            } else {
+                return 'Unanswered';
+            }
+        },
+        startbeginfunction() {
+            this.startbeging = true;
+            this.showbegin = false;
+            this.startingpoint = true
+            this.startTimer();
+        },
+
+        openmodal() {
+            // $("#exampleModalCenters").modal("show");
+        },
+
+
+
+        scoringpagess() {
+
+            if (this.unanswered > 0) {
+                this.showwarning = true;
+
+
+            }
+            else {
+                this.scoringpage()
+            }
+        },
+
+        scoringpage() {
+            this.handleBreadcrumpsUpdate('Normal');
+
+
+            localStorage.setItem('breadcrumps', 'Normal');
+            // this.$router.push('/mockscore')
+            this.$router.push({ path: `/mockscore/${this.id}` });
+            //     this.$router.push({ path: `/mockscore/${this.id}` }).then(() => {
+            //   // Reload the page after navigation
+            //   window.location.reload();
+            // });
+        },
+
+        Getflagequestion() {
+
+
+            localStorage.setItem('breadcrumps', 'Flaged Question');
+
+            this.review = false;
+            this.starts = true;
+            this.stopTimerAndSaveDuration();
+
+            // setTimeout(() => {
+            // get("/getflagedquestion?id=" + this.id).then((res) => {
+            //     this.setData(res);
+            // });
+            // }, 2000);
+
+            localStorage.setItem("question", "flaged");
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+
+            //     get("/getflagedquestion?id=" + this.id).then((res) => {
+            //   this.setData(res);
+
+            // });
+        },
+
+        Getunanswerquestion() {
+
+            localStorage.setItem('breadcrumps', 'Unanswer Question');
+
+            this.review = false;
+            this.starts = true;
+            //   this.showflagelist = true
+
+            this.stopTimerAndSaveDuration();
+
+            // setTimeout(() => {
+            // get("/getflagedquestion?id=" + this.id).then((res) => {
+            //     this.setData(res);
+            // });
+            // }, 2000);
+
+            localStorage.setItem("question", "unanswer");
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+
+            //   this.showflagelist = true
+
+            //     get("/getflagedquestion?id=" + this.id).then((res) => {
+            //   this.setData(res);
+
+            // });
+        },
+
+
+
+
+        Getunanswersoloquestion(e) {
+
+            localStorage.setItem('breadcrumps', 'Unanswer Question');
+            this.review = false;
+            this.starts = true;
+            this.stopTimerAndSaveDuration();
+
+            localStorage.setItem("question", "unanswersolo");
+            localStorage.setItem("questionid", e);
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+
+        },
+
+
+
+        Getflagedsoloquestion(e) {
+            this.review = false;
+            this.starts = true;
+            this.stopTimerAndSaveDuration();
+
+            localStorage.setItem("question", "unflagsolo");
+            localStorage.setItem("questionid", e);
+
+            localStorage.setItem('breadcrumps', 'Flaged Question');
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+
+        },
+
+
+        flagged(e) {
+            this.form.questionId = e;
+            byMethod(this.method, "/saveflage", this.form).then((res) => {
+                if (res.data.saved) {
+                    console.log(res.data.saved);
+                    //   this.nextQuestion();
+                    // this.$toast.success('Flagged Question Successfully')
+                    this.flg = false
+                    // setTimeout(() => {
+                    this.nextQuestion();
+                    // }, 500);
+                    this.getFlaged();
+                    this.getReviewsss()
+
+                }
+            });
+        },
+
+
+        saveSkip(e) {
+            this.form.questionId = e;
+            byMethod(this.method, "/saveskip", this.form).then((res) => {
+                if (res.data.saved) {
+                    console.log(res.data.saved);
+
+
+
+                    this.nextQuestion();
+
+                    this.getReviewsss()
+
+                }
+            });
+        },
+
+
+
+        setflage(e) {
+            this.flagedid = e;
+            this.flg = true
+        },
+
+        getFlaged() {
+            get("/getflagedcount?id=" + this.id).then((res) => {
+                console.log(res.data.data);
+                this.flagcounts = res.data.data;
+                //   this.setData(res);
+            });
+        },
+
+        startTimer() {
+            console.log("Starting", this.duration);
+
+
+            const storedDuration = parseInt(localStorage.getItem("remainingsec"));
+            if (storedDuration) {
+                this.remainingTimeInSeconds = storedDuration;
+            } else {
+                this.remainingTimeInSeconds = this.duration * 60;
+            }
+            this.timer = setInterval(() => {
+                if (this.remainingTimeInSeconds > 0) {
+                    this.remainingTimeInSeconds--;
+                } else {
+                    console.log("Stopping timersss");
+                    this.$toast.error("Your Time Finished");
+                    // this.getReviews();
+                    this.scoringpage();
+                    clearInterval(this.timer);
+                }
+            }, 1000);
+            this.playicon = false
+        },
+        stopTimer() {
+            console.log("Stopping timer");
+            clearInterval(this.timer);
+        },
+
+        stopTimerAndSaveDuration() {
+            if (this.timer) {
+                clearInterval(this.timer); // Stop the timer
+                console.log(this.remainingTimeInSeconds);
+                this.duration = Math.floor(this.remainingTimeInSeconds / 60);
+                localStorage.setItem("remainingsec", this.remainingTimeInSeconds);
+
+                let parentObject = JSON.parse(localStorage.getItem("mockObject"));
+
+                if (parentObject) {
+                    // Update the duration in the local storage object
+                    parentObject.duration = this.duration;
+
+                    // Save the updated object back to localStorage
+                    localStorage.setItem("mockObject", JSON.stringify(parentObject));
+
+                    console.log("Updated duration saved to localStorage:", parentObject);
+                } else {
+                    console.log("mockObject not found in localStorage");
+                }
+
+                console.log("Timer stopped. Remaining time:", this.duration);
+            }
+        },
+
+        commentsave(e , comment) {
+            console.log("id", e);
+            this.form.question_id = e;
+            this.form.comments = comment;
+
+            byMethod(this.method, "/addmockcomment", this.form)
+                .then((res) => {
+                    if (res.data.saved) {
+                        console.log(res.data.saved);
+                        this.$toast.success("Comment saved successfully")
+
+
+
+                        get("/getmockquestion?id=" + this.id).then((res) => {
+                            this.setData(res);
+                            this.form.question_id = null;
+                            this.form.comments = "";
+                        });
+                    }
+                })
+                .catch((error) => {
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors;
+                    }
+                    this.isProcessing = false;
+                });
+        },
+
+
+
+        // setInitialSelectedOption() {
+        //   const optionWithScore = this.currentQuestion.options.find(
+        //     (option) => option.score !== null
+        //   );
+        //   if (optionWithScore) {
+        //     this.selectedOption = optionWithScore;
+        //   }
+        // },
+
+
+        setInitialSelectedOption() {
+            const optionWithScore = this.currentQuestion.options.find(
+                (option) => option.score !== null
+            );
+            if (optionWithScore) {
+                // Set selectedOption to option.id, not the whole option
+                this.selectedOption = optionWithScore.id;
+            }
+        },
+
+        toggle(index) {
+            this.activeIndex = this.activeIndex === index ? null : index;
+        },
+        setData(res) {
+            this.questions = res.data.data;
+
+
+
+
+            this.$nextTick(() => {
+                console.log("Total questions after reactivity update:", this.questions.length);
+
+                this.counts = this.questions.length;
+            });
+            console.log(res.data.data);
+            this.resetSelectedOption();
+            this.loadershow = false
+        },
+        nextQuestion() {
+
+
+            const ppp = localStorage.getItem("pauseindex");
+
+            if (this.playicon && this.currentQuestionIndex >= ppp) {
+
+                // this.$toast.error('To continue attempting questions, please play timer again')
+                this.playagain = true
+            }
+            else {
+
+
+                console.log("sss");
+                if (this.currentQuestionIndex < this.questions.length - 1) {
+                    this.currentQuestionIndex++;
+                    // this.resetSelectedOption();
+                } else {
+                    // this.stopTimerAndSaveDuration()
+
+                    alert("Questions End");
+                    // this.getReviews();
+                    // this.getReviewsss()
+                }
+
+            }
+
+
+            this.selectedOptions = null
+
+            this.feedbackCategories = [
+
+
+                { name: "Question", selectedOption: null },
+                { name: "Answer", selectedOption: null },
+                { name: "Rullingout", selectedOption: null },
+                { name: "Condition", selectedOption: null },
+                { name: "Explanation", selectedOption: null },
+                { name: "Notes", selectedOption: null },
+            ]
+
+            this.showOptionsIndex = null
+        },
+        previousQuestion() {
+
+
+
+
+
+
+
+
+            if (this.currentQuestionIndex > 0) {
+
+                this.reviewquestioncheck()
+                this.currentQuestionIndex--;
+                // this.resetSelectedOption();
+            }
+
+
+            this.selectedOptions = null
+
+            this.feedbackCategories = [
+
+
+                { name: "Question", selectedOption: null },
+                { name: "Answer", selectedOption: null },
+                { name: "Rullingout", selectedOption: null },
+                { name: "Condition", selectedOption: null },
+                { name: "Explanation", selectedOption: null },
+                { name: "Notes", selectedOption: null },
+            ]
+
+            this.showOptionsIndex = null
+
+        },
+        resetSelectedOption() {
+            this.selectedOption = null;
+        },
+        submitAnswer(e) {
+
+            if (this.playicon) {
+
+                // this.$toast.error('To continue attempting questions, please play timer again')
+                this.playagain = true
+            }
+
+            else {
+
+
+
+
+                if (this.flg) {
+                    this.flagged(this.flagedid)
+                    console.log('taba ')
+
+                }
+
+                else {
+
+
+                    console.log("here", e);
+                    this.form.question_id = e;
+                    //   this.form.correct = this.selectedOption.correct;
+                    this.form.option_id = this.selectedOption;
+
+                    // handle answer submission logic
+                    console.log("Selected option:", this.selectedOption, "selected question", e);
+
+                    byMethod(this.method, "/createmockscore", this.form)
+                        .then((res) => {
+                            if (res.data.saved) {
+                                console.log(res.data.saved);
+                                // this.nextQuestion();
+                                // this.$toast.success('Option Selected')
+                                // setTimeout(() => {
+                                this.getReviewsss()
+                                this.nextQuestion();
+                                // }, 500);
+                            }
+                        })
+                        .catch((error) => {
+                            if (error.response.status === 422) {
+                                this.errors = error.response.data.errors;
+                            }
+                            this.isProcessing = false;
+                        });
+                }
+
+            }
+        },
+
+        getScore() {
+            console.log("hello");
+
+            get("/getscore?id=" + this.id).then((res) => {
+                this.currentscore = true;
+                this.correct = res.data.correct;
+                this.wrong = res.data.wrong;
+                this.correctanswer = res.data.correctanswer;
+                this.wronganswer = res.data.wronganswer;
+                this.setData(res);
+
+                this.review = true;
+                this.starts = false;
+            });
+        },
+
+        getReviews(e) {
+
+            if (this.playicon) {
+
+                // this.$toast.error('To continue attempting questions, please play timer again')
+                this.playagain = true
+            }
+
+            else {
+
+
+
+                console.log(e)
+                this.indexnow = e
+
+                localStorage.setItem('presentindex', e);
+
+
+
+                get("/getmockreview?id=" + this.id).then((res) => {
+                    // this.setData(res);
+
+
+
+                    this.unanswered = res.data.unanswered;
+                    this.flagcounts = res.data.flagcount;
+                    this.form.unansweredid = res.data.unansweredid;
+                    this.form.flaggedid = res.data.flagedid;
+                    this.review = true;
+                    this.starts = false;
+                });
+
+
+                setTimeout(() => {
+                    get("/getmockquestion?id=" + this.id).then((res) => {
+                        this.allquestions = res.data.data
+                        this.setData(res);
+                    });
+                }, 500);
+
+            }
+        },
+
+
+
+        getReviewsss(e) {
+
+            console.log(e)
+            this.indexnow = e
+
+            localStorage.setItem('presentindex', e);
+
+
+
+            get("/getmockreview?id=" + this.id).then((res) => {
+
+
+
+
+                this.unanswered = res.data.unanswered;
+                this.flagcounts = res.data.flagcount;
+                this.form.unansweredid = res.data.unansweredid;
+                this.form.flaggedid = res.data.flagedid;
+
+            });
+
+
+            setTimeout(() => {
+                get("/getmockquestion?id=" + this.id).then((res) => {
+                    this.allquestions = res.data.data
+
+                });
+            }, 500);
+        },
+
+
+        getBack() {
+
+            this.showflagelist = false
+            this.showunanswerlist = false
+
+            // this.currentQuestionIndex = 5
+            this.review = false;
+            this.starts = true;
+            this.handleBreadcrumpsUpdate('Normal');
+        },
+
+
+        getBackindex(e) {
+            console.log('indexing', e)
+
+            this.showflagelist = false
+            this.showunanswerlist = false
+
+
+            console.log('', e);
+
+            localStorage.setItem('presentindex', e);
+
+            localStorage.setItem('breadcrumps', 'Normal');
+            this.currentQuestionIndex = e
+            this.review = false;
+            this.starts = true;
+            this.reviewfirst = false;
+            this.handleBreadcrumpsUpdate('Normal');
+
+            this.selectedOptions = null
+
+            this.feedbackCategories = [
+                { name: "Question", selectedOption: null },
+                { name: "Answer", selectedOption: null },
+                { name: "Rullingout", selectedOption: null },
+                { name: "Condition", selectedOption: null },
+                { name: "Explanation", selectedOption: null },
+                { name: "Notes", selectedOption: null },
+            ]
+
+            this.showOptionsIndex = null
+
+        },
+
+
+        handleBreadcrumpsUpdate(newBreadcrumps) {
+            // Update the breadcrumps value
+            this.breadcrumps = newBreadcrumps;
+        },
+
+        Getunanswerquestions() {
+            byMethod(this.method, "/unansweredquestions", this.form)
+                .then((res) => {
+                    this.unansweredquestionsdata = res.data.data;
+                    this.showanswered = true;
+                })
+                .catch((error) => {
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors;
+                    }
+                    this.isProcessing = false;
+                });
+        },
+
+        Getunanswerquestionslist() {
+            this.review = false;
+            this.showansweredlist = true;
+        },
+
+
+        Getreviewquestionslist() {
+            this.review = false;
+            this.showreviewlist = true;
+        },
+
+
+        Getflagequestions() {
+            byMethod(this.method, "/reviewquestions", this.form)
+                .then((res) => {
+                    this.reviewquestionsdata = res.data.data;
+                    this.showreview = true;
+                })
+                .catch((error) => {
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors;
+                    }
+                    this.isProcessing = false;
+                });
+        },
+    },
 }
 </script>
 
