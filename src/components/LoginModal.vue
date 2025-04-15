@@ -8,7 +8,7 @@
           <img src="/images/logo.png" alt="">
         </div>
         <form class="loginform-synapse" @submit.prevent="login">
-          <div class="form-group">
+          <div class="form-group email-box">
             <label>Your Email Address<span>*</span></label>
             <input type="email" v-model="email" required />
           </div>
@@ -79,8 +79,8 @@ export default {
 
 
     async login() {
-      const baseUrl = 'http://127.0.0.1:8000/api'
-      // const baseUrl = 'https://staging.imsynapse.com/api'
+      // const baseUrl = 'http://127.0.0.1:8000/api'
+      const baseUrl = 'https://staging.imsynapse.com/api'
 
 
       console.log('remember', this.rememberMe);
@@ -196,6 +196,7 @@ export default {
   border-radius: 50px;
   position: relative;
   width:100%;
+  height: 598.69px;
   max-width: 359.83px;
   will-change: transform;
   transform: translateY(0);
@@ -225,7 +226,7 @@ export default {
 .form-group input {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #9DED6C;
+  border: 1px solid #9ded6c75;
   border-radius: 40px;
 }
 
@@ -243,7 +244,7 @@ export default {
     font-size: 14px;
     height: 29.60px;
     position: relative;
-    margin: 0px 0px 34px 0px;
+    margin: 0px 0px 24px 0px;
 }
 
 .submit-btn:hover {
@@ -262,7 +263,7 @@ export default {
 
 .login-remember h6 {
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
   color: #6D6E71;
   font-weight: normal;
   line-height: 8px;
@@ -272,6 +273,11 @@ export default {
     left: 50%;
     transform: translate(-50%);
     width: 200px;
+}
+
+.email-box {
+    padding: 0px 0px 31px 0px;
+    margin: 0px !important;
 }
 
 </style>

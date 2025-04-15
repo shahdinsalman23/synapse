@@ -108,9 +108,10 @@
         </div>
       </div>
     </section>
-
+    <transition name="fade">
       <PauseMockModal v-if="showPauseModal" @close="showPauseModal = false" @resume="showPauseModal = false"
         @exit="handleExitMock" />
+      </transition>
   </div>
 </template>
 
@@ -210,6 +211,16 @@ export default {
 
 
 <style scoped>
+
+.fade-enter-active {
+  animation: pure-fade-in 0.3s !important;
+}
+
+.fade-leave-active {
+  animation: pure-fade-out 0.3s !important;
+}
+
+
 .header-icon-wrapper {
   display: flex;
   align-items: center;

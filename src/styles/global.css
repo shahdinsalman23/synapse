@@ -11,13 +11,18 @@
 }
 
 @font-face {
-    font-family: HelveticaMyriadlight;
+    font-family: myriadlight;
     src: url(../../public/Fonts/Fonts/MyriadPro-Light.otf);
 }
 
 @font-face {
-    font-family: Helveticamyriadregular;
+    font-family: myriadregular;
     src: url(../../public/Fonts/Fonts/MyriadPro-Regular.otf);
+}
+
+@font-face {
+    font-family: HelveticaNeue;
+    src: url(../../public/Fonts/Fonts/HelveticaNeueLTPro-Cn.ttf);
 }
 
 *{
@@ -61,6 +66,7 @@
     background: #D1D3D4 !important;
     height: 72.25px !important;
     transform: translate(0px, -10px);
+    font-weight: bold !important;
 }
 
 
@@ -395,11 +401,11 @@ section.login-signup-sec {
 }
 
 .logintop-head p {
-    padding: 20px 0px 19px 0px;
+    padding: 20px 0px 12px 0px;
     color: #6D6E71;
     font-weight: 300;
     font-size: 20px;
-    font-family: 'Poppins';
+    font-family: myriadlight;
 }
 
 .logintop-head {
@@ -439,12 +445,12 @@ section.login-signup-sec {
     font-size: 14px;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     font-weight: 300;
-    padding: 10px 0px 15px 0px;
+    padding: 10px 0px 14px 0px;
 }
 
 
 .loginform-synapse h5 {
-    padding: 20px 0px 20px 0px;
+    padding: 30px 0px 20px 0px;
     color: #6D6E71;
     font-weight: 300;
 }
@@ -472,6 +478,8 @@ section.login-signup-sec {
   .loginform-synapse .form-group input {
     background: #E6E7E8;
     color: #000;
+    height: 35.45px;
+    width: 247.54px;
   }
   
   .loginform-synapse .form-group input:focus {

@@ -1,6 +1,5 @@
 <template>
-   <transition name="fade">
-    <div class="modal-overlay" @click.self="closeModal" v-if="show">
+    <div class="modal-overlay" @click.self="closeModal">
       <div class="modal-content">
         <div class="modal-buttons">
           <button class="modal-resume-btn" @click="handleResume">Resume Mock</button>
@@ -12,7 +11,6 @@
         </div>
       </div>
     </div>
-  </transition>
   </template>
   
   <script>
@@ -33,14 +31,12 @@
   
   <style scoped>
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s;
+.fade-enter-active {
+  animation: fade-in 0.3s;
 }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+.fade-leave-active {
+  animation: fade-out 0.3s;
 }
 
   .modal-overlay {
@@ -68,8 +64,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: content-fade 0.3s ease-out;
+    opacity: 0;
+    animation: pure-fade-in 0.3s ease-out forwards; 
   }
+
+  @keyframes pure-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pure-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
   
   h3 {
     margin-bottom: 1.5rem;
@@ -116,24 +123,35 @@
   }
 
 
-  @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+
+
+/* .modal-content {
+  transform-origin: top center;
+  animation: modal-slide 0.3s ease-out;
 }
 
-
-@keyframes content-fade {
+@keyframes modal-slide {
   from {
-    opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(-100%);
   }
   to {
-    opacity: 1;
     transform: translateY(0);
   }
+} */
+
+/* For leave transition */
+.leaving .modal-content {
+  animation: pure-fade-in 0.3s ease-out forwards; 
 }
 
-
+/* @keyframes modal-slide-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+} */
 
 
   </style>
