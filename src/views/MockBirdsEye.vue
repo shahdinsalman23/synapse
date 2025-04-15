@@ -46,7 +46,7 @@
             </div>
         </section>
 
-        <transition name="slide-modal">
+        <transition name="fade">
         <SubmittingMockModal 
             v-if="igonreunanswer"
             @close="$emit('closed')"
@@ -129,6 +129,15 @@ export default {
 </script>
 
 <style scoped>
+
+.fade-enter-active {
+  animation: pure-fade-in 0.3s !important;
+}
+
+.fade-leave-active {
+  animation: pure-fade-out 0.3s !important;
+}
+
 .mockbirdseye-boxes {
     display: grid;
     grid-template-columns: repeat(18, 1fr);

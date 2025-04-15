@@ -30,6 +30,15 @@
   </script>
   
   <style scoped>
+
+.fade-enter-active {
+  animation: fade-in 0.3s;
+}
+
+.fade-leave-active {
+  animation: fade-out 0.3s;
+}
+
   .modal-overlay {
     position: fixed;
     top: 100px;
@@ -55,7 +64,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    animation: pure-fade-in 0.3s ease-out forwards; 
   }
+
+  @keyframes pure-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pure-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
   
   h3 {
     margin-bottom: 1.5rem;
@@ -102,12 +123,9 @@
   }
 
 
-  @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
 
-.modal-content {
+
+/* .modal-content {
   transform-origin: top center;
   animation: modal-slide 0.3s ease-out;
 }
@@ -119,21 +137,21 @@
   to {
     transform: translateY(0);
   }
-}
+} */
 
 /* For leave transition */
 .leaving .modal-content {
-  animation: modal-slide-up 0.3s ease-in;
+  animation: pure-fade-in 0.3s ease-out forwards; 
 }
 
-@keyframes modal-slide-up {
+/* @keyframes modal-slide-up {
   from {
     transform: translateY(0);
   }
   to {
     transform: translateY(-100%);
   }
-}
+} */
 
 
   </style>

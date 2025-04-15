@@ -11,13 +11,18 @@
 }
 
 @font-face {
-    font-family: HelveticaMyriadlight;
+    font-family: myriadlight;
     src: url(../../public/Fonts/Fonts/MyriadPro-Light.otf);
 }
 
 @font-face {
-    font-family: Helveticamyriadregular;
+    font-family: myriadregular;
     src: url(../../public/Fonts/Fonts/MyriadPro-Regular.otf);
+}
+
+@font-face {
+    font-family: HelveticaNeue;
+    src: url(../../public/Fonts/Fonts/HelveticaNeueLTPro-Cn.ttf);
 }
 
 *{
@@ -58,7 +63,10 @@
 }
 
 .activeindex {
-    border: 3px solid #939393 !important
+    background: #D1D3D4 !important;
+    height: 72.25px !important;
+    transform: translate(0px, -10px);
+    font-weight: bold !important;
 }
 
 
@@ -173,6 +181,7 @@ section.homepg-sec {
 }
 
 .home-headLogo img {
+    width: 250px;
     padding: 0px 0px 26px 0px;
 }
 
@@ -387,40 +396,20 @@ section.login-signup-sec {
 /********** Login Form Modal CSS Start **********/
 
 .logintop-head img {
-    width: 100px;
+    width: 180px;
     padding: 0px 0px 0px 0px;
 }
 
-.logintop-head h2 {
-    padding: 20px 0px 0px 0px;
-    color: gray;
-    font-weight: 400;
-    font-family: 'Poppins';
-    font-size: 24px;
-}
-
 .logintop-head p {
-    font-size: 12px;
-    color: #000;
+    padding: 20px 0px 12px 0px;
+    color: #6D6E71;
+    font-weight: 300;
+    font-size: 20px;
+    font-family: myriadlight;
 }
 
 .logintop-head {
-    padding: 40px 0px 40px 0px;
-}
-
-ul.social-login-icons li img {
-    width: 20px;
-    height: 20px;
-}
-
-ul.social-login-icons ul li img {
-    width: 20px;
-    height: 20px;
-}
-
-ul.social-login-icons li img {
-    width: 20px;
-    height: 20px;
+    padding: 0px 0px 55px 0px;
 }
 
 .social-login-icons {
@@ -434,77 +423,52 @@ ul.social-login-icons li img {
     list-style: none;
 }
 
-ul.social-login-icons li img {
-    width: 20px;
-    height: 20px;
-}
 
 .social-login-icons {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 5px;
 }
 
 .social-login-icons li {
     list-style: none;
-    background: #808080c9;
     padding: 3px 3px;
 }
 
-.social-login-icons .facebook {
-    padding: 5px 10px;
-    color: #fff;
-    border-radius: 5px;
-}
-
-.social-login-icons .google {
-    padding: 6px 5px;
-    color: #fff;
-    border-radius: 5px;
-}
-
-.social-login-icons .facelock {
-    padding: 5px 5px 1px 5px;
-    color: #fff;
-    border-radius: 5px;
-}
-
-.social-login-icons .instagram {
-    padding: 5px 7px;
-    font-size: 17px;
-    color: #fff;
-    border-radius: 5px;
-    margin: 1px 0px 0px 0px;
+.social-login-icons li img {
+    width: 26.61px;
 }
 
 .login-other-method p {
-    color: #000;
-    font-size: 12px;
+    color: #6D6E71;
+    font-size: 14px;
     font-family: Avenir, Helvetica, Arial, sans-serif;
-    font-weight: 600;
-    padding: 10px 0px 15px 0px;
+    font-weight: 300;
+    padding: 10px 0px 14px 0px;
 }
 
 
 .loginform-synapse h5 {
-    padding: 20px 0px 20px 0px;
-    color: #000;
-    font-weight: 500;
+    padding: 30px 0px 20px 0px;
+    color: #6D6E71;
+    font-weight: 300;
 }
 
 .loginform-synapse h5 a {
-    color: #008ac3;
+    color: #1A90FF;
     text-decoration-line: none;
+    font-weight: bold;
 }
 
 /* Extra styles */
 .loginform-synapse .form-group label {
-    text-align: left;
-    font-size: 12px;
-    color: #000;
-    font-weight: bold;
-  }
+    text-align: center;
+    font-size: 14px;
+    color: #6D6E71;
+    margin: 0px 0px 5px 0px;
+}
+
   
   .loginform-synapse .form-group label span {
     color: red;
@@ -512,8 +476,10 @@ ul.social-login-icons li img {
   }
   
   .loginform-synapse .form-group input {
-    background: #80808042;
+    background: #E6E7E8;
     color: #000;
+    height: 35.45px;
+    width: 247.54px;
   }
   
   .loginform-synapse .form-group input:focus {
@@ -838,6 +804,10 @@ button.begin-btn a {
     position: relative;
     font-family: Helveticacondensed;
     color: #000;
+    height: 49.27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .questionnumber.selected {
@@ -866,6 +836,7 @@ button.begin-btn a {
     display: flex;
     align-items: center;
     justify-content: center;
+    transform: translate(0px, -12px);
   }
   
   .questiontext-box {

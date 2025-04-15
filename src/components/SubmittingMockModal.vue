@@ -31,6 +31,8 @@
   
   <style scoped>
 
+  
+
   .modal-overlay {
     position: fixed;
     top: 80px;
@@ -113,31 +115,42 @@
 }
 
 .modal-content {
-  transform-origin: top center;
-  animation: modal-slide 0.3s ease-out;
+  animation: pure-fade-in 0.3s ease-out forwards; 
 }
 
-@keyframes modal-slide {
+/* @keyframes modal-slide {
   from {
     transform: translateY(-100%);
   }
   to {
     transform: translateY(0);
   }
-}
+} */
 
 /* For leave transition */
 .leaving .modal-content {
-  animation: modal-slide-up 0.3s ease-in;
+  animation: pure-fade-in 0.3s ease-out forwards; 
 }
 
-@keyframes modal-slide-up {
+/* @keyframes modal-slide-up {
   from {
     transform: translateY(0);
   }
   to {
     transform: translateY(-100%);
   }
+} */
+
+
+
+@keyframes pure-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pure-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 
