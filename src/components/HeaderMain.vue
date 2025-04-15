@@ -109,10 +109,8 @@
       </div>
     </section>
 
-    <transition name="slide-modal">
       <PauseMockModal v-if="showPauseModal" @close="showPauseModal = false" @resume="showPauseModal = false"
         @exit="handleExitMock" />
-    </transition>
   </div>
 </template>
 

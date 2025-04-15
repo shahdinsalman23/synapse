@@ -1,5 +1,6 @@
 <template>
-    <div class="modal-overlay" @click.self="closeModal">
+   <transition name="fade">
+    <div class="modal-overlay" @click.self="closeModal" v-if="show">
       <div class="modal-content">
         <div class="modal-buttons">
           <button class="modal-resume-btn" @click="handleResume">Resume Mock</button>
@@ -11,6 +12,7 @@
         </div>
       </div>
     </div>
+  </transition>
   </template>
   
   <script>
@@ -30,6 +32,17 @@
   </script>
   
   <style scoped>
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
   .modal-overlay {
     position: fixed;
     top: 100px;
@@ -55,6 +68,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: content-fade 0.3s ease-out;
   }
   
   h3 {
@@ -107,33 +121,19 @@
   to { opacity: 1; }
 }
 
-.modal-content {
-  transform-origin: top center;
-  animation: modal-slide 0.3s ease-out;
-}
 
-@keyframes modal-slide {
+@keyframes content-fade {
   from {
-    transform: translateY(-100%);
+    opacity: 0;
+    transform: translateY(20px);
   }
   to {
+    opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* For leave transition */
-.leaving .modal-content {
-  animation: modal-slide-up 0.3s ease-in;
-}
 
-@keyframes modal-slide-up {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-100%);
-  }
-}
 
 
   </style>
