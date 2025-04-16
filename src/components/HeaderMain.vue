@@ -343,16 +343,16 @@ export default {
 
 
 
-
+/* 
 .slide-modal-enter-active {
   animation: slide-in 0.3s ease-out;
 }
 
 .slide-modal-leave-active {
   animation: slide-out 0.3s ease-in;
-}
+} */
 
-@keyframes slide-in {
+/* @keyframes slide-in {
   from {
     transform: translateY(-100%);
     opacity: 0;
@@ -374,5 +374,5 @@ export default {
     transform: translateY(-100%);
     opacity: 0;
   }
-}
+} */
 </style>

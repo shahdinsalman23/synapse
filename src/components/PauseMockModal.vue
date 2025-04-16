@@ -31,14 +31,6 @@
   
   <style scoped>
 
-.fade-enter-active {
-  animation: fade-in 0.3s;
-}
-
-.fade-leave-active {
-  animation: fade-out 0.3s;
-}
-
   .modal-overlay {
     position: fixed;
     top: 100px;

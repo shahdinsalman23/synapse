@@ -6,7 +6,14 @@
                     <div v-for="(tab, index) in tabs" :key="index" class="mock-review-accordion-tab" :data-tab-type="tab.title === 'Notes' || tab.title === 'Journal' ? 'orange' : 'red'"
                         :class="{ 'active': activeIndex === index }" @click="toggleAccordion(index)">
                         <div class="mocktab-maintext"
-                            :style="{ background: tab.title === 'Notes' || tab.title === 'Journal' ? '#FBAD18' : '#ED1C24' }">
+                            :style="{ 
+                                background: 
+                                    activeIndex === index 
+                                        ? (tab.title === 'Notes' || tab.title === 'Journal' ? '#FBAD18' : '#ED1C24')
+                                        : activeIndex !== null 
+                                            ? '#A7A9AC' 
+                                            : (tab.title === 'Notes' || tab.title === 'Journal' ? '#FBAD18' : '#ED1C24')
+                            }">
                             <h4>{{ tab.title }}</h4>
                             <div class="accordion-icon">
                                 <svg v-if="activeIndex === index" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -23,7 +30,14 @@
                     </div>
                 </div>
                 <transition name="slide">
-                    <div v-if="activeIndex !== null" class="mockreviewtab-detail">
+                    <div 
+                        v-if="activeIndex !== null" 
+                        class="mockreviewtab-detail"
+                        :style="{ 
+                            'border-color': (tabs[activeIndex].title === 'Notes' || tabs[activeIndex].title === 'Journal') ? '#FBAD18' : '#ED1C24',
+                            'border-top-color': (tabs[activeIndex].title === 'Notes' || tabs[activeIndex].title === 'Journal') ? '#FBAD18' : '#ED1C24'
+                        }"
+                        >
                         <!-- Comments Tab Content -->
                         <div v-if="tabs[activeIndex].title === 'Comments'" class="comments-section">
                             <!-- Comments List -->
@@ -245,6 +259,8 @@ section.mockreviewdetail-sec {
 }
 
 .mockreviewtab-detail {
+    border: 1px solid;
+    border-top: 1px solid;
     width: 100%;
     background: white;
     padding: 20px;
@@ -252,6 +268,8 @@ section.mockreviewdetail-sec {
     box-shadow: 0 0px 10px 2px rgba(0, 0, 0, 0.1);
     z-index: 10;
     text-align: left;
+    position: relative;
+    margin-top: 15px;
 }
 
 .slide-enter-active,
@@ -339,31 +357,18 @@ section.mockreviewdetail-sec {
 }
 
 
-.mock-review-accordion-tab.active::before {
-    position: absolute;
-    content: "";
-    width: 20px;
-    height: 20px;
-    transform: rotate(45deg);
-    left: 120px;
-    top: 19px;
-    z-index: 99999;
+.mockreviewtab-detail[style*="ED1C24"]::before {
+    border-bottom-color: #ED1C24;
 }
 
-.mock-review-accordion-tab.active:not([data-tab-type="orange"])::before {
-    background: #ED1C24;
-}
-
-/* Orange tabs (Notes/Journal) */
-.mock-review-accordion-tab.active[data-tab-type="orange"]::before {
-    background: #FBAD18;
+.mockreviewtab-detail[style*="FBAD18"]::before {
+    border-bottom-color: #FBAD18;
 }
 
 .mocktab-maintext {
     position: relative;
     z-index: 1;
 }
-
 
 
 </style>
