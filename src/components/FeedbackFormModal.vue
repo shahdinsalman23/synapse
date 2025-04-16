@@ -19,85 +19,7 @@
                 </div>
               </div>
             </div>
-            <div class="feedbackform-button">
-              <button  @click.prevent="toggleOptions('answer')"
-              :class="{ 'active-btn': activeButton === 'answer' }">Answer</button>
-              <div class="feeback-question-options" v-show="activeButton === 'answer'">
-                <div class="feeback-question-option" :class="{ 'selected': selectedOptions[activeButton] === 'incorrect' }">
-                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
-                  <p>incorrect</p>
-                </div>
-                <div class="feeback-question-option">
-                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
-                  <p>Needs improvement</p>
-                </div>
-              </div>
-            </div>
-            <div class="feedbackform-button">
-              <button @click.prevent="toggleOptions('ruling')"
-              :class="{ 'active-btn': activeButton === 'ruling' }">Rulling Out</button>
-              <div class="feeback-question-options" v-show="activeButton === 'ruling'">
-                <div class="feeback-question-option" :class="{ 'selected': selectedOptions[activeButton] === 'incorrect' }">
-                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
-                  <p>incorrect</p>
-                </div>
-                <div class="feeback-question-option">
-                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
-                  <p>Needs improvement</p>
-                </div>
-              </div>
-            </div>
-            <div class="feedbackform-button">
-              <button @click.prevent="toggleOptions('condition')"
-              :class="{ 'active-btn': activeButton === 'condition' }">Condition</button>
-              <div class="feeback-question-options" v-show="activeButton === 'condition'">
-                <div class="feeback-question-option" :class="{ 'selected': selectedOptions[activeButton] === 'incorrect' }">
-                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
-                  <p>incorrect</p>
-                </div>
-                <div class="feeback-question-option">
-                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
-                  <p>Needs improvement</p>
-                </div>
-              </div>
-            </div>
-            <div class="feedbackform-button">
-              <button @click.prevent="toggleOptions('explanation')"
-              :class="{ 'active-btn': activeButton === 'explanation' }">Explanation</button>
-              <div class="feeback-question-options" v-show="activeButton === 'explanation'">
-                <div class="feeback-question-option" :class="{ 'selected': selectedOptions[activeButton] === 'incorrect' }">
-                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
-                  <p>incorrect</p>
-                </div>
-                <div class="feeback-question-option">
-                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
-                  <p>Needs improvement</p>
-                </div>
-              </div>
-            </div>
-            <div class="feedbackform-button">
-              <button @click.prevent="toggleOptions('notes')"
-              :class="{ 'active-btn': activeButton === 'notes' }">Notes</button>
-              <div class="feeback-question-options" v-show="activeButton === 'notes'">
-                <div class="feeback-question-option" :class="{ 'selected': selectedOptions[activeButton] === 'incorrect' }">
-                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
-                  <p>incorrect</p>
-                </div>
-                <div class="feeback-question-option">
-                  <input type="radio" v-model="selectedOptions[activeButton]"  value="incorrect"  @change="updateStyle">
-                  <p>Needs improvement</p>
-                </div>
-              </div>
-            </div>
-            <div class="feedbackform-button">
-              <button @click.prevent="toggleOptions('other')"
-              :class="{ 'active-btn': activeButton === 'other' }">Other</button>
-              <div class="feeback-question-options" v-show="activeButton === 'other'">
-                <div class="feeback-question-option">
-                    <input type="text" placeholder="Optional text...">
-                </div>
-              </div>
-            </div>
+           
           </div>
           <div class="feedbackform-submitbtn">
             <button type="submit">Submit</button>
@@ -113,11 +35,19 @@ export default {
   data() {
     return {
       activeButton: null,
-      selectedOptions: {
-        question: null,
-        answer: null,
-        ruling: null,
-      }
+      // selectedOptions: {
+      //   question: null,
+      //   answer: null,
+      //   ruling: null,
+      // },
+      feedbackCategories: [
+                { name: "Question", selectedOption: null },
+                { name: "Answer", selectedOption: null },
+                { name: "Rullingout", selectedOption: null },
+                { name: "Condition", selectedOption: null },
+                { name: "Explanation", selectedOption: null },
+                { name: "Notes", selectedOption: null },
+            ],
     }
   },
   methods: {

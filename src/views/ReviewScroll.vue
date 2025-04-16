@@ -9,6 +9,9 @@
 
         </div>
         <div v-else>
+            <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
+            :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
+            @startagain="startTimer" @exitmock="exit" :stoptimerpopup="stoptimerpopup" />
 
 
             <section class="reviewscroll-sec">
@@ -91,7 +94,7 @@
                                 <span class="flag-hover-text">Flag Question</span>
                             </span>
                             <div class="questioncomment">
-                                <button @click="showPauseModal = true"><svg width="20" height="21" viewBox="0 0 20 21"
+                                <button @click="openfeedbackpop"><svg width="20" height="21" viewBox="0 0 20 21"
                                         fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M3.75 20.8584C3.69 20.8584 3.62006 20.8485 3.56006 20.8185C3.35006 20.7385 3.20996 20.5385 3.20996 20.3185V15.9185H2.41003C1.20003 15.9185 0.209961 14.9284 0.209961 13.7184V2.59845C0.209961 1.38845 1.20003 0.398438 2.41003 0.398438H17.26C18.47 0.398438 19.46 1.38845 19.46 2.59845V13.7184C19.46 14.9284 18.47 15.9185 17.26 15.9185H8.40002L4.15002 20.6784C4.05002 20.7984 3.9 20.8584 3.75 20.8584ZM2.42004 1.48843C1.80004 1.48843 1.30005 1.98843 1.30005 2.60843V13.7285C1.30005 14.3485 1.80004 14.8484 2.42004 14.8484H3.75C4.05 14.8484 4.29004 15.0885 4.29004 15.3885V18.9185L7.76001 15.0284C7.86001 14.9184 8.01003 14.8484 8.16003 14.8484H17.26C17.88 14.8484 18.38 14.3485 18.38 13.7285V2.60843C18.38 1.98843 17.88 1.48843 17.26 1.48843H2.41003H2.42004Z"
@@ -170,8 +173,52 @@
 
 
             <transition name="slide-modal">
-                <FeedbackFormModal v-if="showPauseModal" @close="showPauseModal = false"
-                    @resume="showPauseModal = false" @exit="handleExitMock" />
+                <!-- <FeedbackFormModal v-if="showPauseModal" @close="showPauseModal = false"
+                    @resume="showPauseModal = false" @exit="handleExitMock" /> -->
+
+                    <div class="modal-overlay" v-if="showPauseModal" @click.self="showPauseModal = false">
+                        <div class="modal-content">
+                          <div class="feedback-form-box">
+                            <h4>Share feedback</h4>
+                            <form action="">
+                              <div class="feedbackform-button">
+                                <div class="feedbackform-button" v-for="(category, index) in feedbackCategories" :key="index">
+                                  <button @click="toggleOptions(index)"
+                                  :class="{ 'active-btn': category.selectedOption }" type="button"> {{ category.name }}</button>
+
+                                  <div class="feeback-question-options" v-if="showOptionsIndex === index && category.name != 'Other'">
+                                    <div class="feeback-question-option" >
+                                      <input type="radio" :checked="category.selectedOption === 'Incorrect'"
+                                      @click="selectOption(index, 'Incorrect')" value="Incorrect">
+                                      <p>Incorrect</p>
+                                    </div>
+                                    <div class="feeback-question-option">
+                                      <input type="radio" value="Needs improvement"
+                                      :checked="category.selectedOption === 'Needs improvement'"
+                                      @click="selectOption(index, 'Needs improvement')">
+                                      <p>Needs improvement</p>
+                                    </div>
+                                  </div>
+
+                                  <div v-if="category.name == 'Other' && showOptionsIndex === 6" class="feeback-question-option">
+
+                                    <input class="input-form" type="text" placeholder="Optional text..."
+                                    v-model="form.optionfeedback" />
+                                  </div>
+
+                                 
+                                </div>
+
+                                
+                               
+                              </div>
+                              <div class="feedbackform-submitbtn">
+                                <button type="button" @click="submitFeedback">Submit</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
 
 
             </transition>
@@ -187,18 +234,27 @@
 <script>
 
 import MockReviewDetail from "../components/MockReviewDetail.vue"
-import FeedbackFormModal from "../components/FeedbackFormModal.vue"
+// import FeedbackFormModal from "../components/FeedbackFormModal.vue"
 import ReviewMockBirdsEye from "@/components/ReviewMockBirdsEye.vue";
 import { get, byMethod } from "./lib/api";
+import HeaderQuestion from "@/components/HeaderQuestion.vue";
 
 export default {
     components: {
         MockReviewDetail,
-        FeedbackFormModal,
-        ReviewMockBirdsEye
+        // FeedbackFormModal,
+        ReviewMockBirdsEye,
+        HeaderQuestion
     },
     data() {
         return {
+            activeButton: null,
+
+            // selectedOptions: {
+      //   question: null,
+      //   answer: null,
+      //   ruling: null,
+      // },
             reviewfirst: true,
             currentIndex: 0,
             numbers: Array.from({ length: 50 }, (_, i) => i + 1),
@@ -339,6 +395,8 @@ export default {
                 { name: "Condition", selectedOption: null },
                 { name: "Explanation", selectedOption: null },
                 { name: "Notes", selectedOption: null },
+                { name: "Other", selectedOption: null },
+
             ],
             // Track which category's options are currently visible
             showOptionsIndex: null,
@@ -495,6 +553,11 @@ export default {
 
     methods: {
 
+
+        Showbirdeye(){
+            this.reviewfirst = true
+
+        },
         // startMock(){
         //     console.log('hello');
         //     this.reviewfirst = false
@@ -660,6 +723,7 @@ export default {
                 return category;
             });
             this.form.optionfeedback = this.currentQuestion.feedback ? this.currentQuestion.feedback.optionfeedback : ''
+            this.showPauseModal = true
             // $('#exampleModalCenters').modal('show');
 
             // this.feedbackpop = true
@@ -674,7 +738,11 @@ export default {
 
 
         toggleOptions(index) {
+
+            console.log('inde' , index);
             this.showOptionsIndex = this.showOptionsIndex === index ? null : index;
+            // this.showOptionsIndex = index;
+
 
         },
         // Method to send selected values to the backend
@@ -699,6 +767,7 @@ export default {
                     this.$toast.success("Saved feedback successfully", {
                         timeout: 100,
                     });
+                    this.showPauseModal = false
                     // this.feedbackpop = false
 
 
@@ -1297,6 +1366,7 @@ export default {
                 { name: "Condition", selectedOption: null },
                 { name: "Explanation", selectedOption: null },
                 { name: "Notes", selectedOption: null },
+                { name: "Other", selectedOption: null },
             ]
 
             this.showOptionsIndex = null
@@ -1329,6 +1399,8 @@ export default {
                 { name: "Condition", selectedOption: null },
                 { name: "Explanation", selectedOption: null },
                 { name: "Notes", selectedOption: null },
+                { name: "Other", selectedOption: null },
+
             ]
 
             this.showOptionsIndex = null
@@ -1521,6 +1593,7 @@ export default {
                 { name: "Condition", selectedOption: null },
                 { name: "Explanation", selectedOption: null },
                 { name: "Notes", selectedOption: null },
+                { name: "Other", selectedOption: null },
             ]
 
             this.showOptionsIndex = null
@@ -1578,6 +1651,166 @@ export default {
 
 
 <style scoped>
+
+.modal-overlay {
+    position: fixed;
+    top: 200px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    margin: 0px 20px;
+  }
+  
+  .modal-content {
+    background: #ffffff94;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    width: 1200px;
+    height: 460px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: top center;
+    animation: modal-slide 0.3s ease-out;
+  }
+  
+  .feedback-form-box {
+    border: 1px solid #93959875;
+    width: 250px;
+    border-radius: 50px;
+    background: #fff;
+    box-shadow: 0 0 11.34px #00000080;
+    padding: 16px 20px 29px 20px;
+  }
+  
+  .feedback-form-box h4 {
+    padding: 0px 0px 19px 0px;
+    color: #231F20;
+  }
+  
+  .feedbackform-button button {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    border: 1px solid #808285;
+    padding: 3px 20px;
+    width: 115px;
+    margin: 0px 0px 10px 0px;
+    border-radius: 30px;
+    color: #2F292B;
+    cursor: pointer;
+    
+  }
+  
+  .feedbackform-submitbtn {
+    margin: 12px 0px 0px 0px;
+  }
+  
+  .feedbackform-submitbtn button {
+    border: 1px solid #20b14b82;
+    background: #9DED6C;
+    padding: 4px 10px;
+    width: 81.96px;
+    height: 23.02px;
+    border-radius: 30px;
+    color: #2F292B;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .feeback-question-options {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 0px 0px 10px 0px;	
+  }
+  
+  .feeback-question-option p {
+      font-size: 11px;
+  }
+  
+  .feeback-question-option {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+  }
+  
+  .active-btn {
+    background-color: #9DED6C !important;
+    border-color: #20b14b !important;
+    font-weight: bold;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+  }
+  
+  
+  .feeback-question-option input {
+      border: 1px solid #8082857d;
+      background: #EAEBEC;
+      padding: 3px 25px 3px 10px;
+      border-radius: 30px;
+      font-size: 12px;
+  }
+  
+  .feeback-question-option input:focus {
+      outline: none;
+  }
+  
+  
+  .feeback-question-option.selected {
+    background: #FFF9C4; 
+    border-radius: 15px;
+    padding: 2px 8px;
+  }
+  
+  .feeback-question-option input[type="radio"]:checked {
+    accent-color: #6B7280; 
+  }
+  
+  
+  
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+  }
+  
+  
+  @keyframes modal-slide {
+    from {
+      transform: translateY(-100%);
+    }
+  
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  /* For leave transition */
+  .leaving .modal-content {
+    animation: modal-slide-up 0.3s ease-in;
+  }
+  
+  
+  @keyframes modal-slide-up {
+    from {
+      transform: translateY(0);
+    }
+  
+    to {
+      transform: translateY(-100%);
+    }
+  }
 .questionnumber.special {
     background: #FFBABE !important;
 }
