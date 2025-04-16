@@ -31,7 +31,9 @@
     box-sizing: border-box;
 }
 
-
+html {
+    position: relative;
+}
 
 
 /********** Container CSS Start **********/
@@ -1326,6 +1328,10 @@ button.modal-exit-btn .cardbottom-shadow img {
     padding: 0px 0px 15px 0px;
     color: #BCBEC0;
     font-size: 14px;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 
