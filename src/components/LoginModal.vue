@@ -79,8 +79,8 @@ export default {
 
 
     async login() {
-      const baseUrl = 'http://127.0.0.1:8000/api'
-      // const baseUrl = 'https://staging.imsynapse.com/api'
+      // const baseUrl = 'http://127.0.0.1:8000/api'
+      const baseUrl = 'https://staging.imsynapse.com/api'
 
 
       console.log('remember', this.rememberMe);
@@ -248,8 +248,8 @@ export default {
 }
 
 .submit-btn:hover {
-  background: transparent;
-  color: #9DED6C;
+  background: #20B14B;
+  color: #fff;
 }
 
 /* Custom remember switch */
