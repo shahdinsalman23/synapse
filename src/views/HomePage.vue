@@ -22,9 +22,9 @@
                 <div class="cardbottem-content">
                   <h4>{{ card.question }}</h4>
                   <p>{{ card.description }}</p>
+                  <div class="cardbottom-shadow">
+                   <img src="/images/cardshadow.png" alt="">
                 </div>
-                <div class="cardbottom-shadow">
-                  <img src="/images/cardshadow.png" alt="">
                 </div>
               </div>
             </div>

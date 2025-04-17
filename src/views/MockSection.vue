@@ -51,7 +51,7 @@
             <div class="questions-notes-mock-sec">
                 <div class="container">
                     <div class="question-note-boxes">
-                        <div class="question-box" data-aos="fade-right" data-aos-delay="0" data-aos-duration="800">
+                        <div class="question-box" data-aos="fade-up" data-aos-delay="0" data-aos-duration="800">
                             <h3><img src="/images/questionmark.png" alt=""> Question</h3>
                             <div class="question-score">
                                 <h6>score</h6>
@@ -82,7 +82,7 @@
                                 <img src="/images/cardshadow.png" alt="">
                             </div>
                         </div>
-                        <div class="mock-box" data-aos="fade-left" data-aos-delay="200" data-aos-duration="800">
+                        <div class="mock-box" data-aos="fade-up" data-aos-delay="200" data-aos-duration="800">
                             <h3><img src="/images/brain.png" alt=""> Mocks</h3>
                             <div class="question-score">
                                 <h6>score</h6>

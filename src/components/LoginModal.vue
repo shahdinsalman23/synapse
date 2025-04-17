@@ -248,8 +248,8 @@ export default {
 }
 
 .submit-btn:hover {
-  background: transparent;
-  color: #9DED6C;
+  background: #20B14B;
+  color: #fff;
 }
 
 /* Custom remember switch */

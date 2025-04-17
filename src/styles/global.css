@@ -31,7 +31,12 @@
     box-sizing: border-box;
 }
 
-
+/* html {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+} */
 
 
 /********** Container CSS Start **********/
@@ -208,12 +213,10 @@ section.homepg-sec {
 
 .homemock-card {
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s ease-in-out;
     border-radius: 40px;
     position: relative;
-    box-shadow: 0px 15px 10px -15px #111; 
     cursor:pointer
 }
 
@@ -541,7 +544,8 @@ section.login-signup-sec {
 }
 
 .userlogin-sec .cardbottom-shadow img {
-    left: -70px !important;
+    left: -80px !important;
+    width: 410px;
 }
 
 /********** UserLogin Page CSS End **********/
