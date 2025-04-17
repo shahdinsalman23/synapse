@@ -1,5 +1,5 @@
 <template>
-    <footer>
+    <footer class="footermain">
         <div class="container">
             <div class="footer-copyright">
                 <p>ⓒ Copyrights 2025 | SYNAPSE</p>
@@ -13,4 +13,20 @@
     name: "FooterComponent",
   };
   </script>
+
+
+<style scoped>
+
+
+footer {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+</style>
   
