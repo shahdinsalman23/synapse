@@ -1,5 +1,10 @@
 <template>
     <div>
+
+        <Loadingcircle v-if="loading"/>
+
+   
+    <div v-else>
         <div v-if="!showing">
 
 
@@ -103,6 +108,9 @@
         <MockSelection v-else :indexing="indexing" />
 
     </div>
+
+  
+</div>
 </template>
 
 
@@ -111,16 +119,19 @@ import AttemptProgressButton from '@/components/AttemptProgressButton.vue';
 import MockSelection from './MockSelection.vue';
 import Vue from 'vue';
 import { get } from './lib/api';
+import Loadingcircle from '@/components/Loadingcircle.vue';
 
 export default {
     name: "MockSection",
     components: {
         AttemptProgressButton,
-        MockSelection
+        MockSelection,
+        Loadingcircle
     },
 
     data() {
         return {
+            loading:true,
             showing: false,
             indexing: 0,
             showscore: true,
@@ -174,6 +185,7 @@ export default {
 
             console.log(res.data.data)
             this.loadershow = false
+            this.loading = false
 
             
 

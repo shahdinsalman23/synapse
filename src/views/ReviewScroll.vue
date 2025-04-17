@@ -1,6 +1,17 @@
 <template>
     <div>
 
+  
+
+    <div v-if="loadingcircle">
+
+        <Loadingcircle/>
+    </div>
+    <div v-else>
+        <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
+        :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
+        @startagain="startTimer" @exitmock="exit" :stoptimerpopup="stoptimerpopup" />
+
         <div v-if="reviewfirst">
 
 
@@ -9,9 +20,7 @@
 
         </div>
         <div v-else>
-            <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
-            :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
-            @startagain="startTimer" @exitmock="exit" :stoptimerpopup="stoptimerpopup" />
+   
 
 
             <section class="reviewscroll-sec">
@@ -227,6 +236,7 @@
 
 
     </div>
+      </div>
 </template>
 
 
@@ -238,16 +248,19 @@ import MockReviewDetail from "../components/MockReviewDetail.vue"
 import ReviewMockBirdsEye from "@/components/ReviewMockBirdsEye.vue";
 import { get, byMethod } from "./lib/api";
 import HeaderQuestion from "@/components/HeaderQuestion.vue";
+import Loadingcircle from "@/components/Loadingcircle.vue";
 
 export default {
     components: {
         MockReviewDetail,
         // FeedbackFormModal,
         ReviewMockBirdsEye,
-        HeaderQuestion
+        HeaderQuestion,
+        Loadingcircle
     },
     data() {
         return {
+            loadingcircle:true,
             activeButton: null,
 
             // selectedOptions: {
@@ -1322,6 +1335,7 @@ export default {
                 console.log("Total questions after reactivity update:", this.questions.length);
 
                 this.counts = this.questions.length;
+                this.loadingcircle = false
             });
             console.log(res.data.data);
             this.resetSelectedOption();

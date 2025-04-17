@@ -87,3 +87,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.home-headLogo img {
+  width: 250px;
+  padding: 0px 0px 26px 0px;
+}
+</style>

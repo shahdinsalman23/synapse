@@ -1,5 +1,12 @@
 <template>
-    <div>
+
+    <div v-if="loadingcircle">
+
+        <Loadingcircle/>
+    </div>
+
+    
+    <div v-else>
 
 
         <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
@@ -18,25 +25,11 @@
                                 <path d="m15 18-6-6 6-6" />
                             </svg></div>
 
-                        <!-- <div class="slider-wrapper">
-                        <div class="questionnumber-slide" :style="slideStyle">
-                            <span  v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber"
-                                :class="{ selected: selectedNumbers.includes(number) }" @click="toggleNumber(number)">
-                                {{ indexnav + 1 }}
-                                <svg v-if="selectedNumbers.includes(number)" class="red-flag" width="11"
-                                    viewBox="0 0 19 17">
-                                    <path
-                                        d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
-                                        fill="#ED1C24" />
-                                </svg>
-                            </span>
-                        </div>
-                    </div> -->
+                      
+                           
 
-
-
-
-                        <div class="slider-wrapper">
+                 
+                    <div class="slider-wrapper"  v-if="renderReady" >
                             <div class="questionnumber-slide  scrollmenu" ref="scrollContainer" :style="slideStyle">
                                 <span v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber"
                                     :style="{
@@ -58,6 +51,11 @@
                                 </span>
                             </div>
                         </div>
+
+                         <div v-else class="slider-skeleton">
+                                <span v-for="n in 10" :key="n" class="questionnumber skeleton"></span>
+                              </div>
+                   
 
 
 
@@ -168,6 +166,7 @@
             :igonreunanswer="igonreunanswer" @getBackindex="getBackindex" @submitMock="scoringpagess" @closed="closed"
             @finalscroing="scoringpage" />
     </div>
+
 </template>
 
 
@@ -176,17 +175,21 @@
 import HeaderQuestion from '@/components/HeaderQuestion.vue';
 import { get, byMethod } from './lib/api';
 import MockBirdsEye from './MockBirdsEye.vue';
+import Loadingcircle from '@/components/Loadingcircle.vue';
 
 export default {
     components: {
 
         HeaderQuestion,
-        MockBirdsEye
+        MockBirdsEye,
+        Loadingcircle
     },
 
 
     data() {
         return {
+            loadingcircle:true,
+            renderReady:false,
             eye: true,
             currentIndex: 0,
             numbers: Array.from({ length: 200 }, (_, i) => i + 1),
@@ -1058,14 +1061,27 @@ export default {
             this.questions = res.data.data;
 
             this.$nextTick(() => {
-                console.log("Total questions after reactivity update:", this.questions.length);
 
-                this.counts = this.questions.length;
+                requestAnimationFrame(() => {
+      console.log("Total questions after render:", this.questions.length);
+      this.counts = this.questions.length;
+      this.loadingcircle = false;
+      this.renderReady = true;
+    //   setTimeout(() => {
+    //     this.renderReady = true;
+    //   }, 1000);
+    });
+                // console.log("Total questions after reactivity update:", this.questions.length);
+
+                // this.counts = this.questions.length;
+                // this.loadingcircle = false;
             });
+
             console.log(res.data.data);
             this.resetSelectedOption();
             this.loadershow = false
             window.scrollTo(0, 0);
+            // this.loadingcircle = false
         },
         nextQuestion() {
             console.log('hello last')
@@ -1474,6 +1490,23 @@ export default {
 
 
 <style scoped>
+
+
+.skeleton {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin: 0 4px;
+    background: #eee;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+  }
+  
 .input-field input[type="radio"] {
 
     opacity: 0 !important;

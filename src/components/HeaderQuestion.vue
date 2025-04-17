@@ -144,7 +144,7 @@
         </div>
       </section>
 
-      <transition name="slide-modal">
+      <transition name="fade">
       <PauseMockModal 
         v-if="showPauseModal || stoptimerpopup"
         @close="Resuming"
