@@ -15,7 +15,9 @@
                             <div class="mock-image">
                                 <!-- <img src="/images/mock1.png" alt="" @click="showselections(1)"> -->
                                 <img src="/images/mock1.png" alt="" @click="content(items)">
-
+                                    <div class="cardbottom-shadow">
+                                         <img src="/images/cardshadow.png" alt="">
+                                    </div>
                                 <div class="mock-imageabslt-btn">
                                     <button class="pause-mockabslt" v-if="items.exit" @click="content(items)" style="cursor:pointer"><i class="fa-solid fa-pause"></i></button>
                                     <button class="replay-mockabslt" @click.stop="deletescore(items.id)"><img src="images/replay-icon.png" alt=""></button>
@@ -29,6 +31,7 @@
                                     <div class="progress-btn"  v-else>
                                         <button>Not attempted yet</button>
                                     </div>
+                                   
                             </div>
                         </div>
                         <!-- <div class="mock-card" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800">
@@ -398,4 +401,19 @@ img {
     border: none;
     line-height: 10px;
 }
+
+
+.mock-image .cardbottom-shadow img {
+    border: none;
+    padding: 0px;
+    bottom: 25px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 290px;
+    z-index: 0;
+    opacity: 0.7;
+}
+
+
+
 </style>

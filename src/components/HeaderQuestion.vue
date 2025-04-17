@@ -312,7 +312,7 @@ export default {
   .hamburger-icon span {
     position: absolute;
     width: auto;
-    top: -20px;
+    top: -22px;
     font-size: 11px;
     background-color: #9DED6C;
     padding: 3px 6px;

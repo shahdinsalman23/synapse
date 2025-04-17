@@ -165,6 +165,7 @@ header.header-main .row {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 24px;
+    letter-spacing: 1px;
     justify-content: center;
 }
 
@@ -796,7 +797,7 @@ button.begin-btn a {
     gap: 1px;
     will-change: transform;
     position: relative;
-    padding: 40px 0px;
+    padding: 40px 0px 30px 0px;
 }
   
   .questionnumber {
@@ -959,7 +960,7 @@ button.begin-btn a {
 }
 
 .flaggedquestions {
-    top: -25px !important;
+    top: -27px !important;
     width: 110px !important;
     right: -67px !important;
 }
@@ -974,7 +975,7 @@ button.begin-btn a {
     position: absolute;
     width: auto;
     right: -45px;
-    top: -27px;
+    top: -29px;
     font-size: 11px;
     background-color: #9DED6C;
     padding: 3px 6px;
@@ -997,7 +998,7 @@ button.begin-btn a {
 
 span.pausemock {
     right: -40px !important;
-    top: -25px !important;
+    top: -27px !important;
 }
 
 .mockquestion-navigate ul li:hover span {
@@ -1084,7 +1085,9 @@ span.pausemock {
     padding: 8px 23px;
     border-radius: 20px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: Helvetica;
 }
 
 
@@ -1149,7 +1152,7 @@ span.pausemock {
     left: 50%;
     transform: translate(-50%);
     width: auto;
-    bottom: -26px;
+    bottom: -27px;
 }
 
 /********** Mock Birds Eye Page CSS End **********/
@@ -1230,12 +1233,13 @@ button.modal-exit-btn .cardbottom-shadow img {
     height: 640px;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding: 0px 12px 0px 25px;
+    padding: 10px 12px 0px 25px;
     /* Firefox support */
     scrollbar-width: thin;
     scrollbar-color: #B5B7B9 transparent;
   }
-  
+
+
   /* Chrome, Edge, Safari (Webkit-based) */
   .question-option-tabsbox-scroll::-webkit-scrollbar {
     width: 5.83px;

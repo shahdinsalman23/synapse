@@ -90,8 +90,8 @@
 
                         <!-- Other Tabs Content -->
                         <div v-else>
-                            <div v-for="(contentItem, pIndex) in tabs[activeIndex].content" :key="pIndex"
-                                class="content-block mockreviewdetail-text" v-html="contentItem">
+                            <div  class="content-block mockreviewdetail-text">
+                                <TextEditerMock/>
                             </div>
                         </div>
                     </div>
@@ -102,7 +102,9 @@
 </template>
 
 <script>
+import TextEditerMock from './TextEditerMock.vue';
 export default {
+  components: { TextEditerMock },
 
     props: {
         currentQuestion: {
@@ -369,6 +371,13 @@ section.mockreviewdetail-sec {
     position: relative;
     z-index: 1;
 }
+
+.accordion-icon svg {
+    width: 20px;
+    height: 20px;
+    margin: 4px 0px 0px 0px;
+}
+
 
 
 </style>
