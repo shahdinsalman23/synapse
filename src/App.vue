@@ -10,9 +10,14 @@
   /> -->
 
   <HeaderMain v-else-if="$route.name !== 'MockQuestion' && $route.name !== 'MockReview' " />
-    
-    <router-view />
+    <div>
+
+      <router-view />
+    </div>
+  
+
     <FooterComponent />
+  
   </div>
 </template>
 

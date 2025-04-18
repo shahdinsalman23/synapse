@@ -14,7 +14,7 @@
                         <div class="mock-card" data-aos="fade-up" data-aos-delay="0" data-aos-duration="800" v-for="(items, index) in title" :key="index">
                             <div class="mock-image">
                                 <!-- <img src="/images/mock1.png" alt="" @click="showselections(1)"> -->
-                                <img src="/images/mock1.png" alt="" @click="content(items)">
+                                <img :src="`/images/mock${index + 1}.png`" alt="" @click="content(items , index)">
                                     <div class="cardbottom-shadow">
                                          <img src="/images/cardshadow.png" alt="">
                                     </div>
@@ -252,9 +252,11 @@ export default {
        
 
 
-        content(e) {
-            console.log('yes', e.score)
+        content(e , index) {
+            console.log('yes', e)
             this.selectedItem = e;
+
+            localStorage.setItem('mockindex', index + 1);
 
             setTimeout(() => {
 
@@ -264,6 +266,8 @@ export default {
                     localStorage.setItem('mockObject', JSON.stringify(e));
                     localStorage.setItem('question', 'normal');
                     localStorage.setItem("remainingsec", null);
+
+
                     this.$router.push({ path: `/reviewscroll/${e.id}` });
 
                 }
@@ -406,7 +410,7 @@ img {
 .mock-image .cardbottom-shadow img {
     border: none;
     padding: 0px;
-    bottom: 25px;
+    bottom: 23px;
     left: 50%;
     transform: translate(-50%);
     width: 290px;

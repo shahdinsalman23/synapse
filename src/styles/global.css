@@ -80,8 +80,10 @@
 
 
 .activeindexborder {
-    border: 3px solid #939393 !important;
+  
     border-radius: 13px;
+    background-color: #949393 !important;
+    color: white !important;
 }
 
 .isselected {
@@ -323,7 +325,7 @@ section.homepg-sec {
 }
 
 section.login-signup-sec {
-    padding: 85px 0px 75px 0px;
+    padding: 85px 0px 60px 0px;
 }
 
 
@@ -337,7 +339,7 @@ section.login-signup-sec {
 
 
 section.login-signup-sec {
-    padding: 108px 0px 97px 0px;
+    padding: 108px 0px 60px 0px;
 }
 
 .loginSignup-btn {
@@ -538,8 +540,8 @@ section.login-signup-sec {
 .progress-btn button {
     margin: 15px 5px 0px 5px;
     background: #D1D3D4;
-    border: 1px solid #D1D3D4;
-    padding: 8px 15px;
+    border: 1px solid #58595B;
+    padding: 6px 22px;
     border-radius: 40px;
     font-size: 12px;
 }
@@ -845,8 +847,11 @@ button.begin-btn a {
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translate(0px, -12px);
+    transform: translate(0px, -8px);
   }
+  .modal-footer p {
+    color: #747474;
+}
   
   .questiontext-box {
     background: #F1F2F2;
@@ -856,6 +861,7 @@ button.begin-btn a {
     border-radius: 30px;
     position: relative;
     margin: 0px 0px 29px 0px;
+    min-height: 100px;
 }
 
 .questionflag {
@@ -1054,7 +1060,7 @@ span.pausemock {
     color: #000000;
     border-radius: 10px;
     background: #BCBEC0;
-    font-weight: 400;
+    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1084,9 +1090,9 @@ span.pausemock {
     color: #fff;
     padding: 8px 23px;
     border-radius: 20px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
-    letter-spacing: 1px;
+   
     font-family: Helvetica;
 }
 

@@ -9,7 +9,16 @@
               </div>
           </button>
         </div>
+
+        <div class="modal-footer">
+          <p>
+            if you exit, you can later resume this mock from the mock home page.
+          </p>
+        </div>
       </div>
+
+
+     
     </div>
   </template>
   
@@ -33,7 +42,7 @@
 
   .modal-overlay {
     position: fixed;
-    top: 100px;
+    top: 200px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -44,21 +53,25 @@
     margin: 0px 20px;
   }
   
+  
+
   .modal-content {
-    background: #ffffff94; 
-    backdrop-filter: blur(5px); 
+    background: #ffffff94;
+    backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(10px);
     padding: 2rem;
     border-radius: 12px;
     text-align: center;
     width: 1200px;
-    height: 560px;
-    display: flex;
+    height: 80vh;
+    display: flex
+;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     opacity: 0;
-    animation: pure-fade-in 0.3s ease-out forwards; 
-  }
+    animation: pure-fade-in-4843559d 0.3s ease-out forwards;
+    flex-direction: column;
+}
 
   @keyframes pure-fade-in {
   from { opacity: 0; }

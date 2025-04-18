@@ -122,8 +122,11 @@ export default {
 
     computed: {
         roundedPercent() {
-            // return Math.round(this.correctpercent);
-            return Math.round(this.correct) * 100 / this.totalquestions;
+        
+            // return Math.round(this.correct) * 100 / this.totalquestions;
+
+            const percent = (this.correct / this.totalquestions) * 100;
+             return parseFloat(percent.toFixed(1));
 
         },
 

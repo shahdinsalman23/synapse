@@ -10,7 +10,7 @@
     <div v-else>
         <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
         :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
-        @startagain="startTimer" @exitmock="exit" :stoptimerpopup="stoptimerpopup" />
+        @startagain="startTimer" @exitmock="exit" :stoptimerpopup="stoptimerpopup"  :fillicon="fillicon" />
 
         <div v-if="reviewfirst">
 
@@ -26,7 +26,8 @@
             <section class="reviewscroll-sec">
                 <div class="container">
                     <div class="questionnumber-slide-container" ref="container">
-                        <div class="questionleft-arrow" @mouseenter="startScroll('left')" @mouseleave="stopScroll"><svg
+                        <div class="questionleft-arrow" @mouseenter="startScroll('left')" @mouseleave="stopScroll" @mousedown="fastScroll('left')"
+                        @mouseup="stopScroll"><svg
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left">
@@ -63,7 +64,8 @@
                             </div>
                         </div>
 
-                        <div class="questionright-arrow" @mouseenter="startScroll('right')" @mouseleave="stopScroll">
+                        <div class="questionright-arrow" @mouseenter="startScroll('right')" @mouseleave="stopScroll"  @mousedown="fastScroll('right')"
+                        @mouseup="stopScroll">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right">
@@ -260,6 +262,7 @@ export default {
     },
     data() {
         return {
+            fillicon:0,
             loadingcircle:true,
             activeButton: null,
 
@@ -277,7 +280,7 @@ export default {
             showPauseModal: false,
             selectedNumbers: [],
             specialNumbers: [],
-            scrollSpeed: 300,
+            scrollSpeed: 70,
             numberWidth: 22,
             gap: 1,
             activeOption: null,
@@ -548,8 +551,13 @@ export default {
                 : "Next Question";
         },
 
+        // maxIndex() {
+        //     const totalWidth = (this.numberWidth + this.gap) * this.numbers.length;
+        //     const containerWidth = this.$refs.container?.offsetWidth || 0;
+        //     return Math.max(0, Math.ceil((totalWidth - containerWidth) / (this.numberWidth + this.gap)));
+        // },
         maxIndex() {
-            const totalWidth = (this.numberWidth + this.gap) * this.numbers.length;
+            const totalWidth = (this.numberWidth + this.gap) * this.allquestions.length;
             const containerWidth = this.$refs.container?.offsetWidth || 0;
             return Math.max(0, Math.ceil((totalWidth - containerWidth) / (this.numberWidth + this.gap)));
         },
@@ -569,6 +577,7 @@ export default {
 
         Showbirdeye(){
             this.reviewfirst = true
+            this.fillicon = 0
 
         },
         // startMock(){
@@ -594,11 +603,13 @@ export default {
             });
         },
         startScroll(direction) {
+            console.log('direct', this.currentIndex , this.maxIndex)
             this.scrollDirection = direction;
 
             if (!this.scrollInterval) {
                 this.scrollInterval = setInterval(() => {
                     if (this.scrollDirection === 'right' && this.currentIndex < this.maxIndex) {
+                        console.log('right');
                         this.currentIndex++;
                     } else if (this.scrollDirection === 'left' && this.currentIndex > 0) {
                         this.currentIndex--;
@@ -607,6 +618,22 @@ export default {
                     }
                 }, this.scrollSpeed);
             }
+        },
+
+        fastScroll(direction) {
+            this.scrollDirection = direction;
+
+            if (this.scrollInterval) clearInterval(this.scrollInterval);
+
+            this.scrollInterval = setInterval(() => {
+                if (direction === 'right' && this.currentIndex < this.maxIndex) {
+                    this.currentIndex += 8; // scroll faster by incrementing more
+                } else if (direction === 'left' && this.currentIndex > 0) {
+                    this.currentIndex -= 8;
+                } else {
+                    this.stopScroll();
+                }
+            }, this.scrollSpeed / 2 ); // faster interval
         },
         stopScroll() {
             if (this.scrollInterval) {
@@ -1585,6 +1612,7 @@ export default {
 
             this.showflagelist = false
             this.showunanswerlist = false
+            this.fillicon = 1
 
 
             console.log('', e);
@@ -1666,6 +1694,12 @@ export default {
 
 <style scoped>
 
+
+.accordion-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
 .modal-overlay {
     position: fixed;
     top: 200px;
@@ -1687,7 +1721,7 @@ export default {
     border-radius: 12px;
     text-align: center;
     width: 1200px;
-    height: 460px;
+    height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1710,7 +1744,7 @@ export default {
   }
   
   .feedbackform-button button {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family:  Helvetica, Arial, sans-serif;
     border: 1px solid #808285;
     padding: 3px 20px;
     width: 115px;

@@ -9,9 +9,9 @@
                     <h4 v-for="(nav, indexnav) in allquestions" :key="indexnav"
                         :class="{ 'activeindexborder': isPresentIndexs(indexnav) }"
                         @click="toggleNumber(indexnav)">
-                        <router-link to="" :style="{
+                        <router-link   :class="{ 'activeindexborder': isPresentIndexs(indexnav) }" to="" :style="{
                             background: nav.score
-                                ? '#BCBEC0'
+                                ? '#c5c5c5'
                                 : (nav.flag
                                     ? 'white'
                                     : (nav.skip
@@ -52,6 +52,7 @@
             @close="$emit('closed')"
             @resume="$emit('closed')"
             @exit="handleExitMock"
+            :unansweredmain="unansweredmain"
         />
         </transition>
     </div>
@@ -72,7 +73,9 @@ export default {
     allquestions: {
      
     },
-    igonreunanswer:{}
+    igonreunanswer:{},
+    unansweredmain:{}
+
     
   },
     data() {

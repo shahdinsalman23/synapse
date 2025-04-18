@@ -2,7 +2,7 @@
     <div class="progress-button" :class="{ completed: isCompleted }" @click="startProgress">
         <!-- Initial Button State -->
         <div v-if="!isStarted" class="button-content">
-            Attempt
+            Attempted
         </div>
 
         <!-- Progress State -->
@@ -85,6 +85,8 @@ export default {
     font-weight: bold;
     color: #231F20;
     font-size: 12px;
+    border: 1px solid #58595B;
+    border-radius: 25px;
 }
 
 .progress-content {
