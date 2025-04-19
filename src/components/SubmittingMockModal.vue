@@ -47,10 +47,10 @@
   }
 
   .submittingmock-overlay {
-    top: -100px !important;
+    top: 80px !important;
 }
   
-  .modal-content {
+  /* .modal-content {
     background: #ffffff94; 
     backdrop-filter: blur(5px); 
     -webkit-backdrop-filter: blur(10px);
@@ -59,6 +59,22 @@
     text-align: center;
     width: 1200px;
     height: 650px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  } */
+
+  .modal-content {
+    background: #ffffff94; 
+    backdrop-filter: blur(5px); 
+    -webkit-backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    width: 80vw;
+    height: 80vh;
+    max-width: 1140px;
+    max-height: 650px;
     display: flex;
     align-items: center;
     justify-content: center;
