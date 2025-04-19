@@ -192,12 +192,12 @@ export default {
 
 .modal-content {
   background: white;
-  padding: 20px 50px 0px 50px;
+  padding: 50px 50px 0px 50px;
   border-radius: 50px;
   position: relative;
   width:100%;
-  height: 598.69px;
-  max-width: 359.83px;
+  height: 680px;
+  max-width: 380px;
   will-change: transform;
   transform: translateY(0);
   box-shadow: 0 0 23.34px #000000BF;

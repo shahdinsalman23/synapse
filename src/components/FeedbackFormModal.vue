@@ -122,7 +122,7 @@ export default {
 }
 
 .feedbackform-button button {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   border: 1px solid #808285;
   padding: 3px 20px;
   width: 115px;

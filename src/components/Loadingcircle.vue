@@ -38,7 +38,7 @@ export default {
 .dot-spinner {
     --uib-size: 2.8rem;
     --uib-speed: .9s;
-    --uib-color: #183153;
+    --uib-color: #2BAAE2;
     position: relative;
     display: flex;
     align-items: center;

@@ -21,8 +21,8 @@
                                 : (nav.flag
                                     ? '#d2cbcb'
                                     : (nav.skip
-                                        ? '#d2cbcb'
-                                        : 'white')),
+                                        ? '#F1F2F2'
+                                        : '#F1F2F2')),
 
                                         color: nav.flag
                                         ? 'black'
@@ -147,7 +147,7 @@ export default {
     text-decoration-line: none;
     color: #000000;
     border-radius: 10px;
-    font-weight: 400;
+    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;

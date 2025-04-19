@@ -2,34 +2,35 @@
 
     <div v-if="loadingcircle">
 
-        <Loadingcircle/>
+        <Loadingcircle />
     </div>
 
-    
+
     <div v-else>
 
 
         <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
             :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
-            @startagain="startTimer" @exitmock="exit" :stoptimerpopup="stoptimerpopup" />
+            @startagain="startTimeing" @exitmock="exit" :stoptimerpopup="stoptimerpopup" :fillicon="fillicon" />
         <div v-if="eye">
 
 
             <section class="questionnumber-sec">
                 <div class="container">
                     <div class="questionnumber-slide-container" ref="container">
-                        <div class="questionleft-arrow" @mouseenter="startScroll('left')" @mouseleave="stopScroll"><svg
+                        <div class="questionleft-arrow" @mouseenter="startScroll('left')" @mouseleave="stopScroll"  @mousedown="fastScroll('left')"
+                        @mouseup="stopScroll"><svg
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left">
                                 <path d="m15 18-6-6 6-6" />
                             </svg></div>
 
-                      
-                           
 
-                 
-                    <div class="slider-wrapper"  v-if="renderReady" >
+
+
+
+                        <div class="slider-wrapper" v-if="renderReady">
                             <div class="questionnumber-slide  scrollmenu" ref="scrollContainer" :style="slideStyle">
                                 <span v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber"
                                     :style="{
@@ -40,7 +41,8 @@
                                                 : (nav.skip
                                                     ? 'white'
                                                     : 'white')),
-                                    }" :class="{ 'activeindex': isPresentIndexs(indexnav) }" @click="getBackindex(indexnav)">
+                                    }" :class="{ 'activeindex': isPresentIndexs(indexnav) }"
+                                    @click="getBackindex(indexnav)">
                                     {{ indexnav + 1 }}
                                     <!-- Ye flag sirf selected numbers pe dikhega -->
                                     <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
@@ -52,19 +54,21 @@
                             </div>
                         </div>
 
-                         <div v-else class="slider-skeleton">
-                                <span v-for="n in 10" :key="n" class="questionnumber skeleton"></span>
-                              </div>
-                   
+                        <div v-else class="slider-skeleton">
+                            <span v-for="n in 10" :key="n" class="questionnumber skeleton"></span>
+                        </div>
 
 
 
-                        <div class="questionright-arrow" @mouseenter="startScroll('right')" @mouseleave="stopScroll">
+
+                        <div class="questionright-arrow" @mouseenter="startScroll('right')" @mouseleave="stopScroll" @mousedown="fastScroll('right')"
+                        @mouseup="stopScroll">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right">
                                 <path d="m9 18 6-6-6-6" />
-                            </svg></div>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -111,7 +115,7 @@
                             <span class="option-letter">{{ option.id }}.</span>
                             {{ option.title }}
                         </div> -->
-                                    <div v-for="option in currentQuestion.options" :key="option.id">
+                                    <div v-for="(option, index) in currentQuestion.options" :key="option.id">
 
 
                                         <div class="input-field question-option"
@@ -121,7 +125,7 @@
                                             <input type="radio" :id="option.id" :value="option.id"
                                                 v-model="selectedOption" />
                                             <!-- <label :for="option.id" >{{ option.title }}</label> -->
-                                            <span class="option-letter">{{ option.id }}.</span>
+                                            <span class="option-letter">{{ index + 1 }}.</span>
                                             {{ option.title }}
                                         </div>
                                     </div>
@@ -164,7 +168,7 @@
 
         <MockBirdsEye v-else :currentQuestionIndex="currentQuestionIndex" :allquestions="allquestions"
             :igonreunanswer="igonreunanswer" @getBackindex="getBackindex" @submitMock="scoringpagess" @closed="closed"
-            @finalscroing="scoringpage" />
+            @finalscroing="scoringpage" :unansweredmain="unansweredmain" />
     </div>
 
 </template>
@@ -188,8 +192,10 @@ export default {
 
     data() {
         return {
-            loadingcircle:true,
-            renderReady:false,
+            filleye: true,
+            fillicon: 1,
+            loadingcircle: true,
+            renderReady: false,
             eye: true,
             currentIndex: 0,
             numbers: Array.from({ length: 200 }, (_, i) => i + 1),
@@ -432,6 +438,8 @@ export default {
 
             this.eye = false
 
+            this.fillicon = 0
+
         },
 
         selectOption(optionId) {
@@ -454,6 +462,7 @@ export default {
             });
         },
         startScroll(direction) {
+            console.log('direct', this.currentIndex , this.maxIndex)
             this.scrollDirection = direction;
 
             if (!this.scrollInterval) {
@@ -467,6 +476,23 @@ export default {
                     }
                 }, this.scrollSpeed);
             }
+        },
+
+
+        fastScroll(direction) {
+            this.scrollDirection = direction;
+
+            if (this.scrollInterval) clearInterval(this.scrollInterval);
+
+            this.scrollInterval = setInterval(() => {
+                if (direction === 'right' && this.currentIndex < this.maxIndex) {
+                    this.currentIndex += 8; // scroll faster by incrementing more
+                } else if (direction === 'left' && this.currentIndex > 0) {
+                    this.currentIndex -= 8;
+                } else {
+                    this.stopScroll();
+                }
+            }, this.scrollSpeed / 2 ); // faster interval
         },
         stopScroll() {
             if (this.scrollInterval) {
@@ -938,6 +964,57 @@ export default {
         },
 
 
+        startTimeing() {
+
+            this.dynamicOpacity = 1
+
+            this.stoptimerpopup = false;
+            console.log("Starting", this.duration);
+            this.getBackindex(this.currentQuestionIndex)
+
+
+            const storedDuration = parseInt(localStorage.getItem("remainingsec"));
+            if (storedDuration) {
+                this.remainingTimeInSeconds = storedDuration;
+            }
+
+
+
+            else {
+                this.remainingTimeInSeconds = this.duration * 60;
+            }
+            this.timer = setInterval(() => {
+                if (this.remainingTimeInSeconds > 0) {
+                    this.remainingTimeInSeconds--;
+
+                    if (this.remainingTimeInSeconds === 600) {
+                        // this.$toast.warning("10 minutes remaining!");
+
+                        this.$toast.warning("10 minutes remaining!", {
+                            duration: 10000,
+                        });
+
+                    }
+
+                    if (this.remainingTimeInSeconds === 60) {
+                        // this.$toast.warning("1 minute remaining!");
+
+                        this.$toast.warning("1 minute remaining!", {
+                            duration: 10000,
+                        });
+                    }
+                } else {
+                    console.log("Stopping timersss");
+                    this.$toast.error("Your Time Finished");
+                    // this.getReviews();
+                    this.scoringpage();
+                    clearInterval(this.timer);
+                }
+            }, 1000);
+            this.playicon = false
+        },
+
+
 
         startTimers() {
 
@@ -967,6 +1044,8 @@ export default {
                 this.startingpoint = true;
                 // this.stoptimerpopup = true;
                 this.showstoptime();
+
+
 
 
 
@@ -1063,14 +1142,15 @@ export default {
             this.$nextTick(() => {
 
                 requestAnimationFrame(() => {
-      console.log("Total questions after render:", this.questions.length);
-      this.counts = this.questions.length;
-      this.loadingcircle = false;
-      this.renderReady = true;
-    //   setTimeout(() => {
-    //     this.renderReady = true;
-    //   }, 1000);
-    });
+                    console.log("Total questions after render:", this.questions.length);
+
+                    this.loadingcircle = false;
+                    this.renderReady = true;
+                    //   setTimeout(() => {
+                    //     this.renderReady = true;
+                    //   }, 1000);
+                });
+
                 // console.log("Total questions after reactivity update:", this.questions.length);
 
                 // this.counts = this.questions.length;
@@ -1350,6 +1430,7 @@ export default {
             this.flg = false
             this.showflagelist = false
             this.showunanswerlist = false
+            this.fillicon = 1
 
 
             console.log('', e);
@@ -1490,8 +1571,6 @@ export default {
 
 
 <style scoped>
-
-
 .skeleton {
     display: inline-block;
     width: 25px;
@@ -1500,13 +1579,22 @@ export default {
     background: #eee;
     border-radius: 50%;
     animation: pulse 1.5s infinite;
-  }
-  @keyframes pulse {
-    0% { opacity: 0.6; }
-    50% { opacity: 1; }
-    100% { opacity: 0.6; }
-  }
-  
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
 .input-field input[type="radio"] {
 
     opacity: 0 !important;

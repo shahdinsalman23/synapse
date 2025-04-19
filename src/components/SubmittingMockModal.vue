@@ -2,7 +2,7 @@
     <div class="modal-overlay submittingmock-overlay" @click.self="closeModal">
       <div class="modal-content">
         <div class="modal-buttons">
-          <button class="unanswered-btn" @click="handleResume">3 unanswered</button>
+          <button class="unanswered-btn" @click="handleResume">{{ unansweredmain }} unanswered</button>
           <button class="submitmock-btn" @click="handleExit">Submit Mock
             <div class="cardbottom-shadow">
                 <img src="/images/cardshadow.png" alt="">
@@ -15,6 +15,14 @@
   
   <script>
   export default {
+
+
+    props: {
+    
+    unansweredmain:{}
+
+    
+  },
     methods: {
       closeModal() {
         this.$emit('close');
@@ -31,7 +39,16 @@
   
   <style scoped>
 
-  
+  .unanswered-btn {
+    background: #ED1C24;
+    color: #fff;
+    border-radius: 40px !important;
+    padding: 13px 5px !important;
+    width: 156.83px;
+    height: 40.57px;
+    line-height: 15px;
+    font-weight: bold;
+}
 
   .modal-overlay {
     position: fixed;
@@ -58,7 +75,7 @@
     border-radius: 12px;
     text-align: center;
     width: 1200px;
-    height: 650px;
+    height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
