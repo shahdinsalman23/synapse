@@ -541,9 +541,11 @@ section.login-signup-sec {
     margin: 15px 5px 0px 5px;
     background: #D1D3D4;
     border: 1px solid #58595B;
-    padding: 6px 22px;
+    padding: 0px 20px;
     border-radius: 40px;
     font-size: 12px;
+    height: 31px;
+
 }
 
 .userlogin-sec {
@@ -945,6 +947,7 @@ button.begin-btn a {
     justify-content: end;
     height: 100%;
     width: 63%;
+    padding: 0px 16px 0px 0px;
 }
 
 .mockquestion-navigate ul li {
@@ -968,7 +971,7 @@ button.begin-btn a {
 .flaggedquestions {
     top: -27px !important;
     width: 110px !important;
-    right: -67px !important;
+    right: -74px !important;
 }
 
 
@@ -980,8 +983,8 @@ button.begin-btn a {
 .mockquestion-navigate ul li span {
     position: absolute;
     width: auto;
-    right: -45px;
-    top: -29px;
+    right: -53px;
+    top: -27px;
     font-size: 11px;
     background-color: #9DED6C;
     padding: 3px 6px;
@@ -1129,6 +1132,7 @@ span.pausemock {
     height: 40.97px;
     line-height: 15px;
     cursor: pointer;
+    font-family: Helvetica;
 }
 
 .unanswered-btn {

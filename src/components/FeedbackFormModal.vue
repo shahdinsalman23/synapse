@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-overlay" @click.self="closeModal">
+  <div class="modal-overlay"  @click.self="closeModal">
     <div class="modal-content">
       <div class="feedback-form-box">
         <h4>Share feedback</h4>
@@ -57,19 +57,32 @@ export default {
     toggleOptions(buttonType) {
       this.activeButton = this.activeButton === buttonType ? null : buttonType;
     },
-    lockScroll() {
-      document.body.style.overflow = 'hidden';
+    lockBodyScroll() {
+      this.scrollPosition = window.pageYOffset;
+      document.body.classList.add('body-scroll-lock');
+      document.body.style.top = `-${this.scrollPosition}px`;
     },
-    unlockScroll() {
-      document.body.style.overflow = '';
+
+    unlockBodyScroll() {
+      document.body.classList.remove('body-scroll-lock');
+      window.scrollTo(0, this.scrollPosition);
+      document.body.style.top = '';
     },
     },
-    mounted() {
-      this.lockScroll();
-    },
-    beforeUnmount() {
-      this.unlockScroll();
-    },
+    watch: {
+    showPauseModal(newVal) {
+      if (newVal) {
+        this.lockBodyScroll();
+      } else {
+        this.unlockBodyScroll();
+      }
+    }
+  },
+  beforeUnmount() {
+    if (this.showPauseModal) {
+      this.unlockBodyScroll();
+    }
+  },
     updateStyle() {
       this.$forceUpdate(); 
     },
@@ -237,4 +250,5 @@ export default {
     transform: translateY(-100%);
   }
 }
+
 </style>

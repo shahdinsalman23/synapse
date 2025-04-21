@@ -326,7 +326,7 @@ export default {
   <style scoped>
 
   .mock-width {
-    width: 22% !important;
+    width: 17% !important;
   }
 
   svg.circle_svg {
