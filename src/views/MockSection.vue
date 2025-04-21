@@ -15,7 +15,7 @@
                             <div class="mock-image">
                                 <!-- <img src="/images/mock1.png" alt="" @click="showselections(1)"> -->
                                 <img :src="`/images/mock${index + 1}.png`" alt="" @click="content(items , index)">
-                                    <div class="cardbottom-shadow">
+                                    <div class="cardbottom-shadow" :class="`shadow-${index}`">
                                          <img src="/images/cardshadow.png" alt="">
                                     </div>
                                 <div class="mock-imageabslt-btn">
@@ -419,6 +419,31 @@ img {
     z-index: 0;
     opacity: 0.7;
 }
+
+
+/* 
+@media only screen and (max-width: 2698px) {
+    .shadow-1 img {
+        width: 270px !important;
+        bottom: 13.5% !important;
+    }
+} */
+
+.shadow-0 img {
+}
+
+.shadow-1 img { 
+}
+
+.shadow-2 img {
+}
+
+.shadow-3 img {
+}
+
+.shadow-4 img {
+}
+
 
 
 

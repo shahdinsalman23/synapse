@@ -84,13 +84,13 @@ export default {
 }
 .progress-button {
     position: relative;
-    height: 30px;
     background: #D1D3D4;
     border-radius: 25px;
     cursor: pointer;
     overflow: hidden;
     transition: all 0.3s ease;
-    margin: 15px 5px 0px 5px;   
+    margin: 16px 5px 0px 5px;
+    border: 1px solid #58595B;  
 }
 
 .button-content,
@@ -102,8 +102,8 @@ export default {
     font-weight: bold;
     color: #231F20;
     font-size: 12px;
-    border: 1px solid #58595B;
     border-radius: 25px;
+    height: 27px;
 }
 
 .progress-content {

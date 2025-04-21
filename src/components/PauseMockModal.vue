@@ -64,8 +64,7 @@
     text-align: center;
     width: 1200px;
     height: 80vh;
-    display: flex
-;
+    display: flex;
     align-items: center;
     justify-content: space-around;
     opacity: 0;

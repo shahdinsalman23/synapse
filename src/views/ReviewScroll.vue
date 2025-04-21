@@ -211,17 +211,16 @@
                                     </div>
                                   </div>
 
-                                  <div v-if="category.name == 'Other' && showOptionsIndex === 6" class="feeback-question-option">
+                                  <!-- <div v-if="category.name == 'Other' && showOptionsIndex === 6" class="feeback-question-option">
 
                                     <input class="input-form" type="text" placeholder="Optional text..."
                                     v-model="form.optionfeedback" />
-                                  </div>
-
-                                 
+                                  </div> -->
                                 </div>
 
                                 
                                
+                                <textarea name="" id="" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea>
                               </div>
                               <div class="feedbackform-submitbtn">
                                 <button type="button" @click="submitFeedback">Submit</button>
@@ -411,7 +410,6 @@ export default {
                 { name: "Condition", selectedOption: null },
                 { name: "Explanation", selectedOption: null },
                 { name: "Notes", selectedOption: null },
-                { name: "Other", selectedOption: null },
 
             ],
             // Track which category's options are currently visible
@@ -508,6 +506,18 @@ export default {
             deep: true,
             immediate: true,
         },
+        showPauseModal(newVal) {
+        if (newVal) {
+            this.lockBodyScroll();
+        } else {
+            this.unlockBodyScroll();
+        }
+        }  
+    },
+        beforeUnmount() {
+            if (this.showPauseModal) {
+                this.unlockBodyScroll();
+            }
     },
 
     mounted() {
@@ -1407,7 +1417,6 @@ export default {
                 { name: "Condition", selectedOption: null },
                 { name: "Explanation", selectedOption: null },
                 { name: "Notes", selectedOption: null },
-                { name: "Other", selectedOption: null },
             ]
 
             this.showOptionsIndex = null
@@ -1635,7 +1644,6 @@ export default {
                 { name: "Condition", selectedOption: null },
                 { name: "Explanation", selectedOption: null },
                 { name: "Notes", selectedOption: null },
-                { name: "Other", selectedOption: null },
             ]
 
             this.showOptionsIndex = null
@@ -1687,7 +1695,19 @@ export default {
                     this.isProcessing = false;
                 });
         },
+        lockBodyScroll() {
+      this.scrollPosition = window.pageYOffset;
+      document.body.classList.add('body-scroll-lock');
+      document.body.style.top = `-${this.scrollPosition}px`;
     },
+
+    unlockBodyScroll() {
+      document.body.classList.remove('body-scroll-lock');
+      window.scrollTo(0, this.scrollPosition);
+      document.body.style.top = '';
+    },
+    },
+    
 }
 </script>
 
@@ -1696,8 +1716,8 @@ export default {
 
 
 .accordion-icon svg {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
 }
 
 .modal-overlay {
@@ -1951,4 +1971,34 @@ export default {
     cursor: pointer;
     transition: color 0.3s ease;
 }
+
+.questioncomment:hover button {
+  background: transparent;
+}
+
+.no-scroll {
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+
+.feedback-textarea {
+    font-size: 10px;
+    resize: none;
+    font-family: Helvetica;
+    padding: 6px 8px;
+    border: 1px solid #808285;
+    background: #ffffff94;
+    border-radius: 10px;
+    width: 90%;
+    height: 50px;
+    margin: 0px 10px;
+}
+
+.feedback-textarea:focus {
+    outline: none;
+}
+
 </style>
