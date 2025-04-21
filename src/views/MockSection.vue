@@ -159,6 +159,8 @@ export default {
 
     created() {
 
+        console.log(window.innerWidth , window.innerHeight);
+
             console.log('toekn' , localStorage.getItem('token'))
 
         get('/getmocks')

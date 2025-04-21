@@ -1,9 +1,16 @@
 <template>
-    <div class="progress-button" :class="{ completed: isCompleted }" @click="startProgress">
-        <!-- Initial Button State -->
-        <div v-if="!isStarted" class="button-content">
-            Attempted
-        </div>
+    <!-- Initial Button State -->
+    <!-- <div v-if="!isStarted" class="button-content">
+        Attempted
+    </div> -->
+    <div >
+
+  
+    
+    <div class="progress-btn"  v-if="!isStarted">
+        <button  @click="startProgress">Attempted</button>
+    </div>
+    <div   class="progress-button" :class="{ completed: isCompleted }"  v-if="isStarted">
 
         <!-- Progress State -->
         <div v-if="isStarted || isCompleted" class="progress-content">
@@ -16,6 +23,7 @@
             Attempted
         </div> -->
     </div>
+</div>
 </template>
 
 <script>
@@ -65,6 +73,15 @@ export default {
     width: 200px;
 }
 
+.progress-btn{
+    cursor: pointer;
+   
+}
+
+.progress-btn button{
+    font-weight: bold;
+    margin: 16px 5px 0px 5px;
+}
 .progress-button {
     position: relative;
     height: 30px;
@@ -118,6 +135,16 @@ export default {
 
 .completed {
     background: #D1D3D4 !important;
+
+
+    position: relative;
+    height: 30px;
+  
+    border-radius: 25px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin: 15px 5px 0px 5px;   
     /* Solid Green */
 }
 

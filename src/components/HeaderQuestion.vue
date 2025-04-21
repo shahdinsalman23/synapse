@@ -62,7 +62,7 @@
               </ul>
             </div>
             <div class="mocktxt">
-              <img src="/images/brain.png" alt="Brain"> Mocks {{ mockIndex }}
+              <img src="/images/brain.png" alt="Brain"> Mock {{ mockIndex }}
             </div>
             <div class="mockquestion-navigate">
               <ul>

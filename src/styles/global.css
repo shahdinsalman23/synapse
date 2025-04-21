@@ -541,9 +541,10 @@ section.login-signup-sec {
     margin: 15px 5px 0px 5px;
     background: #D1D3D4;
     border: 1px solid #58595B;
-    padding: 6px 22px;
+    padding: 6px 0px;
     border-radius: 40px;
     font-size: 12px;
+    width: 100%;
 }
 
 .userlogin-sec {

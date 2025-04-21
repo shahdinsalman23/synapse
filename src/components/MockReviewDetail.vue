@@ -3,7 +3,7 @@
         <section class="mockreviewdetail-sec">
             <div class="tabs-container">
                 <div class="mockreview-accordion-tabs">
-                    <div v-for="(tab, index) in tabs" :key="index" class="mock-review-accordion-tab" :data-tab-type="tab.title === 'Notes' || tab.title === 'Journal' ? 'orange' : 'red'"
+                    <!-- <div v-for="(tab, index) in tabs" :key="index" class="mock-review-accordion-tab" :data-tab-type="tab.title === 'Notes' || tab.title === 'Journal' ? 'orange' : 'red'"
                         :class="{ 'active': activeIndex === index }" @click="toggleAccordion(index)">
                         <div class="mocktab-maintext"
                             :style="{ 
@@ -27,22 +27,44 @@
                                 </svg>
                             </div>
                         </div>
+                    </div> -->
+
+
+                    <div v-for="(tab, index) in tabs" :key="index" class="mock-review-accordion-tab"
+                        :data-tab-type="tab.title === 'Notes' || tab.title === 'Journal' ? 'orange' : 'red'"
+                        :class="{ 'active': activeIndex === index }" @click="toggleAccordion(index)">
+                        <div class="mocktab-maintext" :style="{
+                            background: activeIndex === index
+                                ? (tab.title === 'Notes' || tab.title === 'Journal' ? '#FBAD18' : '#ED1C24')  // Yellow or Red
+                                : '#A7A9AC'  // Gray for inactive
+                        }">
+                            <h4>{{ tab.title }}</h4>
+                            <div class="accordion-icon">
+                                <svg v-if="activeIndex === index" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 12H19" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                                <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 5V19" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+                                    <path d="M5 12H19" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
                 <transition name="slide">
-                    <div 
-                        v-if="activeIndex !== null" 
-                        class="mockreviewtab-detail"
-                        :style="{ 
-                            'border-color': (tabs[activeIndex].title === 'Notes' || tabs[activeIndex].title === 'Journal') ? '#FBAD18' : '#ED1C24',
-                            'border-top-color': (tabs[activeIndex].title === 'Notes' || tabs[activeIndex].title === 'Journal') ? '#FBAD18' : '#ED1C24'
-                        }"
-                        >
-                        <!-- Comments Tab Content -->
+                    <div v-if="activeIndex !== null" class="mockreviewtab-detail" :style="{
+                        'border-color': (tabs[activeIndex].title === 'Notes' || tabs[activeIndex].title === 'Journal') ? '#FBAD18' : '#ED1C24',
+                        'border-top-color': (tabs[activeIndex].title === 'Notes' || tabs[activeIndex].title === 'Journal') ? '#FBAD18' : '#ED1C24'
+                    }">
+
                         <div v-if="tabs[activeIndex].title === 'Comments'" class="comments-section">
-                            <!-- Comments List -->
+
                             <ul class="comments-list">
-                                <li v-for="(comment) in currentQuestion.comments" :key="comment.id" class="comment-item">
+                                <li v-for="(comment) in currentQuestion.comments" :key="comment.id"
+                                    class="comment-item">
                                     <div class="user-avatar">
                                         <img src="https://static.vecteezy.com/system/resources/previews/047/733/682/non_2x/grey-avatar-icon-user-avatar-photo-icon-social-media-user-icon-vector.jpg"
                                             alt="User Avatar">
@@ -52,15 +74,15 @@
                                             <span class="user-name">{{ comment.user.username }}</span>
                                             <span class="comment-time">2 hours ago</span>
                                         </div>
-                                        <p class="comment-text">  {{ comment ? comment.comments : 'No Details' }}</p>
+                                        <p class="comment-text"> {{ comment ? comment.comments : 'No Details' }}</p>
                                     </div>
                                 </li>
                             </ul>
-                            <!-- Comment Input -->
+
                             <div class="comment-input-container">
-                                <input type="text"  v-model="form.comments" placeholder="Write your comment..."
+                                <input type="text" v-model="form.comments" placeholder="Write your comment..."
                                     @keyup.enter="commentsave(currentQuestion.id)">
-                                <button class="send-button"  @click="commentsave(currentQuestion.id)">
+                                <button class="send-button" @click="commentsave(currentQuestion.id)">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="#ED1C24" />
@@ -71,27 +93,25 @@
 
 
                         <div v-else-if="tabs[activeIndex].title === 'Explanation'" class="comments-section">
-                            <div 
-                            class="content-block mockreviewdetail-text" >
-                            {{ currentQuestion.explanation }}
-                        </div>
-                        
-                            
+                            <div class="content-block mockreviewdetail-text">
+                                {{ currentQuestion.explanation }}
+                            </div>
+
+
                         </div>
 
                         <div v-else-if="tabs[activeIndex].title === 'Notes'" class="comments-section">
-                            <div 
-                            class="content-block mockreviewdetail-text" >
-                            {{ currentQuestion.books }}
-                        </div>
-                        
-                            
+                            <div class="content-block mockreviewdetail-text">
+                                {{ currentQuestion.books }}
+                            </div>
+
+
                         </div>
 
-                        <!-- Other Tabs Content -->
+
                         <div v-else>
-                            <div  class="content-block mockreviewdetail-text">
-                                <TextEditerMock/>
+                            <div class="content-block mockreviewdetail-text">
+                                <TextEditerMock />
                             </div>
                         </div>
                     </div>
@@ -104,15 +124,15 @@
 <script>
 import TextEditerMock from './TextEditerMock.vue';
 export default {
-  components: { TextEditerMock },
+    components: { TextEditerMock },
 
     props: {
         currentQuestion: {
-      
+
+        },
+
+
     },
-   
-  
-},
     data() {
         return {
             activeIndex: null,
@@ -195,8 +215,8 @@ export default {
     },
     methods: {
 
-        commentsave(e){
-            this.$emit('commentsave' , e , this.form.comments);
+        commentsave(e) {
+            this.$emit('commentsave', e, this.form.comments);
 
         },
         addComment() {
@@ -377,7 +397,4 @@ section.mockreviewdetail-sec {
     height: 20px;
     margin: 4px 0px 0px 0px;
 }
-
-
-
 </style>
