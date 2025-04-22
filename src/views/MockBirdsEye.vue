@@ -13,9 +13,9 @@
                             background: nav.score
                                 ? '#c5c5c5'
                                 : (nav.flag
-                                    ? 'white'
+                                    ? '#F1F2F2'
                                     : (nav.skip
-                                        ? 'white'
+                                        ? '#F1F2F2'
                                         : '#F1F2F2')),
 
 
@@ -90,6 +90,18 @@ export default {
 
     },
     methods: {
+
+        lockBodyScroll() {
+      this.scrollPosition = window.pageYOffset;
+      document.body.classList.add('body-scroll-lock');
+      document.body.style.top = `-${this.scrollPosition}px`;
+    },
+
+    unlockBodyScroll() {
+      document.body.classList.remove('body-scroll-lock');
+      window.scrollTo(0, this.scrollPosition);
+      document.body.style.top = '';
+    },
 
         isPresentIndexs(indexnav) {
             //   const presentindex = localStorage.getItem('presentindex');

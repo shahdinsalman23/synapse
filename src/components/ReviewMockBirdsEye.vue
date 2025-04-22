@@ -131,6 +131,10 @@ export default {
     grid-row-gap: 8px;
     width: 100%;
     overflow-x: auto;
+    min-height: 530px;
+    align-items: start;
+
+
 }
 
 

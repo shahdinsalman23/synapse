@@ -14,6 +14,7 @@
 
         <!-- Progress State -->
         <div v-if="isStarted || isCompleted" class="progress-content">
+            
             <div class="progress-fill" :style="{ width: progress + '%' }"></div>
             <span class="progress-text">{{ progress }}%</span>
         </div>
@@ -109,6 +110,7 @@ export default {
 .progress-content {
     position: relative;
     height: 100%;
+    min-height: 27px;
 }
 
 .progress-fill {
@@ -138,7 +140,7 @@ export default {
 
 
     position: relative;
-    height: 30px;
+    height: 29px;
   
     border-radius: 25px;
     cursor: pointer;

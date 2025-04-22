@@ -130,7 +130,8 @@
                             :for="option.id" :style="getLabelStyle(option)">
                                 
                                 <div class="option-header" @click="toggleAccordion(index)">
-                                    <h4>{{ option.title }}</h4>
+                                  
+                                    <h4>{{ String.fromCharCode(65 + index) }}. {{ option.title }}</h4>
                                     <div class="accordion-icon">
                                         <svg v-if="activeOption === index" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -220,7 +221,7 @@
 
                                 
                                
-                                <textarea name="" id="" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea>
+                                <textarea name="" id="" v-model="form.optionfeedback" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea>
                               </div>
                               <div class="feedbackform-submitbtn">
                                 <button type="button" @click="submitFeedback">Submit</button>
@@ -668,8 +669,10 @@ export default {
             this.activeOption = this.activeOption === index ? null : index;
         },
         enter(el, done) {
+
             el.style.height = '0';
-            const height = el.scrollHeight;
+            const height = el.scrollHeight + 5;
+            console.log('scrollheight', height)
             requestAnimationFrame(() => {
                 el.style.height = `${height}px`;
                 el.addEventListener('transitionend', done);
@@ -1933,7 +1936,11 @@ export default {
 }
 
 .accordion-icon {
-    padding: 6px 10px 0px 0px;
+
+    padding: 10px 30px;
+    display: flex;
+        align-items: baseline;
+
     transition: transform 0.3s ease;
 }
 
@@ -1953,12 +1960,17 @@ export default {
     margin: 0px 0px 20px 0px;
 }
 
+
+
+
 .option-content p {
-    color: #231F20;
-    line-height: 1.6;
+    color: #231f20;
+    line-height: 1.4;
     text-align: left;
-    padding: 10px 0px 0px 36px;
+    padding: 2px 0 0 36px;
 }
+
+
 
 .question-option.active {
     /* border-color: #ED1C24; */
