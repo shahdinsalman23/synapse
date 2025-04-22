@@ -960,8 +960,12 @@ button.begin-btn a {
     gap: 3px;
     font-size: 15px;
     cursor: pointer;
-    
 }
+
+.mockquestion-navigate ul li p {
+    font-size: 15.3px;
+}
+
 
 .fontsizing {
     font-size: 0px !important;
@@ -1243,13 +1247,12 @@ button.modal-exit-btn .cardbottom-shadow img {
     overflow-y: scroll;
     overflow-x: hidden;
     padding: 10px 12px 0px 25px;
-    /* Firefox support */
     scrollbar-width: thin;
-    scrollbar-color: #B5B7B9 transparent;
+    scrollbar-color: #B5B7B9 #b5b7b91c;
+    position: relative;
   }
 
 
-  /* Chrome, Edge, Safari (Webkit-based) */
   .question-option-tabsbox-scroll::-webkit-scrollbar {
     width: 5.83px;
   }
@@ -1262,6 +1265,12 @@ button.modal-exit-btn .cardbottom-shadow img {
   .question-option-tabsbox-scroll::-webkit-scrollbar-track {
     background-color: #BCBEC0;
     border-radius: 10px;
+  }
+
+  .question-option-tabsbox-scroll::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+    width: 0;
   }
   
 

@@ -219,8 +219,9 @@
                                 </div>
 
                                 
-                               
-                                <textarea name="" id="" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea>
+                               <div class="feedback-textarea-box">
+                                <textarea name="" id="" ref="feedbackArea" @focus="expandTextarea" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea>
+                                </div>
                               </div>
                               <div class="feedbackform-submitbtn">
                                 <button type="button" @click="submitFeedback">Submit</button>
@@ -584,7 +585,9 @@ export default {
 
     methods: {
 
-
+        expandTextarea() {
+      this.$refs.feedbackArea.style.height = "64px";
+    },
         Showbirdeye(){
             this.reviewfirst = true
             this.fillicon = 0
@@ -1900,6 +1903,7 @@ export default {
 .questioncomment button {
     border: none;
     cursor: pointer;
+    background: #f1f2f2;
 }
 
 .question-option {
@@ -1946,6 +1950,7 @@ export default {
 .option-content {
     overflow: hidden;
     transition: height 0.3s ease-out;
+    padding: 0px 0px 15px 0px;
 }
 
 .question-option.active .option-content {
@@ -1973,7 +1978,7 @@ export default {
 }
 
 .questioncomment:hover button {
-  background: transparent;
+  background: #f1f2f2;
 }
 
 .no-scroll {
@@ -1988,17 +1993,46 @@ export default {
     font-size: 10px;
     resize: none;
     font-family: Helvetica;
-    padding: 6px 8px;
-    border: 1px solid #808285;
-    background: #ffffff94;
-    border-radius: 10px;
-    width: 90%;
-    height: 50px;
-    margin: 0px 10px;
+    border: none;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background: transparent;
+    font-style: italic;
+    padding: 0px 3px 0px 0px;
+    color: gray;
+    font-weight: 300;
+    font-family: Helvetica;
+    height: 12px;
+}
+
+.feedback-textarea::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+.feedback-textarea::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.feedback-textarea::-webkit-scrollbar-thumb {
+  background: #808285;
+  border-radius: 10px;
 }
 
 .feedback-textarea:focus {
     outline: none;
+}
+
+.feedback-textarea-box {
+    width: 90%;
+    margin: 0 auto;
+    border: 1px solid #20b14bb8;
+    border-radius: 10px;
+    padding: 5px 8px;
+    background: #ffffff94;
 }
 
 </style>
