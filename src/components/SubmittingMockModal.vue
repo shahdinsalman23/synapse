@@ -89,9 +89,9 @@
     border-radius: 12px;
     text-align: center;
     width: 80vw;
-    height: 80vh;
+    height: 85vh;
     max-width: 1140px;
-    max-height: 650px;
+    max-height: 85vh;
     display: flex;
     align-items: center;
     justify-content: center;

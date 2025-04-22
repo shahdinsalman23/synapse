@@ -125,7 +125,8 @@
                                             <input type="radio" :id="option.id" :value="option.id"
                                                 v-model="selectedOption" />
                                             <!-- <label :for="option.id" >{{ option.title }}</label> -->
-                                            <span class="option-letter">{{ index + 1 }}.</span>
+                                            <!-- <span class="option-letter">{{ index + 1 }}.</span> -->
+                                            <span class="option-letter">{{ String.fromCharCode(65 + index) }}.</span>
                                             {{ option.title }}
                                         </div>
                                     </div>
@@ -656,15 +657,15 @@ export default {
 
             // this.stoptimerpopup = true;
 
-            setTimeout(() => {
-                this.stoptimerpopup = true;
-            }, 100); // Adjust time in milliseconds (500ms = 0.5s)
+            // setTimeout(() => {
+            //     this.stoptimerpopup = true;
+            // }, 100); 
 
-            this.playicon = true
+            // this.playicon = true
             this.stopTimerAndSaveDuration()
 
-            this.reviewquest = true
-            this.dynamicOpacity = 0.2
+            // this.reviewquest = true
+            // this.dynamicOpacity = 0.2
 
         },
 

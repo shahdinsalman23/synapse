@@ -714,7 +714,8 @@ section.mockselection-sec {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 150px 0px;
+    /* padding: 150px 0px; */
+    height: 90vh;
 }
 
 .mockselection-btns {
@@ -1178,14 +1179,14 @@ span.pausemock {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 85vh;
     width: 100%;
     gap: 86px;
 }
 
 .mockscore-sec {
     width: 100%;
-    height: 100vh;
+    height: 100%;
 }
 
 .progress-text-score {
@@ -1248,8 +1249,9 @@ button.modal-exit-btn .cardbottom-shadow img {
     overflow-x: hidden;
     padding: 10px 12px 0px 25px;
     scrollbar-width: thin;
-    scrollbar-color: #B5B7B9 #b5b7b91c;
+    /* scrollbar-color: #B5B7B9 #b5b7b91c; */
     position: relative;
+    scrollbar-color: #B5B7B9 rgb(241, 241, 241);
   }
 
 
@@ -1272,6 +1274,8 @@ button.modal-exit-btn .cardbottom-shadow img {
     height: 0;
     width: 0;
   }
+
+  
   
 
 .brake-border {

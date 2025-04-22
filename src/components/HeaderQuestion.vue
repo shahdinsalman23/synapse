@@ -63,6 +63,9 @@
             </div>
             <div class="mocktxt">
               <img src="/images/brain.png" alt="Brain"> Mock {{ mockIndex }}
+              <span v-if="$route.name == 'MockReview'"  style="text-transform: capitalize;">
+                Review
+              </span>
             </div>
             <div class="mockquestion-navigate">
               <ul>
@@ -126,17 +129,19 @@
                             repeatCount="indefinite"></animate>
                     </circle>
                 </svg> -->
-                <svg v-if="showclock" @click="showclock = false" width="27" height="27" viewBox="0 0 120 160">
-                  <!-- Straight top button moved down -->
+
+
+                <!-- <svg v-if="showclock" @click="showclock = false" width="27" height="27" viewBox="0 0 120 160">
+               
                   <rect x="40" y="10" width="40" height="20" rx="2" fill="#D1D3D4" />
                 
-                  <!-- Line connecting button to clock, also moved down -->
+                
                   <line x1="60" y1="20" x2="60" y2="68" stroke="#D1D3D4" stroke-width="10" />
                 
-                  <!-- Main clock body -->
+                 
                   <circle cx="60" cy="100" r="52" fill="#D1D3D4" />
                 
-                  <!-- Countdown stroke animation -->
+                
                   <circle
                     cx="60"
                     cy="100"
@@ -152,16 +157,85 @@
                       attributeName="stroke-dashoffset"
                       from="0"
                       to="326.72"
-                      dur="10800s"
+                      dur="10s"
                       repeatCount="1"
                       fill="freeze"
                     />
                   </circle>
+                </svg> -->
+
+
+
+                <svg v-if="showclock" @click="showclock = false" width="27" height="27" viewBox="0 0 120 160">
+                  <!-- Top button -->
+                  <rect x="40" y="10" width="40" height="20" rx="2" fill="#D1D3D4" />
+                
+                  <!-- Line connecting button to clock -->
+                  <line x1="60" y1="30" x2="60" y2="68" stroke="#D1D3D4" stroke-width="10" />
+                
+                  <!-- Outer clock circle with border -->
+                  <circle cx="60" cy="100" r="52" fill="#fff" stroke="#D1D3D4" stroke-width="10" />
+                
+                  <!-- Filling black part (like pie chart) -->
+                  <path id="fillPath" fill="black">
+                    <animate
+                      attributeName="d"
+                      dur="10800s"
+                      repeatCount="1"
+                      fill="freeze"
+                      values="
+                        M60,100 L60,48 A52,52 0 0,1 60,48 Z;
+                        M60,100 L60,48 A52,52 0 0,1 107.94,68 Z;
+                        M60,100 L60,48 A52,52 0 0,1 108,132 Z;
+                        M60,100 L60,48 A52,52 0 0,1 60,152 Z;
+                        M60,100 L60,48 A52,52 0 0,1 12,132 Z;
+                        M60,100 L60,48 A52,52 0 0,1 12,68 Z;
+                        M60,100 L60,48 A52,52 0 1,1 60,48 Z
+                      "
+                    />
+                  </path>
                 </svg>
                 
+
+                
+
+                <!-- <svg v-if="showclock" @click="showclock = false" width="27" height="27" viewBox="0 0 120 160">
+               
+                  <rect x="40" y="10" width="40" height="20" rx="2" fill="#D1D3D4" />
+                
+                 
+                  <line x1="60" y1="30" x2="60" y2="68" stroke="#D1D3D4" stroke-width="10" />
                 
                 
-                  <span  >Time remaining</span> <p v-if="!showclock"  @click="showclock = true" class="timer" :style="{ color: remainingTimeInSeconds <= 600 ? 'yellow' : 'white'}">{{formattedTime}}</p> 
+                  <circle cx="60" cy="100" r="52" fill="#fff" stroke="#D1D3D4" stroke-width="10" />
+                
+                
+                  <circle
+                    cx="60"
+                    cy="100"
+                    r="52"
+                    fill="none"
+                    stroke="black"
+                    stroke-width="30"  
+                    stroke-dasharray="326.72"
+                    stroke-dashoffset="0"
+                    transform="rotate(-90 60 100)"
+                  >
+                    <animate
+                      attributeName="stroke-dashoffset"
+                      from="326.72"
+                      to="0"
+                      dur="10s"
+                      fill="freeze"
+                    />
+                  </circle>
+                </svg>
+                 -->
+                
+                
+                
+                
+                  <span>Time remaining</span> <p v-if="!showclock"  @click="showclock = true" class="timer" :style="{ color: remainingTimeInSeconds <= 600 ? 'yellow' : 'white'}">{{formattedTime}}</p> 
                 
                 
                 </li>
