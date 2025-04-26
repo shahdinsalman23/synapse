@@ -17,6 +17,15 @@
 
             <section class="questionnumber-sec">
                 <div class="container">
+
+                    <!-- <QuestionNumberSlider
+  :allquestions="allquestions"
+  :currentQuestionIndex="currentQuestionIndex"
+  :renderReady="renderReady"
+  :slideStyle="slideStyle"
+  @update:currentQuestionIndex="currentQuestionIndex = $event"
+  @question-clicked="onQuestionClicked"
+/> -->
                     <div class="questionnumber-slide-container" ref="container">
                         <div class="questionleft-arrow" @mouseenter="startScroll('left')" @mouseleave="stopScroll"  @mousedown="fastScroll('left')"
                         @mouseup="stopScroll"><svg
