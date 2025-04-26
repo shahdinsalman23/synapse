@@ -51,6 +51,8 @@
                   <!-- Nested Dropdown -->
                   <ul class="nested-dropdown" v-show="isNestedDropdownOpen">
                     <li><router-link to="">{{ user.fullname }}</router-link></li>
+                    <li class="bubbleli"><router-link to="">Bubble Help</router-link><input  type="radio" /></li>
+
                    
                   </ul>
                 </li>
@@ -176,7 +178,7 @@
                   <line x1="60" y1="30" x2="60" y2="68" stroke="#D1D3D4" stroke-width="10" />
                 
                   <!-- Outer clock circle with border -->
-                  <circle cx="60" cy="100" r="52" fill="#fff" stroke="#D1D3D4" stroke-width="10" />
+                  <circle cx="60" cy="100" r="52" :fill="remainingTimeInSeconds <= 600 ? 'yellow' : 'white'"  stroke="#D1D3D4" stroke-width="10" />
                 
                   <!-- Filling black part (like pie chart) -->
                   <path id="fillPath" fill="black">
@@ -300,13 +302,16 @@ export default {
       scrollPosition: 0,
       showclock: false,
       filleye:false,
-      mockIndex:0
+      mockIndex:0,
+      coloring:'#fff'
       
 
     }
   },
 
   created() {
+
+    this.coloring = this.remainingTimeInSeconds <= 600 ? 'yellow' : 'white'
 
     this.mockIndex = parseInt(localStorage.getItem('mockindex'), 10);
 
@@ -400,6 +405,19 @@ export default {
 
   
   <style scoped>
+
+  li.bubbleli {
+    display: flex
+;
+    justify-content: space-between;
+}
+  p {
+    padding-top: 1px;
+}
+
+  p.timer {
+    padding: 0px 9px;
+}
 
   .mock-width {
     width: 17% !important;

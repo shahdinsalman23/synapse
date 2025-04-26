@@ -15,8 +15,8 @@
         <div v-if="reviewfirst">
 
 
-            <ReviewMockBirdsEye :currentQuestionIndex="currentQuestionIndex" :allquestions="allquestions"
-                @getBackindex="getBackindex" @startMocks="getBackindex(0)" />
+            <ReviewMockBirdsEye :currentQuestionIndex="currentQuestionIndex" :allquestions="allquestions" :returning="returning"
+                @getBackindex="getBackindex" @startMocks="getBackindex(0)"  />
 
         </div>
         <div v-else>
@@ -40,9 +40,9 @@
                                 :style="{
                                     background: nav.score
                                         ? (nav.score.correct === 1
-                                            ? 'lightgreen'
+                                            ? '#9ded6c'
                                             : (nav.score.correct === 0
-                                                ? '#fc00006e'
+                                                ? '#FFBABE'
                                                 : 'white'))
                                         : (nav.flag
                                             ? '#d2cbcb'
@@ -50,8 +50,33 @@
                                                 ? '#d2cbcb'
                                                 : 'white')),
 
+                                                border: isPresentIndexs(indexnav)
+                                      ? (
+                                        nav.score
+                                          ? (nav.score.correct === 1
+                                            ? '1px solid green'
+                                            : (nav.score.correct === 0
+                                              ? '1px solid red'
+                                              : '1px solid white'))
+                                          : (nav.flag
+                                            ? '1px solid black'
+                                            : (nav.skip
+                                              ? ' 1px solid black'
+                                              : ' 1px solid white'))
+                                      ) 
+                                      : ''
+
+
+                                                
+
+
+                                                
+
                                 }"
-                                :class="{ 'activeindex': isPresentIndexs(indexnav) }" @click="getBackindex(indexnav)">
+                                :class="{ 'activeindexreview': isPresentIndexs(indexnav) }" @click="getBackindex(indexnav)" 
+                                
+                                
+                                >
                                     {{ indexnav + 1 }}
                                     <!-- Ye flag sirf selected numbers pe dikhega -->
                                     <svg v-if="nav.flag" class="red-flag" width="11"
@@ -267,6 +292,7 @@ export default {
             fillicon:0,
             loadingcircle:true,
             activeButton: null,
+            returning:0,
 
             // selectedOptions: {
       //   question: null,
@@ -1628,6 +1654,8 @@ export default {
 
         getBackindex(e) {
 
+            this.returning = 1
+
             if(!this.showPauseModal){
 
             
@@ -2059,7 +2087,7 @@ export default {
 @media only screen and (min-height: 1024px) {
 
     .question-option-tabsbox-scroll {
-        height: 750px;
+        height: 800px;
     }
 
 
