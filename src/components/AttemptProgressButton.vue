@@ -81,7 +81,7 @@ export default {
 
 .progress-btn button{
     font-weight: bold;
-    margin: 16px 5px 0px 5px;
+    margin: 16px 5px 0px 0px;
 }
 .progress-button {
     position: relative;
@@ -93,6 +93,7 @@ export default {
     margin: 16px 5px 0px 5px;
     border: 1px solid #58595B;  
 }
+
 
 .button-content,
 .completed-content {
