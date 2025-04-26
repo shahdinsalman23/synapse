@@ -233,7 +233,7 @@ export default {
             get("/deletescore?id=" + id).then((res) => {
                 if (res.data.deleted) {
 
-                    this.$toast.success("Score Successfully Reset");
+                    // this.$toast.success("Score Successfully Reset");
                     console.log("deleted")
                     get('/getmocks')
                         .then((res) => {

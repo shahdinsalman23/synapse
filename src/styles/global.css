@@ -849,7 +849,7 @@ button.begin-btn a {
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translate(0px, -8px);
+    transform: translate(0px, -6px);
   }
   .modal-footer p {
     color: #747474;
