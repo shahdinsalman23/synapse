@@ -88,9 +88,9 @@
     padding: 2rem;
     border-radius: 12px;
     text-align: center;
-    width: 80vw;
+    width: 100%;
     height: 85vh;
-    max-width: 1140px;
+    max-width: 1600px;
     max-height: 85vh;
     display: flex;
     align-items: center;
@@ -184,6 +184,24 @@
 @keyframes pure-fade-out {
   from { opacity: 1; }
   to { opacity: 0; }
+}
+
+
+@media only screen and (min-height: 1024px) {
+
+  .modal-content {
+   padding-bottom: 300px;
+
+ 
+   height: 90vh;
+   
+   max-height: 90vh;
+  
+  }
+
+
+
+
 }
 
 

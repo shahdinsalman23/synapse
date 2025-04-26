@@ -117,7 +117,9 @@
                 </li>
                 <li :class="{ 'mock-width': $route.name === 'MockReview' }"><span class="flaggedquestions">Flagged questions</span><svg width="14.52" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z" fill="#D1D3D4" />
-                </svg>{{flagcounts}}</li>
+                </svg><p>
+                  {{flagcounts}}
+                </p></li>
                 
                 <li style="position:relative" v-if="$route.name !== 'MockReview'"
                 >
@@ -562,6 +564,15 @@ export default {
   to {
     transform: translateY(-100%);
     opacity: 0;
+  }
+}
+
+
+@media only screen and (min-height: 1024px) {
+
+
+  .mockquestion-navigate ul li p{
+    padding-top: 2px;
   }
 }
 

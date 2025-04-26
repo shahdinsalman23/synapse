@@ -184,7 +184,7 @@
             </section>
 
 
-            <transition name="slide-modal">
+            <transition name="slide-modal" @click.self="showPauseModal = false">
                 <!-- <FeedbackFormModal v-if="showPauseModal" @close="showPauseModal = false"
                     @resume="showPauseModal = false" @exit="handleExitMock" /> -->
 
@@ -221,7 +221,7 @@
 
                                 
                                <div class="feedback-textarea-box">
-                                <textarea name="" id="" ref="feedbackArea" @focus="expandTextarea" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea>
+                                <textarea name="" id="" ref="feedbackArea" v-model="form.optionfeedback" @focus="expandTextarea" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea>
                                 </div>
                                 <!-- <textarea name="" id="" v-model="form.optionfeedback" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea> -->
                               </div>
@@ -589,6 +589,8 @@ export default {
 
         expandTextarea() {
       this.$refs.feedbackArea.style.height = "64px";
+
+      this.toggleOptions(null)
     },
         Showbirdeye(){
             this.reviewfirst = true
@@ -825,6 +827,7 @@ export default {
                         timeout: 100,
                     });
                     this.showPauseModal = false
+                    this.toggleOptions(null)
                     // this.feedbackpop = false
 
 
@@ -1624,6 +1627,10 @@ export default {
 
 
         getBackindex(e) {
+
+            if(!this.showPauseModal){
+
+            
             console.log('indexing', e)
 
             this.showflagelist = false
@@ -1654,6 +1661,7 @@ export default {
             ]
 
             this.showOptionsIndex = null
+        }
 
         },
 
@@ -1747,7 +1755,7 @@ export default {
     padding: 2rem;
     border-radius: 12px;
     text-align: center;
-    width: 1200px;
+    width: 1300px;
     height: 80vh;
     display: flex;
     align-items: center;
@@ -2003,7 +2011,7 @@ export default {
 
 
 .feedback-textarea {
-    font-size: 10px;
+    font-size: 14px;
     resize: none;
     font-family: Helvetica;
     border: none;
@@ -2046,6 +2054,20 @@ export default {
     border-radius: 10px;
     padding: 5px 8px;
     background: #ffffff94;
+}
+
+@media only screen and (min-height: 1024px) {
+
+    .question-option-tabsbox-scroll {
+        height: 750px;
+    }
+
+
+    .modal-content {
+      
+       padding-bottom: 200px;
+      }
+    
 }
 
 </style>

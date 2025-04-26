@@ -167,7 +167,7 @@ header.header-main .row {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 24px;
-    letter-spacing: 1px;
+    letter-spacing: 0px;
     justify-content: center;
 }
 
@@ -538,7 +538,7 @@ section.login-signup-sec {
 
 
 .progress-btn button {
-    margin: 15px 5px 0px 5px;
+    margin: 15px 5px 0px 0px;
     background: #D1D3D4;
     border: 1px solid #58595B;
     padding: 6px 0px;
@@ -1247,7 +1247,7 @@ button.modal-exit-btn .cardbottom-shadow img {
     height: 640px;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding: 10px 12px 0px 25px;
+    padding: 10px 20px 0px 25px;
     scrollbar-width: thin;
     /* scrollbar-color: #B5B7B9 #b5b7b91c; */
     position: relative;
