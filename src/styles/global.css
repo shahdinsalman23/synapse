@@ -93,7 +93,7 @@
 /********** Header Login Start **********/
 
 header.header-main {
-    padding: 10px 0px 8px 0px;
+    padding: 8px 0px 7px 0px;
     background-image: linear-gradient(109.6deg, #869AA233 20%, #869AA2 100.6%);
 }
 
@@ -122,11 +122,7 @@ header.header-main .row {
     text-decoration-line: none;
     color: #fff;
     font-family: Helvetica;
-    
-
-
-   
-
+    font-size: 13px;
 }
 
 /********** Header Login End **********/
@@ -230,8 +226,8 @@ section.homepg-sec {
 .cardbottom-shadow img {
     position: absolute;
     content: "";
-    left: -75px;
-    width: 390px;
+    left: -55px;
+    width: 310px;
     height: 50px;
     bottom: -26px;
     z-index: -111;
@@ -279,7 +275,7 @@ section.homepg-sec {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 21px 0px 11px 0px;
+    padding: 16px 0px 10px 0px;
     border-radius: 40px;
 }
 
@@ -288,22 +284,24 @@ section.homepg-sec {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 29px 28px 20px 29px;
+    padding: 18px 17px 16px 14px;
 }
 
+
 .cardtop-content img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     object-fit: contain;
     margin-bottom: 13px;
 }
 
 .cardtop-content h2 {
-    font-size: 30px;
-    margin: 0px 0px 14px 0px;
+    font-size: 22px;
+    margin: 0px 0px 10px 0px;
     color: #fff;
     text-transform: uppercase;
 }
+
 
 .cardtop-content h6 {
     font-size: 18px;
@@ -312,14 +310,14 @@ section.homepg-sec {
 
 
 .cardbottem-content h4 {
-    padding: 0px 0px 26px 0px;
-    font-size: 20px;
+    padding: 0px 0px 10px 0px;
+    font-size: 16px;
     color: #58595B;
 }
 
 
 .cardbottem-content p {
-    font-size: 16px;
+    font-size: 14px;
     color: #58595B;
     line-height: 1.4;
 }
@@ -346,19 +344,19 @@ section.login-signup-sec {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 14px;
+    gap: 20px;
 }
 
 .loginSignup-btn button {
     text-decoration-line: none;
     color: #8698A2;
     font-weight: 600;
-    padding: 7px 21px;
+    padding: 4px 14px;
     border: 2px solid #8698A2;
     border-radius: 20px;
     background: transparent;
-    width: 110px;
-    font-size: 16px;
+    width: 80px;
+    font-size: 14px;
     cursor: pointer;
     font-family: Avenir, Helvetica, Arial, sans-serif;
 }
@@ -371,11 +369,12 @@ section.login-signup-sec {
     text-decoration-line: none;
     color: #8698A2;
     font-weight: 600;
-    padding: 7px 21px;
-    border: 2px solid #8698A2;
+    padding: 5px 14px;
+    border: 2px solid #8698A2;      
     border-radius: 20px;
     background: transparent;
-    width: 110px;
+    width: 80px;
+    font-size: 14px;        
 }
 
 .loginSignup-btn .loginBtn {
@@ -1599,7 +1598,7 @@ button.modal-exit-btn .cardbottom-shadow img {
 
 @media (min-width: 1200px) {
     .container {
-        max-width: 1170px;
+        max-width: 970px;
     }
 
     .questionnumber-sec .container {
