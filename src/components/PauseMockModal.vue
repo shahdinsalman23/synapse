@@ -42,7 +42,7 @@
 
   .modal-overlay {
     position: fixed;
-    top: 200px;
+    top: 280px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -62,7 +62,7 @@
     padding: 2rem;
     border-radius: 12px;
     text-align: center;
-    width: 1200px;
+    width: 1250px;
     height: 80vh;
     display: flex;
     align-items: center;

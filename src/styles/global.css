@@ -77,7 +77,7 @@
     transform: translate(0px, -12px);
     font-weight: bold !important;
     border: 2px solid #949393 !important;
-    font-size: 14px !important;
+    font-size: 16px !important;
 }
 
 
@@ -138,7 +138,7 @@ header.header-main .row {
     text-decoration-line: none;
     color: #fff;
     font-family: Helvetica;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 /********** Header Login End **********/
@@ -163,7 +163,7 @@ header.header-main .row {
     text-align: start;
     background: #ED1C24;
     color: #fff;
-    border-radius: 15px;
+    border-radius: 13px;
     padding: 5px 10px 5px 20px;
 }
 
@@ -517,14 +517,14 @@ section.login-signup-sec {
 /********** UserLogin Page CSS Start **********/
 
 .mocksection-pg {
-    padding: 140px 0px 100px 0px;
+    padding: 120px 0px 122px 0px;
 }
 
 
 .userlogin-sec .card-container {
     display: grid;
     grid-template-columns: repeat(3, minmax(186.79px, 1fr));
-    max-width: 875px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -533,16 +533,16 @@ section.login-signup-sec {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 29px 28px 50px 29px;
+    padding: 18px 17px 36px 14px;
 }
 
 .mock-container {
     display: grid;
     grid-template-columns: repeat(5, minmax(100px, 1fr));
-    max-width: 930px;
-    margin: 0 auto;
-    gap: 40px;
+    max-width: 1240px;
+    gap: 90px;
 }
+
 
 
 .mock-image img {
@@ -567,9 +567,11 @@ section.login-signup-sec {
 }
 
 .userlogin-sec .cardbottom-shadow img {
-    left: -80px !important;
-    width: 410px;
+    left: -70px !important;
+    width: 335px;
 }
+
+
 
 /********** UserLogin Page CSS End **********/
 
@@ -816,11 +818,11 @@ button.begin-btn a {
     gap: 1px;
     will-change: transform;
     position: relative;
-    padding: 40px 0px 30px 0px;
+    padding: 53px 0px 15px 0px;
 }
   
   .questionnumber {
-    min-width: 21.83px;
+    min-width: 23.85px;
     text-align: center;
     padding: 15px 0px;
     border: 1px solid #231f2040;
@@ -864,7 +866,7 @@ button.begin-btn a {
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translate(0px, -6px);
+    transform: translate(0px, 7px);
   }
   .modal-footer p {
     color: #747474;
@@ -1362,7 +1364,7 @@ button.modal-exit-btn .cardbottom-shadow img {
   }
 
   .questiontext-sec .container {
-    max-width: 1220px;
+    max-width: 1320px;
 }
 
 /********** Review Scroll Page CSS End **********/
@@ -1614,14 +1616,18 @@ button.modal-exit-btn .cardbottom-shadow img {
 
 @media (min-width: 1200px) {
     .container {
+        max-width: 1270px;
+    }
+
+    .homepg-card-sec .container {
         max-width: 970px;
     }
 
     .questionnumber-sec .container {
-        max-width: 1220px;
+        max-width: 1320px;
     }
 
     .reviewscroll-sec .container {
-        max-width: 1220px;
+        max-width: 1320px;
     }
 }

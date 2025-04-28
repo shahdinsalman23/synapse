@@ -429,22 +429,6 @@ img {
     }
 } */
 
-.shadow-0 img {
-}
-
-.shadow-1 img { 
-}
-
-.shadow-2 img {
-}
-
-.shadow-3 img {
-}
-
-.shadow-4 img {
-}
-
-
 
 
 </style>

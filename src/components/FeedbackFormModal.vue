@@ -93,7 +93,7 @@ export default {
 <style scoped>
 .modal-overlay {
   position: fixed;
-  top: 200px;
+  top: 344px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -112,7 +112,8 @@ export default {
   border-radius: 12px;
   text-align: center;
   width: 1200px;
-  height: 460px;
+  /* height: 460px; */
+  height: 57vh;
   display: flex;
   align-items: center;
   justify-content: center;
