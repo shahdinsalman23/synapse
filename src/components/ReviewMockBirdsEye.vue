@@ -31,6 +31,23 @@
                                             : (nav.skip
                                                 ? 'black'
                                                 : 'black')),
+
+
+                                                border: isPresentIndexs(indexnav)
+                                                ? (
+                                                  nav.score
+                                                    ? (nav.score.correct === 1
+                                                      ? '1px solid green'
+                                                      : (nav.score.correct === 0
+                                                        ? '1px solid red'
+                                                        : '1px solid white'))
+                                                    : (nav.flag
+                                                      ? '1px solid black'
+                                                      : (nav.skip
+                                                        ? ' 1px solid black'
+                                                        : ' 1px solid white'))
+                                                ) 
+                                                : ''
                                        
 
 
@@ -44,7 +61,9 @@
                     </h4>
                 </div>
                 <div class="mockbird-submitbtn">
-                    <button @click="startMock">Start review</button>
+                    <button @click="startMock">{{returning == 1 ? 'Return':'Start review'}}</button>
+                
+
                     <div class="cardbottom-shadow">
                         <img src="/images/cardshadow.png" alt="">
                     </div>
@@ -67,12 +86,16 @@ export default {
      
     },
   
+    returning: {
+     
+    },
     
   },
     data() {
         return {
             selectedNumbers: [],
-            specialNumbers: []
+            specialNumbers: [],
+            
         }
     },
     methods: {
@@ -98,6 +121,7 @@ export default {
 
             console.log('yyyyyyyyyyyyy')
             this.$emit('startMocks');
+          
         },
         generateSpecialNumbers() {
             const specialCount = 12; // Change to 10 if you want exactly 10

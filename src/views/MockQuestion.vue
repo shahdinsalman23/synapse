@@ -940,22 +940,22 @@ export default {
                     if (this.remainingTimeInSeconds === 600) {
                         // this.$toast.warning("10 minutes remaining!");
 
-                        this.$toast.warning("10 minutes remaining!", {
-                            duration: 10000,
-                        });
+                        // this.$toast.warning("10 minutes remaining!", {
+                        //     duration: 10000,
+                        // });
 
                     }
 
                     if (this.remainingTimeInSeconds === 60) {
                         // this.$toast.warning("1 minute remaining!");
 
-                        this.$toast.warning("1 minute remaining!", {
-                            duration: 10000,
-                        });
+                        // this.$toast.warning("1 minute remaining!", {
+                        //     duration: 10000,
+                        // });
                     }
                 } else {
                     console.log("Stopping timersss");
-                    this.$toast.error("Your Time Finished");
+                    // this.$toast.error("Your Time Finished");
                     // this.getReviews();
                     this.scoringpage();
                     clearInterval(this.timer);
@@ -991,22 +991,22 @@ export default {
                     if (this.remainingTimeInSeconds === 600) {
                         // this.$toast.warning("10 minutes remaining!");
 
-                        this.$toast.warning("10 minutes remaining!", {
-                            duration: 10000,
-                        });
+                        // this.$toast.warning("10 minutes remaining!", {
+                        //     duration: 10000,
+                        // });
 
                     }
 
                     if (this.remainingTimeInSeconds === 60) {
                         // this.$toast.warning("1 minute remaining!");
 
-                        this.$toast.warning("1 minute remaining!", {
-                            duration: 10000,
-                        });
+                        // this.$toast.warning("1 minute remaining!", {
+                        //     duration: 10000,
+                        // });
                     }
                 } else {
                     console.log("Stopping timersss");
-                    this.$toast.error("Your Time Finished");
+                    // this.$toast.error("Your Time Finished");
                     // this.getReviews();
                     this.scoringpage();
                     clearInterval(this.timer);
@@ -1021,7 +1021,7 @@ export default {
 
 
 
-            this.stoptimerpopup = false;
+            this.stoptimerpopup = true;
             console.log("Starting", this.duration);
 
 
