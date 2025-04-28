@@ -135,7 +135,7 @@ export default {
     },
     data() {
         return {
-            activeIndex: null,
+            activeIndex: 0,
             form: {},
             tabs: [
                 {

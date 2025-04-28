@@ -979,12 +979,14 @@ export default {
                         return {
                            
                             background: '#9DED6C',
+                            border:'1px solid green'
                             
                         };
                     } else {
                         return {
                            
                             background: '#FFBABE',
+                            border:'1px solid red'
                            
                         };
                     }
@@ -993,6 +995,7 @@ export default {
                         return {
                           
                             background: '#9DED6C',
+                              border:'1px solid green'
                           
                         };
                     }
@@ -2076,13 +2079,19 @@ export default {
 }
 
 .feedback-textarea-box {
-    width: 90%;
+    width: 57%;
     margin: 0 auto;
     border: 1px solid #20b14bb8;
-    border-radius: 10px;
-    padding: 5px 8px;
+    border-radius: 25px;
+    padding: 3px 8px;
     background: #ffffff94;
 }
+
+textarea.feedback-textarea::placeholder {
+    color: black;
+    font-size: 11px;
+}
+
 
 @media only screen and (min-height: 1024px) {
 
