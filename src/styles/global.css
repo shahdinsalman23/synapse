@@ -77,7 +77,7 @@
     transform: translate(0px, -12px);
     font-weight: bold !important;
     border: 2px solid #949393 !important;
-    font-size: 14px !important;
+    font-size: 16px !important;
 }
 
 
@@ -109,7 +109,7 @@
 /********** Header Login Start **********/
 
 header.header-main {
-    padding: 10px 0px 8px 0px;
+    padding: 8px 0px 7px 0px;
     background-image: linear-gradient(109.6deg, #869AA233 20%, #869AA2 100.6%);
 }
 
@@ -138,11 +138,7 @@ header.header-main .row {
     text-decoration-line: none;
     color: #fff;
     font-family: Helvetica;
-    
-
-
-   
-
+    font-size: 12px;
 }
 
 /********** Header Login End **********/
@@ -167,7 +163,7 @@ header.header-main .row {
     text-align: start;
     background: #ED1C24;
     color: #fff;
-    border-radius: 15px;
+    border-radius: 13px;
     padding: 5px 10px 5px 20px;
 }
 
@@ -246,8 +242,8 @@ section.homepg-sec {
 .cardbottom-shadow img {
     position: absolute;
     content: "";
-    left: -75px;
-    width: 390px;
+    left: -55px;
+    width: 310px;
     height: 50px;
     bottom: -26px;
     z-index: -111;
@@ -295,7 +291,7 @@ section.homepg-sec {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 21px 0px 11px 0px;
+    padding: 16px 0px 10px 0px;
     border-radius: 40px;
 }
 
@@ -304,22 +300,24 @@ section.homepg-sec {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 29px 28px 20px 29px;
+    padding: 18px 17px 16px 14px;
 }
 
+
 .cardtop-content img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     object-fit: contain;
     margin-bottom: 13px;
 }
 
 .cardtop-content h2 {
-    font-size: 30px;
-    margin: 0px 0px 14px 0px;
+    font-size: 22px;
+    margin: 0px 0px 10px 0px;
     color: #fff;
     text-transform: uppercase;
 }
+
 
 .cardtop-content h6 {
     font-size: 18px;
@@ -328,14 +326,14 @@ section.homepg-sec {
 
 
 .cardbottem-content h4 {
-    padding: 0px 0px 26px 0px;
-    font-size: 20px;
+    padding: 0px 0px 10px 0px;
+    font-size: 16px;
     color: #58595B;
 }
 
 
 .cardbottem-content p {
-    font-size: 16px;
+    font-size: 14px;
     color: #58595B;
     line-height: 1.4;
 }
@@ -362,19 +360,19 @@ section.login-signup-sec {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 14px;
+    gap: 20px;
 }
 
 .loginSignup-btn button {
     text-decoration-line: none;
     color: #8698A2;
     font-weight: 600;
-    padding: 7px 21px;
+    padding: 4px 14px;
     border: 2px solid #8698A2;
     border-radius: 20px;
     background: transparent;
-    width: 110px;
-    font-size: 16px;
+    width: 80px;
+    font-size: 14px;
     cursor: pointer;
     font-family: Avenir, Helvetica, Arial, sans-serif;
 }
@@ -387,11 +385,12 @@ section.login-signup-sec {
     text-decoration-line: none;
     color: #8698A2;
     font-weight: 600;
-    padding: 7px 21px;
-    border: 2px solid #8698A2;
+    padding: 5px 14px;
+    border: 2px solid #8698A2;      
     border-radius: 20px;
     background: transparent;
-    width: 110px;
+    width: 80px;
+    font-size: 14px;        
 }
 
 .loginSignup-btn .loginBtn {
@@ -518,14 +517,14 @@ section.login-signup-sec {
 /********** UserLogin Page CSS Start **********/
 
 .mocksection-pg {
-    padding: 140px 0px 100px 0px;
+    padding: 120px 0px 122px 0px;
 }
 
 
 .userlogin-sec .card-container {
     display: grid;
     grid-template-columns: repeat(3, minmax(186.79px, 1fr));
-    max-width: 875px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -534,16 +533,16 @@ section.login-signup-sec {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 29px 28px 50px 29px;
+    padding: 18px 17px 36px 14px;
 }
 
 .mock-container {
     display: grid;
     grid-template-columns: repeat(5, minmax(100px, 1fr));
-    max-width: 930px;
-    margin: 0 auto;
-    gap: 40px;
+    max-width: 1240px;
+    gap: 90px;
 }
+
 
 
 .mock-image img {
@@ -568,9 +567,11 @@ section.login-signup-sec {
 }
 
 .userlogin-sec .cardbottom-shadow img {
-    left: -80px !important;
-    width: 410px;
+    left: -70px !important;
+    width: 335px;
 }
+
+
 
 /********** UserLogin Page CSS End **********/
 
@@ -817,11 +818,11 @@ button.begin-btn a {
     gap: 1px;
     will-change: transform;
     position: relative;
-    padding: 40px 0px 30px 0px;
+    padding: 53px 0px 15px 0px;
 }
   
   .questionnumber {
-    min-width: 21.83px;
+    min-width: 23.85px;
     text-align: center;
     padding: 15px 0px;
     border: 1px solid #231f2040;
@@ -865,7 +866,7 @@ button.begin-btn a {
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translate(0px, -6px);
+    transform: translate(0px, 7px);
   }
   .modal-footer p {
     color: #747474;
@@ -944,7 +945,7 @@ button.begin-btn a {
 }
 
 .questiontext-sec {
-    padding: 0px 0px 100px 0px;
+    padding: 225px 0px 100px 0px;
 }
 
 
@@ -1363,11 +1364,35 @@ button.modal-exit-btn .cardbottom-shadow img {
   }
 
   .questiontext-sec .container {
-    max-width: 1220px;
+    max-width: 1320px;
 }
 
 /********** Review Scroll Page CSS End **********/
 
+
+
+section.header-sec {
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+    background: #fff;
+}
+
+section.reviewscroll-sec {
+    position: fixed;
+    width: 100%;
+    top: 90px;
+    z-index: 999;
+    background: #fff
+}
+
+section.questionnumber-sec {
+    position: fixed;
+    width: 100%;
+    top: 90px;
+    z-index: 999;
+    background: #fff
+}
 
 /********** Footer CSS Start **********/
 
@@ -1615,14 +1640,18 @@ button.modal-exit-btn .cardbottom-shadow img {
 
 @media (min-width: 1200px) {
     .container {
-        max-width: 1170px;
+        max-width: 1270px;
+    }
+
+    .homepg-card-sec .container {
+        max-width: 970px;
     }
 
     .questionnumber-sec .container {
-        max-width: 1220px;
+        max-width: 1320px;
     }
 
     .reviewscroll-sec .container {
-        max-width: 1220px;
+        max-width: 1320px;
     }
 }

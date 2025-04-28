@@ -101,7 +101,7 @@
                 </div>
             </section>
 
-            <section class="questiontext-sec">
+            <section class="questiontext-sec" id="sectiontop">
                 <div class="container">
                     <div class="question-option-tabsbox-scroll">
                         <transition name="fade" mode="out-in">

@@ -113,8 +113,8 @@ export default {
 }
 
 .pipeline {
-  width: 1.22px;
-  height: 20px;
+  width: 1px;
+  height: 17px;
   background: #F1F2F2;
   margin-left: 1rem;
 }
