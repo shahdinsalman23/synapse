@@ -945,7 +945,7 @@ button.begin-btn a {
 }
 
 .questiontext-sec {
-    padding: 0px 0px 100px 0px;
+    padding: 225px 0px 100px 0px;
 }
 
 
@@ -1369,6 +1369,30 @@ button.modal-exit-btn .cardbottom-shadow img {
 
 /********** Review Scroll Page CSS End **********/
 
+
+
+section.header-sec {
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+    background: #fff;
+}
+
+section.reviewscroll-sec {
+    position: fixed;
+    width: 100%;
+    top: 90px;
+    z-index: 999;
+    background: #fff
+}
+
+section.questionnumber-sec {
+    position: fixed;
+    width: 100%;
+    top: 90px;
+    z-index: 999;
+    background: #fff
+}
 
 /********** Footer CSS Start **********/
 
