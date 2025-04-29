@@ -339,7 +339,7 @@ section.homepg-sec {
 }
 
 section.login-signup-sec {
-    padding: 85px 0px 60px 0px;
+    padding: 85px 0px 130px 0px;
 }
 
 
@@ -352,9 +352,7 @@ section.login-signup-sec {
 }
 
 
-section.login-signup-sec {
-    padding: 108px 0px 60px 0px;
-}
+
 
 .loginSignup-btn {
     display: flex;
@@ -517,7 +515,7 @@ section.login-signup-sec {
 /********** UserLogin Page CSS Start **********/
 
 .mocksection-pg {
-    padding: 120px 0px 122px 0px;
+    padding: 240px 0px 122px 0px;
 }
 
 
@@ -945,7 +943,7 @@ button.begin-btn a {
 }
 
 .questiontext-sec {
-    padding: 225px 0px 100px 0px;
+    padding: 235px 0px 100px 0px;
 }
 
 
