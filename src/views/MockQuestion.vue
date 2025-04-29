@@ -11,15 +11,16 @@
 
         <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
             :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
-            @startagain="startTimeing" @exitmock="exit" :stoptimerpopup="stoptimerpopup" :fillicon="fillicon" />
+            @startagain="startTimeing" @exitmock="exit" :stoptimerpopup="stoptimerpopup" :fillicon="fillicon"
+            @returnquestion="getBackindexheader" />
         <div v-if="eye">
 
 
             <section class="questionnumber-sec">
                 <div class="container">
                     <div class="questionnumber-slide-container" ref="container">
-                        <div class="questionleft-arrow" @mouseenter="startScroll('left')" @mouseleave="stopScroll"  @mousedown="fastScroll('left')"
-                        @mouseup="stopScroll"><svg
+                        <div class="questionleft-arrow" @mouseenter="startScroll('left')" @mouseleave="stopScroll"
+                            @mousedown="fastScroll('left')" @mouseup="stopScroll"><svg
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left">
@@ -61,8 +62,8 @@
 
 
 
-                        <div class="questionright-arrow" @mouseenter="startScroll('right')" @mouseleave="stopScroll" @mousedown="fastScroll('right')"
-                        @mouseup="stopScroll">
+                        <div class="questionright-arrow" @mouseenter="startScroll('right')" @mouseleave="stopScroll"
+                            @mousedown="fastScroll('right')" @mouseup="stopScroll">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right">
@@ -463,7 +464,7 @@ export default {
             });
         },
         startScroll(direction) {
-            console.log('direct', this.currentIndex , this.maxIndex)
+            console.log('direct', this.currentIndex, this.maxIndex)
             this.scrollDirection = direction;
 
             if (!this.scrollInterval) {
@@ -493,7 +494,7 @@ export default {
                 } else {
                     this.stopScroll();
                 }
-            }, this.scrollSpeed / 2 ); // faster interval
+            }, this.scrollSpeed / 2); // faster interval
         },
         stopScroll() {
             if (this.scrollInterval) {
@@ -1447,6 +1448,32 @@ export default {
 
         },
 
+
+
+        getBackindexheader() {
+
+            
+            this.flg = false
+            this.showflagelist = false
+            this.showunanswerlist = false
+            this.fillicon = 1
+
+
+           
+
+            localStorage.setItem('presentindex', this.currentQuestionIndex);
+
+            localStorage.setItem('breadcrumps', 'Normal');
+         
+            this.review = false;
+            this.starts = true;
+            this.eye = true
+            this.handleBreadcrumpsUpdate('Normal');
+
+        },
+
+
+      
 
         handleBreadcrumpsUpdate(newBreadcrumps) {
             // Update the breadcrumps value

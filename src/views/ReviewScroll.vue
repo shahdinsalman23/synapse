@@ -1,199 +1,93 @@
 <template>
     <div>
 
-  
-
-    <div v-if="loadingcircle">
-
-        <Loadingcircle/>
-    </div>
-    <div v-else>
-        <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
-        :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
-        @startagain="startTimer" @exitmock="exit" :stoptimerpopup="stoptimerpopup"  :fillicon="fillicon" />
-
-        <div v-if="reviewfirst">
 
 
-            <ReviewMockBirdsEye :currentQuestionIndex="currentQuestionIndex" :allquestions="allquestions" :returning="returning"
-                @getBackindex="getBackindex" @startMocks="getBackindex(0)"  />
+        <div v-if="loadingcircle">
 
+            <Loadingcircle />
         </div>
         <div v-else>
-   
+            <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
+                :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
+                @startagain="startTimer" @exitmock="exit" :stoptimerpopup="stoptimerpopup" :fillicon="fillicon"
+                @returnquestion="getBackindexheader" />
+
+            <div v-if="reviewfirst">
 
 
-            <section class="reviewscroll-sec">
-                <div class="container">
-                    <div class="questionnumber-slide-container" ref="container">
-                        <div class="questionleft-arrow" @mouseenter="startScroll('left')" @mouseleave="stopScroll" @mousedown="fastScroll('left')"
-                        @mouseup="stopScroll"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left">
-                                <path d="m15 18-6-6 6-6" />
-                            </svg></div>
+                <ReviewMockBirdsEye :currentQuestionIndex="currentQuestionIndex" :allquestions="allquestions"
+                    :returning="returning" @getBackindex="getBackindex" @startMocks="getBackindex(0)" />
 
-                        <div class="slider-wrapper">
-                            <div class="questionnumber-slide" :style="slideStyle">
-                                <span v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber"
-                                :style="{
-                                    background: nav.score
-                                        ? (nav.score.correct === 1
-                                            ? '#9ded6c'
-                                            : (nav.score.correct === 0
-                                                ? '#FFBABE'
-                                                : 'white'))
-                                        : (nav.flag
-                                            ? '#d2cbcb'
-                                            : (nav.skip
-                                                ? '#d2cbcb'
-                                                : 'white')),
-
-                                                border: isPresentIndexs(indexnav)
-                                      ? (
-                                        nav.score
-                                          ? (nav.score.correct === 1
-                                            ? '1px solid green'
-                                            : (nav.score.correct === 0
-                                              ? '1px solid red'
-                                              : '1px solid white'))
-                                          : (nav.flag
-                                            ? '1px solid black'
-                                            : (nav.skip
-                                              ? ' 1px solid black'
-                                              : ' 1px solid white'))
-                                      ) 
-                                      : ''
+            </div>
+            <div v-else>
 
 
-                                                
 
-
-                                                
-
-                                }"
-                                :class="{ 'activeindexreview': isPresentIndexs(indexnav) }" @click="getBackindex(indexnav)" 
-                                
-                                
-                                >
-                                    {{ indexnav + 1 }}
-                                    <!-- Ye flag sirf selected numbers pe dikhega -->
-                                    <svg v-if="nav.flag" class="red-flag" width="11"
-                                        viewBox="0 0 19 17">
-                                        <path
-                                            d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
-                                            fill="#ED1C24" />
-                                    </svg>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="questionright-arrow" @mouseenter="startScroll('right')" @mouseleave="stopScroll"  @mousedown="fastScroll('right')"
-                        @mouseup="stopScroll">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right">
-                                <path d="m9 18 6-6-6-6" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="questiontext-sec" id="sectiontop">
-                <div class="container">
-                    <div class="question-option-tabsbox-scroll">
-                        <transition name="fade" mode="out-in">
-                        
-                        <div class="questiontext-box" v-if="currentQuestion" :key="currentQuestion.id" >
-                            <p> {{
-                                currentQuestion ? currentQuestion.title : "No questions available."
-                            }}</p>
-                            <span class="questionflag">
-                                <svg v-if="flg || currentQuestion.flag"
-                                width="19" height="17"
-                                viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z"
-                                    fill="#ED1C24" />
-                            </svg>
-
-
-                            <svg  v-if="!flg && !currentQuestion.flag"
-                                 width="19" height="16" viewBox="0 0 19 16"
-                                fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M8.49385 2.26427L8.72443 2.39603H8.74116C11.6548 3.96951 14.7462 4.01469 17.67 2.53156V13.8189C16.2175 14.6116 14.7714 14.996 13.3301 14.996C11.8326 14.996 10.3221 14.5811 8.82642 13.7279C6.28896 12.273 3.59969 12.0096 1 12.9068V1.56338C3.47425 0.631129 6.01882 0.849963 8.49385 2.26427Z"
-                                    fill="#FAF8ED" stroke="#9A9898" stroke-width="2" />
-                            </svg>
-                                <span class="flag-hover-text">Flag Question</span>
-                            </span>
-                            <div class="questioncomment">
-                                <button @click="openfeedbackpop"><svg width="20" height="21" viewBox="0 0 20 21"
-                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M3.75 20.8584C3.69 20.8584 3.62006 20.8485 3.56006 20.8185C3.35006 20.7385 3.20996 20.5385 3.20996 20.3185V15.9185H2.41003C1.20003 15.9185 0.209961 14.9284 0.209961 13.7184V2.59845C0.209961 1.38845 1.20003 0.398438 2.41003 0.398438H17.26C18.47 0.398438 19.46 1.38845 19.46 2.59845V13.7184C19.46 14.9284 18.47 15.9185 17.26 15.9185H8.40002L4.15002 20.6784C4.05002 20.7984 3.9 20.8584 3.75 20.8584ZM2.42004 1.48843C1.80004 1.48843 1.30005 1.98843 1.30005 2.60843V13.7285C1.30005 14.3485 1.80004 14.8484 2.42004 14.8484H3.75C4.05 14.8484 4.29004 15.0885 4.29004 15.3885V18.9185L7.76001 15.0284C7.86001 14.9184 8.01003 14.8484 8.16003 14.8484H17.26C17.88 14.8484 18.38 14.3485 18.38 13.7285V2.60843C18.38 1.98843 17.88 1.48843 17.26 1.48843H2.41003H2.42004Z"
-                                            fill="#8698A2" />
-                                        <path
-                                            d="M14.7601 10.2285H5.66016C5.36016 10.2285 5.12012 9.98845 5.12012 9.68845C5.12012 9.38845 5.36016 9.14844 5.66016 9.14844H14.7601C15.0601 9.14844 15.3002 9.38845 15.3002 9.68845C15.3002 9.98845 15.0601 10.2285 14.7601 10.2285Z"
-                                            fill="#8698A2" />
-                                        <path
-                                            d="M14.7601 6.72845H5.66016C5.36016 6.72845 5.12012 6.48845 5.12012 6.18845C5.12012 5.88845 5.36016 5.64844 5.66016 5.64844H14.7601C15.0601 5.64844 15.3002 5.88845 15.3002 6.18845C15.3002 6.48845 15.0601 6.72845 14.7601 6.72845Z"
-                                            fill="#8698A2" />
-                                    </svg></button>
-                            </div>
-                        </div> 
-                        </transition>
-                        <transition name="fade" mode="out-in">
-                            <div :key="currentQuestion.id">
-
-                            
-                        <div class="question-alloptions" v-if="currentQuestion">
-                            <div  v-for="(option, index) in currentQuestion.options"
-                            :key="option" class="question-option"
-                            :for="option.id" :style="getLabelStyle(option)">
-                                
-                                <div class="option-header" @click="toggleAccordion(index)">
-                                  
-                                    <h4>{{ String.fromCharCode(65 + index) }}. {{ option.title }}</h4>
-                                    <div class="accordion-icon">
-                                        <svg v-if="activeOption === index" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5 12H19" stroke="#231F20" stroke-width="2"
-                                                stroke-linecap="round" />
-                                        </svg>
-                                        <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M12 5V19" stroke="#231F20" stroke-width="2"
-                                                stroke-linecap="round" />
-                                            <path d="M5 12H19" stroke="#231F20" stroke-width="2"
-                                                stroke-linecap="round" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <transition @enter="enter" @leave="leave" :css="false">
-                                    <div v-if="activeOption === index" class="option-content">
-                                        <p>{{ option.rollingout ? option.rollingout : option.explanation }}</p>
-                                    </div>
-                                </transition>
-                            </div>
-                        </div>
-                    </div>
-                    </transition>
-                        <div class="questionsoptions-arrows">
-                            <div class="questionoption-leftarrow" @click="previousQuestion">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                <section class="reviewscroll-sec">
+                    <div class="container">
+                        <div class="questionnumber-slide-container" ref="container">
+                            <div class="questionleft-arrow" @mouseenter="startScroll('left')" @mouseleave="stopScroll"
+                                @mousedown="fastScroll('left')" @mouseup="stopScroll"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left">
                                     <path d="m15 18-6-6 6-6" />
-                                </svg>
+                                </svg></div>
+
+                            <div class="slider-wrapper">
+                                <div class="questionnumber-slide" :style="slideStyle">
+                                    <span v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber"
+                                        :style="{
+                                            background: nav.score
+                                                ? (nav.score.correct === 1
+                                                    ? '#9ded6c'
+                                                    : (nav.score.correct === 0
+                                                        ? '#FFBABE'
+                                                        : '#f1f2f2'))
+                                                : (nav.flag
+                                                    ? '#d2cbcb'
+                                                    : (nav.skip
+                                                        ? '#d2cbcb'
+                                                        : '#f1f2f2')),
+
+                                            border: isPresentIndexs(indexnav)
+                                                ? (
+                                                    nav.score
+                                                        ? (nav.score.correct === 1
+                                                            ? '1px solid green'
+                                                            : (nav.score.correct === 0
+                                                                ? '1px solid red'
+                                                                : '1px solid grey'))
+                                                        : (nav.flag
+                                                            ? '1px solid black'
+                                                            : (nav.skip
+                                                                ? ' 1px solid black'
+                                                                : ' 1px solid grey'))
+                                                )
+                                                : ''
+
+
+
+
+
+
+
+                                        }" :class="{ 'activeindexreview': isPresentIndexs(indexnav) }"
+                                        @click="getBackindex(indexnav)">
+                                        {{ indexnav + 1 }}
+                                        <!-- Ye flag sirf selected numbers pe dikhega -->
+                                        <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
+                                            <path
+                                                d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
+                                                fill="#ED1C24" />
+                                        </svg>
+                                    </span>
+                                </div>
                             </div>
 
-                            <div v-if="currentQuestionIndex === questions.length - 1" class="questionoption-rightarrow"  @click="gotonewpage()">
-                                Finish Review
-                            </div>
-                            <div v-else class="questionoption-rightarrow" @click="nextQuestion()">
+                            <div class="questionright-arrow" @mouseenter="startScroll('right')" @mouseleave="stopScroll"
+                                @mousedown="fastScroll('right')" @mouseup="stopScroll">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round"
@@ -202,70 +96,190 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="brake-border"></div>
-                        <MockReviewDetail :currentQuestion="currentQuestion"  @commentsave="commentsave" />
                     </div>
-                </div>
-            </section>
+                </section>
+
+                <section class="questiontext-sec" id="sectiontop">
+                    <div class="container">
+                        <div class="question-option-tabsbox-scroll">
+                            <transition name="fade" mode="out-in">
+
+                                <div class="questiontext-box" v-if="currentQuestion" :key="currentQuestion.id">
+                                    <p> {{
+                                        currentQuestion ? currentQuestion.title : "No questions available."
+                                    }}</p>
+                                    <span class="questionflag">
+                                        <svg v-if="flg || currentQuestion.flag" @click="removeflage(currentQuestion.id)"
+                                            width="19" height="17" viewBox="0 0 19 17" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z"
+                                                fill="#ED1C24" />
+                                        </svg>
 
 
-            <transition name="slide-modal" @click.self="showPauseModal = false">
-                <!-- <FeedbackFormModal v-if="showPauseModal" @close="showPauseModal = false"
+                                        <svg v-if="!flg && !currentQuestion.flag" width="19" height="16"
+                                            viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M8.49385 2.26427L8.72443 2.39603H8.74116C11.6548 3.96951 14.7462 4.01469 17.67 2.53156V13.8189C16.2175 14.6116 14.7714 14.996 13.3301 14.996C11.8326 14.996 10.3221 14.5811 8.82642 13.7279C6.28896 12.273 3.59969 12.0096 1 12.9068V1.56338C3.47425 0.631129 6.01882 0.849963 8.49385 2.26427Z"
+                                                fill="#FAF8ED" stroke="#9A9898" stroke-width="2" />
+                                        </svg>
+                                        <span class="flag-hover-text">Flag Question</span>
+                                    </span>
+                                    <div class="questioncomment">
+                                        <button @click="openfeedbackpop"><svg width="20" height="21" viewBox="0 0 20 21"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M3.75 20.8584C3.69 20.8584 3.62006 20.8485 3.56006 20.8185C3.35006 20.7385 3.20996 20.5385 3.20996 20.3185V15.9185H2.41003C1.20003 15.9185 0.209961 14.9284 0.209961 13.7184V2.59845C0.209961 1.38845 1.20003 0.398438 2.41003 0.398438H17.26C18.47 0.398438 19.46 1.38845 19.46 2.59845V13.7184C19.46 14.9284 18.47 15.9185 17.26 15.9185H8.40002L4.15002 20.6784C4.05002 20.7984 3.9 20.8584 3.75 20.8584ZM2.42004 1.48843C1.80004 1.48843 1.30005 1.98843 1.30005 2.60843V13.7285C1.30005 14.3485 1.80004 14.8484 2.42004 14.8484H3.75C4.05 14.8484 4.29004 15.0885 4.29004 15.3885V18.9185L7.76001 15.0284C7.86001 14.9184 8.01003 14.8484 8.16003 14.8484H17.26C17.88 14.8484 18.38 14.3485 18.38 13.7285V2.60843C18.38 1.98843 17.88 1.48843 17.26 1.48843H2.41003H2.42004Z"
+                                                    fill="#8698A2" />
+                                                <path
+                                                    d="M14.7601 10.2285H5.66016C5.36016 10.2285 5.12012 9.98845 5.12012 9.68845C5.12012 9.38845 5.36016 9.14844 5.66016 9.14844H14.7601C15.0601 9.14844 15.3002 9.38845 15.3002 9.68845C15.3002 9.98845 15.0601 10.2285 14.7601 10.2285Z"
+                                                    fill="#8698A2" />
+                                                <path
+                                                    d="M14.7601 6.72845H5.66016C5.36016 6.72845 5.12012 6.48845 5.12012 6.18845C5.12012 5.88845 5.36016 5.64844 5.66016 5.64844H14.7601C15.0601 5.64844 15.3002 5.88845 15.3002 6.18845C15.3002 6.48845 15.0601 6.72845 14.7601 6.72845Z"
+                                                    fill="#8698A2" />
+                                            </svg></button>
+                                    </div>
+                                </div>
+                            </transition>
+                            <transition name="fade" mode="out-in">
+                                <div :key="currentQuestion.id">
+
+
+                                    <div class="question-alloptions" v-if="currentQuestion">
+                                        <div v-for="(option, index) in currentQuestion.options" :key="option"
+                                            class="question-option" :for="option.id" :style="getLabelStyle(option)">
+
+                                            <div class="option-header" @click="toggleAccordion(index)">
+
+                                                <h4>{{ String.fromCharCode(65 + index) }}. {{ option.title }}</h4>
+                                                <div class="accordion-icon">
+                                                    <svg v-if="activeOption === index" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M5 12H19" stroke="#231F20" stroke-width="2"
+                                                            stroke-linecap="round" />
+                                                    </svg>
+                                                    <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M12 5V19" stroke="#231F20" stroke-width="2"
+                                                            stroke-linecap="round" />
+                                                        <path d="M5 12H19" stroke="#231F20" stroke-width="2"
+                                                            stroke-linecap="round" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <transition @enter="enter" @leave="leave" :css="false">
+                                                <div v-if="activeOption === index" class="option-content">
+                                                    <p>{{ option.rollingout ? option.rollingout : option.explanation }}
+                                                    </p>
+                                                </div>
+                                            </transition>
+                                        </div>
+                                    </div>
+                                </div>
+                            </transition>
+                            <div class="questionsoptions-arrows">
+                                <div class="questionoption-leftarrow" @click="previousQuestion">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-chevron-left-icon lucide-chevron-left">
+                                        <path d="m15 18-6-6 6-6" />
+                                    </svg>
+                                </div>
+
+                                <div v-if="currentQuestionIndex === questions.length - 1"
+                                    class="questionoption-rightarrow" @click="gotonewpage()">
+                                    Finish Review
+                                </div>
+                                <div v-else class="questionoption-rightarrow" @click="nextQuestion()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-chevron-right-icon lucide-chevron-right">
+                                        <path d="m9 18 6-6-6-6" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="brake-border"></div>
+                            <MockReviewDetail :currentQuestion="currentQuestion" @commentsave="commentsave" />
+                        </div>
+                    </div>
+                </section>
+
+
+                <transition name="slide-modal" @click.self="showPauseModal = false">
+                    <!-- <FeedbackFormModal v-if="showPauseModal" @close="showPauseModal = false"
                     @resume="showPauseModal = false" @exit="handleExitMock" /> -->
 
                     <div class="modal-overlay" v-if="showPauseModal" @click.self="showPauseModal = false">
                         <div class="modal-content">
-                          <div class="feedback-form-box">
-                            <h4>Share feedback</h4>
-                            <form action="">
-                              <div class="feedbackform-button">
-                                <div class="feedbackform-button" v-for="(category, index) in feedbackCategories" :key="index">
-                                  <button @click="toggleOptions(index)"
-                                  :class="{ 'active-btn': category.selectedOption }" type="button"> {{ category.name }}</button>
+                            
+                            <div class="feedback-form-box">
+                                <div class="cross">
+                                    <span class="crossspan" @click="showPauseModal = false">
+                                        X
+                                    </span>
+                                </div>
 
-                                  <div class="feeback-question-options" v-if="showOptionsIndex === index && category.name != 'Other'">
-                                    <div class="feeback-question-option" >
-                                      <input type="radio" :checked="category.selectedOption === 'Incorrect'"
-                                      @click="selectOption(index, 'Incorrect')" value="Incorrect">
-                                      <p>Incorrect</p>
-                                    </div>
-                                    <div class="feeback-question-option">
-                                      <input type="radio" value="Needs improvement"
-                                      :checked="category.selectedOption === 'Needs improvement'"
-                                      @click="selectOption(index, 'Needs improvement')">
-                                      <p>Needs improvement</p>
-                                    </div>
-                                  </div>
 
-                                  <!-- <div v-if="category.name == 'Other' && showOptionsIndex === 6" class="feeback-question-option">
+                                <h4>Share feedback</h4>
+                                <form action="">
+                                    <div class="feedbackform-button">
+                                        <div class="feedbackform-button" v-for="(category, index) in feedbackCategories"
+                                            :key="index">
+                                            <button @click="toggleOptions(index)"
+                                                :class="{ 'active-btn': category.selectedOption }" type="button"> {{
+                                                    category.name }}</button>
+
+                                            <div class="feeback-question-options"
+                                                v-if="showOptionsIndex === index && category.name != 'Other'">
+                                                <div class="feeback-question-option">
+                                                    <input type="radio"
+                                                        :checked="category.selectedOption === 'Incorrect'"
+                                                        @click="selectOption(index, 'Incorrect')" value="Incorrect">
+                                                    <p>Incorrect</p>
+                                                </div>
+                                                <div class="feeback-question-option">
+                                                    <input type="radio" value="Needs improvement"
+                                                        :checked="category.selectedOption === 'Needs improvement'"
+                                                        @click="selectOption(index, 'Needs improvement')">
+                                                    <p>Needs improvement</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- <div v-if="category.name == 'Other' && showOptionsIndex === 6" class="feeback-question-option">
 
                                     <input class="input-form" type="text" placeholder="Optional text..."
                                     v-model="form.optionfeedback" />
                                   </div> -->
-                                </div>
+                                        </div>
 
-                                
-                               <div class="feedback-textarea-box">
-                                <textarea name="" id="" ref="feedbackArea" v-model="form.optionfeedback" @focus="expandTextarea" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea>
-                                </div>
-                                <!-- <textarea name="" id="" v-model="form.optionfeedback" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea> -->
-                              </div>
-                              <div class="feedbackform-submitbtn">
-                                <button type="button" @click="submitFeedback">Submit</button>
-                              </div>
-                            </form>
-                          </div>
+
+                                        <div class="feedback-textarea-box">
+                                            <textarea name="" id="" ref="feedbackArea" v-model="form.optionfeedback"
+                                                @focus="expandTextarea" class="feedback-textarea"
+                                                placeholder="Please write your suggestions here!"></textarea>
+                                        </div>
+                                        <!-- <textarea name="" id="" v-model="form.optionfeedback" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea> -->
+                                    </div>
+                                    <div class="feedbackform-submitbtn">
+                                        <button type="button" @click="submitFeedback">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                      </div>
+                    </div>
 
 
-            </transition>
+                </transition>
+            </div>
+
+
+
         </div>
-
-
-
     </div>
-      </div>
 </template>
 
 
@@ -289,16 +303,16 @@ export default {
     },
     data() {
         return {
-            fillicon:0,
-            loadingcircle:true,
+            fillicon: 0,
+            loadingcircle: true,
             activeButton: null,
-            returning:0,
+            returning: 0,
 
             // selectedOptions: {
-      //   question: null,
-      //   answer: null,
-      //   ruling: null,
-      // },
+            //   question: null,
+            //   answer: null,
+            //   ruling: null,
+            // },
             reviewfirst: true,
             currentIndex: 0,
             numbers: Array.from({ length: 50 }, (_, i) => i + 1),
@@ -536,17 +550,17 @@ export default {
             immediate: true,
         },
         showPauseModal(newVal) {
-        if (newVal) {
-            this.lockBodyScroll();
-        } else {
-            this.unlockBodyScroll();
-        }
-        }  
-    },
-        beforeUnmount() {
-            if (this.showPauseModal) {
+            if (newVal) {
+                this.lockBodyScroll();
+            } else {
                 this.unlockBodyScroll();
             }
+        }
+    },
+    beforeUnmount() {
+        if (this.showPauseModal) {
+            this.unlockBodyScroll();
+        }
     },
 
     mounted() {
@@ -613,16 +627,39 @@ export default {
 
     methods: {
 
-        expandTextarea() {
-      this.$refs.feedbackArea.style.height = "64px";
 
-      this.toggleOptions(null)
-    },
-        Showbirdeye(){
+
+        removeflage(e) {
+
+            this.form.questionId = e;
+            byMethod(this.method, "/removeflage", this.form).then((res) => {
+                if (res.data.saved) {
+                    console.log(res.data.saved);
+
+                    this.flg = false
+                    this.flg2 = false
+
+                    this.getFlaged();
+                    this.getReviewsss()
+
+                }
+            });
+
+        },
+
+        expandTextarea() {
+            this.$refs.feedbackArea.style.height = "64px";
+
+            this.toggleOptions(null)
+        },
+        Showbirdeye() {
             this.reviewfirst = true
             this.fillicon = 0
 
         },
+
+
+
         // startMock(){
         //     console.log('hello');
         //     this.reviewfirst = false
@@ -646,7 +683,7 @@ export default {
             });
         },
         startScroll(direction) {
-            console.log('direct', this.currentIndex , this.maxIndex)
+            console.log('direct', this.currentIndex, this.maxIndex)
             this.scrollDirection = direction;
 
             if (!this.scrollInterval) {
@@ -676,7 +713,7 @@ export default {
                 } else {
                     this.stopScroll();
                 }
-            }, this.scrollSpeed / 2 ); // faster interval
+            }, this.scrollSpeed / 2); // faster interval
         },
         stopScroll() {
             if (this.scrollInterval) {
@@ -824,7 +861,7 @@ export default {
 
         toggleOptions(index) {
 
-            console.log('inde' , index);
+            console.log('inde', index);
             this.showOptionsIndex = this.showOptionsIndex === index ? null : index;
             // this.showOptionsIndex = index;
 
@@ -977,26 +1014,26 @@ export default {
                     console.log("now")
                     if (option.correct == 1) {
                         return {
-                           
+
                             background: '#9DED6C',
-                            border:'1px solid green'
-                            
+                            border: '1px solid green'
+
                         };
                     } else {
                         return {
-                           
+
                             background: '#FFBABE',
-                            border:'1px solid red'
-                           
+                            border: '1px solid red'
+
                         };
                     }
                 } else {
                     if (option.correct == 1) {
                         return {
-                          
+
                             background: '#9DED6C',
-                              border:'1px solid green'
-                          
+                            border: '1px solid green'
+
                         };
                     }
                 }
@@ -1348,7 +1385,7 @@ export default {
             }
         },
 
-        commentsave(e , comment) {
+        commentsave(e, comment) {
             console.log("id", e);
             this.form.question_id = e;
             this.form.comments = comment;
@@ -1637,6 +1674,7 @@ export default {
             setTimeout(() => {
                 get("/getmockquestion?id=" + this.id).then((res) => {
                     this.allquestions = res.data.data
+                    this.setData(res);
 
                 });
             }, 500);
@@ -1657,42 +1695,88 @@ export default {
 
         getBackindex(e) {
 
+            console.log('ind', e)
+
             this.returning = 1
 
-            if(!this.showPauseModal){
+            if (!this.showPauseModal) {
+
+
+                console.log('indexing', e)
+
+                this.showflagelist = false
+                this.showunanswerlist = false
+                this.fillicon = 1
+
+
+                console.log('', e);
+
+                localStorage.setItem('presentindex', e);
+
+                localStorage.setItem('breadcrumps', 'Normal');
+                this.currentQuestionIndex = e
+                this.review = false;
+                this.starts = true;
+                this.reviewfirst = false;
+                this.handleBreadcrumpsUpdate('Normal');
+
+                this.selectedOptions = null
+
+                this.feedbackCategories = [
+                    { name: "Question", selectedOption: null },
+                    { name: "Answer", selectedOption: null },
+                    { name: "Rullingout", selectedOption: null },
+                    { name: "Condition", selectedOption: null },
+                    { name: "Explanation", selectedOption: null },
+                    { name: "Notes", selectedOption: null },
+                ]
+
+                this.showOptionsIndex = null
+            }
+
+        },
+
+
+        getBackindexheader() {
 
             
-            console.log('indexing', e)
 
-            this.showflagelist = false
-            this.showunanswerlist = false
-            this.fillicon = 1
+            this.returning = 1
+
+            if (!this.showPauseModal) {
 
 
-            console.log('', e);
+               
 
-            localStorage.setItem('presentindex', e);
+                this.showflagelist = false
+                this.showunanswerlist = false
+                this.fillicon = 1
 
-            localStorage.setItem('breadcrumps', 'Normal');
-            this.currentQuestionIndex = e
-            this.review = false;
-            this.starts = true;
-            this.reviewfirst = false;
-            this.handleBreadcrumpsUpdate('Normal');
 
-            this.selectedOptions = null
+              
 
-            this.feedbackCategories = [
-                { name: "Question", selectedOption: null },
-                { name: "Answer", selectedOption: null },
-                { name: "Rullingout", selectedOption: null },
-                { name: "Condition", selectedOption: null },
-                { name: "Explanation", selectedOption: null },
-                { name: "Notes", selectedOption: null },
-            ]
+                localStorage.setItem('presentindex', this.currentQuestionIndex);
 
-            this.showOptionsIndex = null
-        }
+                localStorage.setItem('breadcrumps', 'Normal');
+              
+                this.review = false;
+                this.starts = true;
+                this.reviewfirst = false;
+                this.handleBreadcrumpsUpdate('Normal');
+
+                this.selectedOptions = null
+
+                this.feedbackCategories = [
+                    { name: "Question", selectedOption: null },
+                    { name: "Answer", selectedOption: null },
+                    { name: "Rullingout", selectedOption: null },
+                    { name: "Condition", selectedOption: null },
+                    { name: "Explanation", selectedOption: null },
+                    { name: "Notes", selectedOption: null },
+                ]
+
+                this.showOptionsIndex = null
+            }
 
         },
 
@@ -1742,25 +1826,23 @@ export default {
                 });
         },
         lockBodyScroll() {
-      this.scrollPosition = window.pageYOffset;
-      document.body.classList.add('body-scroll-lock');
-      document.body.style.top = `-${this.scrollPosition}px`;
+            this.scrollPosition = window.pageYOffset;
+            document.body.classList.add('body-scroll-lock');
+            document.body.style.top = `-${this.scrollPosition}px`;
+        },
+
+        unlockBodyScroll() {
+            document.body.classList.remove('body-scroll-lock');
+            window.scrollTo(0, this.scrollPosition);
+            document.body.style.top = '';
+        },
     },
 
-    unlockBodyScroll() {
-      document.body.classList.remove('body-scroll-lock');
-      window.scrollTo(0, this.scrollPosition);
-      document.body.style.top = '';
-    },
-    },
-    
 }
 </script>
 
 
 <style scoped>
-
-
 .accordion-icon svg {
     width: 16px;
     height: 16px;
@@ -1777,9 +1859,9 @@ export default {
     align-items: center;
     z-index: 1000;
     margin: 0px 20px;
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
     background: #ffffff94;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(10px);
@@ -1793,24 +1875,24 @@ export default {
     justify-content: center;
     transform-origin: top center;
     animation: modal-slide 0.3s ease-out;
-  }
-  
-  .feedback-form-box {
+}
+
+.feedback-form-box {
     border: 1px solid #93959875;
     width: 250px;
     border-radius: 50px;
     background: #fff;
     box-shadow: 0 0 11.34px #00000080;
     padding: 16px 20px 29px 20px;
-  }
-  
-  .feedback-form-box h4 {
+}
+
+.feedback-form-box h4 {
     padding: 0px 0px 19px 0px;
     color: #231F20;
-  }
-  
-  .feedbackform-button button {
-    font-family:  Helvetica, Arial, sans-serif;
+}
+
+.feedbackform-button button {
+    font-family: Helvetica, Arial, sans-serif;
     border: 1px solid #808285;
     padding: 3px 20px;
     width: 115px;
@@ -1818,14 +1900,14 @@ export default {
     border-radius: 30px;
     color: #2F292B;
     cursor: pointer;
-    
-  }
-  
-  .feedbackform-submitbtn {
+
+}
+
+.feedbackform-submitbtn {
     margin: 12px 0px 0px 0px;
-  }
-  
-  .feedbackform-submitbtn button {
+}
+
+.feedbackform-submitbtn button {
     border: 1px solid #20b14b82;
     background: #9DED6C;
     padding: 4px 10px;
@@ -1836,95 +1918,96 @@ export default {
     font-size: 12px;
     font-weight: bold;
     cursor: pointer;
-  }
-  
-  .feeback-question-options {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin: 0px 0px 10px 0px;	
-  }
-  
-  .feeback-question-option p {
-      font-size: 11px;
-  }
-  
-  .feeback-question-option {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-  }
-  
-  .active-btn {
+}
+
+.feeback-question-options {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0px 0px 10px 0px;
+}
+
+.feeback-question-option p {
+    font-size: 11px;
+}
+
+.feeback-question-option {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.active-btn {
     background-color: #9DED6C !important;
     border-color: #20b14b !important;
     font-weight: bold;
     font-family: Avenir, Helvetica, Arial, sans-serif;
-  }
-  
-  
-  .feeback-question-option input {
-      border: 1px solid #8082857d;
-      background: #EAEBEC;
-      padding: 3px 25px 3px 10px;
-      border-radius: 30px;
-      font-size: 12px;
-  }
-  
-  .feeback-question-option input:focus {
-      outline: none;
-  }
-  
-  
-  .feeback-question-option.selected {
-    background: #FFF9C4; 
+}
+
+
+.feeback-question-option input {
+    border: 1px solid #8082857d;
+    background: #EAEBEC;
+    padding: 3px 25px 3px 10px;
+    border-radius: 30px;
+    font-size: 12px;
+}
+
+.feeback-question-option input:focus {
+    outline: none;
+}
+
+
+.feeback-question-option.selected {
+    background: #FFF9C4;
     border-radius: 15px;
     padding: 2px 8px;
-  }
-  
-  .feeback-question-option input[type="radio"]:checked {
-    accent-color: #6B7280; 
-  }
-  
-  
-  
-  @keyframes fade-in {
+}
+
+.feeback-question-option input[type="radio"]:checked {
+    accent-color: #6B7280;
+}
+
+
+
+@keyframes fade-in {
     from {
-      opacity: 0;
+        opacity: 0;
     }
-  
+
     to {
-      opacity: 1;
+        opacity: 1;
     }
-  }
-  
-  
-  @keyframes modal-slide {
+}
+
+
+@keyframes modal-slide {
     from {
-      transform: translateY(-100%);
+        transform: translateY(-100%);
     }
-  
+
     to {
-      transform: translateY(0);
+        transform: translateY(0);
     }
-  }
-  
-  /* For leave transition */
-  .leaving .modal-content {
+}
+
+/* For leave transition */
+.leaving .modal-content {
     animation: modal-slide-up 0.3s ease-in;
-  }
-  
-  
-  @keyframes modal-slide-up {
+}
+
+
+@keyframes modal-slide-up {
     from {
-      transform: translateY(0);
+        transform: translateY(0);
     }
-  
+
     to {
-      transform: translateY(-100%);
+        transform: translateY(-100%);
     }
-  }
+}
+
 .questionnumber.special {
     background: #FFBABE !important;
 }
@@ -1983,7 +2066,7 @@ export default {
 
     padding: 10px 30px;
     display: flex;
-        align-items: baseline;
+    align-items: baseline;
 
     transition: transform 0.3s ease;
 }
@@ -2030,14 +2113,14 @@ export default {
 }
 
 .questioncomment:hover button {
-  background: #f1f2f2;
+    background: #f1f2f2;
 }
 
 .no-scroll {
-  overflow: hidden !important;
-  position: fixed;
-  width: 100%;
-  height: 100%;
+    overflow: hidden !important;
+    position: fixed;
+    width: 100%;
+    height: 100%;
 }
 
 
@@ -2059,19 +2142,19 @@ export default {
 }
 
 .feedback-textarea::-webkit-scrollbar {
-  width: 3px;
+    width: 3px;
 }
 
 /* Track */
 .feedback-textarea::-webkit-scrollbar-track {
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  cursor: pointer;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 .feedback-textarea::-webkit-scrollbar-thumb {
-  background: #808285;
-  border-radius: 10px;
+    background: #808285;
+    border-radius: 10px;
 }
 
 .feedback-textarea:focus {
@@ -2093,6 +2176,18 @@ textarea.feedback-textarea::placeholder {
 }
 
 
+.cross {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 1px;
+    padding-right: 4px;
+}
+
+span.crossspan {
+    cursor: pointer;
+    font-weight: bold;
+}
+
 @media only screen and (min-height: 1024px) {
 
     .question-option-tabsbox-scroll {
@@ -2101,10 +2196,9 @@ textarea.feedback-textarea::placeholder {
 
 
     .modal-content {
-      
-       padding-bottom: 200px;
-      }
-    
-}
 
+        padding-bottom: 200px;
+    }
+
+}
 </style>
