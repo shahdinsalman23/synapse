@@ -18,14 +18,13 @@
 <style scoped>
 
 
-footer {
-    position: relative;
-    bottom: 0;
+.footermain {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-}
+    margin-top: auto;
+}   
 
 
 </style>
