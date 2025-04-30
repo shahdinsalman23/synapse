@@ -43,6 +43,12 @@ export default {
             interval: null
         }
     },
+
+    created(){
+
+        this.startProgress();
+
+    },
     methods: {
         startProgress() {
 
@@ -122,7 +128,7 @@ export default {
     /* Medium Green */
     transition: width 0.1s linear;
     border-radius: 40px;
-    border: 1px solid #6D6E71;
+   
 }
 
 .progress-text {

@@ -25,7 +25,9 @@
                                 <attempt-progress-button v-if="items.score && items.score.length > 0 && !items.exit"  :item='items' />
 
                                     <div class="progress-btn" v-else-if="items.exit">
-                                        <button style="background:#FFF057" > Resume at {{ Math.round(items.exit.remaining_time / 60) }} min</button>
+                                        <!-- <button style="background:#FFF057" > Resume at {{ Math.round(items.exit.remaining_time / 60) }} min</button> -->
+                                        <button style="background:#FFF057" > PAUSED</button>
+
                                     </div>
 
                                     <div class="progress-btn"  v-else>
