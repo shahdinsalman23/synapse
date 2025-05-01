@@ -93,17 +93,22 @@
 
 
 .activeindexborder {
-  
     border-radius: 13px;
-    background-color: #949393 !important;
-    color: white !important;
+  
+    color: black !important;
+    border: 2px solid black;
+    font-weight: 800 !important;
+    font-size: 19px !important;
+    font-family: HelveticaBoldcont !important;
 }
 
 .isselected {
    
     font-weight: bold !important;
-   
-    font-size: 14px !important;
+
+
+    font-size: 19px !important;
+    font-family: HelveticaBoldcont !important;
 }
 
 /********** Header Login Start **********/

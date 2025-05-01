@@ -12,7 +12,7 @@
         <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
             :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
             @startagain="startTimeing" @exitmock="exit" :stoptimerpopup="stoptimerpopup" :fillicon="fillicon"
-            @returnquestion="getBackindexheader" />
+            @returnquestion="getBackindexheader"  />
         <div v-if="eye">
 
 

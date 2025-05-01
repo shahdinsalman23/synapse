@@ -37,15 +37,15 @@
                                                 ? (
                                                   nav.score
                                                     ? (nav.score.correct === 1
-                                                      ? '1px solid green'
+                                                      ? '2px solid green'
                                                       : (nav.score.correct === 0
-                                                        ? '1px solid red'
-                                                        : '1px solid white'))
+                                                        ? '2px solid red'
+                                                        : '2px solid black'))
                                                     : (nav.flag
-                                                      ? '1px solid black'
+                                                      ? '2px solid black'
                                                       : (nav.skip
-                                                        ? ' 1px solid black'
-                                                        : ' 1px solid white'))
+                                                        ? ' 2px solid black'
+                                                        : ' 2px solid black'))
                                                 ) 
                                                 : ''
                                        

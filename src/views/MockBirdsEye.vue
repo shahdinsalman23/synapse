@@ -7,7 +7,7 @@
                 </div>
                 <div class="mockbirdseye-boxes">
                     <h4 v-for="(nav, indexnav) in allquestions" :key="indexnav"
-                        :class="{ 'activeindexborder': isPresentIndexs(indexnav) }"
+                        
                         @click="toggleNumber(indexnav)">
                         <router-link   :class="{ 'activeindexborder': isPresentIndexs(indexnav) }" to="" :style="{
                             background: nav.score

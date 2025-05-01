@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="top">
 
 
 
@@ -11,7 +11,7 @@
             <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
                 :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
                 @startagain="startTimer" @exitmock="exit" :stoptimerpopup="stoptimerpopup" :fillicon="fillicon"
-                @returnquestion="getBackindexheader" />
+                @returnquestion="getBackindexheader" :isRowFixed="isRowFixed" @SectionScroll="SectionScroll" />
 
             <div v-if="reviewfirst">
 
@@ -20,7 +20,7 @@
                     :returning="returning" @getBackindex="getBackindex" @startMocks="getBackindex(0)" />
 
             </div>
-            <div v-else>
+            <div v-else >
 
 
 
@@ -98,13 +98,15 @@
                         </div>
                     </div>
                 </section>
-
-                <section class="questiontext-sec" id="sectiontop">
+                
+                <section class="questiontext-sec" id="sectiontop"  >
                     <div class="container">
-                        <div class="question-option-tabsbox-scroll">
+                        
+                        <div class="question-option-tabsbox-scroll" @scroll="handleScroll" >
+                          
                             <transition name="fade" mode="out-in">
 
-                                <div class="questiontext-box" v-if="currentQuestion" :key="currentQuestion.id">
+                                <div class="questiontext-box" v-if="currentQuestion" :key="currentQuestion.id" id="bottom" >
                                     <p> {{
                                         currentQuestion ? currentQuestion.title : "No questions available."
                                     }}</p>
@@ -118,7 +120,7 @@
                                         </svg>
 
 
-                                        <svg v-if="!flg && !currentQuestion.flag" width="19" height="16"
+                                        <svg @click="setflage(currentQuestion.id)" v-if="!flg && !currentQuestion.flag" width="19" height="16"
                                             viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M8.49385 2.26427L8.72443 2.39603H8.74116C11.6548 3.96951 14.7462 4.01469 17.67 2.53156V13.8189C16.2175 14.6116 14.7714 14.996 13.3301 14.996C11.8326 14.996 10.3221 14.5811 8.82642 13.7279C6.28896 12.273 3.59969 12.0096 1 12.9068V1.56338C3.47425 0.631129 6.01882 0.849963 8.49385 2.26427Z"
@@ -127,7 +129,16 @@
                                         <span class="flag-hover-text">Flag Question</span>
                                     </span>
                                     <div class="questioncomment">
-                                        <button @click="openfeedbackpop"><svg width="20" height="21" viewBox="0 0 20 21"
+                                        <button @click="openfeedbackpop">
+
+                                            <svg v-if="currentQuestion.feedback" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M2.78009 1.5C2.16009 1.5 1.6601 2 1.6601 2.62V13.74C1.6601 14.36 2.16009 14.86 2.78009 14.86H4.11005C4.41005 14.86 4.65009 15.1 4.65009 15.4V18.93L8.12006 15.04C8.22006 14.93 8.37008 14.86 8.52008 14.86H17.6201C18.2401 14.86 18.7401 14.36 18.7401 13.74V2.62C18.7401 2 18.2401 1.5 17.6201 1.5H2.77008H2.78009Z" fill="#9DED6C"/>
+                                                <path d="M4.11005 20.8701C4.05005 20.8701 3.9801 20.8601 3.9201 20.8301C3.7101 20.7501 3.57001 20.5501 3.57001 20.3301V15.9301H2.77008C1.56008 15.9301 0.570007 14.9402 0.570007 13.7302V2.61014C0.570007 1.40014 1.56008 0.410156 2.77008 0.410156H17.6201C18.8301 0.410156 19.82 1.40014 19.82 2.61014V13.7302C19.82 14.9402 18.8301 15.9301 17.6201 15.9301H8.76007L4.51007 20.6902C4.41007 20.8102 4.26005 20.8701 4.11005 20.8701ZM2.78009 1.50015C2.16009 1.50015 1.6601 2.00015 1.6601 2.62015V13.7401C1.6601 14.3601 2.16009 14.8601 2.78009 14.8601H4.11005C4.41005 14.8601 4.65009 15.1001 4.65009 15.4001V18.9301L8.12006 15.0402C8.22006 14.9302 8.37008 14.8601 8.52008 14.8601H17.6201C18.2401 14.8601 18.7401 14.3601 18.7401 13.7401V2.62015C18.7401 2.00015 18.2401 1.50015 17.6201 1.50015H2.77008H2.78009Z" fill="#8698A2"/>
+                                                <path d="M15.1301 10.2499H6.03009C5.73009 10.2499 5.49005 10.0099 5.49005 9.7099C5.49005 9.4099 5.73009 9.16992 6.03009 9.16992H15.1301C15.4301 9.16992 15.6701 9.4099 15.6701 9.7099C15.6701 10.0099 15.4301 10.2499 15.1301 10.2499Z" fill="#8698A2"/>
+                                                <path d="M15.1301 6.74991H6.03009C5.73009 6.74991 5.49005 6.5099 5.49005 6.2099C5.49005 5.9099 5.73009 5.66992 6.03009 5.66992H15.1301C15.4301 5.66992 15.6701 5.9099 15.6701 6.2099C15.6701 6.5099 15.4301 6.74991 15.1301 6.74991Z" fill="#8698A2"/>
+                                                </svg>
+                                            
+                                            <svg v-else width="20" height="21" viewBox="0 0 20 21" 
                                                 fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path
                                                     d="M3.75 20.8584C3.69 20.8584 3.62006 20.8485 3.56006 20.8185C3.35006 20.7385 3.20996 20.5385 3.20996 20.3185V15.9185H2.41003C1.20003 15.9185 0.209961 14.9284 0.209961 13.7184V2.59845C0.209961 1.38845 1.20003 0.398438 2.41003 0.398438H17.26C18.47 0.398438 19.46 1.38845 19.46 2.59845V13.7184C19.46 14.9284 18.47 15.9185 17.26 15.9185H8.40002L4.15002 20.6784C4.05002 20.7984 3.9 20.8584 3.75 20.8584ZM2.42004 1.48843C1.80004 1.48843 1.30005 1.98843 1.30005 2.60843V13.7285C1.30005 14.3485 1.80004 14.8484 2.42004 14.8484H3.75C4.05 14.8484 4.29004 15.0885 4.29004 15.3885V18.9185L7.76001 15.0284C7.86001 14.9184 8.01003 14.8484 8.16003 14.8484H17.26C17.88 14.8484 18.38 14.3485 18.38 13.7285V2.60843C18.38 1.98843 17.88 1.48843 17.26 1.48843H2.41003H2.42004Z"
@@ -138,7 +149,13 @@
                                                 <path
                                                     d="M14.7601 6.72845H5.66016C5.36016 6.72845 5.12012 6.48845 5.12012 6.18845C5.12012 5.88845 5.36016 5.64844 5.66016 5.64844H14.7601C15.0601 5.64844 15.3002 5.88845 15.3002 6.18845C15.3002 6.48845 15.0601 6.72845 14.7601 6.72845Z"
                                                     fill="#8698A2" />
-                                            </svg></button>
+                                            </svg>
+
+
+
+                                            
+                                        
+                                        </button>
                                     </div>
                                 </div>
                             </transition>
@@ -218,13 +235,18 @@
                             
                             <div class="feedback-form-box">
                                 <div class="cross">
+                                    <h4>Share feedback</h4>
                                     <span class="crossspan" @click="showPauseModal = false">
-                                        X
+                                        <svg width="12" height="12" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1.38013 0.75L8.1701 7.54001" stroke="#6D6E71" stroke-miterlimit="10" stroke-linecap="round"/>
+                                            <path d="M8.1701 0.75L1.38013 7.54001" stroke="#6D6E71" stroke-miterlimit="10" stroke-linecap="round"/>
+                                            </svg>
+                                            
                                     </span>
                                 </div>
 
 
-                                <h4>Share feedback</h4>
+                                <!-- <h4>Share feedback</h4> -->
                                 <form action="">
                                     <div class="feedbackform-button">
                                         <div class="feedbackform-button" v-for="(category, index) in feedbackCategories"
@@ -539,6 +561,19 @@ export default {
     },
 
     watch: {
+
+        reviewfirst(newVal) {
+    if (!newVal) {
+      // reviewfirst is false → section becomes visible
+      this.$nextTick(() => {
+        const section = document.getElementById('sectiontop');
+        if (section) {
+          section.addEventListener('scroll', this.handleScroll);
+          console.log('Scroll listener attached to #sectiontop');
+        }
+      });
+    }
+  },
         currentQuestion: {
             handler(newVal) {
                 if (!this.loading && newVal) {
@@ -565,6 +600,31 @@ export default {
 
     mounted() {
 
+    //     this.lastScrollTop = 0; 
+    // const section = document.getElementById('sectiontop');
+
+    // console.log('section' , section);
+
+    // if (section) {
+    //     section.addEventListener('scroll', this.handleScroll, { passive: true });
+    // }
+
+
+    // window.addEventListener("scroll", this.handleScroll);
+
+
+//     if (!this.reviewfirst) {
+//     this.$nextTick(() => {
+//       const section = document.getElementById('sectiontop');
+//       if (section) {
+
+//         console.log('Scroll listener attached to #sectiontop');
+//         section.addEventListener('scroll', this.handleScroll);
+//       }
+//     });
+//   }
+
+
         // window.addEventListener("scroll", this.handleScroll);
         this.setInitialSelectedOption();
         if (this.currentQuestion.score && this.currentQuestion.score.option_id) {
@@ -576,9 +636,16 @@ export default {
         window.addEventListener('resize', this.calculateVisibleNumbers);
     },
     beforeDestroy() {
-        // window.removeEventListener("scroll", this.handleScroll);s
+        window.removeEventListener("scroll", this.handleScroll);
+
+//         const section = document.getElementById('sectiontop');
+//   if (section) {
+//     section.removeEventListener('scroll', this.handleScroll);
+//   }
         this.stopTimer();
         window.removeEventListener('resize', this.calculateVisibleNumbers);
+
+      
     },
     computed: {
 
@@ -626,6 +693,100 @@ export default {
 
 
     methods: {
+
+        SectionScroll(){
+
+            console.log('hello world')
+           
+            
+  
+
+            const element = document.getElementById('bottom');
+            element.scrollIntoView({ behavior: 'smooth' });
+
+
+              setTimeout(() => {
+                const elements = document.getElementById('app');
+                elements.scrollIntoView({ behavior: 'smooth' });
+                
+            }, 200);
+
+            setTimeout(() => {
+                
+                this.isRowFixed = false;
+            }, 1000);
+
+//             const section = document.getElementById('sectiontop');
+//   if (section) {
+//     section.scrollTop = 0; // scrolls the section to top
+//     console.log('Scrolled section to top');
+//   }
+
+        },
+
+
+//         handleScroll() {
+          
+//     const row = document.getElementById('sectiontop');
+//     if (!this.rowOffsetTop) {
+//       this.rowOffsetTop = row.offsetTop; // Store the initial position of the row
+//     }
+
+//     const currentScrollPosition = window.scrollY;
+
+//     console.log('Row Offset:', this.rowOffsetTop);
+//     console.log('Page Scroll:', currentScrollPosition);
+
+//     // Determine if the user is scrolling up
+//     this.isScrollingUp = currentScrollPosition < this.lastScrollPosition;
+
+//     console.log('Scrolling Up:', this.isScrollingUp);
+
+//     // Set row to fixed if scrolling up and past the row's initial position
+//     if (currentScrollPosition > 1 ) {
+//       this.isRowFixed = true;
+//     } else if (currentScrollPosition < 1 ) {
+//       this.isRowFixed = false;
+//     }
+
+//     // Update the last scroll position
+//     this.lastScrollPosition = currentScrollPosition;
+//   },
+
+
+
+
+
+handleScroll(event) {
+    const el = event.target;
+    const scrollTop = el.scrollTop;
+
+    console.log('Div scrolled to:', scrollTop);
+
+    if (scrollTop > 0) {
+      this.isRowFixed = true;
+    } else {
+      this.isRowFixed = false;
+    }
+  },
+
+    //     handleScroll(event) {
+    //     const scrollTop = event.target.scrollTop;
+
+    //     if (scrollTop > this.lastScrollTop) {
+    //         // Scrolling down
+    //         // this.powerUp = true;
+    //         console.log('down');
+    //     } else if (scrollTop < this.lastScrollTop) {
+    //         // Scrolling up
+    //         // this.powerUp = false;
+    //         console.log('up');
+    //     }
+
+    //     this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Prevent negative scroll
+    // },
+
+    
 
 
 
@@ -762,32 +923,32 @@ export default {
             this.$router.push('/mocksection');
         },
 
-        handleScroll() {
-            const row = document.getElementById('scroll-row');
-            if (!this.rowOffsetTop) {
-                this.rowOffsetTop = row.offsetTop; // Store the initial position of the row
-            }
+        // handleScroll() {
+        //     const row = document.getElementById('scroll-row');
+        //     if (!this.rowOffsetTop) {
+        //         this.rowOffsetTop = row.offsetTop; // Store the initial position of the row
+        //     }
 
-            const currentScrollPosition = window.scrollY;
+        //     const currentScrollPosition = window.scrollY;
 
-            console.log('Row Offset:', this.rowOffsetTop);
-            console.log('Page Scroll:', currentScrollPosition);
+        //     console.log('Row Offset:', this.rowOffsetTop);
+        //     console.log('Page Scroll:', currentScrollPosition);
 
-            // Determine if the user is scrolling up
-            this.isScrollingUp = currentScrollPosition < this.lastScrollPosition;
+        //     // Determine if the user is scrolling up
+        //     this.isScrollingUp = currentScrollPosition < this.lastScrollPosition;
 
-            console.log('Scrolling Up:', this.isScrollingUp);
+        //     console.log('Scrolling Up:', this.isScrollingUp);
 
-            // Set row to fixed if scrolling up and past the row's initial position
-            if (currentScrollPosition > 800 && this.isScrollingUp) {
-                this.isRowFixed = true;
-            } else if (currentScrollPosition < 800 || !this.isScrollingUp) {
-                this.isRowFixed = false;
-            }
+        //     // Set row to fixed if scrolling up and past the row's initial position
+        //     if (currentScrollPosition > 800 && this.isScrollingUp) {
+        //         this.isRowFixed = true;
+        //     } else if (currentScrollPosition < 800 || !this.isScrollingUp) {
+        //         this.isRowFixed = false;
+        //     }
 
-            // Update the last scroll position
-            this.lastScrollPosition = currentScrollPosition;
-        },
+        //     // Update the last scroll position
+        //     this.lastScrollPosition = currentScrollPosition;
+        // },
 
 
         birdseyeView() {
@@ -886,9 +1047,9 @@ export default {
                     console.log(res.data.saved);
                     // this.$toast.success("Saved feedback successfully")
 
-                    this.$toast.success("Saved feedback successfully", {
-                        timeout: 100,
-                    });
+                    // this.$toast.success("Saved feedback successfully", {
+                    //     timeout: 100,
+                    // });
                     this.showPauseModal = false
                     this.toggleOptions(null)
                     // this.feedbackpop = false
@@ -1291,7 +1452,7 @@ export default {
                     // this.$toast.success('Flagged Question Successfully')
                     this.flg = false
                     // setTimeout(() => {
-                    this.nextQuestion();
+                    // this.nextQuestion();
                     // }, 500);
                     this.getFlaged();
                     this.getReviewsss()
@@ -1322,6 +1483,7 @@ export default {
         setflage(e) {
             this.flagedid = e;
             this.flg = true
+            this.submitAnswer()
         },
 
         getFlaged() {
@@ -2125,7 +2287,7 @@ export default {
 
 
 .feedback-textarea {
-    font-size: 14px;
+    font-size: 13px;
     resize: none;
     font-family: Helvetica;
     border: none;
@@ -2134,7 +2296,7 @@ export default {
     overflow-y: scroll;
     background: transparent;
     font-style: italic;
-    padding: 0px 3px 0px 0px;
+    padding: 3px 3px 3px 3px;
     color: gray;
     font-weight: 300;
     font-family: Helvetica;
@@ -2177,15 +2339,24 @@ textarea.feedback-textarea::placeholder {
 
 
 .cross {
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 1px;
+   
+    padding-top: 5px;
     padding-right: 4px;
+    position:relative
 }
 
 span.crossspan {
     cursor: pointer;
     font-weight: bold;
+    position:absolute;
+    right: 4px;
+    top: 5px;
+
+}
+
+#sectiontop{
+   
+    overflow-y: auto;
 }
 
 @media only screen and (min-height: 1024px) {
