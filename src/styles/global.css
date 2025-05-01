@@ -74,7 +74,7 @@
 .activeindex {
     background: #D1D3D4 !important;
     height: 72.25px !important;
-    transform: translate(0px, -12px);
+    transform: translate(0px, 0px);
     font-weight: bold !important;
     border: 2px solid #949393 !important;
     font-size: 16px !important;

@@ -87,8 +87,18 @@
                 <ul class="nested-dropdown" v-show="isNestedDropdownOpen">
                   <li><router-link to="">{{ user.fullname }}</router-link></li>
                   <li class="bubbleli"><router-link to="">Bubble Help</router-link>
-                    <input type="radio" :value="true" v-model="bubbles" @change="globalhelp(bubbles)" /> Yes
-                    <input type="radio" :value="false" v-model="bubbles" @change="globalhelp(bubbles)" /> No
+
+
+
+                   
+                    <!-- <input type="radio" :value="true" v-model="bubbles" @change="globalhelp(bubbles)" /> Yes
+                    <input type="radio" :value="false" v-model="bubbles" @change="globalhelp(bubbles)" /> No -->
+
+
+                    <label class="switch">
+                      <input type="checkbox"  v-model="bubbles" @change="globalhelp">
+                      <span class="slider"></span>
+                  </label>
                   </li>
 
 
@@ -430,11 +440,11 @@ export default {
   methods: {
 
 
-    globalhelp(value) {
+    globalhelp() {
 
-      console.log('eee', value)
+      console.log('eee', this.bubbles)
 
-      get("/globalhelp?value=" + value).then((res) => {
+      get("/globalhelp?value=" + this.bubbles).then((res) => {
         console.log('data', res.data.data)
 
         this.bubbles = res.data.data.value == 0 ? false: true
@@ -538,6 +548,66 @@ export default {
 
 
 <style scoped>
+
+
+/* From Uiverse.io by arghyaBiswasDev */ 
+/* The switch - the box around the slider */
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 2.5em;
+  height: 1.1em;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  border: 1px solid #adb5bd;
+  transition: .8s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: .9em;
+  width: .9em;
+  border-radius: 20px;
+  left: 0.18em;
+  bottom: 0.1em;
+  background-color: #adb5bd;
+  transition: .8s;
+}
+
+input:checked + .slider {
+  background-color: #007bff;
+  border: 1px solid #007bff;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #007bff;
+}
+
+input:checked + .slider:before {
+  transform: translateX(1.1em);
+  background-color: #fff;
+}
+
+
 li.bubbleli {
   display: flex;
   justify-content: space-between;
