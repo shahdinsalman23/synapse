@@ -24,7 +24,7 @@
 
 
 
-                <section class="reviewscroll-sec">
+                <!-- <section class="reviewscroll-sec">
                     <div class="container">
                         <div class="questionnumber-slide-container" ref="container">
                             <div class="questionleft-arrow" @mouseenter="startScroll('left')" @mouseleave="stopScroll"
@@ -76,7 +76,7 @@
                                         }" :class="{ 'activeindexreview': isPresentIndexs(indexnav) }"
                                         @click="getBackindex(indexnav)">
                                         {{ indexnav + 1 }}
-                                        <!-- Ye flag sirf selected numbers pe dikhega -->
+                                    
                                         <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
                                             <path
                                                 d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
@@ -97,8 +97,123 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </section> -->
                 
+
+
+
+                <section class="questionnumber-sec">
+                    <div class="scrollcenter" style="    padding-top: 5px; position:relative
+                ">
+    
+    
+    
+    
+    
+    
+                        <div class="mainscrollview">
+    
+                            <div class="buttond" @mouseenter="startScrolling(-10)" @mouseleave="stopScrolling">
+    
+    
+    
+                                <div class="questionleft-arrow" @click="scrollBackward" @mouseup="stopScroll"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left">
+                                        <path d="m15 18-6-6 6-6" />
+                                    </svg></div>
+                            </div>
+    
+    
+    
+                            <div class="questionnumber-slide  scrollmenus" ref="scrollContainer"
+                                @mousedown="handleMouseDown" @mousemove="handleMouseMove" @mouseup="handleMouseUp"
+                                @mouseleave="handleMouseLeave" :style="slideStyle">
+                                <!-- <span v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber" :style="{
+                                    background: nav.score
+                                        ? '#d2cbcb'
+                                        : (nav.flag
+                                            ? 'white'
+                                            : (nav.skip
+                                                ? 'white'
+                                                : 'white')),
+                                }" :class="{ 'activeindex': isPresentIndexs(indexnav) }" @click="getBackindex(indexnav)">
+                                    {{ indexnav + 1 }}
+    
+                                    <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
+                                        <path
+                                            d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
+                                            fill="#ED1C24" />
+                                    </svg>
+                                </span> -->
+
+
+                                <span v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber"
+                                :style="{
+                                    background: nav.score
+                                        ? (nav.score.correct === 1
+                                            ? '#9ded6c'
+                                            : (nav.score.correct === 0
+                                                ? '#FFBABE'
+                                                : '#f1f2f2'))
+                                        : (nav.flag
+                                            ? '#d2cbcb'
+                                            : (nav.skip
+                                                ? '#d2cbcb'
+                                                : '#f1f2f2')),
+
+                                    border: isPresentIndexs(indexnav)
+                                        ? (
+                                            nav.score
+                                                ? (nav.score.correct === 1
+                                                    ? '1px solid green'
+                                                    : (nav.score.correct === 0
+                                                        ? '1px solid red'
+                                                        : '1px solid grey'))
+                                                : (nav.flag
+                                                    ? '1px solid black'
+                                                    : (nav.skip
+                                                        ? ' 1px solid black'
+                                                        : ' 1px solid grey'))
+                                        )
+                                        : ''
+
+
+
+
+
+
+
+                                }" :class="{ 'activeindexreview': isPresentIndexs(indexnav) }"
+                                @click="getBackindex(indexnav)">
+                                {{ indexnav + 1 }}
+                            
+                                <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
+                                    <path
+                                        d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
+                                        fill="#ED1C24" />
+                                </svg>
+                            </span>
+                            </div>
+    
+                            <div class="buttond" @mouseenter="startScrolling(10)" @mouseleave="stopScrolling">
+    
+    
+                                <div class="questionright-arrow" @click="scrollForward" @mouseup="stopScroll">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-chevron-right-icon lucide-chevron-right">
+                                        <path d="m9 18 6-6-6-6" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+    
+    
+                    </div>
+                </section>
                 <section class="questiontext-sec" id="sectiontop"  >
                     <div class="container">
                         
@@ -694,6 +809,26 @@ export default {
 
     methods: {
 
+
+        handleMouseDown(event) {
+            this.isDragging = true;
+            this.dragStartX = event.pageX;
+            this.scrollLeftStart = this.$refs.scrollContainer.scrollLeft;
+        },
+        handleMouseMove(event) {
+            if (!this.isDragging) return;
+            const delta = event.pageX - this.dragStartX;
+            const speedMultiplier = 6.5; // Increase this value for faster scroll
+            this.$refs.scrollContainer.scrollLeft = this.scrollLeftStart - delta * speedMultiplier;
+        },
+        handleMouseUp() {
+            this.isDragging = false;
+        },
+        handleMouseLeave() {
+            this.isDragging = false;
+        },
+
+
         SectionScroll(){
 
             console.log('hello world')
@@ -1206,33 +1341,33 @@ handleScroll(event) {
 
 
         scrollForward() {
-            this.$refs.scrollContainer.scrollLeft += 200; // Scroll forward by 200px
+            this.$refs.scrollContainer.scrollLeft += 1500; // Scroll forward by 200px
         },
         scrollBackward() {
-            this.$refs.scrollContainer.scrollLeft -= 200; // Scroll backward by 200px
+            this.$refs.scrollContainer.scrollLeft -= 1500; // Scroll backward by 200px
         },
 
-        handleMouseMove(event) {
-            const bounds = event.currentTarget.getBoundingClientRect();
-            const hoverZone = 300; // Define hover zone in pixels
-            const mouseX = event.clientX;
+        // handleMouseMove(event) {
+        //     const bounds = event.currentTarget.getBoundingClientRect();
+        //     const hoverZone = 300; // Define hover zone in pixels
+        //     const mouseX = event.clientX;
 
-            if (mouseX > bounds.right - hoverZone) {
-                // Mouse is on the right side
-                this.startScrolling(8); // Adjust speed as necessary
-            } else if (mouseX < bounds.left + hoverZone) {
-                // Mouse is on the left side
-                this.startScrolling(-8); // Adjust speed as necessary
-            } else {
-                // Stop scrolling when mouse is not in hover zones
-                this.stopScrolling();
-            }
-        },
+        //     if (mouseX > bounds.right - hoverZone) {
+        //         // Mouse is on the right side
+        //         this.startScrolling(8); // Adjust speed as necessary
+        //     } else if (mouseX < bounds.left + hoverZone) {
+        //         // Mouse is on the left side
+        //         this.startScrolling(-8); // Adjust speed as necessary
+        //     } else {
+        //         // Stop scrolling when mouse is not in hover zones
+        //         this.stopScrolling();
+        //     }
+        // },
         startScrolling(speed) {
             if (!this.scrollInterval) {
                 this.scrollInterval = setInterval(() => {
                     this.$refs.scrollContainer.scrollLeft += speed;
-                }, 20); // Adjust interval as necessary
+                }, 20);
             }
         },
         stopScrolling() {
@@ -1632,6 +1767,7 @@ handleScroll(event) {
                 console.log("sss");
                 if (this.currentQuestionIndex < this.questions.length - 1) {
                     this.currentQuestionIndex++;
+                    this.centerSelectedIndex(this.currentQuestionIndex)
                     // this.resetSelectedOption();
                 } else {
                     // this.stopTimerAndSaveDuration()
@@ -1857,6 +1993,8 @@ handleScroll(event) {
 
         getBackindex(e) {
 
+            this.centerSelectedIndex(e)
+
             console.log('ind', e)
 
             this.returning = 1
@@ -1896,6 +2034,28 @@ handleScroll(event) {
                 this.showOptionsIndex = null
             }
 
+        },
+
+
+        centerSelectedIndex(index) {
+            this.$nextTick(() => {
+                const container = this.$refs.scrollContainer;
+                const items = container.querySelectorAll('.questionnumber');
+                const selectedItem = items[index];
+
+                if (!selectedItem) return;
+
+                const containerWidth = container.clientWidth;
+                const itemOffsetLeft = selectedItem.offsetLeft;
+                const itemWidth = selectedItem.offsetWidth;
+
+                const scrollPosition = itemOffsetLeft - (containerWidth / 2) + (itemWidth / 2);
+
+                container.scrollTo({
+                    left: scrollPosition,
+                    behavior: 'smooth'
+                });
+            });
         },
 
 
@@ -2005,6 +2165,146 @@ handleScroll(event) {
 
 
 <style scoped>
+section.questionnumber-sec {
+
+    display: flex;
+    justify-content: center;
+}
+
+.square {
+    background: #d2cbcb75 !important;
+    font-size: 20px;
+    cursor: pointer;
+    color: black;
+    height: 10vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+
+}
+
+
+.scrollmenus {
+    user-select: none;
+    /* Prevents text selection during drag */
+    cursor: grab;
+}
+
+div.scrollmenus {
+    background-color: transparent;
+    overflow: auto;
+    white-space: nowrap;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding-top: 20px;
+    overflow-y: hidden;
+    height: 15vh;
+    padding-bottom: 20px;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer */
+}
+
+div.scrollmenus::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Edge */
+}
+
+.scrollcenter {
+    display: flex;
+    justify-content: center;
+    max-width: 1290px;
+}
+
+.mainscrollview {
+    display: flex;
+    justify-content: center;
+
+    border-radius: 50px;
+    padding: 0px;
+    height: 15vh;
+    max-width: 1290px;
+    overflow-x: hidden;
+}
+
+div.scrollmenu a {
+
+    text-align: center;
+    padding: 6px 3px;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    position: relative;
+    height: 6vh;
+    border: 1px solid grey;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 34px;
+    min-width: 34px;
+}
+
+div.scrollmenu a:hover {
+    border-radius: 0px;
+    background-color: #858796 !important;
+}
+
+
+.active-question {
+    font-weight: bold;
+    color: black;
+}
+
+.scroll-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #f39684;
+    border-radius: 4px;
+}
+
+.buttond {
+    background-color: #ffffff00;
+    box-shadow: none !important;
+    height: 14vh;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 5px;
+}
+
+.scroll-btn {
+    padding: 0px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 50px;
+
+    cursor: pointer;
+
+}
+
+button.scroll-btn svg :hover {
+    fill: black;
+}
+
+
+
+
+
+
+
+
+
+
+
 .accordion-icon svg {
     width: 16px;
     height: 16px;

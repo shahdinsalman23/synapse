@@ -15,7 +15,7 @@
             @returnquestion="getBackindexheader" />
         <div v-if="eye">
 
-            
+
             <!-- <section class="questionnumber-sec">
                 <div class="container">
                     <div class="questionnumber-slide-container" ref="container">
@@ -76,10 +76,10 @@
 
 
             <!-- New Scroller -->
-         <section class="questionnumber-sec">
+            <section class="questionnumber-sec">
                 <div class="scrollcenter" style="    padding-top: 5px; position:relative
             ">
-                 
+
 
 
 
@@ -99,9 +99,11 @@
                                 </svg></div>
                         </div>
 
-                       
 
-                        <div class="questionnumber-slide  scrollmenus" ref="scrollContainer" :style="slideStyle">
+
+                        <div class="questionnumber-slide  scrollmenus" ref="scrollContainer"
+                            @mousedown="handleMouseDown" @mousemove="handleMouseMove" @mouseup="handleMouseUp"
+                            @mouseleave="handleMouseLeave" :style="slideStyle">
                             <span v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber" :style="{
                                 background: nav.score
                                     ? '#d2cbcb'
@@ -110,8 +112,7 @@
                                         : (nav.skip
                                             ? 'white'
                                             : 'white')),
-                            }" :class="{ 'activeindex': isPresentIndexs(indexnav) }"
-                                @click="getBackindex(indexnav)">
+                            }" :class="{ 'activeindex': isPresentIndexs(indexnav) }" @click="getBackindex(indexnav)">
                                 {{ indexnav + 1 }}
 
                                 <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
@@ -123,7 +124,7 @@
                         </div>
 
                         <div class="buttond" @mouseenter="startScrolling(10)" @mouseleave="stopScrolling">
-                           
+
 
                             <div class="questionright-arrow" @click="scrollForward" @mouseup="stopScroll">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -138,7 +139,7 @@
 
 
                 </div>
-            </section> 
+            </section>
 
 
 
@@ -264,6 +265,9 @@ export default {
 
     data() {
         return {
+            isDragging: false,
+            dragStartX: 0,
+            scrollLeftStart: 0,
             filleye: true,
             fillicon: 1,
             loadingcircle: true,
@@ -498,6 +502,24 @@ export default {
 
     methods: {
 
+        handleMouseDown(event) {
+            this.isDragging = true;
+            this.dragStartX = event.pageX;
+            this.scrollLeftStart = this.$refs.scrollContainer.scrollLeft;
+        },
+        handleMouseMove(event) {
+            if (!this.isDragging) return;
+            const delta = event.pageX - this.dragStartX;
+            const speedMultiplier = 6.5; // Increase this value for faster scroll
+            this.$refs.scrollContainer.scrollLeft = this.scrollLeftStart - delta * speedMultiplier;
+        },
+        handleMouseUp() {
+            this.isDragging = false;
+        },
+        handleMouseLeave() {
+            this.isDragging = false;
+        },
+
         closed() {
             this.igonreunanswer = false
 
@@ -707,22 +729,22 @@ export default {
         },
 
 
-        handleMouseMove(event) {
-            const bounds = event.currentTarget.getBoundingClientRect();
-            const hoverZone = 300; // Define hover zone in pixels
-            const mouseX = event.clientX;
+        // handleMouseMove(event) {
+        //     const bounds = event.currentTarget.getBoundingClientRect();
+        //     const hoverZone = 300; // Define hover zone in pixels
+        //     const mouseX = event.clientX;
 
-            if (mouseX > bounds.right - hoverZone) {
-                // Mouse is on the right side
-                this.startScrolling(8); // Adjust speed as necessary
-            } else if (mouseX < bounds.left + hoverZone) {
-                // Mouse is on the left side
-                this.startScrolling(-8); // Adjust speed as necessary
-            } else {
-                // Stop scrolling when mouse is not in hover zones
-                this.stopScrolling();
-            }
-        },
+        //     if (mouseX > bounds.right - hoverZone) {
+        //         // Mouse is on the right side
+        //         this.startScrolling(8); // Adjust speed as necessary
+        //     } else if (mouseX < bounds.left + hoverZone) {
+        //         // Mouse is on the left side
+        //         this.startScrolling(-8); // Adjust speed as necessary
+        //     } else {
+        //         // Stop scrolling when mouse is not in hover zones
+        //         this.stopScrolling();
+        //     }
+        // },
         // startScrolling(speed) {
         //     if (!this.scrollInterval) {
         //         this.scrollInterval = setInterval(() => {
@@ -1319,7 +1341,8 @@ export default {
                     this.currentQuestionIndex++;
                     this.truecondition = false
                     this.$nextTick(() => {
-                        this.scrollToActiveItem();
+                        // this.scrollToActiveItem();
+                        this.centerSelectedIndex(this.currentQuestionIndex)
                     });
                     // this.resetSelectedOption();
                 } else {
@@ -1748,6 +1771,13 @@ section.questionnumber-sec {
 
 }
 
+
+.scrollmenus {
+    user-select: none;
+    /* Prevents text selection during drag */
+    cursor: grab;
+}
+
 div.scrollmenus {
     background-color: transparent;
     overflow: auto;
@@ -1773,7 +1803,7 @@ div.scrollmenus::-webkit-scrollbar {
 .scrollcenter {
     display: flex;
     justify-content: center;
-    max-width: 1200px;
+    max-width: 1290px;
 }
 
 .mainscrollview {
@@ -1783,7 +1813,7 @@ div.scrollmenus::-webkit-scrollbar {
     border-radius: 50px;
     padding: 0px;
     height: 15vh;
-    max-width: 1200px;
+    max-width: 1290px;
     overflow-x: hidden;
 }
 
@@ -1833,6 +1863,7 @@ div.scrollmenu a:hover {
     align-content: center;
     justify-content: center;
     align-items: center;
+    padding-bottom: 5px;
 }
 
 .scroll-btn {
