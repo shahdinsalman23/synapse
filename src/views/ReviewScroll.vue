@@ -113,10 +113,7 @@
     
                         <div class="mainscrollview">
     
-                            <div class="buttond" @mouseenter="startScrolling(-10)" @mouseleave="stopScrolling">
-    
-    
-    
+                            <div class="buttond">    
                                 <div class="questionleft-arrow" @click="scrollBackward" @mouseup="stopScroll"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -197,7 +194,7 @@
                             </span>
                             </div>
     
-                            <div class="buttond" @mouseenter="startScrolling(10)" @mouseleave="stopScrolling">
+                            <div class="buttond">
     
     
                                 <div class="questionright-arrow" @click="scrollForward" @mouseup="stopScroll">
@@ -937,6 +934,7 @@ handleScroll(event) {
 
                     this.getFlaged();
                     this.getReviewsss()
+                    this.centerSelectedIndex(this.currentQuestionIndex)
 
                 }
             });
@@ -1036,7 +1034,8 @@ handleScroll(event) {
         enter(el, done) {
 
             el.style.height = '0';
-            const height = el.scrollHeight + 5;
+            const height = el.scrollHeight + 2;
+            // const height = 100;
             console.log('scrollheight', height)
             requestAnimationFrame(() => {
                 el.style.height = `${height}px`;
@@ -1591,7 +1590,7 @@ handleScroll(event) {
                     // }, 500);
                     this.getFlaged();
                     this.getReviewsss()
-
+                    this.centerSelectedIndex(this.currentQuestionIndex)
                 }
             });
         },
@@ -2166,7 +2165,6 @@ handleScroll(event) {
 
 <style scoped>
 section.questionnumber-sec {
-
     display: flex;
     justify-content: center;
 }
@@ -2199,7 +2197,6 @@ div.scrollmenus {
     display: flex;
     width: 100%;
     align-items: center;
-    padding-top: 20px;
     overflow-y: hidden;
     height: 15vh;
     padding-bottom: 20px;
@@ -2223,7 +2220,6 @@ div.scrollmenus::-webkit-scrollbar {
 .mainscrollview {
     display: flex;
     justify-content: center;
-
     border-radius: 50px;
     padding: 0px;
     height: 15vh;
@@ -2366,7 +2362,7 @@ button.scroll-btn svg :hover {
 }
 
 .feedbackform-submitbtn {
-    margin: 12px 0px 0px 0px;
+    margin: 19px 0px 0px 0px;
 }
 
 .feedbackform-submitbtn button {
@@ -2542,7 +2538,7 @@ button.scroll-btn svg :hover {
 .option-content {
     overflow: hidden;
     transition: height 0.3s ease-out;
-    padding: 0px 0px 15px 0px;
+    padding: 0px 0px 10px 0px;
 }
 
 .question-option.active .option-content {
@@ -2557,7 +2553,7 @@ button.scroll-btn svg :hover {
     color: #231f20;
     line-height: 1.4;
     text-align: left;
-    padding: 2px 0 0 36px;
+    padding: 2px 50px 0 36px;
 }
 
 
@@ -2627,7 +2623,7 @@ button.scroll-btn svg :hover {
     width: 57%;
     margin: 0 auto;
     border: 1px solid #20b14bb8;
-    border-radius: 25px;
+    border-radius: 10px;
     padding: 3px 8px;
     background: #ffffff94;
 }

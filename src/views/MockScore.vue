@@ -5,7 +5,7 @@
                 <div class="mockscore-progress-btn">
                     <div class="mockscore-progress">
                         <div class="progress-text-score">
-                            <div class="progress-text">{{ roundedPercent }}%</div>
+                            <div class="progress-text">{{ roundedPercent ? roundedPercent : 0 }}%</div>
                             <div class="progress-score"> {{ total }}/{{ totalquestions }}</div>
                         </div>
                         <div class="progress-container">
@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     <div class="reviewmock-btn" @click="reviewMock">
-                        <router-link to="">Review mock 1
+                        <router-link to="">Review Mock 1
                             <div class="cardbottom-shadow">
                                 <img src="/images/cardshadow.png" alt="">
                             </div>
