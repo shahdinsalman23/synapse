@@ -61,7 +61,7 @@
                     </h4>
                 </div>
                 <div class="mockbird-submitbtn">
-                    <button @click="startMock">{{returning == 1 ? 'Return':'Start review'}}</button>
+                    <button @click="startMock">{{returning == 1 ? 'Return':'Start Review'}}</button>
                 
 
                     <div class="cardbottom-shadow">
@@ -198,8 +198,13 @@ export default {
 .flag-icon {
     position: absolute;
     top: 2px;
-    right: 7px;
+    right: 10px;
     z-index: 1;
+}
+
+span.flag-icon svg {
+    width: 13.5px;
+    height: 13.5px;
 }
 
 @media only screen and (max-width: 1024px) {

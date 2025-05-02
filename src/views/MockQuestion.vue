@@ -87,7 +87,7 @@
 
                     <div class="mainscrollview">
 
-                        <div class="buttond" @mouseenter="startScrolling(-10)" @mouseleave="stopScrolling">
+                        <div class="buttond">
 
 
 
@@ -123,9 +123,7 @@
                             </span>
                         </div>
 
-                        <div class="buttond" @mouseenter="startScrolling(10)" @mouseleave="stopScrolling">
-
-
+                        <div class="buttond">
                             <div class="questionright-arrow" @click="scrollForward" @mouseup="stopScroll">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -1003,14 +1001,13 @@ export default {
 
                     this.getFlaged();
                     this.getReviewsss()
-
+                    this.centerSelectedIndex(this.currentQuestionIndex)
                 }
             });
         },
 
 
         removeflage(e) {
-
             this.form.questionId = e;
             byMethod(this.method, "/removeflage", this.form).then((res) => {
                 if (res.data.saved) {
@@ -1021,6 +1018,7 @@ export default {
 
                     this.getFlaged();
                     this.getReviewsss()
+                    this.centerSelectedIndex(this.currentQuestionIndex)
 
                 }
             });
@@ -1399,7 +1397,7 @@ export default {
                 this.truecondition = true
                 this.selectedOption = e
             }
-
+            this.centerSelectedIndex(this.currentQuestionIndex)
             console.log('true condition', this.truecondition)
 
         },
@@ -1752,7 +1750,6 @@ export default {
 
 <style scoped>
 section.questionnumber-sec {
-
     display: flex;
     justify-content: center;
 }

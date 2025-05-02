@@ -869,7 +869,7 @@ button.begin-btn a {
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translate(0px, 7px);
+    transform: translate(0px, 23px);
   }
   .modal-footer p {
     color: #747474;
@@ -948,7 +948,7 @@ button.begin-btn a {
 }
 
 .questiontext-sec {
-    padding: 235px 0px 100px 0px;
+    padding: 235px 0px 20px 0px;
 }
 
 
@@ -1392,7 +1392,7 @@ section.reviewscroll-sec {
 section.questionnumber-sec {
     position: fixed;
     width: 100%;
-    top: 90px;
+    top: 85px;
     z-index: 999;
     background: #fff
 }
