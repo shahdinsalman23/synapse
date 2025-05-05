@@ -5,7 +5,9 @@
                 <div class="mockscore-progress-btn">
                     <div class="mockscore-progress">
                         <div class="progress-text-score">
-                            <div class="progress-text">{{ roundedPercent ? roundedPercent : 0 }}%</div>
+                            <div class="progress-text">{{ roundedPercent ? roundedPercent : 0 }}<span class="percen">%
+
+                            </span></div>
                             <div class="progress-score"> {{ total }}/{{ totalquestions }}</div>
                         </div>
                         <div class="progress-container">
@@ -188,10 +190,29 @@ export default {
 
 
 <style scoped>
+
+span.percen {
+    font-size: 18px;
+    font-weight: lighter !important;
+    font-family: auto;
+    padding-left: 1px;
+}
+
+.progress-text-score {
+    display: flex
+;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    gap: 65px;
+    margin: 0px 0px 4px 0px;
+    padding: 0px 11px;
+
+}
 .progress-container {
     position: relative;
-    width: 172.13px;
-    height: 26.08px;
+    width: 100%;
+    height: 28.08px;
     background-color: #D1D3D4;
     border-radius: 50px;
     overflow: hidden;
@@ -216,13 +237,13 @@ export default {
 .progress-text {
     font-weight: 400;
     color: #fff;
-    font-size: 26px;
+    font-size: 25px;
 }
 
 .progress-score {
     color: #fff;
     padding: 8px 0px 0px 0px;
-    font-size: 17px;
+    font-size: 15px;
     font-family: Helvetica;
 }
 
