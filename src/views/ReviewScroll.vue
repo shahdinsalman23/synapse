@@ -335,7 +335,7 @@
                                 </div>
                             </div>
                             <div class="brake-border"></div>
-                            <MockReviewDetail :currentQuestion="currentQuestion" @commentsave="commentsave" />
+                            <MockReviewDetail  ref="reviewDetailRef" :currentQuestion="currentQuestion" @commentsave="commentsave" />
                         </div>
                     </div>
                 </section>
@@ -403,9 +403,6 @@
                                     </div>
                                     <div class="feedbackform-submitbtn">
                                         <button type="button" @click="submitFeedback">Submit</button>
-                                        <div class="cardbottom-shadow">
-                                            <img src="/images/cardshadow.png" alt="">
-                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -939,8 +936,15 @@ export default {
                 if (res.data.saved) {
                     console.log(res.data.saved);
 
+                 
                     this.flg = false
                     this.flg2 = false
+                    const updatedIndex = this.currentQuestionIndex;
+                            console.log("Updated index:", updatedIndex);
+                    if (this.allquestions[updatedIndex]) {
+                        this.$set(this.allquestions[updatedIndex], 'flag', false);
+                    }
+
 
                     this.getFlaged();
                     this.getReviewsss()
@@ -1588,6 +1592,12 @@ export default {
 
 
         flagged(e) {
+
+            const updatedIndex = this.currentQuestionIndex;
+                            console.log("Updated index:", updatedIndex);
+                    if (this.allquestions[updatedIndex]) {
+                        this.$set(this.allquestions[updatedIndex], 'flag', true);
+                    }
             this.form.questionId = e;
             byMethod(this.method, "/saveflage", this.form).then((res) => {
                 if (res.data.saved) {
@@ -1595,6 +1605,8 @@ export default {
                     //   this.nextQuestion();
                     // this.$toast.success('Flagged Question Successfully')
                     this.flg = false
+
+                    
                     // setTimeout(() => {
                     // this.nextQuestion();
                     // }, 500);
@@ -1777,6 +1789,7 @@ export default {
                 if (this.currentQuestionIndex < this.questions.length - 1) {
                     this.currentQuestionIndex++;
                     this.centerSelectedIndex(this.currentQuestionIndex)
+                    this.$refs.reviewDetailRef.resetActiveTab();
                     // this.resetSelectedOption();
                 } else {
                     // this.stopTimerAndSaveDuration()
@@ -1819,6 +1832,9 @@ export default {
                 this.currentQuestionIndex--;
                 // this.resetSelectedOption();
             }
+
+
+            this.$refs.reviewDetailRef.resetActiveTab();
 
 
             this.selectedOptions = null
@@ -2004,11 +2020,15 @@ export default {
 
             this.centerSelectedIndex(e)
 
+           
+
             console.log('ind', e)
 
             this.returning = 1
 
             if (!this.showPauseModal) {
+                this.$refs.reviewDetailRef?.resetActiveTab();
+                
 
 
                 console.log('indexing', e)
@@ -2041,6 +2061,7 @@ export default {
                 ]
 
                 this.showOptionsIndex = null
+                
             }
 
         },

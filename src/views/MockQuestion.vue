@@ -448,6 +448,7 @@ export default {
         currentQuestion: {
             handler() {
                 this.setInitialSelectedOption();
+             
             },
             deep: true,
             immediate: true,
@@ -991,6 +992,14 @@ export default {
 
 
         flagged(e) {
+
+
+            const updatedIndex = this.currentQuestionIndex;
+                            console.log("Updated index:", updatedIndex);
+                    if (this.allquestions[updatedIndex]) {
+                        this.$set(this.allquestions[updatedIndex], 'flag', true);
+                    }
+
             this.form.questionId = e;
             byMethod(this.method, "/saveflage", this.form).then((res) => {
                 if (res.data.saved) {
@@ -1008,6 +1017,8 @@ export default {
 
 
         removeflage(e) {
+           
+
             this.form.questionId = e;
             byMethod(this.method, "/removeflage", this.form).then((res) => {
                 if (res.data.saved) {
@@ -1015,6 +1026,11 @@ export default {
 
                     this.flg = false
                     this.flg2 = false
+                    const updatedIndex = this.currentQuestionIndex;
+                            console.log("Updated index:", updatedIndex);
+                    if (this.allquestions[updatedIndex]) {
+                        this.$set(this.allquestions[updatedIndex], 'flag', false);
+                    }
 
                     this.getFlaged();
                     this.getReviewsss()
@@ -1312,12 +1328,9 @@ export default {
             // this.loadingcircle = false
         },
         nextQuestion() {
-            console.log('hello last')
-
-
-            console.log('selected option', this.selectedOption)
+           
             this.flg = false
-
+            this.flg2 = true
 
             const ppp = localStorage.getItem("pauseindex");
 
@@ -1334,7 +1347,7 @@ export default {
                 }
 
 
-                console.log("sss");
+             
                 if (this.currentQuestionIndex < this.questions.length - 1) {
                     this.currentQuestionIndex++;
                     this.truecondition = false
@@ -1411,7 +1424,12 @@ export default {
 
             else {
 
-                console.log('current question', this.currentQuestion)
+                const updatedIndex = this.currentQuestionIndex;
+                            console.log("Updated index:", updatedIndex);
+                    if (this.allquestions[updatedIndex]) {
+                        this.$set(this.allquestions[updatedIndex], 'score', true);
+                    }
+               
 
 
 
@@ -1425,7 +1443,7 @@ export default {
                 // else{
 
 
-                console.log("here", e);
+              
                 // this.form.question_id = e;
                 this.form.question_id = this.currentQuestion.id;
 
@@ -1439,10 +1457,15 @@ export default {
                     .then((res) => {
                         if (res.data.saved) {
                             console.log(res.data.saved);
+                           
                             // this.selectedOption = null;
                             // this.nextQuestion();
                             // this.$toast.success('Option Selected')
                             // setTimeout(() => {
+
+
+
+
                             get("/getmockquestion?id=" + this.id).then((res) => {
                                 this.allquestions = res.data.data
 
@@ -1583,9 +1606,11 @@ export default {
             this.showflagelist = false
             this.showunanswerlist = false
             this.fillicon = 1
-
-
-            console.log('', e);
+            this.currentQuestionIndex = e
+           
+            console.log('currentquestion' , this.currentQuestion)
+          
+         
 
             localStorage.setItem('presentindex', e);
 
@@ -1593,7 +1618,11 @@ export default {
             this.currentQuestionIndex = e
             this.review = false;
             this.starts = true;
-            this.eye = true
+            this.eye = true;
+            this.flg2 = true
+            
+            this.reviewquestioncheck()
+
             this.handleBreadcrumpsUpdate('Normal');
 
         },

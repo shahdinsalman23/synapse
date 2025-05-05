@@ -214,6 +214,9 @@ export default {
         }
     },
     methods: {
+        resetActiveTab() {
+            this.activeIndex = this.tabs.findIndex(tab => tab.title === 'Explanation');
+        },
 
         commentsave(e) {
             this.$emit('commentsave', e, this.form.comments);
