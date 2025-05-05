@@ -403,6 +403,9 @@
                                     </div>
                                     <div class="feedbackform-submitbtn">
                                         <button type="button" @click="submitFeedback">Submit</button>
+                                         <div class="cardbottom-shadow">
+                   <img src="/images/cardshadow.png" alt="">
+            </div>
                                     </div>
                                 </form>
                             </div>
@@ -2672,9 +2675,11 @@ button.scroll-btn svg :hover {
     width: 70%;
     margin: 0 auto;
     border: 1px solid #20b14bb8;
-    border-radius: 8px;
+    border-radius: 13px;
     padding: 3px 8px;
     background: #ffffff94;
+    font-size:14px;
+    color:black
 }
 
 textarea.feedback-textarea::placeholder {
