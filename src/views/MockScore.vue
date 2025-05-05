@@ -193,26 +193,37 @@ export default {
     width: 172.13px;
     height: 26.08px;
     background-color: #D1D3D4;
-    border-radius: 10px;
+    border-radius: 50px;
     overflow: hidden;
     border: 1px solid #8082856b;
 }
 
 .progress-bar {
-  height: 100%;
-  background-color: #9DED6C;
-  border-radius: 20px;
-  border-right: 1px solid #6d6e7178;
-  transition: width 0.3s ease-in-out;
+    height: 100%;
+    background-color: #9DED6C;
+    border-radius: 50px;
+    border-right: 1px solid #6d6e7178;
+    transition: width 0.3s ease-in-out;
 }
 
+.mockscore-progress {
+    padding: 10px 10px 10px 10px;
+    background: #ED1C24;
+    border-radius: 20px;
+}
+
+
 .progress-text {
-  font-weight: bold;
-  color: #231F20;
+    font-weight: 400;
+    color: #fff;
+    font-size: 26px;
 }
 
 .progress-score {
-    color: #231F20;
+    color: #fff;
+    padding: 8px 0px 0px 0px;
+    font-size: 17px;
+    font-family: Helvetica;
 }
 
 </style>

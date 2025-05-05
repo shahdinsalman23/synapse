@@ -553,11 +553,12 @@ export default {
 /* From Uiverse.io by arghyaBiswasDev */ 
 /* The switch - the box around the slider */
 .switch {
-  font-size: 17px;
-  position: relative;
-  display: inline-block;
-  width: 2.5em;
-  height: 1.1em;
+    font-size: 17px;
+    position: relative;
+    display: inline-block;
+    width: 35px;
+    height: 18px;
+    transition: all .6s ease;
 }
 
 /* Hide default HTML checkbox */
@@ -565,6 +566,7 @@ export default {
   opacity: 0;
   width: 0;
   height: 0;
+  transition: all .6s ease;
 }
 
 /* The slider */
@@ -579,32 +581,37 @@ export default {
   border: 1px solid #adb5bd;
   transition: .8s;
   border-radius: 30px;
+  transition: all .6s ease;
 }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: .9em;
-  width: .9em;
-  border-radius: 20px;
-  left: 0.18em;
-  bottom: 0.1em;
-  background-color: #adb5bd;
-  transition: .8s;
+.slider::before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    border-radius: 20px;
+    left: 0.18em;
+    bottom: 2px;
+    background-color: #adb5bd;
+    transition: all .6s ease;
 }
+
 
 input:checked + .slider {
-  background-color: #007bff;
-  border: 1px solid #007bff;
+  background-color: #20b14b;
+  border: 1px solid #20b14b;
+  transition: all .6s ease;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #007bff;
+  box-shadow: 0 0 1px #20b14b;
+  transition: all .6s ease;
 }
 
 input:checked + .slider:before {
-  transform: translateX(1.1em);
+  transform: translateX(14px);
   background-color: #fff;
+  transition: all .6s ease;
 }
 
 

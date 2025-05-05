@@ -43,6 +43,10 @@
 } */
 
 
+html {
+    min-width: 1270x; /* Optional - Minimum width set karen */
+  }
+
 /********** Container CSS Start **********/
 
 .container {
@@ -94,12 +98,12 @@
 
 .activeindexborder {
     border-radius: 13px;
-  
     color: black !important;
     border: 2px solid black;
     font-weight: 800 !important;
     font-size: 19px !important;
     font-family: HelveticaBoldcont !important;
+    line-height: 40px;
 }
 
 .isselected {
@@ -949,15 +953,12 @@ button.begin-btn a {
 
 .questiontext-sec {
     padding: 235px 0px 20px 0px;
+    position: relative;
+    z-index: 1; 
+    background: white;
+    min-height: calc(100vh - 200px);  
 }
 
-
-.mockquestion-navigate {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-}
 
 
 .mockquestion-navigate ul {
@@ -1373,6 +1374,12 @@ button.modal-exit-btn .cardbottom-shadow img {
 /********** Review Scroll Page CSS End **********/
 
 
+
+.mockquestion-navigate {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
 
 section.header-sec {
     position: fixed;

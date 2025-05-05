@@ -400,6 +400,9 @@
                                     </div>
                                     <div class="feedbackform-submitbtn">
                                         <button type="button" @click="submitFeedback">Submit</button>
+                                        <div class="cardbottom-shadow">
+                                            <img src="/images/cardshadow.png" alt="">
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -2353,7 +2356,7 @@ button.scroll-btn svg :hover {
     font-family: Helvetica, Arial, sans-serif;
     border: 1px solid #808285;
     padding: 3px 20px;
-    width: 115px;
+    width: 145px;
     margin: 0px 0px 10px 0px;
     border-radius: 30px;
     color: #2F292B;
@@ -2363,6 +2366,15 @@ button.scroll-btn svg :hover {
 
 .feedbackform-submitbtn {
     margin: 19px 0px 0px 0px;
+    position: relative;
+}
+
+.feedbackform-submitbtn .cardbottom-shadow img {
+    width: 150px;
+    bottom: -25px;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 9;
 }
 
 .feedbackform-submitbtn button {
@@ -2376,6 +2388,8 @@ button.scroll-btn svg :hover {
     font-size: 12px;
     font-weight: bold;
     cursor: pointer;
+    position: relative;
+    z-index: 99;
 }
 
 .feeback-question-options {
@@ -2620,10 +2634,10 @@ button.scroll-btn svg :hover {
 }
 
 .feedback-textarea-box {
-    width: 57%;
+    width: 70%;
     margin: 0 auto;
     border: 1px solid #20b14bb8;
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 3px 8px;
     background: #ffffff94;
 }

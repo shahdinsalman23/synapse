@@ -23,6 +23,9 @@
           </div>
           <div class="feedbackform-submitbtn">
             <button type="submit">Submit</button>
+            <div class="cardbottom-shadow">
+                   <img src="/images/cardshadow.png" alt="">
+            </div>
           </div>
         </form>
       </div>
@@ -139,7 +142,7 @@ export default {
   font-family: Helvetica, Arial, sans-serif;
   border: 1px solid #808285;
   padding: 3px 20px;
-  width: 115px;
+  width: 145px;
   margin: 0px 0px 10px 0px;
   border-radius: 30px;
   color: #2F292B;
@@ -149,6 +152,7 @@ export default {
 
 .feedbackform-submitbtn {
   margin: 12px 0px 0px 0px;
+  position: relative;
 }
 
 .feedbackform-submitbtn button {
