@@ -508,7 +508,7 @@ export default {
         handleMouseMove(event) {
             if (!this.isDragging) return;
             const delta = event.pageX - this.dragStartX;
-            const speedMultiplier = 6.5; // Increase this value for faster scroll
+            const speedMultiplier = 1; // Increase this value for faster scroll
             this.$refs.scrollContainer.scrollLeft = this.scrollLeftStart - delta * speedMultiplier;
         },
         handleMouseUp() {
@@ -1749,6 +1749,13 @@ export default {
 
 
 <style scoped>
+
+
+.questionleft-arrow, .questionright-arrow {
+  
+
+    transform: translate(0px, 23px) !important;
+}
 section.questionnumber-sec {
     display: flex;
     justify-content: center;
@@ -1782,7 +1789,7 @@ div.scrollmenus {
     display: flex;
     width: 100%;
     align-items: center;
-    padding-top: 20px;
+    padding-bottom: 20px;
     overflow-y: hidden;
     height: 15vh;
     padding-bottom: 20px;
@@ -1809,7 +1816,7 @@ div.scrollmenus::-webkit-scrollbar {
 
     border-radius: 50px;
     padding: 0px;
-    height: 15vh;
+    height: 17vh;
     max-width: 1290px;
     overflow-x: hidden;
 }
