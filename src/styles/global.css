@@ -1265,8 +1265,8 @@ button.modal-exit-btn .cardbottom-shadow img {
 
 
 .question-option-tabsbox-scroll {
-    height: 640px;
-    overflow-y: scroll;
+    height: 100%;
+
     overflow-x: hidden;
     padding: 10px 20px 0px 25px;
     scrollbar-width: thin;

@@ -1,5 +1,5 @@
 <template>
-    <div id="top">
+    <div id="top" @scroll="handleScroll" class="scrollwhole">
 
 
 
@@ -20,7 +20,7 @@
                     :returning="returning" @getBackindex="getBackindex" @startMocks="getBackindex(0)" />
 
             </div>
-            <div v-else >
+            <div v-else  >
 
 
 
@@ -214,7 +214,7 @@
                 <section class="questiontext-sec" id="sectiontop"  >
                     <div class="container">
                         
-                        <div class="question-option-tabsbox-scroll" @scroll="handleScroll" >
+                        <div class="question-option-tabsbox-scroll"  >
                           
                             <transition name="fade" mode="out-in">
 
@@ -301,6 +301,9 @@
                                             <transition @enter="enter" @leave="leave" :css="false">
                                                 <div v-if="activeOption === index" class="option-content">
                                                     <p>{{ option.rollingout ? option.rollingout : option.explanation }}
+
+                                                        
+                                                        
                                                     </p>
                                                 </div>
                                             </transition>
@@ -725,7 +728,7 @@ export default {
     // }
 
 
-    // window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("scroll", this.handleScroll);
 
 
 //     if (!this.reviewfirst) {
@@ -818,7 +821,7 @@ export default {
         handleMouseMove(event) {
             if (!this.isDragging) return;
             const delta = event.pageX - this.dragStartX;
-            const speedMultiplier = 6.5; // Increase this value for faster scroll
+            const speedMultiplier = 1; // Increase this value for faster scroll
             this.$refs.scrollContainer.scrollLeft = this.scrollLeftStart - delta * speedMultiplier;
         },
         handleMouseUp() {
@@ -833,18 +836,19 @@ export default {
 
             console.log('hello world')
            
-            
+            const elements = document.getElementById('app');
+            elements.scrollIntoView({ behavior: 'smooth' });
   
 
-            const element = document.getElementById('bottom');
-            element.scrollIntoView({ behavior: 'smooth' });
+            // const element = document.getElementById('bottom');
+            // element.scrollIntoView({ behavior: 'smooth' });
 
 
-              setTimeout(() => {
-                const elements = document.getElementById('app');
-                elements.scrollIntoView({ behavior: 'smooth' });
+            //   setTimeout(() => {
+            //     const elements = document.getElementById('app');
+            //     elements.scrollIntoView({ behavior: 'smooth' });
                 
-            }, 200);
+            // }, 200);
 
             setTimeout(() => {
                 
@@ -892,34 +896,37 @@ export default {
 
 
 
-handleScroll(event) {
-    const el = event.target;
-    const scrollTop = el.scrollTop;
+// handleScroll(event) {
+//     const el = event.target;
+//     const scrollTop = el.scrollTop;
 
-    console.log('Div scrolled to:', scrollTop);
+//     console.log('Div scrolled to:', scrollTop);
 
-    if (scrollTop > 0) {
-      this.isRowFixed = true;
-    } else {
-      this.isRowFixed = false;
-    }
-  },
+//     if (scrollTop > 0) {
+//       this.isRowFixed = true;
+//     } else {
+//       this.isRowFixed = false;
+//     }
+//   },
 
-    //     handleScroll(event) {
-    //     const scrollTop = event.target.scrollTop;
+        handleScroll(event) {
+            const scrollTop = event.target.documentElement.scrollTop || event.target.body.scrollTop;
+            console.log('down' , scrollTop);
 
-    //     if (scrollTop > this.lastScrollTop) {
-    //         // Scrolling down
-    //         // this.powerUp = true;
-    //         console.log('down');
-    //     } else if (scrollTop < this.lastScrollTop) {
-    //         // Scrolling up
-    //         // this.powerUp = false;
-    //         console.log('up');
-    //     }
+        if (scrollTop > 0) {
+            this.isRowFixed = true;
+            // Scrolling down
+            // this.powerUp = true;
+            console.log('down');
+        } else  {
+            // Scrolling up
+            // this.powerUp = false;
+            this.isRowFixed = false;
+            console.log('up');
+        }
 
-    //     this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Prevent negative scroll
-    // },
+        this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Prevent negative scroll
+    },
 
     
 
@@ -1037,7 +1044,7 @@ handleScroll(event) {
         enter(el, done) {
 
             el.style.height = '0';
-            const height = el.scrollHeight + 2;
+            const height = el.scrollHeight;
             // const height = 100;
             console.log('scrollheight', height)
             requestAnimationFrame(() => {
@@ -2167,6 +2174,13 @@ handleScroll(event) {
 
 
 <style scoped>
+
+
+.questionleft-arrow, .questionright-arrow {
+  
+
+    transform: translate(0px, 23px) !important;
+}
 section.questionnumber-sec {
     display: flex;
     justify-content: center;
@@ -2225,7 +2239,7 @@ div.scrollmenus::-webkit-scrollbar {
     justify-content: center;
     border-radius: 50px;
     padding: 0px;
-    height: 15vh;
+    height: 17vh;
     max-width: 1290px;
     overflow-x: hidden;
 }
@@ -2330,7 +2344,7 @@ button.scroll-btn svg :hover {
     border-radius: 12px;
     text-align: center;
     width: 1300px;
-    height: 80vh;
+    height: 72vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2567,7 +2581,7 @@ button.scroll-btn svg :hover {
     color: #231f20;
     line-height: 1.4;
     text-align: left;
-    padding: 2px 50px 0 36px;
+    padding: 10px 50px 0 36px;
 }
 
 
