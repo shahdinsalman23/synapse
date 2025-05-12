@@ -2258,9 +2258,18 @@ export default {
 }
 
 section.questionnumber-sec {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 1rem;
 }
+
+.responsive-wrapper {
+  width: 100%;
+  max-width: 1440px; 
+  margin: 0 auto;
+}
+
 
 .square {
     background: #d2cbcb75 !important;
@@ -2305,19 +2314,20 @@ div.scrollmenus::-webkit-scrollbar {
 }
 
 .scrollcenter {
-    display: flex;
-    justify-content: center;
-    max-width: 1290px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 1rem;
 }
 
 .mainscrollview {
-    display: flex;
-    justify-content: center;
-    border-radius: 50px;
-    padding: 0px;
-    height: 17vh;
-    max-width: 1290px;
-    overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1290px;
+  height: auto;
+  min-height: 80px;
+  padding: 0;
 }
 
 div.scrollmenu a {
@@ -2775,4 +2785,14 @@ span.crossspan {
     }
 
 }
+
+
+@media only screen and (max-width: 425px) {
+    .mocktxt {
+        width: 200px;
+    }
+}
+
+
+
 </style>
