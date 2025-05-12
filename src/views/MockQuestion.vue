@@ -76,69 +76,53 @@
 
 
             <!-- New Scroller -->
-            <section class="questionnumber-sec">
-                <div class="scrollcenter" style="    padding-top: 5px; position:relative
-            ">
-
-
-
-
-
-
-                    <div class="mainscrollview">
-
-                        <div class="buttond">
-
-
-
-                            <div class="questionleft-arrow" @click="scrollBackward" @mouseup="stopScroll"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left">
-                                    <path d="m15 18-6-6 6-6" />
-                                </svg></div>
-                        </div>
-
-
-
-                        <div class="questionnumber-slide  scrollmenus" ref="scrollContainer"
-                            @mousedown="handleMouseDown" @mousemove="handleMouseMove" @mouseup="handleMouseUp"
-                            @mouseleave="handleMouseLeave" :style="slideStyle">
-                            <span v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber" :style="{
-                                background: nav.score
-                                    ? '#d2cbcb'
-                                    : (nav.flag
-                                        ? 'white'
-                                        : (nav.skip
+            <div class="responsive-wrapper">
+                <section class="questionnumber-sec">
+                    <div class="scrollcenter" style="padding-top: 5px; position:relative">
+                        <div class="mainscrollview">
+                            <div class="buttond">
+                                <div class="questionleft-arrow" @click="scrollBackward" @mouseup="stopScroll"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left">
+                                        <path d="m15 18-6-6 6-6" />
+                                    </svg></div>
+                            </div>
+                            <div class="questionnumber-slide  scrollmenus" ref="scrollContainer"
+                                @mousedown="handleMouseDown" @mousemove="handleMouseMove" @mouseup="handleMouseUp"
+                                @mouseleave="handleMouseLeave" :style="slideStyle">
+                                <span v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber" :style="{
+                                    background: nav.score
+                                        ? '#d2cbcb'
+                                        : (nav.flag
                                             ? 'white'
-                                            : 'white')),
-                            }" :class="{ 'activeindex': isPresentIndexs(indexnav) }" @click="getBackindex(indexnav)">
-                                {{ indexnav + 1 }}
+                                            : (nav.skip
+                                                ? 'white'
+                                                : 'white')),
+                                }" :class="{ 'activeindex': isPresentIndexs(indexnav) }" @click="getBackindex(indexnav)">
+                                    {{ indexnav + 1 }}
 
-                                <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
-                                    <path
-                                        d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
-                                        fill="#ED1C24" />
-                                </svg>
-                            </span>
-                        </div>
-
-                        <div class="buttond">
-                            <div class="questionright-arrow" @click="scrollForward" @mouseup="stopScroll">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="lucide lucide-chevron-right-icon lucide-chevron-right">
-                                    <path d="m9 18 6-6-6-6" />
-                                </svg>
+                                    <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
+                                        <path
+                                            d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
+                                            fill="#ED1C24" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="buttond">
+                                <div class="questionright-arrow" @click="scrollForward" @mouseup="stopScroll">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-chevron-right-icon lucide-chevron-right">
+                                        <path d="m9 18 6-6-6-6" />
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
-                </div>
-            </section>
-
+                </section>
+            </div>
 
 
 
@@ -1788,6 +1772,15 @@ export default {
 section.questionnumber-sec {
     display: flex;
     justify-content: center;
+    width: 100%;
+    padding: 0 1rem;
+    left: 0px;
+}
+
+.responsive-wrapper {
+  width: 100%;
+  max-width: 1440px; /* Adjust as needed */
+  margin: 0 auto;
 }
 
 .square {
@@ -1836,19 +1829,20 @@ div.scrollmenus::-webkit-scrollbar {
 .scrollcenter {
     display: flex;
     justify-content: center;
-    max-width: 1290px;
+    width: 100%;
+    padding: 0 1rem;
 }
 
 .mainscrollview {
     display: flex;
     justify-content: center;
-
-    border-radius: 50px;
-    padding: 0px;
-    height: 17vh;
-    max-width: 1290px;
-    overflow-x: hidden;
+    width: 100%;
+    max-width: 1280px;
+    height: auto;
+    min-height: 80px; 
+    padding: 0;
 }
+
 
 div.scrollmenu a {
 
