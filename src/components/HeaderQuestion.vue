@@ -369,7 +369,11 @@
 
     <transition name="fade">
       <PauseMockModal v-if="showPauseModal || stoptimerpopup" @close="Resuming" @resume="Resuming"
-        @exit="handleExitMock" />
+        @exit="handleExitMock"
+
+       
+       
+        />
     </transition>
   </div>
 </template>
@@ -446,6 +450,7 @@ export default {
 
       get("/globalhelp?value=" + this.bubbles).then((res) => {
         console.log('data', res.data.data)
+        this.$emit('globalhelp')
 
         this.bubbles = res.data.data.value == 0 ? false: true
 
@@ -460,14 +465,14 @@ export default {
     },
 
     PauseModal() {
-      this.$emit('showstoptimer')
       this.showPauseModal = true
+      this.$emit('showstoptimer')
 
     },
 
     Resuming() {
-      this.$emit('startagain')
       this.showPauseModal = false
+      this.$emit('startagain')
     },
 
     notifyParent() {

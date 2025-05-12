@@ -13,7 +13,7 @@
       <div class="container">
         <div class="row">
           <div class="card-container">
-            <div v-for="(card, index) in cards" :key="index" class="homemock-card" data-aos="fade-up" :data-aos-delay="index * 100"  data-aos-duration="800" @click="gotoroute">
+            <div v-for="(card, index) in cards" :key="index" class="homemock-card" data-aos="fade-up" :data-aos-delay="index * 100"  data-aos-duration="800" @click="gotoroute(card)">
               <div class="cardtop-content">
                 <img :src="card.image" alt="Card Image" />
                 <h2>{{ card.title }}</h2>
@@ -79,10 +79,13 @@ export default {
   methods: {
 
 
-    gotoroute(){
+    gotoroute(e){
 
-      console.log('here');
-      this.$router.push('/mocksection')
+      console.log('here' , e);
+      if(e.title == 'Mocks'){
+
+        this.$router.push('/mocksection')
+      }
     }
   }
 };

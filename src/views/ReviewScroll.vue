@@ -11,7 +11,7 @@
             <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
                 :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
                 @startagain="startTimer" @exitmock="exit" :stoptimerpopup="stoptimerpopup" :fillicon="fillicon"
-                @returnquestion="getBackindexheader" :isRowFixed="isRowFixed" @SectionScroll="SectionScroll" />
+                @returnquestion="getBackindexheader" :isRowFixed="isRowFixed" @SectionScroll="SectionScroll" @globalhelp="globalhelp" />
 
             <div v-if="reviewfirst">
 
@@ -241,7 +241,9 @@
                                                 d="M8.49385 2.26427L8.72443 2.39603H8.74116C11.6548 3.96951 14.7462 4.01469 17.67 2.53156V13.8189C16.2175 14.6116 14.7714 14.996 13.3301 14.996C11.8326 14.996 10.3221 14.5811 8.82642 13.7279C6.28896 12.273 3.59969 12.0096 1 12.9068V1.56338C3.47425 0.631129 6.01882 0.849963 8.49385 2.26427Z"
                                                 fill="#FAF8ED" stroke="#9A9898" stroke-width="2" />
                                         </svg>
-                                        <span class="flag-hover-text">Flag Question</span>
+                                        <!-- <span class="flag-hover-text" v-if="bubbles == 1">Flag Question</span> -->
+                                        
+                                    <span class="flag-hover-text" v-if="bubbles == 1">Flag Question</span>
                                     </span>
                                     <div class="questioncomment">
                                         <button @click="openfeedbackpop">
@@ -599,6 +601,7 @@ export default {
             tooltipLeft: 0,
             selectedOptions: null,
             loadingflag: false,
+            bubbles: null,
 
             openIndexes: [],
 
@@ -692,6 +695,13 @@ export default {
 
         this.getReviewsss()
         // this.startTimer();
+
+        get("/getglobalhelp").then((res) => {
+        console.log('data', res.data.data)
+
+        this.bubbles = res.data.data.value == 0 ? false: true
+
+      });
     },
 
     watch: {
@@ -831,6 +841,16 @@ export default {
 
 
     methods: {
+
+        globalhelp(){
+            get("/getglobalhelp").then((res) => {
+        console.log('data', res.data.data)
+
+        this.bubbles = res.data.data.value == 0 ? false: true
+
+      });
+
+        },
 
 
         handleMouseDown(event) {
@@ -1870,7 +1890,7 @@ export default {
 
 
             this.$refs.reviewDetailRef.resetActiveTab();
-
+            this.centerSelectedIndex(this.currentQuestionIndex)
 
             this.selectedOptions = null
 

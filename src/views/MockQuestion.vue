@@ -12,7 +12,7 @@
         <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
             :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
             @startagain="startTimeing" @exitmock="exit" :stoptimerpopup="stoptimerpopup" :fillicon="fillicon"
-            @returnquestion="getBackindexheader" />
+            @returnquestion="getBackindexheader" @globalhelp="globalhelp" />
         <div v-if="eye">
 
 
@@ -167,7 +167,7 @@
                                             fill="#FAF8ED" stroke="#9A9898" stroke-width="2" />
                                     </svg>
 
-                                    <span class="flag-hover-text">Flag Question</span>
+                                    <span class="flag-hover-text" v-if="bubbles == 1">Flag Question</span>
                                 </span>
                             </div>
                         </transition>
@@ -220,6 +220,7 @@
                             </svg> -->
                                 Submit Mock
                             </div>
+
 
                             <div class="questionoption-rightarrow" v-else @click="nextQuestion()">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -364,6 +365,7 @@ export default {
             currentselected: 0,
             truecondition: false,
             unansweredmain: 0,
+            bubbles: null,
 
             scores: [
                 {
@@ -442,6 +444,15 @@ export default {
 
         this.getReviewsss()
         this.startTimer();
+
+
+        get("/getglobalhelp").then((res) => {
+        console.log('data', res.data.data)
+
+        this.bubbles = res.data.data.value == 0 ? false: true
+
+      });
+
     },
 
     watch: {
@@ -455,51 +466,19 @@ export default {
         },
     },
 
-    // methods: {
-    //     selectOption(optionId) {
-    //         this.selectedOption = optionId
-    //     },
-    //     toggleNumber(number) {
-    //         const index = this.selectedNumbers.indexOf(number);
-    //         if (index > -1) {
-    //             this.selectedNumbers.splice(index, 1);
-    //         } else {
-    //             this.selectedNumbers.push(number);
-    //         }
-    //     },
-    //     calculateVisibleNumbers() {
-    //         this.$nextTick(() => {
-    //             if (this.$refs.container) {
-    //                 const containerWidth = this.$refs.container.offsetWidth;
-    //                 this.visibleNumbers = Math.floor(containerWidth / (this.numberWidth + this.gap));
-    //             }
-    //         });
-    //     },
-    //     startScroll(direction) {
-    //         this.scrollDirection = direction;
-
-    //         if (!this.scrollInterval) {
-    //             this.scrollInterval = setInterval(() => {
-    //                 if (this.scrollDirection === 'right' && this.currentIndex < this.maxIndex) {
-    //                     this.currentIndex++;
-    //                 } else if (this.scrollDirection === 'left' && this.currentIndex > 0) {
-    //                     this.currentIndex--;
-    //                 } else {
-    //                     this.stopScroll();
-    //                 }
-    //             }, this.scrollSpeed);
-    //         }
-    //     },
-    //     stopScroll() {
-    //         if (this.scrollInterval) {
-    //             clearInterval(this.scrollInterval);
-    //             this.scrollInterval = null;
-    //         }
-    //     }
-    // },
 
 
     methods: {
+
+        globalhelp(){
+            get("/getglobalhelp").then((res) => {
+        console.log('data', res.data.data)
+
+        this.bubbles = res.data.data.value == 0 ? false: true
+
+      });
+
+        },
 
         handleMouseDown(event) {
             this.isDragging = true;
@@ -1382,7 +1361,7 @@ export default {
                 // this.resetSelectedOption();
 
                 this.$nextTick(() => {
-                    this.scrollToActiveItem();
+                     this.centerSelectedIndex(this.currentQuestionIndex)
                 });
             }
 

@@ -101,9 +101,9 @@ html {
     color: black !important;
     border: 2px solid black;
     font-weight: 800 !important;
-    font-size: 22px !important;
+    font-size: 18px !important;
     padding-top: 0;
-    padding-bottom: 2px;
+ 
 }
 
 
@@ -112,9 +112,9 @@ html {
 
 .isselected {
     font-weight: bold !important;
-    font-size: 22px !important;
+    font-size: 18px !important;
     padding-top: 0px;
-    padding-bottom: 3px;
+   
 }
 
 /********** Header Login Start **********/
@@ -175,7 +175,7 @@ header.header-main .row {
     background: #ED1C24;
     color: #fff;
     border-radius: 13px;
-    padding: 5px 10px 5px 20px;
+    padding: 5px 20px 5px 20px;
 }
 
 .mockhead-hamburger {
@@ -1107,12 +1107,13 @@ span.pausemock {
 }
 
 .birdsaeye-head {
-    padding: 0px 0px 42px 0px;
+    padding: 0px 0px 37px 0px;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin-top: 80px;
 }
 
 .birdsaeye-head h6 {

@@ -68,7 +68,7 @@
     align-items: center;
     justify-content: space-around;
     opacity: 0;
-    animation: pure-fade-in-4843559d 0.3s ease-out forwards;
+    animation: pure-fade-in 0.3s ease-out forwards;
     flex-direction: column;
 }
 
@@ -129,33 +129,12 @@
 
 
 
-/* .modal-content {
-  transform-origin: top center;
-  animation: modal-slide 0.3s ease-out;
-}
 
-@keyframes modal-slide {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-} */
 
 /* For leave transition */
 .leaving .modal-content {
   animation: pure-fade-in 0.3s ease-out forwards; 
 }
-
-/* @keyframes modal-slide-up {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-100%);
-  }
-} */
 
 
   </style>
