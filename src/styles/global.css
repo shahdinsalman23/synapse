@@ -907,7 +907,7 @@ button.begin-btn a {
     font-size: 15px;
     line-height: 22px;
     color: #231F20;
-    text-align: justify;
+    text-align: left;
 }
 
 .question-option h4 {
