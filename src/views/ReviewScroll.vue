@@ -246,7 +246,7 @@
                                     <span class="flag-hover-text" v-if="bubbles == 1">Flag Question</span>
                                     </span>
                                     <div class="questioncomment">
-                                        <button @click="openfeedbackpop">
+                                        <button @click="openfeedbackpop" class="feedbackbutton">
 
                                             <svg v-if="currentQuestion.feedback" width="20" height="21"
                                                 viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -278,7 +278,7 @@
                                             </svg>
 
 
-
+                                            <span class="feedback-hover-text" v-if="bubbles == 1">Give Feedback</span>
 
 
                                         </button>
@@ -333,6 +333,7 @@
                                         class="lucide lucide-chevron-left-icon lucide-chevron-left">
                                         <path d="m15 18-6-6 6-6" />
                                     </svg>
+                                    <span class="leftarrow-hover-text" v-if="bubbles == 1">Previous Question</span>
                                 </div>
 
                                 <div v-if="currentQuestionIndex === questions.length - 1"
@@ -346,6 +347,7 @@
                                         class="lucide lucide-chevron-right-icon lucide-chevron-right">
                                         <path d="m9 18 6-6-6-6" />
                                     </svg>
+                                    <span class="leftarrow-hover-text" v-if="bubbles == 1">Next Question</span>
                                 </div>
                             </div>
                             <div class="brake-border"></div>
@@ -2250,6 +2252,12 @@ export default {
 
 
 <style scoped>
+
+
+.questionsoptions-arrows {
+   
+    padding: 20px 0px 0px 0px;
+}
 .questionleft-arrow,
 .questionright-arrow {
 
@@ -2411,7 +2419,7 @@ button.scroll-btn svg :hover {
 
 .modal-overlay {
     position: fixed;
-    top: 200px;
+    top: 400px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -2426,11 +2434,11 @@ button.scroll-btn svg :hover {
     background: #ffffff94;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(10px);
-    padding: 2rem;
+    padding: 2rem 0rem;
     border-radius: 12px;
     text-align: center;
     width: 1300px;
-    height: 72vh;
+    height: 65vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2770,6 +2778,23 @@ span.crossspan {
 #sectiontop {
 
     overflow-y: auto;
+}
+
+
+@media only screen and (max-width: 1600px) {
+
+    .modal-content {
+  
+ 
+    
+ 
+        height: 60vh;
+        display: flex
+    ;
+        align-items: flex-start;
+   
+    }
+
 }
 
 @media only screen and (min-height: 1024px) {

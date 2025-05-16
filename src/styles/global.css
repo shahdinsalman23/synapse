@@ -1074,6 +1074,123 @@ span.pausemock {
 }
 
 
+
+
+.leftarrow-hover-text {
+    position: absolute;
+    width: 95px;
+    left: 45%;
+    top: -30px;
+    font-size: 10px;
+    background-color: #9DED6C;
+    padding: 3px 3px;
+    border-radius: 6px;
+    color: #000000;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.leftarrow-hover-text::before {
+    position: absolute;
+    content: "";
+    background: #9DED6C;
+    width: 10px;
+    height: 10px;
+    bottom: -9px;
+    clip-path: polygon(0 0, 0% 100%, 100% 0);
+    right: 55px;
+}
+
+
+
+
+.lock-hover-text {
+    position: absolute;
+    width: 95px;
+    left: -100%;
+    top: -30px;
+    font-size: 10px;
+    background-color: #9DED6C;
+    padding: 3px 3px;
+    border-radius: 6px;
+    color: #000000;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.lock-hover-text::before {
+    position: absolute;
+    content: "";
+    background: #9DED6C;
+    width: 10px;
+    height: 10px;
+    bottom: -9px;
+    clip-path: polygon(0 0, 0% 100%, 100% 0);
+    right: 55px;
+}
+
+
+
+
+  .questionoption-leftarrow:hover .leftarrow-hover-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.questionoption-rightarrow:hover .leftarrow-hover-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.feedbackbutton:hover .feedback-hover-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.accordion-icon:hover .lock-hover-text {
+    visibility: visible;
+    opacity: 1;
+}
+.feedback-hover-text
+
+ {
+    position: absolute;
+    width: 80px;
+    top: 32px;
+    font-size: 10px;
+    background-color: #9DED6C;
+    padding: 3px 3px;
+    border-radius: 6px;
+    color: #000000;
+    visibility: hidden;
+    opacity: 0;
+    left: -20px;
+}
+
+.feedback-hover-text::before {
+    position: absolute;
+    content: "";
+    background: #9DED6C;
+    width: 10px;
+    height: 10px;
+    bottom: 17px;
+    clip-path: polygon(0 200%, 100% 100%, 50% 0);
+    right: 41px;
+}
+
+.questionoption-leftarrow {
+ 
+    position: relative;
+}
+
+.questionoption-rightarrow {
+ 
+    position: relative;
+}
+
+
 /********** Mock Question Page CSS End **********/
 
 

@@ -194,6 +194,7 @@
                                     stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left">
                                     <path d="m15 18-6-6 6-6" />
                                 </svg>
+                                <span class="leftarrow-hover-text" v-if="bubbles == 1">Previous Question</span>
                             </div>
                             <div class="questionoption-rightarrow" v-if="currentQuestionIndex === questions.length - 1"
                                 @click="scoringpagess()">
@@ -213,6 +214,7 @@
                                     class="lucide lucide-chevron-right-icon lucide-chevron-right">
                                     <path d="m9 18 6-6-6-6" />
                                 </svg>
+                                <span class="leftarrow-hover-text" v-if="bubbles == 1">Next Question</span>
                             </div>
                         </div>
 
@@ -1741,6 +1743,7 @@ export default {
 
 
 <style scoped>
+
 
 
 .questionleft-arrow, .questionright-arrow {
