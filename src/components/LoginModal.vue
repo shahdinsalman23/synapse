@@ -12,9 +12,23 @@
             <label>Your Email Address<span>*</span></label>
             <input type="email" v-model="email" required />
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label>Password<span>*</span></label>
             <input type="password" v-model="password" required />
+          </div> -->
+
+           <div class="form-group password-wrapper">
+            <label>Password <span>*</span></label>
+            <div class="password-input">
+              <input
+                :type="showPassword ? 'text' : 'password'"
+                v-model="password"
+                required
+              />
+              <span class="toggle-icon" @click="togglePassword">
+                <i :class="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+              </span>
+            </div>
           </div>
 
           <div class="login-remember">
@@ -53,7 +67,8 @@ export default {
     return {
       email: '',
       password: '',
-      rememberMe: false
+      rememberMe: false,
+      showPassword: false
     }
   },
   mounted() {
@@ -75,15 +90,19 @@ export default {
   },
   methods: {
 
+    togglePassword() {
+      this.showPassword = !this.showPassword
+    },
+
 
 
 
     async login() {
       // const baseUrl = 'http://127.0.0.1:8000/api'
-      const baseUrl = 'https://staging.imsynapse.com/api'
+      // const baseUrl = 'https://staging.imsynapse.com/api'
       // const baseUrl = 'https://staging.imsynapse.com/api'
 
-      // const baseUrl = 'https://synapse.appssols.com/api'
+      const baseUrl = 'https://synapse.appssols.com/api'
 
 
 
@@ -155,6 +174,31 @@ export default {
 </script>
 
 <style scoped>
+
+span.toggle-icon {
+  font-size: 14px;
+  opacity: .7;
+ 
+}
+
+.password-wrapper {
+  position: relative;
+}
+.password-input {
+  position: relative;
+}
+.password-input input {
+  width: 100%;
+  padding-right: 30px; /* space for the icon */
+}
+.toggle-icon {
+  position: absolute;
+  top: 50%;
+  right: 25px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+}
 /* TRANSITION ANIMATION */
 .modal-enter-active,
 .modal-leave-active {

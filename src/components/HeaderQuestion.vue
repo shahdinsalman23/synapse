@@ -136,7 +136,7 @@
                   </svg>
               </li>
 
-              <li v-if="$route.name == 'MockReview'" :class="{ 'mock-width': $route.name === 'MockReview' }" >
+              <li v-if="$route.name == 'MockReview'" :class="{ 'mock-width': $route.name === 'MockReview' }" style="cursor: default;">
                 <CircularProgress :percentage="75" />
 
 
@@ -354,7 +354,7 @@
 
               </li>
 
-              <li v-if="$route.name == 'MockReview'" >
+              <li v-if="$route.name == 'MockReview'"  style="cursor: default;">
 
                 <div class="roundcount">
                   {{incorrectcount}}
@@ -369,7 +369,7 @@
                 </div>
 
                 <div class="roundcount">
-                  {{unanswered}}
+                  {{ Math.abs(unanswered) }}
 
 
                 </div>
