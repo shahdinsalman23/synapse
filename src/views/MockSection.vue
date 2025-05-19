@@ -73,7 +73,13 @@
                         </div>
                         <div class="note-box" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800">
                             <h3><img src="/images/file.png" alt=""> Notes</h3>
-                            <img src="/images/lock.png" class="lock-img" alt="">
+                            <div class="imgdiv">
+
+                                <img src="/images/lock.png" class="lock-img" alt="">
+                                <span class="lock-hover-text">Locked section</span>
+                                
+                            </div>
+                            
                             <div class="note-score">
                                 <h6>Progress</h6>
                                 <div class="progress-container">
@@ -86,6 +92,9 @@
                             <div class="cardbottom-shadow">
                                 <img src="/images/cardshadow.png" alt="">
                             </div>
+
+                           
+                          
                         </div>
                         <div class="mock-box" data-aos="fade-up" data-aos-delay="200" data-aos-duration="800">
                             <h3><img src="/images/brain.png" alt=""> Mocks</h3>
@@ -306,6 +315,35 @@ export default {
 
 
 <style scoped>
+
+
+
+
+
+.lock-hover-text {
+    position: absolute;
+    width: 95px;
+    left: 77%;
+    top: -18px;
+    font-size: 10px;
+    background-color: #9DED6C;
+    padding: 3px 3px;
+    border-radius: 6px;
+    color: #000000;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.lock-hover-text::before {
+    position: absolute;
+    content: "";
+    background: #9DED6C;
+    width: 10px;
+    height: 10px;
+    bottom: -9px;
+    clip-path: polygon(0 0, 0% 100%, 100% 0);
+    right: 55px;
+}
 img {
     cursor: pointer;
 

@@ -95,10 +95,10 @@
                                     background: nav.score
                                         ? '#d2cbcb'
                                         : (nav.flag
-                                            ? 'white'
+                                            ? '#f1f2f2'
                                             : (nav.skip
-                                                ? 'white'
-                                                : 'white')),
+                                                ? '#f1f2f2'
+                                                : '#f1f2f2')),
                                 }" :class="{ 'activeindex': isPresentIndexs(indexnav) }" @click="getBackindex(indexnav)">
                                     {{ indexnav + 1 }}
 
@@ -197,7 +197,7 @@
                                 <span class="leftarrow-hover-text" v-if="bubbles == 1">Previous Question</span>
                             </div>
                             <div class="questionoption-rightarrow" v-if="currentQuestionIndex === questions.length - 1"
-                                @click="scoringpagess()">
+                                @click="scoringpage()">
                                 <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right">
@@ -835,7 +835,7 @@ export default {
         scoringpagess() {
 
 
-            this.nextQuestion()
+            // this.nextQuestion()
             setTimeout(() => {
 
                 if (this.unanswered > 0) {
@@ -853,6 +853,7 @@ export default {
                     this.scoringpage()
                 }
             }, 200);
+            // this.scoringpage()
         },
 
         scoringpage() {

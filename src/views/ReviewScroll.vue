@@ -11,7 +11,8 @@
             <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
                 :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
                 @startagain="startTimer" @exitmock="exit" :stoptimerpopup="stoptimerpopup" :fillicon="fillicon"
-                @returnquestion="getBackindexheader" :isRowFixed="isRowFixed" @SectionScroll="SectionScroll" @globalhelp="globalhelp" />
+                @returnquestion="getBackindexheader" :isRowFixed="isRowFixed" @SectionScroll="SectionScroll"
+                @globalhelp="globalhelp" :correctcount="correctcount" :incorrectcount="incorrectcount" :unanswered="unanswered" />
 
             <div v-if="reviewfirst">
 
@@ -186,6 +187,18 @@
                                     }" :class="{ 'activeindexreview': isPresentIndexs(indexnav) }"
                                     @click="getBackindex(indexnav)">
                                     {{ indexnav + 1 }}
+                                   
+
+                                   
+
+                                    <svg v-if="nav.feedback" width="10" height="11" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.41003 1.45117C1.79003 1.45117 1.29004 1.95117 1.29004 2.57117V13.6912C1.29004 14.3112 1.79003 14.8112 2.41003 14.8112H3.73999C4.03999 14.8112 4.28003 15.0512 4.28003 15.3512V18.8812L7.75 14.9912C7.85 14.8812 8.00002 14.8112 8.15002 14.8112H17.25C17.87 14.8112 18.37 14.3112 18.37 13.6912V2.57117C18.37 1.95117 17.87 1.45117 17.25 1.45117H2.40002H2.41003Z" fill="#FFF200"/>
+                                        <path d="M3.75 20.8213C3.69 20.8213 3.62006 20.8113 3.56006 20.7813C3.35006 20.7013 3.20996 20.5013 3.20996 20.2813V15.8813H2.41003C1.20003 15.8813 0.209961 14.8913 0.209961 13.6813V2.56134C0.209961 1.35134 1.20003 0.361328 2.41003 0.361328H17.26C18.47 0.361328 19.46 1.35134 19.46 2.56134V13.6813C19.46 14.8913 18.47 15.8813 17.26 15.8813H8.40002L4.15002 20.6413C4.05002 20.7613 3.9 20.8213 3.75 20.8213ZM2.42004 1.45132C1.80004 1.45132 1.30005 1.95132 1.30005 2.57132V13.6913C1.30005 14.3113 1.80004 14.8113 2.42004 14.8113H3.75C4.05 14.8113 4.29004 15.0513 4.29004 15.3513V18.8813L7.76001 14.9913C7.86001 14.8813 8.01003 14.8113 8.16003 14.8113H17.26C17.88 14.8113 18.38 14.3113 18.38 13.6913V2.57132C18.38 1.95132 17.88 1.45132 17.26 1.45132H2.41003H2.42004Z" fill="#FBAD18"/>
+                                        <path d="M14.7601 10.1913H5.66016C5.36016 10.1913 5.12012 9.95134 5.12012 9.65134C5.12012 9.35134 5.36016 9.11133 5.66016 9.11133H14.7601C15.0601 9.11133 15.3002 9.35134 15.3002 9.65134C15.3002 9.95134 15.0601 10.1913 14.7601 10.1913Z" fill="#FBAD18"/>
+                                        <path d="M14.7601 6.69135H5.66016C5.36016 6.69135 5.12012 6.45134 5.12012 6.15134C5.12012 5.85134 5.36016 5.61133 5.66016 5.61133H14.7601C15.0601 5.61133 15.3002 5.85134 15.3002 6.15134C15.3002 6.45134 15.0601 6.69135 14.7601 6.69135Z" fill="#FBAD18"/>
+                                        </svg>
+                                    
+                                        
 
                                     <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
                                         <path
@@ -223,7 +236,7 @@
                                     id="bottom">
                                     <p> {{
                                         currentQuestion ? currentQuestion.title : "No questions available."
-                                    }}</p>
+                                        }}</p>
                                     <span class="questionflag">
                                         <svg v-if="flg || currentQuestion.flag" @click="removeflage(currentQuestion.id)"
                                             width="19" height="17" viewBox="0 0 19 17" fill="none"
@@ -242,13 +255,21 @@
                                                 fill="#FAF8ED" stroke="#9A9898" stroke-width="2" />
                                         </svg>
                                         <!-- <span class="flag-hover-text" v-if="bubbles == 1">Flag Question</span> -->
-                                        
-                                    <span class="flag-hover-text" v-if="bubbles == 1">Flag Question</span>
+
+                                        <span class="flag-hover-text" v-if="bubbles == 1">Flag Question</span>
                                     </span>
                                     <div class="questioncomment">
                                         <button @click="openfeedbackpop" class="feedbackbutton">
 
-                                            <svg v-if="currentQuestion.feedback" width="20" height="21"
+                                            <svg v-if="currentQuestion.feedback"  width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M2.41003 1.45117C1.79003 1.45117 1.29004 1.95117 1.29004 2.57117V13.6912C1.29004 14.3112 1.79003 14.8112 2.41003 14.8112H3.73999C4.03999 14.8112 4.28003 15.0512 4.28003 15.3512V18.8812L7.75 14.9912C7.85 14.8812 8.00002 14.8112 8.15002 14.8112H17.25C17.87 14.8112 18.37 14.3112 18.37 13.6912V2.57117C18.37 1.95117 17.87 1.45117 17.25 1.45117H2.40002H2.41003Z" fill="#FFF200"/>
+                                                <path d="M3.75 20.8213C3.69 20.8213 3.62006 20.8113 3.56006 20.7813C3.35006 20.7013 3.20996 20.5013 3.20996 20.2813V15.8813H2.41003C1.20003 15.8813 0.209961 14.8913 0.209961 13.6813V2.56134C0.209961 1.35134 1.20003 0.361328 2.41003 0.361328H17.26C18.47 0.361328 19.46 1.35134 19.46 2.56134V13.6813C19.46 14.8913 18.47 15.8813 17.26 15.8813H8.40002L4.15002 20.6413C4.05002 20.7613 3.9 20.8213 3.75 20.8213ZM2.42004 1.45132C1.80004 1.45132 1.30005 1.95132 1.30005 2.57132V13.6913C1.30005 14.3113 1.80004 14.8113 2.42004 14.8113H3.75C4.05 14.8113 4.29004 15.0513 4.29004 15.3513V18.8813L7.76001 14.9913C7.86001 14.8813 8.01003 14.8113 8.16003 14.8113H17.26C17.88 14.8113 18.38 14.3113 18.38 13.6913V2.57132C18.38 1.95132 17.88 1.45132 17.26 1.45132H2.41003H2.42004Z" fill="#FBAD18"/>
+                                                <path d="M14.7601 10.1913H5.66016C5.36016 10.1913 5.12012 9.95134 5.12012 9.65134C5.12012 9.35134 5.36016 9.11133 5.66016 9.11133H14.7601C15.0601 9.11133 15.3002 9.35134 15.3002 9.65134C15.3002 9.95134 15.0601 10.1913 14.7601 10.1913Z" fill="#FBAD18"/>
+                                                <path d="M14.7601 6.69135H5.66016C5.36016 6.69135 5.12012 6.45134 5.12012 6.15134C5.12012 5.85134 5.36016 5.61133 5.66016 5.61133H14.7601C15.0601 5.61133 15.3002 5.85134 15.3002 6.15134C15.3002 6.45134 15.0601 6.69135 14.7601 6.69135Z" fill="#FBAD18"/>
+                                                </svg>
+                                                
+
+                                            <!-- <svg v-if="currentQuestion.feedback" width="20" height="21"
                                                 viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path
                                                     d="M2.78009 1.5C2.16009 1.5 1.6601 2 1.6601 2.62V13.74C1.6601 14.36 2.16009 14.86 2.78009 14.86H4.11005C4.41005 14.86 4.65009 15.1 4.65009 15.4V18.93L8.12006 15.04C8.22006 14.93 8.37008 14.86 8.52008 14.86H17.6201C18.2401 14.86 18.7401 14.36 18.7401 13.74V2.62C18.7401 2 18.2401 1.5 17.6201 1.5H2.77008H2.78009Z"
@@ -262,7 +283,7 @@
                                                 <path
                                                     d="M15.1301 6.74991H6.03009C5.73009 6.74991 5.49005 6.5099 5.49005 6.2099C5.49005 5.9099 5.73009 5.66992 6.03009 5.66992H15.1301C15.4301 5.66992 15.6701 5.9099 15.6701 6.2099C15.6701 6.5099 15.4301 6.74991 15.1301 6.74991Z"
                                                     fill="#8698A2" />
-                                            </svg>
+                                            </svg> -->
 
                                             <svg v-else width="20" height="21" viewBox="0 0 20 21" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -358,12 +379,12 @@
                 </section>
 
 
-                <transition name="slide-modal" @click.self="showPauseModal = false">
+                <transition name="slide-modal">
                     <!-- <FeedbackFormModal v-if="showPauseModal" @close="showPauseModal = false"
                     @resume="showPauseModal = false" @exit="handleExitMock" /> -->
 
-                    <div class="modal-overlay" v-if="showPauseModal" @click.self="showPauseModal = false">
-                        <div class="modal-content">
+                    <div class="modal-overlays" v-if="showPauseModal" >
+                        <div class="modal-contents">
 
                             <div class="feedback-form-box">
                                 <div class="cross">
@@ -382,8 +403,8 @@
 
 
                                 <!-- <h4>Share feedback</h4> -->
-                                <form action="" >
-                                    <div class="feedbackform-button" >
+                                <form action="">
+                                    <div class="feedbackform-button">
                                         <div class="feedbackform-button" v-for="(category, index) in feedbackCategories"
                                             :key="index">
                                             <button @click="toggleOptions(index)"
@@ -533,6 +554,9 @@ export default {
             secondindex: "books",
             thirdindex: null,
             fourthindex: null,
+
+            conrrectcount:0,
+            incorrectcount:1,
 
 
 
@@ -699,11 +723,11 @@ export default {
         // this.startTimer();
 
         get("/getglobalhelp").then((res) => {
-        console.log('data', res.data.data)
+            console.log('data', res.data.data)
 
-        this.bubbles = res.data.data.value == 0 ? false: true
+            this.bubbles = res.data.data.value == 0 ? false : true
 
-      });
+        });
     },
 
     watch: {
@@ -731,17 +755,18 @@ export default {
             immediate: true,
         },
         showPauseModal(newVal) {
-            if (newVal) {
-                this.lockBodyScroll();
-            } else {
-                this.unlockBodyScroll();
-            }
+            console.log(newVal)
+            // if (newVal) {
+            //     this.lockBodyScroll();
+            // } else {
+            //     this.unlockBodyScroll();
+            // }
         }
     },
     beforeUnmount() {
-        if (this.showPauseModal) {
-            this.unlockBodyScroll();
-        }
+        // if (this.showPauseModal) {
+        //     this.unlockBodyScroll();
+        // }
     },
 
     mounted() {
@@ -844,13 +869,13 @@ export default {
 
     methods: {
 
-        globalhelp(){
+        globalhelp() {
             get("/getglobalhelp").then((res) => {
-        console.log('data', res.data.data)
+                console.log('data', res.data.data)
 
-        this.bubbles = res.data.data.value == 0 ? false: true
+                this.bubbles = res.data.data.value == 0 ? false : true
 
-      });
+            });
 
         },
 
@@ -1257,6 +1282,10 @@ export default {
                     // });
                     this.showPauseModal = false
                     this.toggleOptions(null)
+                    const updatedIndex = this.currentQuestionIndex;
+                    if (this.allquestions[updatedIndex]) {
+                        this.$set(this.allquestions[updatedIndex], 'feedback', true);
+                    }
                     // this.feedbackpop = false
 
 
@@ -1405,7 +1434,19 @@ export default {
                 }
             }
             else {
-                return {}
+                if (option.explanation != null) {
+                    return {
+
+                        background: '#9DED6C',
+                        border: '1px solid green'
+
+                    };
+
+                }
+                else{
+
+                    return {}
+                }
             }
         },
 
@@ -2044,6 +2085,9 @@ export default {
 
 
                 this.unanswered = res.data.unanswered;
+                this.incorrectcount = res.data.incorrect
+                this.correctcount = res.data.correct
+                
                 this.flagcounts = res.data.flagcount;
                 this.form.unansweredid = res.data.unansweredid;
                 this.form.flaggedid = res.data.flagedid;
@@ -2254,10 +2298,30 @@ export default {
 <style scoped>
 
 
+.questionnumber {
+  
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.modal-overlays {
+    width: 100%;
+}
+
+.modal-contents {
+    position: fixed;
+    right: 43%;
+    top: 30%;
+    z-index: 1;
+}
 .questionsoptions-arrows {
-   
+
     padding: 20px 0px 0px 0px;
 }
+
 .questionleft-arrow,
 .questionright-arrow {
 
@@ -2266,16 +2330,16 @@ export default {
 }
 
 section.questionnumber-sec {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 1rem;
 }
 
 .responsive-wrapper {
-  width: 100%;
-  max-width: 1440px; 
-  margin: 0 auto;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
 }
 
 
@@ -2322,20 +2386,20 @@ div.scrollmenus::-webkit-scrollbar {
 }
 
 .scrollcenter {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 1rem;
 }
 
 .mainscrollview {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 1290px;
-  height: auto;
-  min-height: 80px;
-  padding: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 1290px;
+    height: auto;
+    min-height: 80px;
+    padding: 0;
 }
 
 div.scrollmenu a {
@@ -2428,11 +2492,11 @@ button.scroll-btn svg :hover {
     align-items: center;
     z-index: 1000;
     margin: 0px 20px;
+    pointer-events: none;
 }
 
 .modal-content {
-    background: #ffffff94;
-    backdrop-filter: blur(5px);
+    
     -webkit-backdrop-filter: blur(10px);
     padding: 2rem 0rem;
     border-radius: 12px;
@@ -2444,6 +2508,7 @@ button.scroll-btn svg :hover {
     justify-content: center;
     transform-origin: top center;
     animation: modal-slide 0.3s ease-out;
+    pointer-events: auto;
 }
 
 .feedback-form-box {
@@ -2784,15 +2849,14 @@ span.crossspan {
 @media only screen and (max-width: 1600px) {
 
     .modal-content {
-  
- 
-    
- 
+
+
+
+
         height: 60vh;
-        display: flex
-    ;
+        display: flex;
         align-items: flex-start;
-   
+
     }
 
 }
@@ -2817,7 +2881,4 @@ span.crossspan {
         width: 200px;
     }
 }
-
-
-
 </style>

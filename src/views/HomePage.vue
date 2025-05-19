@@ -81,7 +81,7 @@ import LoginModal from '@/components/LoginModal.vue'
             image: "/images/brain.png",
           },
           {
-            title: "All in done",
+            title: "All in one",
             price: "£19.99/mo.",
             question: "Get all in one",
             description:

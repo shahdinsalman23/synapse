@@ -3,7 +3,9 @@
         <section class="mockscore-sec">
             <div class="container">
                 <div class="mockscore-progress-btn">
-                    <div class="mockscore-progress">
+                    <CircularProgress :percentage="75" :size="120" :stroke="10" :fontsize="35"  :Color="'#808285'" />
+                    <!-- <div class="mockscore-progress">
+
                         <div class="progress-text-score">
                             <div class="progress-text">{{ roundedPercent ? roundedPercent : 0 }}<span class="percen">
                                 <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white;">
@@ -17,7 +19,7 @@
                         <div class="progress-container">
                             <div class="progress-bar" :style="{ width: total * 100 / totalquestions + '%' }"></div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="reviewmock-btn" @click="reviewMock">
                         <router-link to="">Review Mock 1
                             <div class="cardbottom-shadow">
@@ -33,9 +35,16 @@
 
 
 <script>
+import CircularProgress from '@/components/CircularProgress.vue';
 import { get } from './lib/api';
 
 export default {
+
+    components: {
+   
+    CircularProgress
+  },
+
   data() {
     return {
       progress: 36,
@@ -195,6 +204,16 @@ export default {
 
 <style scoped>
 
+.percentage-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 35px;
+    color: #808285 !important;
+    font-weight: bold;
+}
+
 span.percen {
     font-size: 18px;
     font-weight: lighter !important;
@@ -217,7 +236,7 @@ span.percen {
     position: relative;
     width: 100%;
     height: 28.08px;
-    background-color: #D1D3D4;
+
     border-radius: 50px;
     overflow: hidden;
     border: 1px solid #8082856b;

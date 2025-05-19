@@ -829,12 +829,18 @@ button.begin-btn a {
     position: relative;
     padding: 53px 0px 15px 0px;
 }
+
+.roundcount {
+    background-color: grey;
+    padding: 5px 10px;
+    border-radius: 50px;
+}
   
   .questionnumber {
     min-width: 23.85px;
     text-align: center;
     padding: 15px 0px;
-    border: 1px solid #231f2040;
+    /* border: 1px solid #231f2040; */
     border-radius: 4px;
     flex-shrink: 0;
     font-size: 12px;
@@ -1128,6 +1134,23 @@ span.pausemock {
     clip-path: polygon(0 0, 0% 100%, 100% 0);
     right: 55px;
 }
+
+
+
+
+.imgdiv:hover .lock-hover-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.lock-img .leftarrow-hover-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+
 
 
 

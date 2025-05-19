@@ -41,10 +41,10 @@
                             <h4>{{ tab.title }}</h4>
                             <div class="accordion-icon">
 
-                                  <svg v-if="tab.title === 'Journal'" width="15" height="19" viewBox="0 0 15 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <!-- <svg v-if="tab.title === 'Journal'" width="15" height="19" viewBox="0 0 15 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M12.77 7.77228H12.7399V5.9823C12.7399 3.1523 10.41 0.822266 7.57996 0.822266C4.74996 0.822266 2.41992 3.1523 2.41992 5.9823V7.77228H2.30994C1.54994 7.77228 0.939941 8.39227 0.939941 9.14227V16.6523C0.939941 17.4123 1.55994 18.0223 2.30994 18.0223H12.7999C13.5599 18.0223 14.1699 17.4023 14.1699 16.6523V9.1123C14.1099 8.3523 13.53 7.76227 12.77 7.76227V7.77228ZM8.33997 12.8523C8.22997 12.9323 8.19995 12.9923 8.19995 13.1323V14.7823C8.19995 15.0023 8.08995 15.2323 7.88995 15.3423C7.40995 15.5923 6.93994 15.2623 6.93994 14.7823V13.1323C6.93994 13.0223 6.90996 12.9323 6.82996 12.8823C6.32996 12.5223 6.15991 11.8723 6.40991 11.3423C6.65991 10.8123 7.24994 10.5023 7.80994 10.6123C8.42994 10.7223 8.87994 11.2323 8.87994 11.8723C8.84994 12.2323 8.67991 12.6023 8.34991 12.8523H8.33997ZM10.4699 7.77228H4.66992V5.9823C4.66992 4.3823 5.95997 3.06226 7.58997 3.06226C9.21997 3.06226 10.5099 4.3523 10.5099 5.9823V7.77228H10.4799H10.4699Z" fill="#6D6E71"/>
-                                    </svg>
-                                <svg v-else-if="activeIndex === index" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    </svg> -->
+                                <svg v-if="activeIndex === index" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path d="M5 12H19" stroke="#fff" stroke-width="2" stroke-linecap="round" />
                                 </svg>
@@ -58,7 +58,7 @@
                                     <path d="M12 5V19" stroke="#fff" stroke-width="2" stroke-linecap="round" />
                                     <path d="M5 12H19" stroke="#fff" stroke-width="2" stroke-linecap="round" />
                                 </svg>
-                                <span class="lock-hover-text">Locked section</span>
+                                <!-- <span class="lock-hover-text">Locked section</span> -->
                             </div>
                         </div>
                     </div>
@@ -238,11 +238,11 @@ export default {
                 this.newComment = '';
             }
         },
-        toggleAccordion(index , title) {
-            if(title != 'Journal'){
+        toggleAccordion(index ) {
+            // if(title != 'Journal'){
 
                 this.activeIndex = this.activeIndex === index ? null : index
-            }
+            // }
         }
     }
 }

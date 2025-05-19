@@ -135,6 +135,12 @@
                       fill="#D1D3D4" />
                   </svg>
               </li>
+
+              <li v-if="$route.name == 'MockReview'" :class="{ 'mock-width': $route.name === 'MockReview' }" >
+                <CircularProgress :percentage="75" />
+
+
+              </li>
               <li :class="{ 'mock-width': $route.name === 'MockReview' }" class="fontsizing"><router-link to="">
                   <span v-if="bubbles == 1">Bird's eye view</span>
 
@@ -219,7 +225,7 @@
 
                 </router-link>
               </li>
-              <li :class="{ 'mock-width': $route.name === 'MockReview' }"><span class="flaggedquestions" v-if="bubbles == 1">Flagged
+              <li :class="{ 'mock-width': $route.name === 'MockReview' }" style="cursor: default;"><span class="flaggedquestions" v-if="bubbles == 1">Flagged
                   questions</span><svg width="14.52" height="17" viewBox="0 0 19 17" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -347,6 +353,27 @@
 
 
               </li>
+
+              <li v-if="$route.name == 'MockReview'" >
+
+                <div class="roundcount">
+                  {{incorrectcount}}
+
+
+                </div>
+
+                <div class="roundcount">
+                  {{correctcount}}
+
+
+                </div>
+
+                <div class="roundcount">
+                  {{unanswered}}
+
+
+                </div>
+              </li>
               <li v-if="$route.name !== 'MockReview'" class="pause" @click="PauseModal"><span class="pausemock" v-if="bubbles == 1">Pause
                   mock</span><svg width="25" height="25" viewBox="0 0 25 25" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
@@ -385,11 +412,13 @@
 import PauseMockModal from './PauseMockModal.vue';
 import { mapGetters } from "vuex";
 import { get } from "../views/lib/api";
+import CircularProgress from './CircularProgress.vue';
 
 
 export default {
   components: {
-    PauseMockModal
+    PauseMockModal,
+    CircularProgress
   },
 
   props: {
@@ -404,7 +433,13 @@ export default {
     },
     stoptimerpopup: {},
     fillicon: {},
-    isRowFixed:{}
+    isRowFixed:{},
+    correctcount:{},
+    incorrectcount:{},
+    unanswered:{}
+
+
+
   },
   data() {
     return {
@@ -416,7 +451,7 @@ export default {
       filleye: false,
       mockIndex: 0,
       coloring: '#fff',
-      bubbles: null
+      bubbles: null,
 
 
     }
