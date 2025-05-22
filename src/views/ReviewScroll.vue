@@ -12,7 +12,8 @@
                 :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
                 @startagain="startTimer" @exitmock="exit" :stoptimerpopup="stoptimerpopup" :fillicon="fillicon"
                 @returnquestion="getBackindexheader" :isRowFixed="isRowFixed" @SectionScroll="SectionScroll"
-                @globalhelp="globalhelp" :correctcount="correctcount" :incorrectcount="incorrectcount" :unanswered="unanswered" />
+                @globalhelp="globalhelp" :correctcount="correctcount" :incorrectcount="incorrectcount"
+                :unanswered="unanswered" :roundedPercent="roundedPercent" />
 
             <div v-if="reviewfirst">
 
@@ -186,25 +187,42 @@
 
                                     }" :class="{ 'activeindexreview': isPresentIndexs(indexnav) }"
                                     @click="getBackindex(indexnav)">
-                                    {{ indexnav + 1 }}
-                                   
 
-                                   
-
-                                    <svg v-if="nav.feedback" width="10" height="11" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2.41003 1.45117C1.79003 1.45117 1.29004 1.95117 1.29004 2.57117V13.6912C1.29004 14.3112 1.79003 14.8112 2.41003 14.8112H3.73999C4.03999 14.8112 4.28003 15.0512 4.28003 15.3512V18.8812L7.75 14.9912C7.85 14.8812 8.00002 14.8112 8.15002 14.8112H17.25C17.87 14.8112 18.37 14.3112 18.37 13.6912V2.57117C18.37 1.95117 17.87 1.45117 17.25 1.45117H2.40002H2.41003Z" fill="#FFF200"/>
-                                        <path d="M3.75 20.8213C3.69 20.8213 3.62006 20.8113 3.56006 20.7813C3.35006 20.7013 3.20996 20.5013 3.20996 20.2813V15.8813H2.41003C1.20003 15.8813 0.209961 14.8913 0.209961 13.6813V2.56134C0.209961 1.35134 1.20003 0.361328 2.41003 0.361328H17.26C18.47 0.361328 19.46 1.35134 19.46 2.56134V13.6813C19.46 14.8913 18.47 15.8813 17.26 15.8813H8.40002L4.15002 20.6413C4.05002 20.7613 3.9 20.8213 3.75 20.8213ZM2.42004 1.45132C1.80004 1.45132 1.30005 1.95132 1.30005 2.57132V13.6913C1.30005 14.3113 1.80004 14.8113 2.42004 14.8113H3.75C4.05 14.8113 4.29004 15.0513 4.29004 15.3513V18.8813L7.76001 14.9913C7.86001 14.8813 8.01003 14.8113 8.16003 14.8113H17.26C17.88 14.8113 18.38 14.3113 18.38 13.6913V2.57132C18.38 1.95132 17.88 1.45132 17.26 1.45132H2.41003H2.42004Z" fill="#FBAD18"/>
-                                        <path d="M14.7601 10.1913H5.66016C5.36016 10.1913 5.12012 9.95134 5.12012 9.65134C5.12012 9.35134 5.36016 9.11133 5.66016 9.11133H14.7601C15.0601 9.11133 15.3002 9.35134 15.3002 9.65134C15.3002 9.95134 15.0601 10.1913 14.7601 10.1913Z" fill="#FBAD18"/>
-                                        <path d="M14.7601 6.69135H5.66016C5.36016 6.69135 5.12012 6.45134 5.12012 6.15134C5.12012 5.85134 5.36016 5.61133 5.66016 5.61133H14.7601C15.0601 5.61133 15.3002 5.85134 15.3002 6.15134C15.3002 6.45134 15.0601 6.69135 14.7601 6.69135Z" fill="#FBAD18"/>
-                                        </svg>
-                                    
-                                        
-
-                                    <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
+                                    <svg :style="{ opacity: nav.flag ? 1 : 0 }" width="11" viewBox="0 0 19 17">
                                         <path
                                             d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
                                             fill="#ED1C24" />
                                     </svg>
+
+                                    {{ indexnav + 1 }}
+
+
+
+
+                                    <svg :style="{ opacity: nav.feedback ? 1 : 0 }" width="10" height="11"
+                                        viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M2.41003 1.45117C1.79003 1.45117 1.29004 1.95117 1.29004 2.57117V13.6912C1.29004 14.3112 1.79003 14.8112 2.41003 14.8112H3.73999C4.03999 14.8112 4.28003 15.0512 4.28003 15.3512V18.8812L7.75 14.9912C7.85 14.8812 8.00002 14.8112 8.15002 14.8112H17.25C17.87 14.8112 18.37 14.3112 18.37 13.6912V2.57117C18.37 1.95117 17.87 1.45117 17.25 1.45117H2.40002H2.41003Z"
+                                            fill="#FFF200" />
+                                        <path
+                                            d="M3.75 20.8213C3.69 20.8213 3.62006 20.8113 3.56006 20.7813C3.35006 20.7013 3.20996 20.5013 3.20996 20.2813V15.8813H2.41003C1.20003 15.8813 0.209961 14.8913 0.209961 13.6813V2.56134C0.209961 1.35134 1.20003 0.361328 2.41003 0.361328H17.26C18.47 0.361328 19.46 1.35134 19.46 2.56134V13.6813C19.46 14.8913 18.47 15.8813 17.26 15.8813H8.40002L4.15002 20.6413C4.05002 20.7613 3.9 20.8213 3.75 20.8213ZM2.42004 1.45132C1.80004 1.45132 1.30005 1.95132 1.30005 2.57132V13.6913C1.30005 14.3113 1.80004 14.8113 2.42004 14.8113H3.75C4.05 14.8113 4.29004 15.0513 4.29004 15.3513V18.8813L7.76001 14.9913C7.86001 14.8813 8.01003 14.8113 8.16003 14.8113H17.26C17.88 14.8113 18.38 14.3113 18.38 13.6913V2.57132C18.38 1.95132 17.88 1.45132 17.26 1.45132H2.41003H2.42004Z"
+                                            fill="#FBAD18" />
+                                        <path
+                                            d="M14.7601 10.1913H5.66016C5.36016 10.1913 5.12012 9.95134 5.12012 9.65134C5.12012 9.35134 5.36016 9.11133 5.66016 9.11133H14.7601C15.0601 9.11133 15.3002 9.35134 15.3002 9.65134C15.3002 9.95134 15.0601 10.1913 14.7601 10.1913Z"
+                                            fill="#FBAD18" />
+                                        <path
+                                            d="M14.7601 6.69135H5.66016C5.36016 6.69135 5.12012 6.45134 5.12012 6.15134C5.12012 5.85134 5.36016 5.61133 5.66016 5.61133H14.7601C15.0601 5.61133 15.3002 5.85134 15.3002 6.15134C15.3002 6.45134 15.0601 6.69135 14.7601 6.69135Z"
+                                            fill="#FBAD18" />
+                                    </svg>
+
+
+
+
+                                    <!-- <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
+                                        <path
+                                            d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
+                                            fill="#ED1C24" />
+                                    </svg> -->
                                 </span>
                             </div>
 
@@ -236,7 +254,7 @@
                                     id="bottom">
                                     <p> {{
                                         currentQuestion ? currentQuestion.title : "No questions available."
-                                        }}</p>
+                                    }}</p>
                                     <span class="questionflag">
                                         <svg v-if="flg || currentQuestion.flag" @click="removeflage(currentQuestion.id)"
                                             width="19" height="17" viewBox="0 0 19 17" fill="none"
@@ -252,7 +270,7 @@
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M8.49385 2.26427L8.72443 2.39603H8.74116C11.6548 3.96951 14.7462 4.01469 17.67 2.53156V13.8189C16.2175 14.6116 14.7714 14.996 13.3301 14.996C11.8326 14.996 10.3221 14.5811 8.82642 13.7279C6.28896 12.273 3.59969 12.0096 1 12.9068V1.56338C3.47425 0.631129 6.01882 0.849963 8.49385 2.26427Z"
-                                                fill="#FAF8ED" stroke="#9A9898" stroke-width="2" />
+                                                fill="transparent" stroke="#9A9898" stroke-width="2" />
                                         </svg>
                                         <!-- <span class="flag-hover-text" v-if="bubbles == 1">Flag Question</span> -->
 
@@ -261,13 +279,22 @@
                                     <div class="questioncomment">
                                         <button @click="openfeedbackpop" class="feedbackbutton">
 
-                                            <svg v-if="currentQuestion.feedback"  width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2.41003 1.45117C1.79003 1.45117 1.29004 1.95117 1.29004 2.57117V13.6912C1.29004 14.3112 1.79003 14.8112 2.41003 14.8112H3.73999C4.03999 14.8112 4.28003 15.0512 4.28003 15.3512V18.8812L7.75 14.9912C7.85 14.8812 8.00002 14.8112 8.15002 14.8112H17.25C17.87 14.8112 18.37 14.3112 18.37 13.6912V2.57117C18.37 1.95117 17.87 1.45117 17.25 1.45117H2.40002H2.41003Z" fill="#FFF200"/>
-                                                <path d="M3.75 20.8213C3.69 20.8213 3.62006 20.8113 3.56006 20.7813C3.35006 20.7013 3.20996 20.5013 3.20996 20.2813V15.8813H2.41003C1.20003 15.8813 0.209961 14.8913 0.209961 13.6813V2.56134C0.209961 1.35134 1.20003 0.361328 2.41003 0.361328H17.26C18.47 0.361328 19.46 1.35134 19.46 2.56134V13.6813C19.46 14.8913 18.47 15.8813 17.26 15.8813H8.40002L4.15002 20.6413C4.05002 20.7613 3.9 20.8213 3.75 20.8213ZM2.42004 1.45132C1.80004 1.45132 1.30005 1.95132 1.30005 2.57132V13.6913C1.30005 14.3113 1.80004 14.8113 2.42004 14.8113H3.75C4.05 14.8113 4.29004 15.0513 4.29004 15.3513V18.8813L7.76001 14.9913C7.86001 14.8813 8.01003 14.8113 8.16003 14.8113H17.26C17.88 14.8113 18.38 14.3113 18.38 13.6913V2.57132C18.38 1.95132 17.88 1.45132 17.26 1.45132H2.41003H2.42004Z" fill="#FBAD18"/>
-                                                <path d="M14.7601 10.1913H5.66016C5.36016 10.1913 5.12012 9.95134 5.12012 9.65134C5.12012 9.35134 5.36016 9.11133 5.66016 9.11133H14.7601C15.0601 9.11133 15.3002 9.35134 15.3002 9.65134C15.3002 9.95134 15.0601 10.1913 14.7601 10.1913Z" fill="#FBAD18"/>
-                                                <path d="M14.7601 6.69135H5.66016C5.36016 6.69135 5.12012 6.45134 5.12012 6.15134C5.12012 5.85134 5.36016 5.61133 5.66016 5.61133H14.7601C15.0601 5.61133 15.3002 5.85134 15.3002 6.15134C15.3002 6.45134 15.0601 6.69135 14.7601 6.69135Z" fill="#FBAD18"/>
-                                                </svg>
-                                                
+                                            <svg v-if="currentQuestion.feedback" width="20" height="21"
+                                                viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M2.41003 1.45117C1.79003 1.45117 1.29004 1.95117 1.29004 2.57117V13.6912C1.29004 14.3112 1.79003 14.8112 2.41003 14.8112H3.73999C4.03999 14.8112 4.28003 15.0512 4.28003 15.3512V18.8812L7.75 14.9912C7.85 14.8812 8.00002 14.8112 8.15002 14.8112H17.25C17.87 14.8112 18.37 14.3112 18.37 13.6912V2.57117C18.37 1.95117 17.87 1.45117 17.25 1.45117H2.40002H2.41003Z"
+                                                    fill="#FFF200" />
+                                                <path
+                                                    d="M3.75 20.8213C3.69 20.8213 3.62006 20.8113 3.56006 20.7813C3.35006 20.7013 3.20996 20.5013 3.20996 20.2813V15.8813H2.41003C1.20003 15.8813 0.209961 14.8913 0.209961 13.6813V2.56134C0.209961 1.35134 1.20003 0.361328 2.41003 0.361328H17.26C18.47 0.361328 19.46 1.35134 19.46 2.56134V13.6813C19.46 14.8913 18.47 15.8813 17.26 15.8813H8.40002L4.15002 20.6413C4.05002 20.7613 3.9 20.8213 3.75 20.8213ZM2.42004 1.45132C1.80004 1.45132 1.30005 1.95132 1.30005 2.57132V13.6913C1.30005 14.3113 1.80004 14.8113 2.42004 14.8113H3.75C4.05 14.8113 4.29004 15.0513 4.29004 15.3513V18.8813L7.76001 14.9913C7.86001 14.8813 8.01003 14.8113 8.16003 14.8113H17.26C17.88 14.8113 18.38 14.3113 18.38 13.6913V2.57132C18.38 1.95132 17.88 1.45132 17.26 1.45132H2.41003H2.42004Z"
+                                                    fill="#FBAD18" />
+                                                <path
+                                                    d="M14.7601 10.1913H5.66016C5.36016 10.1913 5.12012 9.95134 5.12012 9.65134C5.12012 9.35134 5.36016 9.11133 5.66016 9.11133H14.7601C15.0601 9.11133 15.3002 9.35134 15.3002 9.65134C15.3002 9.95134 15.0601 10.1913 14.7601 10.1913Z"
+                                                    fill="#FBAD18" />
+                                                <path
+                                                    d="M14.7601 6.69135H5.66016C5.36016 6.69135 5.12012 6.45134 5.12012 6.15134C5.12012 5.85134 5.36016 5.61133 5.66016 5.61133H14.7601C15.0601 5.61133 15.3002 5.85134 15.3002 6.15134C15.3002 6.45134 15.0601 6.69135 14.7601 6.69135Z"
+                                                    fill="#FBAD18" />
+                                            </svg>
+
 
                                             <!-- <svg v-if="currentQuestion.feedback" width="20" height="21"
                                                 viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -383,8 +410,8 @@
                     <!-- <FeedbackFormModal v-if="showPauseModal" @close="showPauseModal = false"
                     @resume="showPauseModal = false" @exit="handleExitMock" /> -->
 
-                    <div class="modal-overlays" v-if="showPauseModal" >
-                        <div class="modal-contents">
+                    <div class="modal-overlays" v-if="showPauseModal">
+                        <div class="modal-contents" ref="draggable" @mousedown="startDrag">
 
                             <div class="feedback-form-box">
                                 <div class="cross">
@@ -488,6 +515,9 @@ export default {
             loadingcircle: true,
             activeButton: null,
             returning: 0,
+            isDragging: false,
+            dragOffsetX: 0,
+            dragOffsetY: 0,
 
             // selectedOptions: {
             //   question: null,
@@ -540,7 +570,6 @@ export default {
                 }
             ],
 
-
             isRowFixed: false,     // To toggle the fixed class
             rowOffsetTop: 0,       // To store the initial offset of the row
             lastScrollPosition: 0, // To track the last scroll position
@@ -555,8 +584,8 @@ export default {
             thirdindex: null,
             fourthindex: null,
 
-            conrrectcount:0,
-            incorrectcount:1,
+            conrrectcount: 0,
+            incorrectcount: 1,
 
 
 
@@ -628,6 +657,9 @@ export default {
             selectedOptions: null,
             loadingflag: false,
             bubbles: null,
+            total: 0,
+            correctpercent: 0,
+            totalquestions: 0,
 
             openIndexes: [],
 
@@ -669,6 +701,16 @@ export default {
 
         this.showflagelist = localStorage.getItem('breadcrumps');
         this.showunanswerlist = localStorage.getItem('breadcrumps');
+
+        get("/getmockscore?id=" + this.id).then((res) => {
+            //   this.setData(res);
+            this.correct = res.data.correct;
+            this.wrong = res.data.wrong;
+            this.total = res.data.data
+            this.totalquestions = res.data.totalquestion
+            this.correctpercent = res.data.correctanswer
+            console.log(res.data)
+        });
 
 
         if (getabout == "normal") {
@@ -823,6 +865,14 @@ export default {
 
     },
     computed: {
+        roundedPercent() {
+
+            // return Math.round(this.correct) * 100 / this.totalquestions;
+
+            const percent = (this.correct / this.totalquestions) * 100;
+            return parseFloat(percent.toFixed(1));
+
+        },
 
         currentQuestion() {
             return this.questions[this.currentQuestionIndex];
@@ -868,6 +918,33 @@ export default {
 
 
     methods: {
+
+
+        startDrag(event) {
+            this.isDragging = true;
+            const modal = this.$refs.draggable;
+            const rect = modal.getBoundingClientRect();
+            this.dragOffsetX = event.clientX - rect.left;
+            this.dragOffsetY = event.clientY - rect.top;
+
+            document.addEventListener("mousemove", this.onDrag);
+            document.addEventListener("mouseup", this.stopDrag);
+        },
+        onDrag(event) {
+            if (!this.isDragging) return;
+
+            const modal = this.$refs.draggable;
+            modal.style.position = "fixed";
+            modal.style.left = `${event.clientX - this.dragOffsetX}px`;
+            modal.style.top = `${event.clientY - this.dragOffsetY}px`;
+            modal.style.margin = 0; // cancel any default margins
+        },
+        stopDrag() {
+            this.isDragging = false;
+            document.removeEventListener("mousemove", this.onDrag);
+            document.removeEventListener("mouseup", this.stopDrag);
+        },
+
 
         globalhelp() {
             get("/getglobalhelp").then((res) => {
@@ -1443,7 +1520,7 @@ export default {
                     };
 
                 }
-                else{
+                else {
 
                     return {}
                 }
@@ -2087,7 +2164,7 @@ export default {
                 this.unanswered = res.data.unanswered;
                 this.incorrectcount = res.data.incorrect
                 this.correctcount = res.data.correct
-                
+
                 this.flagcounts = res.data.flagcount;
                 this.form.unansweredid = res.data.unansweredid;
                 this.form.flaggedid = res.data.flagedid;
@@ -2162,6 +2239,11 @@ export default {
                 ]
 
                 this.showOptionsIndex = null
+
+                this.$nextTick(() => {
+                        // this.scrollToActiveItem();
+                        this.centerSelectedIndex(this.currentQuestionIndex)
+                    });
 
             }
 
@@ -2297,14 +2379,16 @@ export default {
 
 <style scoped>
 
-
 .questionnumber {
-  
-    display: flex
-;
+
+    display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     flex-direction: column;
+    min-width: 23.85px;
+    min-height: 40px;
+    text-align: center;
+    padding: 3px 0px;
 }
 
 .modal-overlays {
@@ -2315,8 +2399,10 @@ export default {
     position: fixed;
     right: 43%;
     top: 30%;
-    z-index: 1;
+    z-index: 9999;
+    cursor: grab;
 }
+
 .questionsoptions-arrows {
 
     padding: 20px 0px 0px 0px;
@@ -2496,7 +2582,7 @@ button.scroll-btn svg :hover {
 }
 
 .modal-content {
-    
+
     -webkit-backdrop-filter: blur(10px);
     padding: 2rem 0rem;
     border-radius: 12px;

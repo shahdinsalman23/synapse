@@ -3,7 +3,7 @@
         <section class="mockscore-sec">
             <div class="container">
                 <div class="mockscore-progress-btn">
-                    <CircularProgress :percentage="75" :size="120" :stroke="10" :fontsize="35"  :Color="'#808285'" />
+                    <CircularProgress :percentage="roundedPercent ? roundedPercent : 0" :size="120" :stroke="10" :fontsize="35"  :Color="'#808285'" />
                     <!-- <div class="mockscore-progress">
 
                         <div class="progress-text-score">
@@ -239,7 +239,7 @@ span.percen {
 
     border-radius: 50px;
     overflow: hidden;
-    border: 1px solid #8082856b;
+  
 }
 
 .progress-bar {
