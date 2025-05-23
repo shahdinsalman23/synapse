@@ -95,6 +95,7 @@
     font-size: 10px;
     color: white;
     font-weight: bold;
+    font-family: Helveticacondensed !important;
   }
   </style>
   

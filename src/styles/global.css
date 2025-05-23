@@ -831,9 +831,10 @@ button.begin-btn a {
 }
 
 .roundcount {
-    background-color: grey;
+    background-image: linear-gradient( 101grad, #A6EE85 50%, #FFBABE 50% );
     padding: 5px 10px;
     border-radius: 50px;
+    color: #000;
 }
   
   .questionnumber {
@@ -972,7 +973,7 @@ button.begin-btn a {
 .mockquestion-navigate ul {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 24px;
     justify-content: end;
     height: 100%;
     width: 63%;
@@ -994,6 +995,7 @@ button.begin-btn a {
 
 .mockquestion-navigate ul li p {
     font-size: 15.3px;
+     font-family: Helveticacondensed;
 }
 
 

@@ -353,8 +353,7 @@
 
 
               </li>
-
-              <li v-if="$route.name == 'MockReview'"  style="cursor: default;">
+              <li class="count-header-gradiant" v-if="$route.name == 'MockReview'"  style="cursor: default;">
 
                 <div class="roundcount">
                   {{incorrectcount}}
@@ -362,13 +361,13 @@
 
                 </div>
 
-                <div class="roundcount">
+                <div class="roundcount round-count-colorchange">
                   {{correctcount}}
 
 
                 </div>
 
-                <div class="roundcount">
+                <div class="roundcount round-count-colorpink">
                   {{ Math.abs(unanswered) }}
 
 
@@ -804,6 +803,21 @@ svg.circle_svg {
 }
 
 
+.count-header-gradiant {
+  display: flex !important;
+  align-items: center !important;
+  gap: 24px;
+}
+
+.round-count-colorchange {
+  background: #A6EE85;
+  color: #000;
+}
+
+.round-count-colorpink {
+  background: #FFBABE;
+  color: #000;
+}
 
 
 .slide-modal-enter-active {

@@ -212,6 +212,7 @@ export default {
     font-size: 35px;
     color: #808285 !important;
     font-weight: bold;
+    font-family: Helveticacondensed !important;
 }
 
 span.percen {
