@@ -148,7 +148,7 @@
                                         fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M8.49385 2.26427L8.72443 2.39603H8.74116C11.6548 3.96951 14.7462 4.01469 17.67 2.53156V13.8189C16.2175 14.6116 14.7714 14.996 13.3301 14.996C11.8326 14.996 10.3221 14.5811 8.82642 13.7279C6.28896 12.273 3.59969 12.0096 1 12.9068V1.56338C3.47425 0.631129 6.01882 0.849963 8.49385 2.26427Z"
-                                            fill="#FAF8ED" stroke="#9A9898" stroke-width="2" />
+                                            fill="transparent" stroke="#9A9898" stroke-width="2" />
                                     </svg>
 
                                     <span class="flag-hover-text" v-if="bubbles == 1">Flag Question</span>
@@ -197,7 +197,7 @@
                                 <span class="leftarrow-hover-text" v-if="bubbles == 1">Previous Question</span>
                             </div>
                             <div class="questionoption-rightarrow" v-if="currentQuestionIndex === questions.length - 1"
-                                @click="scoringpage()">
+                                @click="scoringpaging()">
                                 <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right">
@@ -860,6 +860,26 @@ export default {
             this.igonreunanswer = false
 
 
+            // $('#exampleModalCenters').modal('hide');
+            get("/removeexits?id=" + this.id).then((res) => {
+                console.log(res)
+                this.handleBreadcrumpsUpdate('Normal');
+
+
+                localStorage.setItem('breadcrumps', 'Normal');
+                // this.$router.push('/mockscore')
+                this.$router.push({ path: `/mockscore/${this.id}` });
+
+            });
+
+
+        },
+
+
+        scoringpaging() {
+            this.igonreunanswer = false
+
+            this.submitAnswer()
             // $('#exampleModalCenters').modal('hide');
             get("/removeexits?id=" + this.id).then((res) => {
                 console.log(res)
@@ -1563,9 +1583,11 @@ export default {
 
 
         getBackindex(e) {
+            console.log('gggggggggggggggggg')
 
             // this.scrollToActiveItem()
             this.centerSelectedIndex(e)
+            // this.centerSelectedIndex(this.currentQuestionIndex)
 
             console.log('getback', e)
             this.flg = false
@@ -1588,6 +1610,10 @@ export default {
             this.flg2 = true
             
             this.reviewquestioncheck()
+            this.$nextTick(() => {
+                        // this.scrollToActiveItem();
+                        this.centerSelectedIndex(this.currentQuestionIndex)
+                    });
 
             this.handleBreadcrumpsUpdate('Normal');
 
@@ -1745,6 +1771,13 @@ export default {
 
 <style scoped>
 
+.red-flag {
+    position: absolute;
+    top: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
 
 
 .questionleft-arrow, .questionright-arrow {

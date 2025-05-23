@@ -112,8 +112,8 @@ html {
 
 .isselected {
     font-weight: bold !important;
-    font-size: 18px !important;
-    padding-top: 0px;
+    font-size: 19px !important;
+    padding-top: 4px;
    
 }
 
@@ -831,10 +831,23 @@ button.begin-btn a {
 }
 
 .roundcount {
-    background-image: linear-gradient( 101grad, #A6EE85 50%, #FFBABE 50% );
-    padding: 5px 10px;
+    background-color: grey;
     border-radius: 50px;
-    color: #000;
+    width: 100%;
+    max-width: 23px;
+    height: 100%;
+    min-height: 23px;
+    max-height: 23px;
+    min-width: 23px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-family: Helveticacondensed;
+    color: black;
+    font-weight: 600;
+
 }
   
   .questionnumber {
@@ -994,8 +1007,11 @@ button.begin-btn a {
 }
 
 .mockquestion-navigate ul li p {
-    font-size: 15.3px;
      font-family: Helveticacondensed;
+    font-size: 14.3px;
+    font-weight: 600;
+    padding-bottom: 2px;
+    color: #d1d3d4;
 }
 
 
@@ -1144,6 +1160,13 @@ span.pausemock {
     visibility: visible;
     opacity: 1;
 }
+
+
+.note-box:hover .lock-hover-text {
+    visibility: visible;
+    opacity: 1;
+}
+
 
 .lock-img .leftarrow-hover-text {
     visibility: visible;

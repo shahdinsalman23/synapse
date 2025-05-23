@@ -137,7 +137,7 @@
               </li>
 
               <li v-if="$route.name == 'MockReview'" :class="{ 'mock-width': $route.name === 'MockReview' }" style="cursor: default;">
-                <CircularProgress :percentage="75" />
+                <CircularProgress :percentage="roundedPercent ? roundedPercent:0" />
 
 
               </li>
@@ -353,26 +353,43 @@
 
 
               </li>
-              <li class="count-header-gradiant" v-if="$route.name == 'MockReview'"  style="cursor: default;">
 
-                <div class="roundcount">
-                  {{incorrectcount}}
-
-
-                </div>
-
-                <div class="roundcount round-count-colorchange">
-                  {{correctcount}}
-
-
-                </div>
-
-                <div class="roundcount round-count-colorpink">
-                  {{ Math.abs(unanswered) }}
+              <li v-if="$route.name == 'MockReview'"  style="cursor: default;" :class="{ 'mock-width': $route.name === 'MockReview' }">
+                
+                <div class="roundcount" style="background-color:#F1F2F2">
+                  {{ Math.abs(unanswered) ?? 0 }} 
 
 
                 </div>
               </li>
+            
+              <li v-if="$route.name == 'MockReview'"  style="cursor: default;" :class="{ 'mock-width': $route.name === 'MockReview' }">
+
+               
+
+                <div class="roundcount" style="background-color:#A6EE85">
+                  {{correctcount ?? 0}}
+
+
+                </div>
+
+               
+              </li>
+
+
+            
+
+              <li v-if="$route.name == 'MockReview'"  style="cursor: default;" :class="{ 'mock-width': $route.name === 'MockReview' }">
+
+                <div class="roundcount" style="background-color:#FFBABE">
+                  {{incorrectcount ?? 0}}
+
+
+                </div>
+
+               
+              </li>
+
               <li v-if="$route.name !== 'MockReview'" class="pause" @click="PauseModal"><span class="pausemock" v-if="bubbles == 1">Pause
                   mock</span><svg width="25" height="25" viewBox="0 0 25 25" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
@@ -435,7 +452,9 @@ export default {
     isRowFixed:{},
     correctcount:{},
     incorrectcount:{},
-    unanswered:{}
+    unanswered:{},
+    roundedPercent:{}
+
 
 
 
