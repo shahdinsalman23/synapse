@@ -129,7 +129,7 @@ export default {
   width: 250px;
   border-radius: 50px;
   background: #fff;
-  box-shadow: 0 0 11.34px #00000080;
+  box-shadow: 0 0 11.34px #000000cf;
   padding: 16px 20px 29px 20px;
 }
 

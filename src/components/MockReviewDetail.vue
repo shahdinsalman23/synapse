@@ -303,7 +303,7 @@ section.mockreviewdetail-sec {
     background: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0px 10px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px 2px #0000004a;
     z-index: 10;
     text-align: left;
     position: relative;
