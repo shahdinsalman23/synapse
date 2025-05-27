@@ -312,10 +312,25 @@ export default {
 }
 
 /* Link Styling */
-.main-dropdown li {
+/* .main-dropdown li {
   padding: 8px 15px;
   position: relative;
   font-family: Helvetica;
+} */
+
+
+.main-dropdown li {
+  padding: 8px 15px;
+  position: relative;
+  font-family: Helvetica, Arial, sans-serif;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .main-dropdown li a {
