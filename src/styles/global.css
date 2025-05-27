@@ -847,6 +847,7 @@ button.begin-btn a {
     font-family: Helveticacondensed;
     color: black;
     font-weight: 600;
+    padding-bottom: 2px;
 
 }
   
@@ -1007,10 +1008,10 @@ button.begin-btn a {
 }
 
 .mockquestion-navigate ul li p {
-     font-family: Helveticacondensed;
+     font-family: HelveticaNeue;
     font-size: 14.3px;
     font-weight: 600;
-    padding-bottom: 2px;
+    
     color: #d1d3d4;
 }
 

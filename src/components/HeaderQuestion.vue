@@ -679,7 +679,7 @@ li.bubbleli {
 }
 
 p {
-  padding-top: 1px;
+  padding-top: 3px;
 }
 
 p.timer {
