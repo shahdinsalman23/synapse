@@ -847,7 +847,7 @@ button.begin-btn a {
     font-family: Helveticacondensed;
     color: black;
     font-weight: 600;
-    padding-bottom: 2px;
+   
 
 }
   
@@ -1890,5 +1890,12 @@ section.questionnumber-sec {
 
     .reviewscroll-sec .container {
         max-width: 1320px;
+    }
+}
+
+@media only screen and (min-height: 1024px) {
+
+    .roundcount {
+        padding-bottom: 2px;
     }
 }

@@ -33,7 +33,7 @@ export default {
   name: 'CircularProgress',
   props: {
     percentage: { type: Number, default: 75 },
-    size: { type: Number, default: 30 },
+    size: { type: Number, default: 28 },
     stroke: { type: Number, default: 3 },
     trackColor: { type: String, default: '#eee' },
     Color: { type: String, default: 'white' },

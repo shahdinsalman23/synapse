@@ -356,8 +356,10 @@
 
               <li v-if="$route.name == 'MockReview'"  style="cursor: default;" :class="{ 'mock-width': $route.name === 'MockReview' }">
                 
-                <div class="roundcount" style="background-color:#F1F2F2">
-                  {{ Math.abs(unanswered) ?? 0 }} 
+                <div class="roundcount" style="background: linear-gradient(to right, #A6EE85 50%, #FFBABE 50%);">
+                  <!-- {{ Math.abs(unanswered) ?? 0 }}  -->
+
+                  {{ (correctcount ?? 0) + (incorrectcount ?? 0) }}
 
 
                 </div>
@@ -679,7 +681,7 @@ li.bubbleli {
 }
 
 p {
-  padding-top: 3px;
+  padding-top: 0px;
 }
 
 p.timer {
@@ -892,5 +894,10 @@ ul, li {
   .mockquestion-navigate ul li p {
     padding-top: 2px;
   }
+
+  p {
+    padding-top: 3px;
+  }
+  
 }
 </style>
