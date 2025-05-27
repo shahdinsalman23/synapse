@@ -221,12 +221,25 @@
                     </div>
                 </div>
             </div>
+
+            <transition name="fade">
+                <SubmittingMockModal
+                    v-if="igonreunanswers"
+                    @close="igonreunanswers = false"
+                    @resume="igonreunanswers = false"
+                    @exit="scoringpage"
+                    :unansweredmain="unansweredmain"
+                />
+                </transition>
         </div>
 
 
         <MockBirdsEye v-else :currentQuestionIndex="currentQuestionIndex" :allquestions="allquestions"
             :igonreunanswer="igonreunanswer" @getBackindex="getBackindex" @submitMock="scoringpagess" @closed="closed"
             @finalscroing="scoringpage" :unansweredmain="unansweredmain" />
+
+
+
     </div>
 
 </template>
@@ -238,13 +251,15 @@ import HeaderQuestion from '@/components/HeaderQuestion.vue';
 import { get, byMethod } from './lib/api';
 import MockBirdsEye from './MockBirdsEye.vue';
 import Loadingcircle from '@/components/Loadingcircle.vue';
+import SubmittingMockModal from '@/components/SubmittingMockModal.vue';
 
 export default {
     components: {
 
         HeaderQuestion,
         MockBirdsEye,
-        Loadingcircle
+        Loadingcircle,
+        SubmittingMockModal
     },
 
 
@@ -261,6 +276,8 @@ export default {
             currentIndex: 0,
             numbers: Array.from({ length: 200 }, (_, i) => i + 1),
             igonreunanswer: false,
+            igonreunanswers: false,
+
 
             scrollDirection: null,
             selectedNumber: null,
@@ -877,6 +894,21 @@ export default {
 
 
         scoringpaging() {
+
+            
+            if (this.unanswered > 0) {
+                    this.igonreunanswers = true
+
+                    // $('#exampleModalCenters').modal('show');
+
+
+
+                    console.log('here')
+
+                }
+                else{
+
+               
             this.igonreunanswer = false
 
             this.submitAnswer()
@@ -891,6 +923,7 @@ export default {
                 this.$router.push({ path: `/mockscore/${this.id}` });
 
             });
+        }
 
 
         },

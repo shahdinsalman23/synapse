@@ -1940,6 +1940,10 @@ export default {
         },
         nextQuestion() {
 
+            if(this.showPauseModal){
+                return
+            }
+
 
             const ppp = localStorage.getItem("pauseindex");
 
@@ -1988,7 +1992,9 @@ export default {
 
 
 
-
+            if(this.showPauseModal){
+                return
+            }
 
 
 
@@ -2014,7 +2020,7 @@ export default {
                 { name: "Condition", selectedOption: null },
                 { name: "Explanation", selectedOption: null },
                 { name: "Notes", selectedOption: null },
-                { name: "Other", selectedOption: null },
+             
 
             ]
 
