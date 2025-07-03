@@ -20,7 +20,7 @@ const routes = [
   // { path: "/mocksquestion/:id", component: MockQuestion , meta: { requiresAuth: true } },
   { path: "/mocksquestion/:id", component: MockQuestion, name: 'MockQuestion', meta: { requiresAuth: true } },
   { path: "/mockbirdseye", component: MockBirdsEye , meta: { requiresAuth: true } },
-  { path: "/mockscore/:id", component: MockScore , meta: { requiresAuth: true } },
+  { path: "/mockscore/:id", component: MockScore ,  name: 'MockScore', meta: { requiresAuth: true } },
   { path: "/reviewmockbirdseye", component: ReviewMockBirdsEye , meta: { requiresAuth: true } },
   { path: "/reviewscroll/:id", component: ReviewScroll , name: 'MockReview', meta: { requiresAuth: true } },
 ];

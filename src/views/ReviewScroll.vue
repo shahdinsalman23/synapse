@@ -152,13 +152,13 @@
                                 <span v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber"
                                     :style="{
                                         background: nav.score
-                                            ? (nav.score.correct === 1
+                                            ? (nav.score.correct == 1
                                                 ? '#9ded6c'
-                                                : (nav.score.correct === 0
+                                                : (nav.score.correct == 0
                                                     ? '#FFBABE'
                                                     : '#f1f2f2'))
                                             : (nav.flag
-                                                ? '#d2cbcb'
+                                                ? '#f1f2f2'
                                                 : (nav.skip
                                                     ? '#d2cbcb'
                                                     : '#f1f2f2')),
@@ -166,9 +166,9 @@
                                         border: isPresentIndexs(indexnav)
                                             ? (
                                                 nav.score
-                                                    ? (nav.score.correct === 1
+                                                    ? (nav.score.correct == 1
                                                         ? '1px solid green'
-                                                        : (nav.score.correct === 0
+                                                        : (nav.score.correct == 0
                                                             ? '1px solid red'
                                                             : '1px solid grey'))
                                                     : (nav.flag
@@ -186,15 +186,16 @@
 
 
                                     }" :class="{ 'activeindexreview': isPresentIndexs(indexnav) }"
-                                    @click="getBackindex(indexnav)">
+                                    >
 
-                                    <svg :style="{ opacity: nav.flag ? 1 : 0 }" width="11" viewBox="0 0 19 17">
+                                    <svg :style="{ opacity: nav.flag ? 1 : 0 }" width="9" viewBox="0 0 19 17">
                                         <path
                                             d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
                                             fill="#ED1C24" />
                                     </svg>
 
-                                    {{ indexnav + 1 }}
+                                    <!-- {{ indexnav + 1 }} -->
+                                    <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ indexnav + 1 }}</span>
 
 
 
@@ -252,6 +253,7 @@
 
                                 <div class="questiontext-box" v-if="currentQuestion" :key="currentQuestion.id"
                                     id="bottom">
+                                    <p class="currentquestionnumber">{{currentQuestion.number}}</p>
                                     <p> {{
                                         currentQuestion ? currentQuestion.title : "No questions available."
                                     }}</p>
@@ -336,7 +338,7 @@
 
                                                 <h4>{{ String.fromCharCode(65 + index) }}. {{ option.title }}</h4>
                                                 <div class="accordion-icon">
-                                                    <svg v-if="activeOption === index" width="24" height="24"
+                                                    <svg v-if="activeOptions.includes(index)" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none"
                                                         xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M5 12H19" stroke="#231F20" stroke-width="2"
@@ -352,7 +354,7 @@
                                                 </div>
                                             </div>
                                             <transition @enter="enter" @leave="leave" :css="false">
-                                                <div v-if="activeOption === index" class="option-content">
+                                                <div v-if="activeOptions.includes(index)" class="option-content">
                                                     <p>{{ option.rollingout ? option.rollingout : option.explanation }}
 
 
@@ -405,7 +407,10 @@
                         <div class="modal-contents" ref="draggable" @mousedown="startDrag">
 
                             <div class="feedback-form-box">
+
                                 <div class="cross">
+                                    <p class="currentquestionnumber" style="padding-bottom: 10px;">{{currentQuestion.number}}</p>
+                                   
                                     <h4>Share feedback</h4>
                                     <span class="crossspan" @click="showPauseModal = false">
                                         <svg width="12" height="12" viewBox="0 0 9 9" fill="none"
@@ -461,7 +466,8 @@
                                         <!-- <textarea name="" id="" v-model="form.optionfeedback" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea> -->
                                     </div>
                                     <div class="feedbackform-submitbtn">
-                                        <button type="button" @click="submitFeedback">Submit</button>
+                                        <button type="button" @click="submitFeedback" :disabled="isSubmitDisabled"
+                                        :class="{ 'disabled-btn': isSubmitDisabled }">Submit</button>
                                         <div class="cardbottom-shadow">
                                             <img src="/images/cardshadow.png" alt="">
                                         </div>
@@ -613,7 +619,9 @@ export default {
 
 
             id: null,
-            form: {},
+            form: {
+                 optionfeedback: ''
+            },
             method: "POST",
             questions: [],
             allquestions: [],
@@ -653,6 +661,7 @@ export default {
             totalquestions: 0,
 
             openIndexes: [],
+            activeOptions: [],
 
             feedbackCategories: [
                 { name: "Question", selectedOption: null },
@@ -763,6 +772,8 @@ export default {
         });
     },
 
+    
+
     watch: {
 
         reviewfirst(newVal) {
@@ -856,6 +867,17 @@ export default {
 
     },
     computed: {
+
+        isSubmitDisabled() {
+        const hasSelectedOption = this.feedbackCategories.some(category => category.selectedOption);
+        const hasTextFeedback = this.form.optionfeedback.trim().length > 0;
+        return !(hasSelectedOption || hasTextFeedback);
+    },
+
+    //     isSubmitDisabled() {
+    //     // Check if all selectedOption are null or empty
+    //     return !this.feedbackCategories.some(category => category.selectedOption);
+    // },
         roundedPercent() {
 
             // return Math.round(this.correct) * 100 / this.totalquestions;
@@ -1068,6 +1090,11 @@ export default {
 
 
         removeflage(e) {
+            if (this.allquestions[this.currentQuestionIndex]) {
+                        this.$set(this.allquestions[this.currentQuestionIndex], 'flag', false);
+                    }
+
+                    this.currentQuestion.flag = false
 
             this.form.questionId = e;
             byMethod(this.method, "/removeflage", this.form).then((res) => {
@@ -1079,13 +1106,13 @@ export default {
                     this.flg2 = false
                     const updatedIndex = this.currentQuestionIndex;
                     console.log("Updated index:", updatedIndex);
-                    if (this.allquestions[updatedIndex]) {
-                        this.$set(this.allquestions[updatedIndex], 'flag', false);
-                    }
+                    // if (this.allquestions[updatedIndex]) {
+                    //     this.$set(this.allquestions[updatedIndex], 'flag', false);
+                    // }
 
 
                     this.getFlaged();
-                    this.getReviewsss()
+                    // this.getReviewsss()
                     this.centerSelectedIndex(this.currentQuestionIndex)
 
                 }
@@ -1192,8 +1219,17 @@ export default {
 
             this.specialNumbers = tempNumbers;
         },
+        // toggleAccordion(index) {
+        //     this.activeOption = this.activeOption === index ? null : index;
+        // },
+
         toggleAccordion(index) {
-            this.activeOption = this.activeOption === index ? null : index;
+            const i = this.activeOptions.indexOf(index);
+            if (i !== -1) {
+            this.activeOptions.splice(i, 1); // close if already open
+            } else {
+            this.activeOptions.push(index); // open without closing others
+            }
         },
         enter(el, done) {
 
@@ -1292,25 +1328,49 @@ export default {
 
         },
 
+
+        // openfeedbackpop() {
+        //     const response = this.currentQuestion.feedback ? this.currentQuestion.feedback : ''
+        //     console.log('name' , this.feedbackCategories , this.currentQuestion.feedback);
+
+        //     this.feedbackCategories = this.feedbackCategories.map(category => {
+        //         const key = category.name.toLowerCase().replace(" ", "_");
+        //         if (response[key]) {
+        //             category.selectedOption = response[key];
+        //         }
+        //         return category;
+        //     });
+        //     this.form.optionfeedback = this.currentQuestion.feedback ? this.currentQuestion.feedback.optionfeedback : ''
+        //     this.showPauseModal = true
+        //     // $('#exampleModalCenters').modal('show');
+
+        //     // this.feedbackpop = true
+
+        // },
+
+
         openfeedbackpop() {
-            const response = this.currentQuestion.feedback ? this.currentQuestion.feedback : ''
+    const response = this.currentQuestion.feedback || '';
+    const keyMap = {
+        Question: 'question',
+        Answer: 'answer',
+        Rullingout: 'rulling_out',
+        Condition: 'condition',
+        Explanation: 'explanation',
+        Notes: 'notes',
+    };
 
+    this.feedbackCategories = this.feedbackCategories.map(category => {
+        const key = keyMap[category.name] || this.toSnakeCase(category.name);
+        if (response[key]) {
+            category.selectedOption = response[key];
+        }
+        return category;
+    });
 
-            this.feedbackCategories = this.feedbackCategories.map(category => {
-                const key = category.name.toLowerCase().replace(" ", "_");
-                if (response[key]) {
-                    category.selectedOption = response[key];
-                }
-                return category;
-            });
-            this.form.optionfeedback = this.currentQuestion.feedback ? this.currentQuestion.feedback.optionfeedback : ''
-            this.showPauseModal = true
-            // $('#exampleModalCenters').modal('show');
-
-            // this.feedbackpop = true
-
-        },
-
+    this.form.optionfeedback = this.currentQuestion.feedback?.optionfeedback || '';
+    this.showPauseModal = true;
+},
 
 
         exit() {
@@ -1777,7 +1837,7 @@ export default {
                     // this.nextQuestion();
                     // }, 500);
                     this.getFlaged();
-                    this.getReviewsss()
+                    // this.getReviewsss()
                     this.centerSelectedIndex(this.currentQuestionIndex)
                 }
             });
@@ -1806,6 +1866,7 @@ export default {
             this.flagedid = e;
             this.flg = true
             this.submitAnswer()
+            this.currentQuestion.flag = true
         },
 
         getFlaged() {
@@ -2067,7 +2128,7 @@ export default {
                                 // this.nextQuestion();
                                 // this.$toast.success('Option Selected')
                                 // setTimeout(() => {
-                                this.getReviewsss()
+                                // this.getReviewsss()
                                 this.nextQuestion();
                                 // }, 500);
                             }
@@ -2376,6 +2437,11 @@ export default {
 
 <style scoped>
 
+.disabled-btn {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .questionnumber {
 
     display: flex;
@@ -2409,7 +2475,7 @@ export default {
 .questionright-arrow {
 
 
-    transform: translate(0px, 23px) !important;
+    transform: translate(0px, 24px) !important;
 }
 
 section.questionnumber-sec {

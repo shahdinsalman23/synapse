@@ -1,60 +1,46 @@
 <template>
-    <div class="progress-container" :style="{ width: size + 'px', height: size + 'px' }">
-      <svg class="progress-ring" :width="size" :height="size">
-        <circle
-          class="progress-ring__background"
-          :stroke="trackColor"
-          fill="transparent"
-          :r="radius"
-          :cx="size / 2"
-          :cy="size / 2"
-          :stroke-width="stroke"
-        />
-        <circle
-          class="progress-ring__circle"
-          :stroke="progressColor"
-          fill="transparent"
-          :r="radius"
-          :cx="size / 2"
-          :cy="size / 2"
-          :stroke-width="stroke"
-          :stroke-dasharray="circumference"
-          :stroke-dashoffset="dashOffset"
-          stroke-linecap="round"
-        />
-      </svg>
-      <div class="percentage-text" :style="{ fontSize: fontsize + 'px', color: Color }">{{ currentPercentage  }}%</div>
-    </div>
-  </template>
-  
-  <script>
+  <div class="maincont"  :style="{ width: width + 'px' , gap:Gap + 'px'}">
 
+  
+  <div class="linear-progress-container" :style="{ height: Containerheight + 'px', backgroundColor: trackColor }">
+    <div
+      class="linear-progress-bar"
+      :style="{
+        width: currentPercentage + '%',
+        backgroundColor: progressColor,
+        height: height + 'px',
+        transition: 'width 0.5s ease'
+      }"
+    ></div>
+    
+  </div>
+  <div class="linear-progress-texts" :style="{ fontSize: fontSize + 'px', color: color }">
+    {{ currentPercentage }}%
+  </div>
+</div>
+</template>
+
+<script>
 export default {
-  name: 'CircularProgress',
+  name: 'LinearProgress',
   props: {
     percentage: { type: Number, default: 75 },
-    size: { type: Number, default: 28 },
-    stroke: { type: Number, default: 3 },
-    trackColor: { type: String, default: '#eee' },
-    Color: { type: String, default: 'white' },
-    fontsize: { type: Number, default: 10 },
-    progressColor: { type: String, default: '#84e231' }
+    height: { type: Number, default: 12 },
+    Containerheight: { type: Number, default: 14 },
+
+    trackColor: { type: String, default: 'red' },
+    progressColor: { type: String, default: '#84e231' },
+    color: { type: String, default: '#98a7af' },
+    fontSize: { type: Number, default: 32 },
+    fontcolor: { type: String, default: '#98a7af' },
+    width:{type: Number, default: 210},
+    Gap:{type: Number, default: 20}
+
   },
   data() {
     return {
       currentPercentage: 0
     };
-  },
-  computed: {
-    radius() {
-      return (this.size - this.stroke) / 2;
-    },
-    circumference() {
-      return 2 * Math.PI * this.radius;
-    },
-    dashOffset() {
-      return this.circumference * (1 - this.currentPercentage / 100);
-    }
   },
   watch: {
     percentage: {
@@ -67,20 +53,19 @@ export default {
   methods: {
     animateProgress(target) {
       let start = null;
-      const duration = 1000; // 1 second
-      const startVal = 0;
-      const endVal = target;
+      const duration = 1000;
+      const startVal = this.currentPercentage;
 
       const step = (timestamp) => {
         if (!start) start = timestamp;
         const progress = timestamp - start;
-        const percentageProgress = Math.min(progress / duration, 1);
-        this.currentPercentage = Math.floor(startVal + (endVal - startVal) * percentageProgress);
+        const progressPercent = Math.min(progress / duration, 1);
+        this.currentPercentage = Math.floor(startVal + (target - startVal) * progressPercent);
 
         if (progress < duration) {
           requestAnimationFrame(step);
         } else {
-          this.currentPercentage = target; // ensure it lands exactly
+          this.currentPercentage = target;
         }
       };
 
@@ -88,74 +73,38 @@ export default {
     }
   }
 };
-//   export default {
-//     name: 'CircularProgress',
-//     props: {
-//       percentage: {
-//         type: Number,
-//         default: 75
-//       },
-//       size: {
-//         type: Number,
-//         default: 30
-//       },
-//       stroke: {
-//         type: Number,
-//         default: 3
-//       },
-//       trackColor: {
-//         type: String,
-//         default: '#eee'
-//       },
+</script>
 
-//       Color: {
-//         type: String,
-//         default: 'white'
-//       },
-//       fontsize: {
-//         type: Number,
-//         default: 12
-//       },
-//       progressColor: {
-//         type: String,
-//         default: '#84e231' // green
-//       }
-//     },
-//     computed: {
-//       radius() {
-//         return (this.size - this.stroke) / 2
-//       },
-//       circumference() {
-//         return 2 * Math.PI * this.radius
-//       },
-//       dashOffset() {
-//         return this.circumference * (1 - this.percentage / 100)
-//       }
-//     }
-//   }
-  </script>
-  
-  <style scoped>
-  .progress-container {
-    position: relative;
-    display: inline-block;
- 
-    border-radius: 50%;
-  }
-  
-  .progress-ring {
-    transform: rotate(-90deg);
-  }
-  
-  .percentage-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 10px;
-    color: white;
-    font-weight: bold;
-    font-family: Helveticacondensed !important;
-  }
-  </style>
-  
+<style scoped>
+
+.maincont {
+  width: 17%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+   
+}
+.linear-progress-container {
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.8px solid white;
+}
+
+.linear-progress-bar {
+  border-radius: 10px;
+}
+
+.linear-progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  white-space: nowrap;
+  font-family: Helveticacondensed, sans-serif;
+}
+
+.linear-progress-texts {font-family: 'Helveticacondensed';color: #98a7af;font-weight: bold;}
+</style>

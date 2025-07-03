@@ -24,14 +24,18 @@
                       fill="white" />
                   </svg>
 
-                  Mock Home</router-link></li>
+                  <span class="lispan">
+
+                    Mock Home</span></router-link></li>
               <li><router-link to=""><svg width="17" height="14" viewBox="0 0 17 14" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M14.4598 0.0898438H2.70982C1.66982 0.0898438 0.819824 0.939851 0.819824 1.97985V11.8898C0.819824 12.9298 1.66982 13.7798 2.70982 13.7798H14.4598C15.4998 13.7798 16.3498 12.9298 16.3498 11.8898V1.97985C16.3498 0.939851 15.4998 0.0898438 14.4598 0.0898438ZM15.1798 12.8998L10.2898 8.92985V8.63985H11.4398L15.6798 12.0798C15.6298 12.4198 15.4398 12.7098 15.1798 12.8998ZM1.48982 12.0798L5.72981 8.63985H6.87982V8.92985L1.98982 12.8998C1.71982 12.7098 1.53982 12.4198 1.48982 12.0798ZM1.98982 0.979851L6.87982 4.94984V5.23985H5.72981L1.48982 1.79985C1.53982 1.45985 1.72982 1.16985 1.98982 0.979851ZM2.72981 0.739845H6.87982V4.09985L2.72981 0.739845ZM4.68982 5.23985H1.46982V2.62984L4.68982 5.23985ZM1.46982 8.63985H4.68982L1.46982 11.2498V8.63985ZM6.87982 9.76984V13.1298H2.72981L6.87982 9.76984ZM7.72981 13.1298V8.20985C7.72981 7.97985 7.53981 7.78985 7.30981 7.78985H1.46982V6.07985H7.30981C7.53981 6.07985 7.72981 5.88985 7.72981 5.65985V0.739845H9.43982V5.65985C9.43982 5.88985 9.62982 6.07985 9.85982 6.07985H15.6998V7.78985H9.85982C9.62982 7.78985 9.43982 7.97985 9.43982 8.20985V13.1298H7.72981ZM15.6798 1.78985L11.4398 5.22985H10.2898V4.93985L15.1798 0.969849C15.4498 1.15985 15.6298 1.44985 15.6798 1.78985ZM15.6998 2.60985V5.21985H12.4798L15.6998 2.60985ZM10.2898 4.08984V0.729851H14.4398L10.2898 4.08984ZM10.2898 9.75985L14.4398 13.1199H10.2898V9.75985ZM12.4798 8.62984H15.6998V11.2398L12.4798 8.62984Z"
                       fill="#231F20" />
                   </svg>
-                  About MLA</router-link></li>
+                  <span class="lispan">
+
+                    About MLA</span></router-link></li>
               <li><router-link to=""><svg width="19" height="20" viewBox="0 0 19 20" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -55,7 +59,7 @@
                     <path
                       d="M7.15977 9.33046C7.05977 9.33046 6.94978 9.37046 6.87978 9.45046C6.79978 9.53046 6.75977 9.63046 6.75977 9.73046C6.75977 9.83046 6.79978 9.94046 6.87978 10.0105L7.93977 11.0705C8.09977 11.2305 8.34977 11.2305 8.50977 11.0705L11.9098 7.67046C12.0698 7.51046 12.0698 7.26047 11.9098 7.10047C11.7498 6.94047 11.4998 6.94047 11.3398 7.10047L8.22977 10.2105L7.44977 9.43046C7.36977 9.35046 7.26977 9.31046 7.16977 9.31046L7.15977 9.33046Z"
                       fill="#231F20" />
-                  </svg>FAQ</router-link></li>
+                  </svg><span class="lispan">FAQ</span></router-link></li>
               <li><router-link to=""><svg width="15" height="19" viewBox="0 0 15 19" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -71,7 +75,11 @@
                       d="M14.3598 8.78117C14.3598 8.67117 14.3598 8.56117 14.3598 8.45117H11.8198C11.8198 8.56117 11.8398 8.67117 11.8398 8.78117C11.8398 11.1212 9.92981 13.0312 7.58981 13.0312C5.24981 13.0312 3.33981 11.1212 3.33981 8.78117C3.33981 8.67117 3.33982 8.56117 3.35982 8.45117H0.819824C0.819824 8.56117 0.819824 8.67117 0.819824 8.78117C0.819824 12.0812 3.18982 14.8312 6.31982 15.4312V18.8712H8.87982V15.4312C12.0098 14.8312 14.3798 12.0812 14.3798 8.78117H14.3598Z"
                       fill="#231F20" />
                   </svg>
-                  About us</router-link></li>
+                  <span class="lispan">
+
+                    About us
+                  </span>
+                </router-link></li>
               <li class="has-nested" @click.stop="toggleNestedDropdown">
                 <router-link to=""><svg width="17" height="20" viewBox="0 0 17 20" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
@@ -82,7 +90,7 @@
                       d="M8.57964 9.83015C6.11964 9.83015 4.12963 7.83015 4.11963 5.37015C4.11963 2.91015 6.11964 0.910156 8.57964 0.910156C11.0396 0.910156 13.0296 2.91015 13.0396 5.37015C13.0396 7.83015 11.0396 9.83015 8.57964 9.83015ZM8.57964 1.61015C6.49964 1.61015 4.80963 3.30016 4.80963 5.38016C4.80963 7.46016 6.49964 9.15015 8.57964 9.15015C10.6596 9.15015 12.3496 7.46016 12.3496 5.38016C12.3496 3.30016 10.6596 1.61015 8.57964 1.61015Z"
                       fill="#231F20" stroke="#231F20" stroke-width="0.46" stroke-miterlimit="10" />
                   </svg>
-                  User ▸</router-link>
+                  <span class="lispan"> User ▸ </span></router-link>
                 <!-- Nested Dropdown -->
                 <ul class="nested-dropdown" v-show="isNestedDropdownOpen">
                   <li><router-link to="">{{ user.fullname }}</router-link></li>
@@ -90,15 +98,15 @@
 
 
 
-                   
+
                     <!-- <input type="radio" :value="true" v-model="bubbles" @change="globalhelp(bubbles)" /> Yes
                     <input type="radio" :value="false" v-model="bubbles" @change="globalhelp(bubbles)" /> No -->
 
 
                     <label class="switch">
-                      <input type="checkbox"  v-model="bubbles" @change="globalhelp">
+                      <input type="checkbox" v-model="bubbles" @change="globalhelp">
                       <span class="slider"></span>
-                  </label>
+                    </label>
                   </li>
 
 
@@ -113,7 +121,11 @@
                       d="M7.58009 8.04092C7.21009 8.04092 6.8501 7.67093 6.8501 7.31093V1.19093C6.8501 0.820933 7.22009 0.460938 7.58009 0.460938C7.94009 0.460938 8.31009 0.830933 8.31009 1.19093V7.31093C8.31009 7.68093 7.94009 8.04092 7.58009 8.04092Z"
                       fill="#231F20" />
                   </svg>
-                  Logout</router-link></li>
+                  <span class="lispan">
+
+                    Logout
+                  </span>
+                </router-link></li>
             </ul>
           </div>
           <div class="mocktxt">
@@ -121,28 +133,36 @@
             <span v-if="$route.name == 'MockReview'" style="text-transform: capitalize;">
               Review
             </span>
+
+            <span v-if="$route.name == 'MockScore'" style="text-transform: capitalize;">
+              Score
+            </span>
           </div>
           <div class="mockquestion-navigate">
             <ul>
               <li v-if="$route.name == 'MockReview' && isRowFixed && fillicon == 1" class="mock-width"><svg width="16"
-                @click="$emit('SectionScroll')"
-                    height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M14.8199 9.23118L8.33997 2.74117C8.27997 2.69117 8.22002 2.65117 8.15002 2.62117C8.15002 2.62117 8.13 2.62117 8.12 2.62117C7.97 2.56117 7.81003 2.56117 7.66003 2.62117C7.59003 2.65117 7.52998 2.69117 7.47998 2.74117C7.47998 2.74117 7.46996 2.74117 7.45996 2.75117L0.969971 9.24117C0.849971 9.36117 0.790039 9.51117 0.790039 9.68117C0.790039 9.85117 0.849971 10.0012 0.969971 10.1212C1.08997 10.2412 1.24003 10.3012 1.41003 10.3012C1.58003 10.3012 1.72998 10.2312 1.84998 10.1212L7.29004 4.68117V16.7012C7.29004 17.0412 7.57003 17.3212 7.91003 17.3212C8.25003 17.3212 8.53003 17.0412 8.53003 16.7012V4.68117L13.96 10.1112C14.2 10.3512 14.59 10.3512 14.84 10.1112C15.09 9.87117 15.08 9.48118 14.84 9.23118H14.8199Z"
-                      fill="#D1D3D4" />
-                    <path
-                      d="M1.41003 1.88063H14.39C14.73 1.88063 15.01 1.60062 15.01 1.26062C15.01 0.920624 14.73 0.640625 14.39 0.640625H1.41003C1.07003 0.640625 0.790039 0.920624 0.790039 1.26062C0.790039 1.60062 1.07003 1.88063 1.41003 1.88063Z"
-                      fill="#D1D3D4" />
-                  </svg>
+                  @click="$emit('SectionScroll')" height="18" viewBox="0 0 16 18" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M14.8199 9.23118L8.33997 2.74117C8.27997 2.69117 8.22002 2.65117 8.15002 2.62117C8.15002 2.62117 8.13 2.62117 8.12 2.62117C7.97 2.56117 7.81003 2.56117 7.66003 2.62117C7.59003 2.65117 7.52998 2.69117 7.47998 2.74117C7.47998 2.74117 7.46996 2.74117 7.45996 2.75117L0.969971 9.24117C0.849971 9.36117 0.790039 9.51117 0.790039 9.68117C0.790039 9.85117 0.849971 10.0012 0.969971 10.1212C1.08997 10.2412 1.24003 10.3012 1.41003 10.3012C1.58003 10.3012 1.72998 10.2312 1.84998 10.1212L7.29004 4.68117V16.7012C7.29004 17.0412 7.57003 17.3212 7.91003 17.3212C8.25003 17.3212 8.53003 17.0412 8.53003 16.7012V4.68117L13.96 10.1112C14.2 10.3512 14.59 10.3512 14.84 10.1112C15.09 9.87117 15.08 9.48118 14.84 9.23118H14.8199Z"
+                    fill="#D1D3D4" />
+                  <path
+                    d="M1.41003 1.88063H14.39C14.73 1.88063 15.01 1.60062 15.01 1.26062C15.01 0.920624 14.73 0.640625 14.39 0.640625H1.41003C1.07003 0.640625 0.790039 0.920624 0.790039 1.26062C0.790039 1.60062 1.07003 1.88063 1.41003 1.88063Z"
+                    fill="#D1D3D4" />
+                </svg>
+                <span v-if="bubbles == 1" style="width:80px; padding: 3px 3px;">Top of page</span>
               </li>
 
-              <li v-if="$route.name == 'MockReview'" :class="{ 'mock-width': $route.name === 'MockReview' }" style="cursor: default;">
-                <CircularProgress :percentage="roundedPercent ? roundedPercent:0" />
+              <li v-if="$route.name == 'MockReview'" :class="{ 'mock-widths': $route.name === 'MockReview' }"
+                style="cursor: default;">
+                <CircularProgress :percentage="roundedPercent ? roundedPercent : 0" :fontSize="16" :width="100"
+                  :color="'white'" :height="5" :Gap="8" :Containerheight="7" />
 
 
               </li>
-              <li :class="{ 'mock-width': $route.name === 'MockReview' }" class="fontsizing"><router-link to="">
-                  <span v-if="bubbles == 1">Bird's eye view</span>
+              <li :class="{ 'mock-width': $route.name === 'MockReview' }" class="fontsizing"
+                v-if="$route.name !== 'MockScore'"><router-link to="">
+                  <span v-if="bubbles == 1" style="width:80px; padding: 3px 3px;">Bird's eye view</span>
 
                   <svg @click="notifyParent()" v-if="fillicon == 1" width="18" height="18" viewBox="0 0 18 18"
                     fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -225,7 +245,8 @@
 
                 </router-link>
               </li>
-              <li :class="{ 'mock-width': $route.name === 'MockReview' }" style="cursor: default;"><span class="flaggedquestions" v-if="bubbles == 1">Flagged
+              <li :class="{ 'mock-width': $route.name === 'MockReview' }" style="cursor: default;"
+                v-if="$route.name !== 'MockScore'"><span class="flaggedquestions" v-if="bubbles == 1">Flagged
                   questions</span><svg width="14.52" height="17" viewBox="0 0 19 17" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -237,66 +258,25 @@
                 </p>
               </li>
 
-              <li style="position:relative" v-if="$route.name !== 'MockReview'">
-                <!-- <svg v-if="showclock" @click="showclock = false" width="25" height="25" class="circle_svg">
-                    <circle cx="12" cy="12" r="9" class="circle cpath"></circle>
-                    <circle cx="12" cy="12" r="4" class="circle cfill" stroke-mitterlimit="20"
-                        stroke-dasharray="360">
-                        <animate attributeName="stroke-dashoffset" from="360" to="350" dur="10s"
-                            repeatCount="indefinite"></animate>
-                    </circle>
-                </svg> -->
+              <li style="position:relative" v-if="$route.name !== 'MockReview' && $route.name !== 'MockScore'">
+             
 
 
-                <!-- <svg v-if="showclock" @click="showclock = false" width="27" height="27" viewBox="0 0 120 160">
-               
-                  <rect x="40" y="10" width="40" height="20" rx="2" fill="#D1D3D4" />
-                
-                
-                  <line x1="60" y1="20" x2="60" y2="68" stroke="#D1D3D4" stroke-width="10" />
-                
+
+                <!-- <svg v-show="showclock" @click="showclock = false" width="27" height="27" viewBox="0 0 120 160">
                  
-                  <circle cx="60" cy="100" r="52" fill="#D1D3D4" />
-                
-                
-                  <circle
-                    cx="60"
-                    cy="100"
-                    r="52"
-                    fill="none"
-                    stroke="black"
-                    stroke-width="10"
-                    stroke-dasharray="326.72"
-                    stroke-dashoffset="0"
-                    transform="rotate(-90 60 100)"
-                  >
-                    <animate
-                      attributeName="stroke-dashoffset"
-                      from="0"
-                      to="326.72"
-                      dur="10s"
-                      repeatCount="1"
-                      fill="freeze"
-                    />
-                  </circle>
-                </svg> -->
-
-
-
-                <svg v-if="showclock" @click="showclock = false" width="27" height="27" viewBox="0 0 120 160">
-                  <!-- Top button -->
                   <rect x="40" y="10" width="40" height="20" rx="2" fill="#D1D3D4" />
 
-                  <!-- Line connecting button to clock -->
+                
                   <line x1="60" y1="30" x2="60" y2="68" stroke="#D1D3D4" stroke-width="10" />
 
-                  <!-- Outer clock circle with border -->
+                
                   <circle cx="60" cy="100" r="52" :fill="remainingTimeInSeconds <= 600 ? 'yellow' : 'white'"
                     stroke="#D1D3D4" stroke-width="10" />
 
-                  <!-- Filling black part (like pie chart) -->
+                
                   <path id="fillPath" fill="black">
-                    <animate attributeName="d" dur="10800s" repeatCount="1" fill="freeze" values="
+                    <animate  ref="clockAnimation" attributeName="d" dur="10s" repeatCount="1" fill="freeze" values="
                         M60,100 L60,48 A52,52 0 0,1 60,48 Z;
                         M60,100 L60,48 A52,52 0 0,1 107.94,68 Z;
                         M60,100 L60,48 A52,52 0 0,1 108,132 Z;
@@ -306,56 +286,38 @@
                         M60,100 L60,48 A52,52 0 1,1 60,48 Z
                       " />
                   </path>
-                </svg>
+                </svg> -->
 
-
-
-
-                <!-- <svg v-if="showclock" @click="showclock = false" width="27" height="27" viewBox="0 0 120 160">
-               
+                <svg v-show="showclock" @click="showclock = false" width="27" height="27" viewBox="0 0 120 160">
+                  <!-- Top button -->
                   <rect x="40" y="10" width="40" height="20" rx="2" fill="#D1D3D4" />
-                
-                 
                   <line x1="60" y1="30" x2="60" y2="68" stroke="#D1D3D4" stroke-width="10" />
-                
-                
-                  <circle cx="60" cy="100" r="52" fill="#fff" stroke="#D1D3D4" stroke-width="10" />
-                
-                
-                  <circle
-                    cx="60"
-                    cy="100"
-                    r="52"
-                    fill="none"
-                    stroke="black"
-                    stroke-width="30"  
-                    stroke-dasharray="326.72"
-                    stroke-dashoffset="0"
-                    transform="rotate(-90 60 100)"
-                  >
-                    <animate
-                      attributeName="stroke-dashoffset"
-                      from="326.72"
-                      to="0"
-                      dur="10s"
-                      fill="freeze"
-                    />
-                  </circle>
+                  <circle cx="60" cy="100" r="52"
+                    :fill="remainingTimeInSeconds <= 600 ? 'yellow' : 'white'"
+                    stroke="#D1D3D4" stroke-width="10" />
+            
+                  <!-- Dynamic path instead of <animate> -->
+                  <path :d="arcPath" fill="black" />
                 </svg>
-                 -->
+                
+                
+
+
+
 
 
 
 
                 <span v-if="bubbles == 1">Time remaining</span>
-                <p v-if="!showclock" @click="showclock = true" class="timer"
+                <p v-if="!showclock" @click="handleShowClock" class="timer"
                   :style="{ color: remainingTimeInSeconds <= 600 ? 'yellow' : 'white' }">{{ formattedTime }}</p>
 
 
               </li>
 
-              <li v-if="$route.name == 'MockReview'"  style="cursor: default;" :class="{ 'mock-width': $route.name === 'MockReview' }">
-                
+              <li v-if="$route.name == 'MockReview' || $route.name == 'MockScore'" style="cursor: default;"
+                :class="{ 'mock-width': $route.name === 'MockReview' || $route.name == 'MockScore' }">
+
                 <div class="roundcount" style="background: linear-gradient(to right, #A6EE85 50%, #FFBABE 50%);">
                   <!-- {{ Math.abs(unanswered) ?? 0 }}  -->
 
@@ -364,36 +326,49 @@
 
                 </div>
               </li>
-            
-              <li v-if="$route.name == 'MockReview'"  style="cursor: default;" :class="{ 'mock-width': $route.name === 'MockReview' }">
 
-               
+              <li v-if="$route.name == 'MockReview' || $route.name == 'MockScore'" style="cursor: default;"
+                :class="{ 'mock-width': $route.name === 'MockReview' || $route.name == 'MockScore' }">
+
+
 
                 <div class="roundcount" style="background-color:#A6EE85">
-                  {{correctcount ?? 0}}
+                  {{ correctcount ?? 0 }}
 
 
                 </div>
 
-               
+
               </li>
 
 
-            
 
-              <li v-if="$route.name == 'MockReview'"  style="cursor: default;" :class="{ 'mock-width': $route.name === 'MockReview' }">
+
+              <li v-if="$route.name == 'MockReview' || $route.name == 'MockScore'" style="cursor: default;"
+                :class="{ 'mock-width': $route.name === 'MockReview' || $route.name == 'MockScore' }">
 
                 <div class="roundcount" style="background-color:#FFBABE">
-                  {{incorrectcount ?? 0}}
+                  {{ incorrectcount ?? 0 }}
 
 
                 </div>
 
-               
+
               </li>
 
-              <li v-if="$route.name !== 'MockReview'" class="pause" @click="PauseModal"><span class="pausemock" v-if="bubbles == 1">Pause
-                  mock</span><svg width="25" height="25" viewBox="0 0 25 25" fill="none"
+              <li v-if="$route.name !== 'MockReview' && $route.name !== 'MockScore'" class="pause"><span
+                  class="pausemock" v-if="bubbles == 1">Pause
+                  mock</span>
+
+                <svg v-if="showPauseModal" @click="Resuming" width="25" height="25" viewBox="0 0 25 25" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <!-- Outer Circle -->
+                  <circle cx="12.5" cy="12.5" r="12" stroke="#D1D3D4" stroke-width="1" fill="none" />
+                  <!-- Play Triangle -->
+                  <path d="M10 8L17 12.5L10 17V8Z" fill="#D1D3D4" />
+                </svg>
+
+                <svg @click="PauseModal" v-else width="25" height="25" viewBox="0 0 25 25" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M12.9699 0.359375C13.2399 0.429375 13.5399 0.419373 13.8199 0.45973C24.4099 1.91937 27.81 15.7194 19.06 21.9394C11.8 27.0994 1.58998 22.6594 0.389978 13.8894C0.349978 13.6094 0.360002 13.3094 0.290002 13.0394C0.310002 12.5194 0.260002 11.9794 0.290002 11.4594C0.630002 5.61937 5.54997 0.699375 11.38 0.359375H12.9599H12.9699ZM11.6099 2.27937C3.50995 2.75937 -0.740047 12.3094 4.48995 18.6094C8.86995 23.8894 17.11 23.2794 20.68 17.4394C24.87 10.5994 19.5599 1.79937 11.5999 2.26937L11.6099 2.27937Z"
@@ -414,11 +389,7 @@
 
     <transition name="fade">
       <PauseMockModal v-if="showPauseModal || stoptimerpopup" @close="Resuming" @resume="Resuming"
-        @exit="handleExitMock"
-
-       
-       
-        />
+        @exit="handleExitMock" />
     </transition>
   </div>
 </template>
@@ -451,11 +422,11 @@ export default {
     },
     stoptimerpopup: {},
     fillicon: {},
-    isRowFixed:{},
-    correctcount:{},
-    incorrectcount:{},
-    unanswered:{},
-    roundedPercent:{}
+    isRowFixed: {},
+    correctcount: {},
+    incorrectcount: {},
+    unanswered: {},
+    roundedPercent: {}
 
 
 
@@ -471,7 +442,13 @@ export default {
       filleye: false,
       mockIndex: 0,
       coloring: '#fff',
-      bubbles: null,
+      bubbles: null, 
+      
+      totalDuration: 10800 * 1000, 
+      startTime: Date.now(),
+      currentTime: 0,
+      interval: null,
+
 
 
     }
@@ -485,18 +462,67 @@ export default {
 
 
     get("/getglobalhelp").then((res) => {
-        console.log('data', res.data.data)
+      console.log('data', res.data.data)
 
-        this.bubbles = res.data.data.value == 0 ? false: true
+      this.bubbles = res.data.data.value == 0 ? false : true
 
-      });
+    });
 
   },
 
   computed: {
     ...mapGetters(["user"]), // your getter is named "user"
+
+    remainingTimeInSecondss() {
+      return Math.floor((this.totalDuration - this.currentTime) / 1000);
+    },
+    arcPath() {
+      const progress = Math.min(this.currentTime / this.totalDuration, 1);
+      const radius = 52;
+      const cx = 60;
+      const cy = 100;
+      const startAngle = -Math.PI / 2; // 12 o'clock
+      const endAngle = startAngle + progress * 2 * Math.PI;
+
+      const x1 = cx + radius * Math.cos(startAngle);
+      const y1 = cy + radius * Math.sin(startAngle);
+      const x2 = cx + radius * Math.cos(endAngle);
+      const y2 = cy + radius * Math.sin(endAngle);
+      const largeArcFlag = progress > 0.5 ? 1 : 0;
+
+      return `M${cx},${cy} L${x1},${y1} A${radius},${radius} 0 ${largeArcFlag},1 ${x2},${y2} Z`;
+    },
+  },
+
+  mounted() {
+    this.startTimer();
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
   },
   methods: {
+
+    startTimer() {
+      this.interval = setInterval(() => {
+        this.currentTime = Date.now() - this.startTime;
+        if (this.currentTime >= this.totalDuration) {
+          clearInterval(this.interval);
+          this.currentTime = this.totalDuration;
+        }
+      }, 100); // 10 fps update
+    },
+
+    handleShowClock() {
+      this.showclock = true;
+
+     
+      this.$nextTick(() => {
+        const anim = this.$refs.clockAnimation;
+        if (anim) {
+          anim.beginElement(); 
+        }
+      });
+    },
 
 
     globalhelp() {
@@ -507,7 +533,7 @@ export default {
         console.log('data', res.data.data)
         this.$emit('globalhelp')
 
-        this.bubbles = res.data.data.value == 0 ? false: true
+        this.bubbles = res.data.data.value == 0 ? false : true
 
       });
 
@@ -531,6 +557,9 @@ export default {
     },
 
     notifyParent() {
+      if (this.showPauseModal) {
+        return
+      }
       console.log('hello')
       this.filleye = true
 
@@ -539,6 +568,9 @@ export default {
 
 
     notifyParentQuestion() {
+      if (this.showPauseModal) {
+        return
+      }
       console.log('hellossss')
       this.filleye = false
 
@@ -587,6 +619,8 @@ export default {
       document.body.style.top = '';
     },
   },
+
+ 
   watch: {
     showPauseModal(newVal) {
       if (newVal) {
@@ -608,17 +642,20 @@ export default {
 
 
 <style scoped>
+span.lispan {
+  padding-top: 3px;
+}
 
 
-/* From Uiverse.io by arghyaBiswasDev */ 
+/* From Uiverse.io by arghyaBiswasDev */
 /* The switch - the box around the slider */
 .switch {
-    font-size: 17px;
-    position: relative;
-    display: inline-block;
-    width: 35px;
-    height: 18px;
-    transition: all .6s ease;
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 35px;
+  height: 18px;
+  transition: all .6s ease;
 }
 
 /* Hide default HTML checkbox */
@@ -645,30 +682,30 @@ export default {
 }
 
 .slider::before {
-    position: absolute;
-    content: "";
-    height: 13px;
-    width: 13px;
-    border-radius: 20px;
-    left: 0.18em;
-    bottom: 2px;
-    background-color: #adb5bd;
-    transition: all .6s ease;
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  border-radius: 20px;
+  left: 0.18em;
+  bottom: 2px;
+  background-color: #adb5bd;
+  transition: all .6s ease;
 }
 
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: #20b14b;
   border: 1px solid #20b14b;
   transition: all .6s ease;
 }
 
-input:focus + .slider {
+input:focus+.slider {
   box-shadow: 0 0 1px #20b14b;
   transition: all .6s ease;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   transform: translateX(14px);
   background-color: #fff;
   transition: all .6s ease;
@@ -692,6 +729,10 @@ p.timer {
 
 .mock-width {
   width: 17% !important;
+}
+
+.mock-widths {
+  width: 100% !important;
 }
 
 svg.circle_svg {
@@ -809,11 +850,13 @@ svg.circle_svg {
   box-sizing: border-box;
 }
 
-ul, li {
+ul,
+li {
   margin: 0;
   padding: 0;
   list-style: none;
 }
+
 .main-dropdown li a {
   color: #000;
   text-decoration: none;
@@ -898,6 +941,11 @@ ul, li {
   p {
     padding-top: 3px;
   }
-  
+
+
+  p.timer {
+    padding-top: 3px;
+  }
+
 }
 </style>

@@ -13,13 +13,13 @@
                         
                         :style="{
                             background: nav.score
-                                ? (nav.score.correct === 1
+                                ? (nav.score.correct == 1
                                     ? '#9DED6C'
-                                    : (nav.score.correct === 0
+                                    : (nav.score.correct == 0
                                         ? '#FFBABE'
                                         : 'white'))
                                 : (nav.flag
-                                    ? '#d2cbcb'
+                                    ? '#f1f2f2'
                                     : (nav.skip
                                         ? '#F1F2F2'
                                         : '#F1F2F2')),
@@ -36,9 +36,9 @@
                                                 border: isPresentIndexs(indexnav)
                                                 ? (
                                                   nav.score
-                                                    ? (nav.score.correct === 1
+                                                    ? (nav.score.correct == 1
                                                       ? '2px solid green'
-                                                      : (nav.score.correct === 0
+                                                      : (nav.score.correct == 0
                                                         ? '2px solid red'
                                                         : '2px solid black'))
                                                     : (nav.flag
@@ -54,7 +54,7 @@
                         }"
                         >{{ indexnav + 1 }}</router-link>
                         <span v-if="nav.flag" class="flag-icons">
-                            <svg width="13" height="16" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg width="12" height="16" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z" fill="#ED1C24"/>
                             </svg>
                         </span>

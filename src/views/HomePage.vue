@@ -93,3 +93,18 @@ import LoginModal from '@/components/LoginModal.vue'
     },
   };
   </script>
+
+  <style scoped>
+  .main-content {
+    flex: 1;
+    height: 90vh;
+    display: flex
+;
+    justify-content
+
+: center;
+    align-content: center;
+    align-items: center;
+}
+
+</style>

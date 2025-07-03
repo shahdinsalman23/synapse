@@ -1,5 +1,8 @@
 <template>
     <div>
+        <HeaderQuestion 
+     :correctcount="correct" :incorrectcount="wrong"
+        />
         <section class="mockscore-sec">
             <div class="container">
                 <div class="mockscore-progress-btn">
@@ -21,7 +24,7 @@
                         </div>
                     </div> -->
                     <div class="reviewmock-btn" @click="reviewMock">
-                        <router-link to="">Review Mock 1
+                        <router-link to="">Review Mock {{ mockIndex }}
                             <div class="cardbottom-shadow">
                                 <img src="/images/cardshadow.png" alt="">
                             </div>
@@ -37,12 +40,14 @@
 <script>
 import CircularProgress from '@/components/CircularProgress.vue';
 import { get } from './lib/api';
+import HeaderQuestion from '@/components/HeaderQuestion.vue';
 
 export default {
 
     components: {
    
-    CircularProgress
+    CircularProgress,
+    HeaderQuestion
   },
 
   data() {
@@ -85,6 +90,7 @@ export default {
             remainingTimeInSeconds: 0,
             flagcounts: 0,
             correctpercent: 0,
+            mockIndex: 0,
 
 
 
@@ -100,6 +106,8 @@ export default {
   },
 
   created() {
+
+    this.mockIndex = parseInt(localStorage.getItem('mockindex'), 10);
         this.id = this.$route.params.id;
         this.form.subcategory_id = this.id;
         console.log("ID:", this.id);
@@ -129,6 +137,8 @@ export default {
             console.log(res.data)
         });
 
+
+     
 
 
 

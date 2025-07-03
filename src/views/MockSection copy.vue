@@ -70,9 +70,8 @@
                                     <div class="progress-bar">
                                         <div class="progress-fill" style="width: 54%"></div>
                                     </div>
-                                   
+                                    <div class="progress-text">54%</div>
                                 </div>
-                                <div class="progress-text">54%</div>
                             </div>
                             <div class="cardbottom-shadow">
                                 <img src="/images/cardshadow.png" alt="">
@@ -108,12 +107,11 @@
                             <div class="question-score">
                                 <h6>score</h6>
                                 <div class="progress-container">
-                                    <div class="progress-bar" style="background: transparent;">
+                                    <div class="progress-bar">
                                         <div class="progress-fill" style="width: 66%"></div>
                                     </div>
-                                   
+                                    <div class="progress-text">66%</div>
                                 </div>
-                                <div class="progress-text">66%</div>
                             </div>
                             <div class="cardbottom-shadow">
                                 <img src="/images/cardshadow.png" alt="">
@@ -366,7 +364,7 @@ img {
 }
 
 .progress-bar {
-    height: 10px;
+    height: 20px;
     background: #D1D3D4;
     border-radius: 8px;
     overflow: hidden;
@@ -374,8 +372,7 @@ img {
     top: 50%;
     transform: translateY(-50%);
     width: 100%;
-    border: 1px solid white;
-   
+    border: 1px solid #58595b63;
 }
 
 .progress-fill {
@@ -389,14 +386,16 @@ img {
 }
 
 .progress-text {
- 
-    color: white;
-    font-size: 17px;
-   
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    color: #000000;
+    font-size: 12px;
+    font-weight: bold;
     z-index: 2;
     user-select: none;
     pointer-events: none;
-    font-family: HelveticaBoldcont;
 }
 
 

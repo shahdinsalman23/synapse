@@ -1,6 +1,6 @@
 <template>
     <div class="modal-overlay submittingmock-overlay" @click.self="closeModal">
-      <div class="modal-content">
+      <div class="modal-content" @click.self="closeModal">
         <div class="modal-buttons">
           <button class="unanswered-btn" @click="handleResume">{{ unansweredmain }} unanswered</button>
           <button class="submitmock-btn" @click="handleExit">Submit Mock

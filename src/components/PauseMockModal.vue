@@ -1,6 +1,6 @@
 <template>
     <div class="modal-overlay" @click.self="closeModal">
-      <div class="modal-content">
+      <div class="modal-content"  @click.self="closeModal">
         <div class="modal-buttons">
           <button class="modal-resume-btn" @click="handleResume">Resume Mock</button>
           <button class="modal-exit-btn" @click="handleExit">Exit Mock
@@ -62,14 +62,15 @@
     padding: 2rem;
     border-radius: 12px;
     text-align: center;
-    width: 1250px;
-    height: 80vh;
+    width: 1350px;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: space-around;
     opacity: 0;
     animation: pure-fade-in 0.3s ease-out forwards;
     flex-direction: column;
+    margin-bottom: 40px;
 }
 
   @keyframes pure-fade-in {

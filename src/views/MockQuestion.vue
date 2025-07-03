@@ -12,7 +12,7 @@
         <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
             :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
             @startagain="startTimeing" @exitmock="exit" :stoptimerpopup="stoptimerpopup" :fillicon="fillicon"
-            @returnquestion="getBackindexheader" @globalhelp="globalhelp" />
+            @returnquestion="getBackindexheader" @globalhelp="globalhelp"  />
         <div v-if="eye">
 
 
@@ -99,8 +99,8 @@
                                             : (nav.skip
                                                 ? '#f1f2f2'
                                                 : '#f1f2f2')),
-                                }" :class="{ 'activeindex': isPresentIndexs(indexnav) }" @click="getBackindex(indexnav)">
-                                    {{ indexnav + 1 }}
+                                }" :class="{ 'activeindex': isPresentIndexs(indexnav) }" >
+                                    <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ indexnav + 1 }}</span>
 
                                     <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
                                         <path
@@ -132,24 +132,42 @@
                     <div class="question-option-arrows-wrapper">
                         <transition name="fade" mode="out-in">
                             <div class="questiontext-box" v-if="currentQuestion" :key="currentQuestion.id">
+                                <p class="currentquestionnumber">{{currentQuestion.number}}</p>
                                 <p>{{ currentQuestion.title }}</p>
                                 <span class="questionflag">
-                                    <svg v-if="flg && flg2 || currentQuestion.flag && flg2"
+                                    <!-- <svg v-if="flg && flg2 || currentQuestion.flag && flg2"
                                         @click="removeflage(currentQuestion.id)" width="19" height="17"
                                         viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z"
                                             fill="#ED1C24" />
-                                    </svg>
+                                    </svg> -->
+
+                                    <svg v-if="currentQuestion.flag"
+                                    @click="removeflage(currentQuestion.id)" width="19" height="17"
+                                    viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z"
+                                        fill="#ED1C24" />
+                                </svg>
 
 
-                                    <svg v-if="!flg && !currentQuestion.flag || !flg2"
+
+                                <svg v-if="!currentQuestion.flag"
+                                @click="setflage(currentQuestion.id)" width="19" height="16" viewBox="0 0 19 16"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M8.49385 2.26427L8.72443 2.39603H8.74116C11.6548 3.96951 14.7462 4.01469 17.67 2.53156V13.8189C16.2175 14.6116 14.7714 14.996 13.3301 14.996C11.8326 14.996 10.3221 14.5811 8.82642 13.7279C6.28896 12.273 3.59969 12.0096 1 12.9068V1.56338C3.47425 0.631129 6.01882 0.849963 8.49385 2.26427Z"
+                                    fill="transparent" stroke="#9A9898" stroke-width="2" />
+                            </svg>
+
+                                    <!-- <svg v-if="!flg && !currentQuestion.flag || !flg2"
                                         @click="setflage(currentQuestion.id)" width="19" height="16" viewBox="0 0 19 16"
                                         fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M8.49385 2.26427L8.72443 2.39603H8.74116C11.6548 3.96951 14.7462 4.01469 17.67 2.53156V13.8189C16.2175 14.6116 14.7714 14.996 13.3301 14.996C11.8326 14.996 10.3221 14.5811 8.82642 13.7279C6.28896 12.273 3.59969 12.0096 1 12.9068V1.56338C3.47425 0.631129 6.01882 0.849963 8.49385 2.26427Z"
                                             fill="transparent" stroke="#9A9898" stroke-width="2" />
-                                    </svg>
+                                    </svg> -->
 
                                     <span class="flag-hover-text" v-if="bubbles == 1">Flag Question</span>
                                 </span>
@@ -196,13 +214,12 @@
                                 </svg>
                                 <span class="leftarrow-hover-text" v-if="bubbles == 1">Previous Question</span>
                             </div>
-                            <div class="questionoption-rightarrow" v-if="currentQuestionIndex === questions.length - 1"
-                                @click="scoringpaging()">
-                                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right">
-                                <path d="m9 18 6-6-6-6" />
-                            </svg> -->
+                            <!-- <div class="questionoption-rightarrow" v-if="currentQuestionIndex === questions.length - 1"
+                                @click="scoringpaging()"> -->
+
+                                <div class="questionoption-rightarrow" v-if="currentQuestionIndex === questions.length - 1"
+                                @click="gotoBev()">
+                              
                                 Submit Mock
                             </div>
 
@@ -369,6 +386,7 @@ export default {
             truecondition: false,
             unansweredmain: 0,
             bubbles: null,
+            noClick:false,
 
             scores: [
                 {
@@ -778,7 +796,7 @@ export default {
 
         showstoptime() {
 
-
+                this.noClick = true
 
 
             localStorage.setItem("pauseindex", this.currentQuestionIndex);
@@ -850,7 +868,7 @@ export default {
 
 
         scoringpagess() {
-
+            this.getReviewsss()
 
             // this.nextQuestion()
             setTimeout(() => {
@@ -874,6 +892,7 @@ export default {
         },
 
         scoringpage() {
+            this.getReviewsss()
             this.igonreunanswer = false
 
 
@@ -894,6 +913,7 @@ export default {
 
 
         scoringpaging() {
+            this.getReviewsss()
 
             
             if (this.unanswered > 0) {
@@ -927,6 +947,23 @@ export default {
 
 
         },
+
+
+
+        gotoBev() {
+            // this.submitAnswer()
+            this.getReviewsss()
+            setTimeout(() => {
+                this.fillicon = 0
+            this.eye = false
+
+            }, 300);
+            
+           
+
+
+        },
+
 
         Getflagequestion() {
 
@@ -1028,7 +1065,7 @@ export default {
                     });
 
                     this.getFlaged();
-                    this.getReviewsss()
+                    // this.getReviewsss()
                     this.centerSelectedIndex(this.currentQuestionIndex)
                 }
             });
@@ -1037,6 +1074,15 @@ export default {
 
         removeflage(e) {
            
+
+            if (this.allquestions[this.currentQuestionIndex]) {
+                        this.$set(this.allquestions[this.currentQuestionIndex], 'flag', false);
+                    }
+
+                    this.flg = false
+                    this.flg2 = false
+
+                    this.currentQuestion.flag = false
 
             this.form.questionId = e;
             byMethod(this.method, "/removeflage", this.form).then((res) => {
@@ -1047,12 +1093,12 @@ export default {
                     this.flg2 = false
                     const updatedIndex = this.currentQuestionIndex;
                             console.log("Updated index:", updatedIndex);
-                    if (this.allquestions[updatedIndex]) {
-                        this.$set(this.allquestions[updatedIndex], 'flag', false);
-                    }
+                    // if (this.allquestions[updatedIndex]) {
+                    //     this.$set(this.allquestions[updatedIndex], 'flag', false);
+                    // }
 
                     this.getFlaged();
-                    this.getReviewsss()
+                    // this.getReviewsss()
                     this.centerSelectedIndex(this.currentQuestionIndex)
 
                 }
@@ -1084,6 +1130,7 @@ export default {
             this.flg = true
             this.flg2 = true
             this.flagged(this.flagedid)
+            this.currentQuestion.flag = true
         },
 
         getFlaged() {
@@ -1148,6 +1195,8 @@ export default {
 
 
         startTimeing() {
+
+            this.noClick = false
 
             this.dynamicOpacity = 1
 
@@ -1428,8 +1477,18 @@ export default {
                 this.currentselected = e
                 this.truecondition = true
                 this.selectedOption = e
+
+                 setTimeout(() => {
+
+
+
+                            this.nextQuestion();
+                            }, 200);
+                
             }
+            this.$nextTick(() => {
             this.centerSelectedIndex(this.currentQuestionIndex)
+        });
             console.log('true condition', this.truecondition)
 
         },
@@ -1485,11 +1544,15 @@ export default {
 
 
 
-                            get("/getmockquestion?id=" + this.id).then((res) => {
-                                this.allquestions = res.data.data
+                            // get("/getmockquestion?id=" + this.id).then((res) => {
+                            //     this.allquestions = res.data.data
 
-                            });
-                            this.getReviewsss()
+                            // });
+
+                    
+
+
+                            // this.getReviewsss()
                             // this.nextQuestion();
                             // }, 500);
                         }
@@ -1616,33 +1679,39 @@ export default {
 
 
         getBackindex(e) {
-            console.log('gggggggggggggggggg')
+
+            if(this.noClick){
+                return
+
+            }
+          
 
             // this.scrollToActiveItem()
             this.centerSelectedIndex(e)
             // this.centerSelectedIndex(this.currentQuestionIndex)
 
-            console.log('getback', e)
+           
             this.flg = false
             this.showflagelist = false
             this.showunanswerlist = false
             this.fillicon = 1
             this.currentQuestionIndex = e
            
-            console.log('currentquestion' , this.currentQuestion)
+         
           
          
 
-            localStorage.setItem('presentindex', e);
-
-            localStorage.setItem('breadcrumps', 'Normal');
+           
             this.currentQuestionIndex = e
             this.review = false;
             this.starts = true;
             this.eye = true;
             this.flg2 = true
             
-            this.reviewquestioncheck()
+            // this.reviewquestioncheck()
+            localStorage.setItem('presentindex', e);
+
+        localStorage.setItem('breadcrumps', 'Normal');
             this.$nextTick(() => {
                         // this.scrollToActiveItem();
                         this.centerSelectedIndex(this.currentQuestionIndex)
@@ -1816,7 +1885,7 @@ export default {
 .questionleft-arrow, .questionright-arrow {
   
 
-    transform: translate(0px, 23px) !important;
+    transform: translate(0px, 24px) !important;
 }
 section.questionnumber-sec {
     display: flex;

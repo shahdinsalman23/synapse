@@ -3,7 +3,7 @@
     <!-- <div v-if="!isStarted" class="button-content">
         Attempted
     </div> -->
-    <div class="main-progress">
+    <div >
 
   
     
@@ -16,18 +16,14 @@
         <div v-if="isStarted || isCompleted" class="progress-content">
             
             <div class="progress-fill" :style="{ width: progress + '%' }"></div>
-            <!-- <span class="progress-text">{{ progress }}%</span> -->
+            <span class="progress-text">{{ progress }}%</span>
         </div>
 
         <!-- Completed State -->
         <!-- <div v-if="isCompleted" class="completed-content">
             Attempted
         </div> -->
-       
     </div>
-    <span class="progress-text">{{ progress }}<span class="pertext">%</span></span>
-
-    
 </div>
 </template>
 
@@ -79,19 +75,6 @@ export default {
 </script>
 
 <style scoped>
-
-.pertext{
-    font-weight: 400;
-    font-size: 17px;
-}
-
-.main-progress {
-    display: flex;
-    align-items: baseline;
-    align-content: center;
-    justify-content: center;
-    gap: 5px;
-}
 .container {
     display: inline-block;
     width: 200px;
@@ -108,14 +91,13 @@ export default {
 }
 .progress-button {
     position: relative;
-    background: #ed1c24;
+    background: #D1D3D4;
     border-radius: 25px;
     cursor: pointer;
     overflow: hidden;
     transition: all 0.3s ease;
-    margin: 22px 0px 0px 15px; 
+    margin: 16px 5px 0px 5px;
     border: 1px solid #58595B;  
-    width: 70%;
 }
 
 .button-content,
@@ -134,7 +116,7 @@ export default {
 .progress-content {
     position: relative;
     height: 100%;
-    min-height: 10px;
+    min-height: 27px;
 }
 
 .progress-fill {
@@ -150,27 +132,27 @@ export default {
 }
 
 .progress-text {
-  
-    color: black;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
     font-weight: bold;
     mix-blend-mode: difference;
-    width: 25%;
-    font-size: 19px;
 }
 
 .completed {
-    background: #ed1c24 !important;
+    background: #D1D3D4 !important;
 
 
     position: relative;
-    height: 11px;
+    height: 29px;
   
     border-radius: 25px;
     cursor: pointer;
     overflow: hidden;
     transition: all 0.3s ease;
-    margin: 22px 0px 0px 15px; 
-    width: 70%;
+    margin: 15px 5px 0px 5px;   
     /* Solid Green */
 }
 
