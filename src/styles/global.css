@@ -1381,6 +1381,19 @@ button.modal-exit-btn .cardbottom-shadow img {
 /********** Footer CSS End **********/
 
 
+@media only screen and (max-width: 1920px) {
+    .loginSignup-btn a{
+        padding: 5px 12px;
+    }
+    .userlogin-sec .card-container {
+        max-width: 775px;
+    }
+    .userlogin-sec .cardbottom-shadow img {
+        left: -80px !important;
+        width: 380px;
+    }
+}
+
 @media only screen and (max-width: 1024px) {
     .card-container {
         grid-template-columns: repeat(3, 1fr);
