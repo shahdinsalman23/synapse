@@ -195,7 +195,9 @@
                                     </svg>
 
                                     <!-- {{ indexnav + 1 }} -->
-                                    <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ indexnav + 1 }}</span>
+                                    <!-- <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ indexnav + 1 }}</span> -->
+                                    <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ nav.question_no ?? indexnav + 1 }}</span>
+
 
 
 
@@ -254,9 +256,10 @@
                                 <div class="questiontext-box" v-if="currentQuestion" :key="currentQuestion.id"
                                     id="bottom">
                                     <p class="currentquestionnumber">{{currentQuestion.number}}</p>
-                                    <p> {{
+                                    <!-- <p> {{
                                         currentQuestion ? currentQuestion.title : "No questions available."
-                                    }}</p>
+                                    }}</p> -->
+                                    <p v-html="currentQuestion ? currentQuestion.title : 'No questions available.'"></p>
                                     <span class="questionflag">
                                         <svg v-if="flg || currentQuestion.flag" @click="removeflage(currentQuestion.id)"
                                             width="19" height="17" viewBox="0 0 19 17" fill="none"

@@ -100,7 +100,9 @@
                                                 ? '#f1f2f2'
                                                 : '#f1f2f2')),
                                 }" :class="{ 'activeindex': isPresentIndexs(indexnav) }" >
-                                    <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ indexnav + 1 }}</span>
+                                    <!-- <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ indexnav + 1 }}</span> -->
+                                    <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ nav.question_no ?? indexnav + 1 }}</span>
+
 
                                     <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
                                         <path
@@ -133,7 +135,8 @@
                         <transition name="fade" mode="out-in">
                             <div class="questiontext-box" v-if="currentQuestion" :key="currentQuestion.id">
                                 <p class="currentquestionnumber">{{currentQuestion.number}}</p>
-                                <p>{{ currentQuestion.title }}</p>
+                                <!-- <p>{{ currentQuestion.title }}</p> -->
+                                <p class="questionimage" v-html="currentQuestion.title"></p>
                                 <span class="questionflag">
                                     <!-- <svg v-if="flg && flg2 || currentQuestion.flag && flg2"
                                         @click="removeflage(currentQuestion.id)" width="19" height="17"
@@ -281,7 +284,8 @@ export default {
 
 
     data() {
-        return {
+        return { 
+           
             isDragging: false,
             dragStartX: 0,
             scrollLeftStart: 0,
@@ -1873,6 +1877,14 @@ export default {
 
 <style scoped>
 
+.questionimage img {
+    height: auto !important;
+}
+
+
+.questionimage p img {
+    height: auto !important;
+}
 .red-flag {
     position: absolute;
     top: 3px;
