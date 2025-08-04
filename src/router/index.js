@@ -9,6 +9,9 @@ import MockBirdsEye from "@/views/MockBirdsEye.vue";
 import MockScore from "@/views/MockScore.vue";
 import ReviewMockBirdsEye from "@/components/ReviewMockBirdsEye.vue";
 import ReviewScroll from "@/views/ReviewScroll.vue";
+import MLAListSelection from '../views/MLAListSelection.vue'
+import QuestionsPage from "@/views/QuestionsPage.vue";
+
 
 Vue.use(VueRouter);
 
@@ -23,6 +26,8 @@ const routes = [
   { path: "/mockscore/:id", component: MockScore , meta: { requiresAuth: true } },
   { path: "/reviewmockbirdseye", component: ReviewMockBirdsEye , meta: { requiresAuth: true } },
   { path: "/reviewscroll/:id", component: ReviewScroll , name: 'MockReview', meta: { requiresAuth: true } },
+  { path: "/mlalistselection", component: MLAListSelection, name: "MLAList", meta: { requiresAuth: true } },
+  { path: "/questionspage", component: QuestionsPage, name: "QuestionsPage", meta: { requiresAuth: true } },
 ];
 
 const router = new VueRouter({

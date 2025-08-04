@@ -915,7 +915,7 @@ button.begin-btn a {
 
 .questionsoptions-arrows {
     display: grid;
-    grid-template-columns: repeat(2, minmax(40%, 1fr));
+    grid-template-columns: repeat(2, minmax(40%, 1fr)) ;
     gap: 38px;
     padding: 14px 0px 0px 0px;
 }
@@ -1368,6 +1368,234 @@ button.modal-exit-btn .cardbottom-shadow img {
 /********** Review Scroll Page CSS End **********/
 
 
+/********** MLA List Selection Page CSS Start **********/
+
+
+.mla-list-layout {
+  display: flex;
+  gap: 54px;
+}
+
+.mlalist-left-section{
+    flex: 0 0 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.mla-content-map {
+    background-color: #fff;
+    padding: 20px 14px 24px 14px;
+    border: 1px solid #1A90FF;
+    box-shadow: 3px 3px 8px 0px #000000BF;
+    border-radius: 30px;
+}
+
+.mlalist-right-section {
+  flex: 0 0 75.5%;
+  background-color: #fff;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+
+.mla-content-map h4 {
+    padding: 0px 0px 14px 0px;
+    margin: 0px;
+    color: #231F20;
+    font-size: 20px;
+}
+
+.mla-content-map .mla-areas-btn {
+    display: block;
+    width: 100%;
+    margin: 0px 0px 8px 0px;
+    background: #F1F1F2;
+    color: #58595B;
+    border: 0.5px solid #6D6E71;
+    padding: 4px 0px;
+    border-radius: 20px;
+    font-family: Helveticacondensed;
+    font-size: 13px;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+
+.mla-content-map .mla-presentation-btn {
+    width: 100%;
+    text-align: center;
+    padding: 4px 0px;
+    border-radius: 20px;
+    border: 0.5px solid #6D6E71;
+    margin: 0px 0px 5px 0px;
+    font-family: Helvetica;
+    color: #58595B;
+    cursor: pointer;
+    font-size: 13px;
+    background: #F1F1F2;
+}
+
+.mla-content-map button:focus{
+    outline: none;
+}
+
+.mla-content-map p {
+    font-size: 12.5px;
+    font-family: Helveticacondensed;
+    letter-spacing: 0.2px;
+}
+
+.mla-content-searchbar {
+    margin: 23px 0px 0px 0px;
+    position: relative;
+}
+
+.mla-content-searchbar input {
+    border: 1px solid #1A90FF;
+    width: 100%;
+    padding: 9px 0px 7px 30px;
+    border-radius: 30px;
+    font-size: 15px;
+    box-shadow: 1.42px 1.42px 2.84px 0px #00000080;
+}
+
+.mla-content-searchbar input::placeholder {
+    color: #D0D2D3;
+    font-family: Helvetica;
+}
+
+.search-mla-icon {
+    position: absolute;
+    right: 10px;
+    bottom: 2px;
+}
+
+.search-mla-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.mla-content-searchbar input:focus {
+    outline: none;
+}
+
+.areas-clinical-practice {
+    width: 50%;
+    border: 0.75px solid #D0D2D3;
+    padding: 13px 10px;
+    border-radius: 20px;
+}
+
+.clinical-practice-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 20px 5px 20px;
+    border: 0.75px solid #1A90FF;
+    background: #69BAFF;
+    border-radius: 50px;
+    margin: 0px 0px 20px 0px;
+}
+
+
+.areas-professional-knowledge {
+    width: 50%;
+    padding: 13px 10px;
+    border: 0.75px solid #D0D2D3;
+    border-radius: 20px;
+}
+
+.professional-knowledge-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 20px 5px 20px;
+    border: 0.75px solid #1A90FF;
+    background: #69BAFF;
+    border-radius: 50px;
+}
+
+
+.clinical-practice-total h4 {
+    font-size: 14px;
+    font-family: 'Helveticacondensed';
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.clinical-practice-total h5 {
+    font-family: 'Helveticacondensed';
+    color: #fff;
+}
+
+.professional-knowledge-total h4 {
+    font-family: 'Helveticacondensed';
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+.professional-knowledge-total h5 {
+    font-family: 'Helveticacondensed';
+    color: #fff;
+}
+
+.precon-radio-btn {
+    display: flex;
+    gap: 4px;
+    margin: 0px 0px 5px 0px;
+    cursor: pointer;
+}
+
+.precon-radio-btn.active {
+  color: white;
+  border-color: #0276BA;
+}
+
+.precon-btnclick-data {
+    padding: 15px 0px 0px 50px;
+}
+
+.precon-radio-btn h6 {
+    color: #58595B;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+
+/********** MLA List Selection Page CSS End **********/
+
+
+
+/********** Questions Page CSS Start **********/
+
+
+
+.questionoptions-button button {
+    background: #9DED6C;
+    border: 0.5px solid #BCBEC0;
+    padding: 7px 82px;
+    border-radius: 10px;
+    color: #231F20;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all .6s ease;
+}
+
+.questionoptions-button button:hover {
+    background: transparent;
+    border-color: #9DED6C;
+    color: #9DED6C;
+}
+
+
+/********** Questions Page CSS End **********/
+
+
+
 /********** Footer CSS Start **********/
 
 
@@ -1627,7 +1855,7 @@ button.modal-exit-btn .cardbottom-shadow img {
 
 @media (min-width: 1200px) {
     .container {
-        max-width: 970px;
+        max-width: 1220px;
     }
 
     .questionnumber-sec .container {
@@ -1637,4 +1865,5 @@ button.modal-exit-btn .cardbottom-shadow img {
     .reviewscroll-sec .container {
         max-width: 1220px;
     }
+
 }
