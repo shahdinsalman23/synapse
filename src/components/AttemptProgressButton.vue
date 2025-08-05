@@ -118,6 +118,7 @@ export default {
     width: 70%;
 }
 
+
 .button-content,
 .completed-content {
     display: flex;

@@ -13,7 +13,7 @@
       <div class="container">
         <div class="row">
           <div class="card-container">
-            <div v-for="(card, index) in cards" :key="index" class="homemock-card" data-aos="fade-up" :data-aos-delay="index * 100"  data-aos-duration="800" @click="gotoroute(card)">
+            <div v-for="(card, index) in cards" :key="index"   @click="gotoroute(card.route)" class="homemock-card" data-aos="fade-up" :data-aos-delay="index * 100"  data-aos-duration="800">
               <div class="cardtop-content">
                 <img :src="card.image" alt="Card Image" />
                 <h2>{{ card.title }}</h2>
@@ -55,6 +55,7 @@ export default {
           question: "Practice questions",
           description: "3800 questions based on the MLA content map.",
           image: "/images/questionmark.png",
+          route: "/mlalistselection",
         },
         {
           title: "Notes",
@@ -63,6 +64,7 @@ export default {
           description:
             "Notes the visual aids for all MLA content map conditions",
           image: "/images/file.png",
+          route: "/mocksection",
         },
         {
           title: "Mocks",
@@ -70,24 +72,20 @@ export default {
           question: "Test yourself",
           description: "Five mocks carefully designed to mirror the MLA",
           image: "/images/brain.png",
+          route: "/mocksection",
         },
       ],
     };
   },
 
 
-  methods: {
-
-
-    gotoroute(e){
-
-      console.log('here' , e);
-      if(e.title == 'Mocks'){
-
-        this.$router.push('/mocksection')
-      }
-    }
+methods: {
+  gotoroute(path) {
+    this.$router.push(path);
   }
+}
+
+
 };
 </script>
 

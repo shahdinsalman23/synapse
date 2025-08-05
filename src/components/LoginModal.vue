@@ -102,9 +102,6 @@ export default {
       // const baseUrl = 'https://staging.imsynapse.com/api'
       const baseUrl = 'https://admin.imsynapse.com/api'
 
-      // const baseUrl = 'https://synapse.appssols.com/api'
-
-
 
       console.log('remember', this.rememberMe);
 

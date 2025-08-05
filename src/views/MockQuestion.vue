@@ -26,11 +26,6 @@
                                 stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left">
                                 <path d="m15 18-6-6 6-6" />
                             </svg></div>
-
-
-
-
-
                         <div class="slider-wrapper" v-if="renderReady">
                             <div class="questionnumber-slide  scrollmenu" ref="scrollContainer" :style="slideStyle">
                                 <span v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber"
