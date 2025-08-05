@@ -37,7 +37,6 @@
                             ABDOMINAL MASS
                         </span>
                 </div>
-
             </div>
         </section>
 

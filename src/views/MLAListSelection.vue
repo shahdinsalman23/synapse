@@ -77,14 +77,23 @@
             <div class="mla-question-box">
               <h4><img src="/images/questionmark.png" alt="img"> Questions</h4>
                <ProgressBar :progress="0" />
+               <div class="cardbottom-shadow">
+                        <img src="/images/cardshadow.png" alt="">
+                    </div>
             </div>
             <div class="mla-question-box mla-note-box">
               <h4><img src="/images/file.png" alt="img"> Notes</h4>
                <ProgressBar :progress="38" />
+               <div class="cardbottom-shadow">
+                        <img src="/images/cardshadow.png" alt="">
+                    </div>
             </div>
             <div class="mla-question-box mla-mock-box">
               <h4><img src="/images/brain.png" alt="img"> Mocks</h4>
                <ProgressBar :progress="66"  label="Score"/>
+               <div class="cardbottom-shadow">
+                        <img src="/images/cardshadow.png" alt="">
+                    </div>
             </div>
           </div>
           </div>
@@ -267,6 +276,14 @@ export default {
     margin: 30px 0px 0px 0px;
     padding: 8px 10px 8px 10px;
     border-radius: 20px;
+    position: relative;
+}
+
+.mla-question-box .cardbottom-shadow img {
+    left: 50%;
+    transform: translate(-50%);
+    bottom: -27px;
+    width: 350px;
 }
 
 .mla-question-box h4 {
