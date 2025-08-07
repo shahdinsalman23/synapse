@@ -339,4 +339,51 @@ export default {
     font-size: 16px;
 }
 
+.activeindex {
+    transform: translate(0px, 10px) !important;
+}
+
+.questionnumber {
+    min-width: 23.65px;
+    text-align: center;
+    padding: 15px 0px;
+    border: none;
+    border-radius: 4px;
+    flex-shrink: 0;
+    font-size: 12px;
+    background-color: #F1F1F2;
+    position: relative;
+    font-family: Helveticacondensed;
+    color: #000;
+    height: 49.27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.questionnumber-slide {
+    padding: 20px 0px 20px 0px;
+}
+
+.questionleft-arrow, .questionright-arrow {
+    transform: translate(0px, 10px);
+}
+
+.questiontext-sec {
+    min-height: calc(100vh - 270px);
+}
+
+
+@media (min-width: 1200px) {
+    .questionnumber-sec .container {
+        max-width: 1310px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1260px;
+    }
+}
+
 </style>
