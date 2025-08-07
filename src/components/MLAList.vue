@@ -9,7 +9,7 @@
             <h5>{{ total }}</h5>
             </div>
         </div>
-        <div v-for="(item, index) in items" :key="index" class="mla-list-item">
+        <div v-for="(item, index) in items" :key="index" class="mla-list-item" @click="$router.push('/questionspage')">
             <h4>{{ item.title }}</h4>
             <h5>{{ item.progress }}</h5>
         </div>
@@ -42,6 +42,7 @@ export default {
     margin: 0px 0px 7px 0px;
     padding: 17px 14px 12px 20px;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .mla-list-item h4 {
