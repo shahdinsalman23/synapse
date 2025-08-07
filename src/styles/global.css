@@ -198,6 +198,12 @@ header.header-main .row {
     width: 37.48px;
 }
 
+.mockquestion-navigate {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
 
 
 /********** Header Main End **********/
@@ -237,8 +243,9 @@ section.homepg-sec {
     grid-template-columns: repeat(4, minmax(186.79px, 1fr));
     /* Default: 4 cards */
     gap: 53px;
-    max-width: 1200px;
+    max-width: 970px;
     width: 100%;
+    margin: 0 auto;
 }
 
 .homemock-card {
@@ -247,7 +254,8 @@ section.homepg-sec {
     transition: transform 0.3s ease-in-out;
     border-radius: 40px;
     position: relative;
-    cursor:pointer
+    cursor:pointer;
+    height: 297px;
 }
 
 .cardbottom-shadow img {
@@ -337,7 +345,7 @@ section.homepg-sec {
 
 
 .cardbottem-content h4 {
-    padding: 0px 0px 10px 0px;
+    padding: 5px 0px 13px 0px;
     font-size: 16px;
     color: #58595B;
 }
@@ -835,7 +843,7 @@ button.begin-btn a {
     gap: 1px;
     will-change: transform;
     position: relative;
-    padding: 53px 0px 15px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
 .roundcount {
@@ -983,7 +991,7 @@ button.begin-btn a {
 }
 
 .questiontext-sec {
-    padding: 235px 0px 20px 0px;
+    padding: 26px 0px 20px 0px;
     position: relative;
     z-index: 1; 
     background: white;
@@ -1287,7 +1295,6 @@ span.pausemock {
     align-items: center;
     justify-content: center;
     width: 100%;
-    margin-top: 80px;
 }
 
 .birdsaeye-head h6 {
@@ -1797,11 +1804,12 @@ button.modal-exit-btn .cardbottom-shadow img {
         padding: 5px 12px;
     }
     .userlogin-sec .card-container {
-        max-width: 775px;
+        max-width: 725px;
     }
     .userlogin-sec .cardbottom-shadow img {
-        left: -80px !important;
-        width: 380px;
+        left: -70px !important;
+        width: 340px;
+
     }
 }
 

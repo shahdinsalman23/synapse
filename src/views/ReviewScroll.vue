@@ -1,10 +1,6 @@
 <template>
     <div id="top" @scroll="handleScroll" class="scrollwhole">
-
-
-
         <div v-if="loadingcircle">
-
             <Loadingcircle />
         </div>
         <div v-else>
@@ -16,16 +12,10 @@
                 :unanswered="unanswered" :roundedPercent="roundedPercent" />
 
             <div v-if="reviewfirst">
-
-
                 <ReviewMockBirdsEye :currentQuestionIndex="currentQuestionIndex" :allquestions="allquestions"
                     :returning="returning" @getBackindex="getBackindex" @startMocks="getBackindex(0)" />
-
             </div>
             <div v-else>
-
-
-
                 <!-- <section class="reviewscroll-sec">
                     <div class="container">
                         <div class="questionnumber-slide-container" ref="container">
@@ -101,20 +91,9 @@
                     </div>
                 </section> -->
 
-
-
-
                 <section class="questionnumber-sec">
-                    <div class="scrollcenter" style="    padding-top: 5px; position:relative
-                ">
-
-
-
-
-
-
+                    <div class="scrollcenter" style="padding-top: 5px; position:relative">
                         <div class="mainscrollview">
-
                             <div class="buttond">
                                 <div class="questionleft-arrow" @click="scrollBackward" @mouseup="stopScroll"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -124,9 +103,6 @@
                                         <path d="m15 18-6-6 6-6" />
                                     </svg></div>
                             </div>
-
-
-
                             <div class="questionnumber-slide  scrollmenus" ref="scrollContainer"
                                 @mousedown="handleMouseDown" @mousemove="handleMouseMove" @mouseup="handleMouseUp"
                                 @mouseleave="handleMouseLeave" :style="slideStyle">
@@ -179,14 +155,7 @@
                                             )
                                             : ''
 
-
-
-
-
-
-
-                                    }" :class="{ 'activeindexreview': isPresentIndexs(indexnav) }"
-                                    >
+                                    }" :class="{ 'activeindexreview': isPresentIndexs(indexnav) }">
 
                                     <svg :style="{ opacity: nav.flag ? 1 : 0 }" width="9" viewBox="0 0 19 17">
                                         <path
@@ -196,7 +165,8 @@
 
                                     <!-- {{ indexnav + 1 }} -->
                                     <!-- <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ indexnav + 1 }}</span> -->
-                                    <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ nav.question_no ?? indexnav + 1 }}</span>
+                                    <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{
+                                        nav.question_no ?? indexnav + 1 }}</span>
 
 
 
@@ -218,9 +188,6 @@
                                             fill="#FBAD18" />
                                     </svg>
 
-
-
-
                                     <!-- <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
                                         <path
                                             d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
@@ -230,8 +197,6 @@
                             </div>
 
                             <div class="buttond">
-
-
                                 <div class="questionright-arrow" @click="scrollForward" @mouseup="stopScroll">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -248,14 +213,11 @@
                 </section>
                 <section class="questiontext-sec" id="sectiontop">
                     <div class="container">
-
                         <div class="question-option-tabsbox-scroll">
-
                             <transition name="fade" mode="out-in">
-
                                 <div class="questiontext-box" v-if="currentQuestion" :key="currentQuestion.id"
                                     id="bottom">
-                                    <p class="currentquestionnumber">{{currentQuestion.number}}</p>
+                                    <p class="currentquestionnumber">{{ currentQuestion.number }}</p>
                                     <!-- <p> {{
                                         currentQuestion ? currentQuestion.title : "No questions available."
                                     }}</p> -->
@@ -268,8 +230,6 @@
                                                 d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z"
                                                 fill="#ED1C24" />
                                         </svg>
-
-
                                         <svg @click="setflage(currentQuestion.id)" v-if="!flg && !currentQuestion.flag"
                                             width="19" height="16" viewBox="0 0 19 16" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -284,14 +244,21 @@
                                     <div class="questioncomment">
                                         <button @click="openfeedbackpop" class="feedbackbutton">
 
-                                            <svg v-if="currentQuestion.feedback"  width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2.41003 1.45117C1.79003 1.45117 1.29004 1.95117 1.29004 2.57117V13.6912C1.29004 14.3112 1.79003 14.8112 2.41003 14.8112H3.73999C4.03999 14.8112 4.28003 15.0512 4.28003 15.3512V18.8812L7.75 14.9912C7.85 14.8812 8.00002 14.8112 8.15002 14.8112H17.25C17.87 14.8112 18.37 14.3112 18.37 13.6912V2.57117C18.37 1.95117 17.87 1.45117 17.25 1.45117H2.40002H2.41003Z" fill="#FFF200"/>
-                                                <path d="M3.75 20.8213C3.69 20.8213 3.62006 20.8113 3.56006 20.7813C3.35006 20.7013 3.20996 20.5013 3.20996 20.2813V15.8813H2.41003C1.20003 15.8813 0.209961 14.8913 0.209961 13.6813V2.56134C0.209961 1.35134 1.20003 0.361328 2.41003 0.361328H17.26C18.47 0.361328 19.46 1.35134 19.46 2.56134V13.6813C19.46 14.8913 18.47 15.8813 17.26 15.8813H8.40002L4.15002 20.6413C4.05002 20.7613 3.9 20.8213 3.75 20.8213ZM2.42004 1.45132C1.80004 1.45132 1.30005 1.95132 1.30005 2.57132V13.6913C1.30005 14.3113 1.80004 14.8113 2.42004 14.8113H3.75C4.05 14.8113 4.29004 15.0513 4.29004 15.3513V18.8813L7.76001 14.9913C7.86001 14.8813 8.01003 14.8113 8.16003 14.8113H17.26C17.88 14.8113 18.38 14.3113 18.38 13.6913V2.57132C18.38 1.95132 17.88 1.45132 17.26 1.45132H2.41003H2.42004Z" fill="#FBAD18"/>
-                                                <path d="M14.7601 10.1913H5.66016C5.36016 10.1913 5.12012 9.95134 5.12012 9.65134C5.12012 9.35134 5.36016 9.11133 5.66016 9.11133H14.7601C15.0601 9.11133 15.3002 9.35134 15.3002 9.65134C15.3002 9.95134 15.0601 10.1913 14.7601 10.1913Z" fill="#FBAD18"/>
-                                                <path d="M14.7601 6.69135H5.66016C5.36016 6.69135 5.12012 6.45134 5.12012 6.15134C5.12012 5.85134 5.36016 5.61133 5.66016 5.61133H14.7601C15.0601 5.61133 15.3002 5.85134 15.3002 6.15134C15.3002 6.45134 15.0601 6.69135 14.7601 6.69135Z" fill="#FBAD18"/>
-                                                </svg>
-                                                
-
+                                            <svg v-if="currentQuestion.feedback" width="20" height="21"
+                                                viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M2.41003 1.45117C1.79003 1.45117 1.29004 1.95117 1.29004 2.57117V13.6912C1.29004 14.3112 1.79003 14.8112 2.41003 14.8112H3.73999C4.03999 14.8112 4.28003 15.0512 4.28003 15.3512V18.8812L7.75 14.9912C7.85 14.8812 8.00002 14.8112 8.15002 14.8112H17.25C17.87 14.8112 18.37 14.3112 18.37 13.6912V2.57117C18.37 1.95117 17.87 1.45117 17.25 1.45117H2.40002H2.41003Z"
+                                                    fill="#FFF200" />
+                                                <path
+                                                    d="M3.75 20.8213C3.69 20.8213 3.62006 20.8113 3.56006 20.7813C3.35006 20.7013 3.20996 20.5013 3.20996 20.2813V15.8813H2.41003C1.20003 15.8813 0.209961 14.8913 0.209961 13.6813V2.56134C0.209961 1.35134 1.20003 0.361328 2.41003 0.361328H17.26C18.47 0.361328 19.46 1.35134 19.46 2.56134V13.6813C19.46 14.8913 18.47 15.8813 17.26 15.8813H8.40002L4.15002 20.6413C4.05002 20.7613 3.9 20.8213 3.75 20.8213ZM2.42004 1.45132C1.80004 1.45132 1.30005 1.95132 1.30005 2.57132V13.6913C1.30005 14.3113 1.80004 14.8113 2.42004 14.8113H3.75C4.05 14.8113 4.29004 15.0513 4.29004 15.3513V18.8813L7.76001 14.9913C7.86001 14.8813 8.01003 14.8113 8.16003 14.8113H17.26C17.88 14.8113 18.38 14.3113 18.38 13.6913V2.57132C18.38 1.95132 17.88 1.45132 17.26 1.45132H2.41003H2.42004Z"
+                                                    fill="#FBAD18" />
+                                                <path
+                                                    d="M14.7601 10.1913H5.66016C5.36016 10.1913 5.12012 9.95134 5.12012 9.65134C5.12012 9.35134 5.36016 9.11133 5.66016 9.11133H14.7601C15.0601 9.11133 15.3002 9.35134 15.3002 9.65134C15.3002 9.95134 15.0601 10.1913 14.7601 10.1913Z"
+                                                    fill="#FBAD18" />
+                                                <path
+                                                    d="M14.7601 6.69135H5.66016C5.36016 6.69135 5.12012 6.45134 5.12012 6.15134C5.12012 5.85134 5.36016 5.61133 5.66016 5.61133H14.7601C15.0601 5.61133 15.3002 5.85134 15.3002 6.15134C15.3002 6.45134 15.0601 6.69135 14.7601 6.69135Z"
+                                                    fill="#FBAD18" />
+                                            </svg>
                                             <!-- <svg v-if="currentQuestion.feedback" width="20" height="21"
                                                 viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path
@@ -320,11 +287,7 @@
                                                     d="M14.7601 6.72845H5.66016C5.36016 6.72845 5.12012 6.48845 5.12012 6.18845C5.12012 5.88845 5.36016 5.64844 5.66016 5.64844H14.7601C15.0601 5.64844 15.3002 5.88845 15.3002 6.18845C15.3002 6.48845 15.0601 6.72845 14.7601 6.72845Z"
                                                     fill="#8698A2" />
                                             </svg>
-
-
                                             <span class="feedback-hover-text" v-if="bubbles == 1">Give Feedback</span>
-
-
                                         </button>
                                     </div>
                                 </div>
@@ -358,11 +321,7 @@
                                             </div>
                                             <transition @enter="enter" @leave="leave" :css="false">
                                                 <div v-if="activeOptions.includes(index)" class="option-content">
-                                                    <p>{{ option.rollingout ? option.rollingout : option.explanation }}
-
-
-
-                                                    </p>
+                                                    <p>{{ option.rollingout ? option.rollingout : option.explanation }}</p>
                                                 </div>
                                             </transition>
                                         </div>
@@ -405,15 +364,12 @@
                 <transition name="slide-modal">
                     <!-- <FeedbackFormModal v-if="showPauseModal" @close="showPauseModal = false"
                     @resume="showPauseModal = false" @exit="handleExitMock" /> -->
-
                     <div class="modal-overlays" v-if="showPauseModal">
                         <div class="modal-contents" ref="draggable" @mousedown="startDrag">
-
                             <div class="feedback-form-box">
-
                                 <div class="cross">
-                                    <p class="currentquestionnumber" style="padding-bottom: 10px;">{{currentQuestion.number}}</p>
-                                   
+                                    <p class="currentquestionnumber" style="padding-bottom: 10px;">
+                                        {{ currentQuestion.number }}</p>
                                     <h4>Share feedback</h4>
                                     <span class="crossspan" @click="showPauseModal = false">
                                         <svg width="12" height="12" viewBox="0 0 9 9" fill="none"
@@ -423,7 +379,6 @@
                                             <path d="M8.1701 0.75L1.38013 7.54001" stroke="#6D6E71"
                                                 stroke-miterlimit="10" stroke-linecap="round" />
                                         </svg>
-
                                     </span>
                                 </div>
 
@@ -454,13 +409,10 @@
                                             </div>
 
                                             <!-- <div v-if="category.name == 'Other' && showOptionsIndex === 6" class="feeback-question-option">
-
                                                 <input class="input-form" type="text" placeholder="Optional text..."
                                                 v-model="form.optionfeedback" />
                                             </div> -->
                                         </div>
-
-
                                         <div class="feedback-textarea-box" ref="feedbackForm">
                                             <textarea name="" id="" ref="feedbackArea" v-model="form.optionfeedback"
                                                 @focus="expandTextarea" class="feedback-textarea"
@@ -470,7 +422,7 @@
                                     </div>
                                     <div class="feedbackform-submitbtn">
                                         <button type="button" @click="submitFeedback" :disabled="isSubmitDisabled"
-                                        :class="{ 'disabled-btn': isSubmitDisabled }">Submit</button>
+                                            :class="{ 'disabled-btn': isSubmitDisabled }">Submit</button>
                                         <div class="cardbottom-shadow">
                                             <img src="/images/cardshadow.png" alt="">
                                         </div>
@@ -479,13 +431,8 @@
                             </div>
                         </div>
                     </div>
-
-
                 </transition>
             </div>
-
-
-
         </div>
     </div>
 </template>
@@ -623,7 +570,7 @@ export default {
 
             id: null,
             form: {
-                 optionfeedback: ''
+                optionfeedback: ''
             },
             method: "POST",
             questions: [],
@@ -775,7 +722,7 @@ export default {
         });
     },
 
-    
+
 
     watch: {
 
@@ -872,15 +819,15 @@ export default {
     computed: {
 
         isSubmitDisabled() {
-        const hasSelectedOption = this.feedbackCategories.some(category => category.selectedOption);
-        const hasTextFeedback = this.form.optionfeedback.trim().length > 0;
-        return !(hasSelectedOption || hasTextFeedback);
-    },
+            const hasSelectedOption = this.feedbackCategories.some(category => category.selectedOption);
+            const hasTextFeedback = this.form.optionfeedback.trim().length > 0;
+            return !(hasSelectedOption || hasTextFeedback);
+        },
 
-    //     isSubmitDisabled() {
-    //     // Check if all selectedOption are null or empty
-    //     return !this.feedbackCategories.some(category => category.selectedOption);
-    // },
+        //     isSubmitDisabled() {
+        //     // Check if all selectedOption are null or empty
+        //     return !this.feedbackCategories.some(category => category.selectedOption);
+        // },
         roundedPercent() {
 
             // return Math.round(this.correct) * 100 / this.totalquestions;
@@ -1094,10 +1041,10 @@ export default {
 
         removeflage(e) {
             if (this.allquestions[this.currentQuestionIndex]) {
-                        this.$set(this.allquestions[this.currentQuestionIndex], 'flag', false);
-                    }
+                this.$set(this.allquestions[this.currentQuestionIndex], 'flag', false);
+            }
 
-                    this.currentQuestion.flag = false
+            this.currentQuestion.flag = false
 
             this.form.questionId = e;
             byMethod(this.method, "/removeflage", this.form).then((res) => {
@@ -1229,9 +1176,9 @@ export default {
         toggleAccordion(index) {
             const i = this.activeOptions.indexOf(index);
             if (i !== -1) {
-            this.activeOptions.splice(i, 1); // close if already open
+                this.activeOptions.splice(i, 1); // close if already open
             } else {
-            this.activeOptions.push(index); // open without closing others
+                this.activeOptions.push(index); // open without closing others
             }
         },
         enter(el, done) {
@@ -1353,27 +1300,27 @@ export default {
 
 
         openfeedbackpop() {
-    const response = this.currentQuestion.feedback || '';
-    const keyMap = {
-        Question: 'question',
-        Answer: 'answer',
-        Rullingout: 'rulling_out',
-        Condition: 'condition',
-        Explanation: 'explanation',
-        Notes: 'notes',
-    };
+            const response = this.currentQuestion.feedback || '';
+            const keyMap = {
+                Question: 'question',
+                Answer: 'answer',
+                Rullingout: 'rulling_out',
+                Condition: 'condition',
+                Explanation: 'explanation',
+                Notes: 'notes',
+            };
 
-    this.feedbackCategories = this.feedbackCategories.map(category => {
-        const key = keyMap[category.name] || this.toSnakeCase(category.name);
-        if (response[key]) {
-            category.selectedOption = response[key];
-        }
-        return category;
-    });
+            this.feedbackCategories = this.feedbackCategories.map(category => {
+                const key = keyMap[category.name] || this.toSnakeCase(category.name);
+                if (response[key]) {
+                    category.selectedOption = response[key];
+                }
+                return category;
+            });
 
-    this.form.optionfeedback = this.currentQuestion.feedback?.optionfeedback || '';
-    this.showPauseModal = true;
-},
+            this.form.optionfeedback = this.currentQuestion.feedback?.optionfeedback || '';
+            this.showPauseModal = true;
+        },
 
 
         exit() {
@@ -2004,7 +1951,7 @@ export default {
         },
         nextQuestion() {
 
-            if(this.showPauseModal){
+            if (this.showPauseModal) {
                 return
             }
 
@@ -2056,7 +2003,7 @@ export default {
 
 
 
-            if(this.showPauseModal){
+            if (this.showPauseModal) {
                 return
             }
 
@@ -2084,7 +2031,7 @@ export default {
                 { name: "Condition", selectedOption: null },
                 { name: "Explanation", selectedOption: null },
                 { name: "Notes", selectedOption: null },
-             
+
 
             ]
 
@@ -2302,9 +2249,9 @@ export default {
                 this.showOptionsIndex = null
 
                 this.$nextTick(() => {
-                        // this.scrollToActiveItem();
-                        this.centerSelectedIndex(this.currentQuestionIndex)
-                    });
+                    // this.scrollToActiveItem();
+                    this.centerSelectedIndex(this.currentQuestionIndex)
+                });
 
             }
 
@@ -2439,7 +2386,6 @@ export default {
 
 
 <style scoped>
-
 .disabled-btn {
     opacity: 0.5;
     cursor: not-allowed;

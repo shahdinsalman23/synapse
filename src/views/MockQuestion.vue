@@ -1936,10 +1936,8 @@ div.scrollmenus {
     display: flex;
     width: 100%;
     align-items: center;
-    padding-bottom: 20px;
     overflow-y: hidden;
-    height: 15vh;
-    padding-bottom: 20px;
+    height: 80px;
     scrollbar-width: none;
     /* Firefox */
     -ms-overflow-style: none;
@@ -1962,10 +1960,10 @@ div.scrollmenus::-webkit-scrollbar {
     display: flex;
     justify-content: center;
     width: 100%;
-    max-width: 1280px;
+    max-width: 1240px;
     height: auto;
-    min-height: 80px; 
-    padding: 0;
+    min-height: 80px;
+    padding: 28px 0px 0px 0px;
 }
 
 
@@ -2010,12 +2008,12 @@ div.scrollmenu a:hover {
 .buttond {
     background-color: #ffffff00;
     box-shadow: none !important;
-    height: 14vh;
+    height: auto;
     display: flex;
     align-content: center;
     justify-content: center;
     align-items: center;
-    padding-bottom: 5px;
+    transform: translate(0px, -23px);
 }
 
 .scroll-btn {

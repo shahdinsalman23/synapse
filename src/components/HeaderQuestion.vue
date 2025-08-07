@@ -406,8 +406,8 @@ import CircularProgress from './CircularProgress.vue';
 
 export default {
   components: {
-    PauseMockModal,
-    CircularProgress
+    CircularProgress,
+    PauseMockModal
   },
 
   props: {

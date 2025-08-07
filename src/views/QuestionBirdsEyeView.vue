@@ -185,6 +185,14 @@ export default {
 }
 
 
+.birdsaeye-head {
+    margin-top: 0px;
+}
+
+.mockbird-submitbtn {
+    padding: 43px 0px 53px 0px;
+}
+
 
 @media (max-width: 768px) {
     .mockbirdseye-boxes {

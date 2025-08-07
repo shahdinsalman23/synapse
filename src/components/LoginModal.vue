@@ -17,14 +17,10 @@
             <input type="password" v-model="password" required />
           </div> -->
 
-           <div class="form-group password-wrapper">
+          <div class="form-group password-wrapper">
             <label>Password <span>*</span></label>
             <div class="password-input">
-              <input
-                :type="showPassword ? 'text' : 'password'"
-                v-model="password"
-                required
-              />
+              <input :type="showPassword ? 'text' : 'password'" v-model="password" required />
               <span class="toggle-icon" @click="togglePassword">
                 <i :class="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
               </span>
@@ -78,7 +74,7 @@ export default {
     document.body.style.overflow = '';
   },
 
-  created(){
+  created() {
 
     const savedCredentials = JSON.parse(localStorage.getItem("rememberMeCredentials"));
     if (savedCredentials) {
@@ -105,16 +101,16 @@ export default {
 
       console.log('remember', this.rememberMe);
 
-    
+
       if (this.rememberMe) {
-       
+
         const credentials = {
           email: this.email,
           password: this.password,
         };
         localStorage.setItem("rememberMeCredentials", JSON.stringify(credentials));
       } else {
-       
+
         localStorage.removeItem("rememberMeCredentials");
       }
 
@@ -126,37 +122,29 @@ export default {
 
         localStorage.setItem("token", response.data.token);
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token;
-       
+
 
         this.$store.dispatch("user", response.data.user);
         console.log('yes', response.data);
 
 
 
-        
+
         if (response.data.user.type == 'user') {
-
-
-
-       this.$router.push('/userlogin')
-
-        
-
-
-
+        if (this.$route.path !== '/userlogin') {
+          this.$router.push('/userlogin');
         }
-        else {
-
-
-          // this.$router.push("/admin");
+      } else {
+        if (this.$route.path !== '/admin') {
           this.$router.push("/admin").then(() => {
             window.location.reload();
           });
         }
+      }
 
 
       } catch (error) {
-     
+
         this.shows = true
         this.loader = false
       }
@@ -165,29 +153,32 @@ export default {
       document.body.style.overflow = '';
       this.$emit('close');
     },
-    
+
   }
 }
 </script>
 
 <style scoped>
-
 span.toggle-icon {
   font-size: 14px;
   opacity: .7;
- 
+
 }
 
 .password-wrapper {
   position: relative;
 }
+
 .password-input {
   position: relative;
 }
+
 .password-input input {
   width: 100%;
-  padding-right: 30px; /* space for the icon */
+  padding-right: 30px;
+  /* space for the icon */
 }
+
 .toggle-icon {
   position: absolute;
   top: 50%;
@@ -196,6 +187,7 @@ span.toggle-icon {
   cursor: pointer;
   color: #555;
 }
+
 /* TRANSITION ANIMATION */
 .modal-enter-active,
 .modal-leave-active {
@@ -240,7 +232,7 @@ span.toggle-icon {
   padding: 50px 50px 0px 50px;
   border-radius: 50px;
   position: relative;
-  width:100%;
+  width: 100%;
   height: 680px;
   max-width: 380px;
   will-change: transform;
@@ -277,19 +269,19 @@ span.toggle-icon {
 
 .submit-btn {
   background-color: #9DED6C;
-    color: #231F20;
-    padding: 5px 0px;
-    border: none;
-    border-radius: 35px;
-    cursor: pointer;
-    width: 111.84px;
-    border: 1px solid #00a14b75;
-    transition: all .6s ease;
-    font-weight: bold;
-    font-size: 14px;
-    height: 29.60px;
-    position: relative;
-    margin: 0px 0px 24px 0px;
+  color: #231F20;
+  padding: 5px 0px;
+  border: none;
+  border-radius: 35px;
+  cursor: pointer;
+  width: 111.84px;
+  border: 1px solid #00a14b75;
+  transition: all .6s ease;
+  font-weight: bold;
+  font-size: 14px;
+  height: 29.60px;
+  position: relative;
+  margin: 0px 0px 24px 0px;
 }
 
 .submit-btn:hover {
@@ -300,10 +292,10 @@ span.toggle-icon {
 /* Custom remember switch */
 .login-remember {
   display: flex;
-    align-items: center;
-    gap: 5px;
-    margin: 0px 0px 44px 0px;
-    justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin: 0px 0px 44px 0px;
+  justify-content: center;
 }
 
 .login-remember h6 {
@@ -315,14 +307,13 @@ span.toggle-icon {
 }
 
 .submit-btn .cardbottom-shadow img {
-    left: 50%;
-    transform: translate(-50%);
-    width: 200px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 200px;
 }
 
 .email-box {
-    padding: 0px 0px 31px 0px;
-    margin: 0px !important;
+  padding: 0px 0px 31px 0px;
+  margin: 0px !important;
 }
-
 </style>

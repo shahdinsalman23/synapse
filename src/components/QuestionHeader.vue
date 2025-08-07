@@ -106,7 +106,7 @@
                             </div>
                             <p class="progress-text">75%</p>
                         </li>
-                        <li><span>Bird's eye view</span>
+                        <li><router-link to="/questionbirdseyeview"><span>Bird's eye view</span>
                             <svg data-v-04b99b7a="" width="18" height="18" viewBox="0 0 18 18" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path data-v-04b99b7a=""
@@ -130,7 +130,7 @@
                                 <path data-v-04b99b7a=""
                                     d="M6.40002 17.4993H1.90002C1.01002 17.4993 0.289978 16.7793 0.289978 15.8893V11.3893C0.289978 10.4993 1.01002 9.7793 1.90002 9.7793H6.40002C7.29002 9.7793 8.01001 10.4993 8.01001 11.3893V15.8893C8.01001 16.7793 7.29002 17.4993 6.40002 17.4993ZM2.17999 10.8093C1.69999 10.8093 1.32001 11.1993 1.32001 11.6693V15.5993C1.32001 16.0793 1.70999 16.4593 2.17999 16.4593H6.10999C6.57999 16.4593 6.96997 16.0693 6.96997 15.5993V11.6693C6.96997 11.1893 6.57999 10.8093 6.10999 10.8093H2.17999Z"
                                     fill="#D1D3D4"></path>
-                            </svg></li>
+                            </svg></router-link></li>
                         <li class="mock-width">
                             <span class="flaggedquestions">Flagged questions</span>
                             <svg width="14.52" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -176,6 +176,14 @@ export default {
 
 
 <style scoped>
+
+.mockquestion-navigate {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+
 .question-header {
     display: grid;
     grid-template-columns: repeat(3, minmax(30%, 1fr));
