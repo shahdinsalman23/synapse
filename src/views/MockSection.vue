@@ -209,7 +209,7 @@ export default {
 
             Vue.set(this.$data, 'title', res.data.data)
 
-            console.log(res.data.data)
+            console.log('here', res.data.data)
             this.loadershow = false
             this.loading = false
 

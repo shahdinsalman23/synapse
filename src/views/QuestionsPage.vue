@@ -340,7 +340,7 @@ export default {
 }
 
 .activeindex {
-    transform: translate(0px, 10px) !important;
+    transform: translate(0px, -10px) !important;
 }
 
 .questionnumber {
@@ -366,7 +366,7 @@ export default {
 }
 
 .questionleft-arrow, .questionright-arrow {
-    transform: translate(0px, 10px);
+    transform: translate(0px, -10px);
 }
 
 .questiontext-sec {

@@ -9,12 +9,19 @@
             <h5>{{ total }}</h5>
             </div>
         </div>
-        <div v-for="(item, index) in items" :key="index" class="mla-list-item" @click="$router.push('/questionspage')">
+        <div v-for="(item, index) in items" :key="index" class="mla-list-item" @click="GOtoroute">
             <h4>{{ item.title }}</h4>
             <h5>{{ item.progress }}</h5>
+
+          
+
+            
+            
         </div>
     </div>
 </template>
+
+
 
 <script>
 export default {
@@ -22,12 +29,54 @@ export default {
         title: String,
         total: String,
         items: Array,
-        wrapperClass: String
+        wrapperClass: String,
+        condition:String,
+    },
+
+    methods: {
+
+        GOtoroute(){
+            if(this.condition == 'conditionAreas'){
+                this.$emit('AreaCondition')
+
+            }
+            else{
+
+                this.$router.push('/questionspage')
+            }
+        }
     }
 }
 </script>
 
 <style scoped>
+
+::-webkit-scrollbar {
+    width: 3px;
+    height: 20px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #d7ebff;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #69baff;
+  }
+
+
+.areas-presentation-condition{
+   
+    height: 81vh;
+    overflow-y: scroll;
+}
 .list-header {
     display: flex;
     justify-content: space-between;

@@ -85,7 +85,7 @@
                                         d="M8.57964 9.83015C6.11964 9.83015 4.12963 7.83015 4.11963 5.37015C4.11963 2.91015 6.11964 0.910156 8.57964 0.910156C11.0396 0.910156 13.0296 2.91015 13.0396 5.37015C13.0396 7.83015 11.0396 9.83015 8.57964 9.83015ZM8.57964 1.61015C6.49964 1.61015 4.80963 3.30016 4.80963 5.38016C4.80963 7.46016 6.49964 9.15015 8.57964 9.15015C10.6596 9.15015 12.3496 7.46016 12.3496 5.38016C12.3496 3.30016 10.6596 1.61015 8.57964 1.61015Z"
                                         fill="#231F20" stroke="#231F20" stroke-width="0.46" stroke-miterlimit="10" />
                                 </svg> User ▸</a></li>
-                        <li><a href="#">
+                        <li><a @click="logout" style="cursor:pointer">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -169,7 +169,13 @@ export default {
     methods: {
         toggleDropdown() {
             this.showDropdown = !this.showDropdown;
-        }
+        },
+
+        logout() {
+      localStorage.removeItem("token");
+      this.$store.dispatch("user", null);
+      this.$router.push("/");
+    },
     }
 };
 </script>
