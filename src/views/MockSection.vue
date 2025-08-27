@@ -36,9 +36,9 @@
 
                                     </div>
 
-                                    <div class="progress-btn"  v-else>
+                                    <!-- <div class="progress-btn"  v-else>
                                         <button>Not attempted yet</button>
-                                    </div>
+                                    </div> -->
                                    
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                 <div class="container">
                     <div class="question-note-boxes">
                         <div class="question-box" data-aos="fade-up" data-aos-delay="0" data-aos-duration="800">
-                            <h3><img src="/images/questionmark.png" alt=""> Question</h3>
+                            <h3><img src="/images/questionmark.png" alt=""> Questions</h3>
                             <div class="question-score">
                                 <h6>score</h6>
                                 <div class="progress-container">
@@ -79,23 +79,20 @@
                             </div>
                         </div>
                         <div class="note-box" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800">
-                            <h3><img src="/images/file.png" alt=""> Notes</h3>
-                            <div class="imgdiv">
-
+                             <div class="imgdiv">
                                 <img src="/images/lock.png" class="lock-img" alt="">
                                 <span class="lock-hover-text">Locked section</span>
-                                
                             </div>
-                            
-                            <div class="note-score">
+                            <h3><img src="/images/file.png" alt=""> Notes</h3> 
+                            <!-- <div class="note-score">
                                 <h6>Progress</h6>
                                 <div class="progress-container">
                                     <div class="progress-bar">
-                                        <!-- <div class="progress-fill" style="width: 54%"></div> -->
+                                        <div class="progress-fill" style="width: 54%"></div>
                                     </div>
-                                    <!-- <div class="progress-text">54%</div> -->
+                                    <div class="progress-text">54%</div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="cardbottom-shadow">
                                 <img src="/images/cardshadow.png" alt="">
                             </div>
@@ -333,8 +330,8 @@ export default {
 .lock-hover-text {
     position: absolute;
     width: 95px;
-    left: 77%;
-    top: -18px;
+    left: 4%;
+    top: -2px;
     font-size: 10px;
     background-color: #9DED6C;
     padding: 3px 3px;
@@ -461,7 +458,7 @@ img {
 .mock-image .cardbottom-shadow img {
     border: none;
     padding: 0px;
-    bottom: 23px;
+    bottom: -22px;
     left: 50%;
     transform: translate(-50%);
     width: 290px;

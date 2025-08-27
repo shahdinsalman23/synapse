@@ -321,7 +321,8 @@
                                             </div>
                                             <transition @enter="enter" @leave="leave" :css="false">
                                                 <div v-if="activeOptions.includes(index)" class="option-content">
-                                                    <p>{{ option.rollingout ? option.rollingout : option.explanation }}</p>
+                                                    <p>{{ option.rollingout ? option.rollingout : option.explanation }}
+                                                    </p>
                                                 </div>
                                             </transition>
                                         </div>
@@ -385,41 +386,38 @@
 
                                 <!-- <h4>Share feedback</h4> -->
                                 <form action="">
-                                    <div class="feedbackform-button">
-                                        <div class="feedbackform-button" v-for="(category, index) in feedbackCategories"
-                                            :key="index">
-                                            <button @click="toggleOptions(index)"
-                                                :class="{ 'active-btn': category.selectedOption }" type="button"> {{
-                                                    category.name }}</button>
-
-                                            <div class="feeback-question-options"
-                                                v-if="showOptionsIndex === index && category.name != 'Other'">
-                                                <div class="feeback-question-option">
-                                                    <input type="radio"
-                                                        :checked="category.selectedOption === 'Incorrect'"
-                                                        @click="selectOption(index, 'Incorrect')" value="Incorrect">
-                                                    <p>Incorrect</p>
-                                                </div>
-                                                <div class="feeback-question-option">
-                                                    <input type="radio" value="Needs improvement"
-                                                        :checked="category.selectedOption === 'Needs improvement'"
-                                                        @click="selectOption(index, 'Needs improvement')">
-                                                    <p>Needs improvement</p>
-                                                </div>
+                                    <div class="feedbackform-button" v-for="(category, index) in feedbackCategories"
+                                        :key="index">
+                                        <button @click="toggleOptions(index)"
+                                            :class="{ 'active-btn': category.selectedOption }" type="button"> {{
+                                                category.name }}</button>
+                                        <div class="feeback-question-options"
+                                            v-if="showOptionsIndex === index && category.name != 'Other'">
+                                            <div class="feeback-question-option">
+                                                <input type="radio" :checked="category.selectedOption === 'Incorrect'"
+                                                    @click="selectOption(index, 'Incorrect')" value="Incorrect">
+                                                <p>Incorrect</p>
                                             </div>
+                                            <div class="feeback-question-option">
+                                                <input type="radio" value="Needs improvement"
+                                                    :checked="category.selectedOption === 'Needs improvement'"
+                                                    @click="selectOption(index, 'Needs improvement')">
+                                                <p>Needs improvement</p>
+                                            </div>
+                                        </div>
 
-                                            <!-- <div v-if="category.name == 'Other' && showOptionsIndex === 6" class="feeback-question-option">
+                                        <!-- <div v-if="category.name == 'Other' && showOptionsIndex === 6" class="feeback-question-option">
                                                 <input class="input-form" type="text" placeholder="Optional text..."
                                                 v-model="form.optionfeedback" />
                                             </div> -->
-                                        </div>
-                                        <div class="feedback-textarea-box" ref="feedbackForm">
-                                            <textarea name="" id="" ref="feedbackArea" v-model="form.optionfeedback"
-                                                @focus="expandTextarea" class="feedback-textarea"
-                                                placeholder="Please write your suggestions here!"></textarea>
-                                        </div>
-                                        <!-- <textarea name="" id="" v-model="form.optionfeedback" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea> -->
                                     </div>
+                                    <div class="feedback-textarea-box" ref="feedbackForm">
+                                        <textarea name="" id="" ref="feedbackArea" v-model="form.optionfeedback"
+                                            @focus="expandTextarea" class="feedback-textarea"
+                                            placeholder="Please write your suggestions here!"></textarea>
+                                    </div>
+                                    <!-- <textarea name="" id="" v-model="form.optionfeedback" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea> -->
+
                                     <div class="feedbackform-submitbtn">
                                         <button type="button" @click="submitFeedback" :disabled="isSubmitDisabled"
                                             :class="{ 'disabled-btn': isSubmitDisabled }">Submit</button>
@@ -2626,14 +2624,28 @@ button.scroll-btn svg :hover {
 
 .feedbackform-button button {
     font-family: Helvetica, Arial, sans-serif;
-    border: 1px solid #808285;
-    padding: 3px 20px;
-    width: 145px;
-    margin: 0px 0px 10px 0px;
-    border-radius: 30px;
-    color: #2F292B;
+    border: none;
+    padding: 7px 20px;
+    width: 100%;
+    color: #231F20;
     cursor: pointer;
+    background: transparent;
+    text-align: -webkit-auto;
+    font-size: 16px;
+    transition: all .6s ease;
+}
 
+.feedbackform-button button:hover {
+    background: #F1F2F2;
+}
+
+.feedbackform-button {
+    border-bottom: 1px solid #939598;
+}
+
+
+.feedback-textarea-box textarea::placeholder {
+    color: #808285;
 }
 
 .feedbackform-submitbtn {
@@ -2913,7 +2925,8 @@ button.scroll-btn svg :hover {
     padding: 3px 8px;
     background: #ffffff94;
     font-size: 14px;
-    color: black
+    color: black;
+    margin-top: 10px;
 }
 
 textarea.feedback-textarea::placeholder {

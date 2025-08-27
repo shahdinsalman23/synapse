@@ -25,7 +25,7 @@
     src: url(../../public/Fonts/Fonts/HelveticaNeueLTPro-Cn.ttf);
 }
 
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -44,8 +44,9 @@
 
 
 html {
-    min-width: 1270x; /* Optional - Minimum width set karen */
-  }
+    min-width: 1270x;
+    /* Optional - Minimum width set karen */
+}
 
 /********** Container CSS Start **********/
 
@@ -87,11 +88,11 @@ html {
 
 
 .activeindexreview {
-    
+
     height: 72.25px !important;
     transform: translate(0px, 0px);
     font-weight: bold !important;
-   
+
     font-size: 14px !important;
 }
 
@@ -103,7 +104,7 @@ html {
     font-weight: 800 !important;
     font-size: 18px !important;
     padding-top: 0;
- 
+
 }
 
 
@@ -114,7 +115,7 @@ html {
     font-weight: bold !important;
     font-size: 19px !important;
     padding-top: 4px;
-   
+
 }
 
 /********** Header Login Start **********/
@@ -254,13 +255,13 @@ section.homepg-sec {
     transition: transform 0.3s ease-in-out;
     border-radius: 40px;
     position: relative;
-    cursor:pointer;
+    cursor: pointer;
     height: 297px;
 }
 
 .cardbottom-shadow img {
     position: absolute;
-    
+
     left: -55px;
     width: 310px;
     height: 50px;
@@ -403,11 +404,11 @@ section.login-signup-sec {
     color: #8698A2;
     font-weight: 600;
     padding: 5px 14px;
-    border: 2px solid #8698A2;      
+    border: 2px solid #8698A2;
     border-radius: 20px;
     background: transparent;
     width: 85px;
-    font-size: 14px;        
+    font-size: 14px;
 }
 
 .loginSignup-btn .loginBtn {
@@ -511,22 +512,22 @@ section.login-signup-sec {
     margin: 0px 0px 5px 0px;
 }
 
-  
-  .loginform-synapse .form-group label span {
+
+.loginform-synapse .form-group label span {
     color: red;
     margin-left: 2px;
-  }
-  
-  .loginform-synapse .form-group input {
+}
+
+.loginform-synapse .form-group input {
     background: #E6E7E8;
     color: #000;
     height: 35.45px;
     width: 247.54px;
-  }
-  
-  .loginform-synapse .form-group input:focus {
+}
+
+.loginform-synapse .form-group input:focus {
     outline: none;
-  }
+}
 
 /********** Login Form Modal CSS End **********/
 
@@ -565,7 +566,7 @@ section.login-signup-sec {
 .mock-image img {
     border: 1px solid #00000059;
     padding: 15px;
- 
+
 }
 
 
@@ -596,20 +597,21 @@ section.login-signup-sec {
 /********** Mock Section Page CSS Start **********/
 
 .question-box {
-    background: #1A90FF;
+    background: #00A2FD;
     border: 1px solid #0276BA;
-    padding: 20px 15px;
-    width: 215.72px;
+    padding: 10px 15px;
+    width: 239px;
     border-radius: 25px;
     margin: 0 auto;
     position: relative;
+    height: 80px;
 }
 
 .question-box h3 {
-    font-size: 26px;
+    font-size: 28px;
     color: #fff;
     text-transform: uppercase;
-    padding: 0px 0px 17px 0px;
+    padding: 0px 0px 8px 0px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -632,34 +634,41 @@ section.login-signup-sec {
 }
 
 .question-box .cardbottom-shadow img {
-    left: -70px;
-    width: 350px;
+    left: -65px;
+    width: 360px;
 }
 
-
 .note-box {
-    background: #D1D3D4;
+    background: #F99D1C;
     border: 1px solid #6D6E71;
-    padding: 20px 15px;
-    width: 215.72px;
+    width: 239px;
     border-radius: 25px;
     position: relative;
     margin: 0 auto;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .note-box h3 {
-    font-size: 23px;
-    color: #fff;
-    text-transform: uppercase;
-    padding: 0px 0px 17px 0px;
     display: flex;
     align-items: center;
-    gap: 5px;
-    justify-content: center;
+    gap: 10px;
+    font-size: 26px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.imgdiv {
+    background: #B4B6B8;
+    padding: 24px 20px 24px 20px;
+    border-bottom-left-radius: 25px;
+    border-top-left-radius: 25px;
 }
 
 .note-box h3 img {
-    width: 21.76px;
+    width: 18.76px;
 }
 
 .note-score {
@@ -675,20 +684,21 @@ section.login-signup-sec {
     text-transform: capitalize;
 }
 
-.lock-img {
+/* .lock-img {
     position: absolute;
     top: 10px;
     right: 10px;
-}
+} */
 
 .mock-box {
     background: #ED1C24;
     border: 1px solid #BE1E2D;
-    padding: 20px 15px;
-    width: 215.72px;
+    padding: 10px 15px;
+    width: 239px;
     border-radius: 25px;
     margin: 0 auto;
     position: relative;
+    height: 80px;
 }
 
 
@@ -696,7 +706,7 @@ section.login-signup-sec {
     font-size: 23px;
     color: #fff;
     text-transform: uppercase;
-    padding: 0px 0px 17px 0px;
+    padding: 0px 0px 8px 0px;
     display: flex;
     align-items: center;
     gap: 5px;
@@ -720,8 +730,8 @@ section.login-signup-sec {
 }
 
 .note-box .cardbottom-shadow img {
-    left: -70px;
-    width: 350px;
+    left: -65px;
+    width: 360px;
 }
 
 .question-note-boxes {
@@ -736,7 +746,7 @@ section.login-signup-sec {
     padding: 0px 0px 100px 0px;
 }
 
-.currentquestionnumber{
+.currentquestionnumber {
     font-weight: bold;
     color: #949393 !important;
     font-size: 14px;
@@ -831,14 +841,14 @@ button.begin-btn a {
     margin: 0 auto;
     position: relative;
 }
-  
-  .slider-wrapper {
+
+.slider-wrapper {
     flex: 1;
     overflow: hidden;
     position: relative;
-  }
-  
-  .questionnumber-slide {
+}
+
+.questionnumber-slide {
     display: flex;
     gap: 1px;
     will-change: transform;
@@ -863,11 +873,11 @@ button.begin-btn a {
     font-family: Helveticacondensed;
     color: black;
     font-weight: 600;
-   
+
 
 }
-  
-  .questionnumber {
+
+.questionnumber {
     min-width: 23.65px;
     text-align: center;
     padding: 15px 0px;
@@ -876,7 +886,7 @@ button.begin-btn a {
     flex-shrink: 0;
     font-size: 12px;
     background-color: transparent;
-    
+
     position: relative;
     font-family: Helveticacondensed;
     color: #000;
@@ -888,10 +898,10 @@ button.begin-btn a {
 
 .questionnumber.selected {
     background-color: #D1D3D4;
-  }
+}
 
 
-   .red-flag {
+.red-flag {
     position: absolute;
     top: -14px;
     left: 50%;
@@ -900,8 +910,8 @@ button.begin-btn a {
 }
 
 
-  .questionleft-arrow,
-  .questionright-arrow {
+.questionleft-arrow,
+.questionright-arrow {
     cursor: pointer;
     font-size: 24px;
     user-select: none;
@@ -913,12 +923,13 @@ button.begin-btn a {
     align-items: center;
     justify-content: center;
     transform: translate(0px, 23px);
-  }
-  .modal-footer p {
+}
+
+.modal-footer p {
     color: #747474;
 }
-  
-  .questiontext-box {
+
+.questiontext-box {
     background: #F1F2F2;
     padding: 20px 64px 20px 35px;
     text-align: left;
@@ -963,7 +974,7 @@ button.begin-btn a {
 
 .questionsoptions-arrows {
     display: grid;
-    grid-template-columns: repeat(2, minmax(40%, 1fr)) ;
+    grid-template-columns: repeat(2, minmax(40%, 1fr));
     gap: 38px;
     padding: 14px 0px 0px 0px;
 }
@@ -993,9 +1004,9 @@ button.begin-btn a {
 .questiontext-sec {
     padding: 26px 0px 20px 0px;
     position: relative;
-    z-index: 1; 
+    z-index: 1;
     background: white;
-    min-height: calc(100vh - 200px);  
+    min-height: calc(100vh - 200px);
 }
 
 
@@ -1024,10 +1035,10 @@ button.begin-btn a {
 }
 
 .mockquestion-navigate ul li p {
-     font-family: Helveticacondensed;
+    font-family: Helveticacondensed;
     font-size: 14.3px;
     font-weight: 600;
-    
+
     color: #d1d3d4;
 }
 
@@ -1148,8 +1159,8 @@ span.pausemock {
 .lock-hover-text {
     position: absolute;
     width: 95px;
-    left: -100%;
-    top: -30px;
+    left: 4%;
+    top: -2px;
     font-size: 10px;
     background-color: #9DED6C;
     padding: 3px 3px;
@@ -1197,7 +1208,7 @@ span.pausemock {
 
 
 
-  .questionoption-leftarrow:hover .leftarrow-hover-text {
+.questionoption-leftarrow:hover .leftarrow-hover-text {
     visibility: visible;
     opacity: 1;
 }
@@ -1218,9 +1229,8 @@ span.pausemock {
     visibility: visible;
     opacity: 1;
 }
-.feedback-hover-text
 
- {
+.feedback-hover-text {
     position: absolute;
     width: 80px;
     top: 32px;
@@ -1246,12 +1256,12 @@ span.pausemock {
 }
 
 .questionoption-leftarrow {
- 
+
     position: relative;
 }
 
 .questionoption-rightarrow {
- 
+
     position: relative;
 }
 
@@ -1304,7 +1314,7 @@ span.pausemock {
     border-radius: 20px;
     font-size: 16px;
     font-weight: 600;
-   
+
     font-family: Helvetica;
 }
 
@@ -1457,31 +1467,31 @@ button.modal-exit-btn .cardbottom-shadow img {
     /* scrollbar-color: #B5B7B9 #b5b7b91c; */
     position: relative;
     scrollbar-color: #B5B7B9 rgb(241, 241, 241);
-  }
+}
 
 
-  .question-option-tabsbox-scroll::-webkit-scrollbar {
+.question-option-tabsbox-scroll::-webkit-scrollbar {
     width: 5.83px;
-  }
-  
-  .question-option-tabsbox-scroll::-webkit-scrollbar-thumb {
+}
+
+.question-option-tabsbox-scroll::-webkit-scrollbar-thumb {
     background-color: transparent;
     border-radius: 10px;
-  }
-  
-  .question-option-tabsbox-scroll::-webkit-scrollbar-track {
+}
+
+.question-option-tabsbox-scroll::-webkit-scrollbar-track {
     background-color: #BCBEC0;
     border-radius: 10px;
-  }
+}
 
-  .question-option-tabsbox-scroll::-webkit-scrollbar-button {
+.question-option-tabsbox-scroll::-webkit-scrollbar-button {
     display: none;
     height: 0;
     width: 0;
-  }
+}
 
-  
-  
+
+
 
 .brake-border {
     border-top: 4px solid #D1D3D4;
@@ -1549,9 +1559,9 @@ button.modal-exit-btn .cardbottom-shadow img {
     position: fixed;
     width: 100%;
     height: 100%;
-  }
+}
 
-  .questiontext-sec .container {
+.questiontext-sec .container {
     max-width: 1320px;
 }
 
@@ -1562,11 +1572,11 @@ button.modal-exit-btn .cardbottom-shadow img {
 
 
 .mla-list-layout {
-  display: flex;
-  gap: 54px;
+    display: flex;
+    gap: 54px;
 }
 
-.mlalist-left-section{
+.mlalist-left-section {
     flex: 0 0 20%;
     display: flex;
     flex-direction: column;
@@ -1582,11 +1592,11 @@ button.modal-exit-btn .cardbottom-shadow img {
 }
 
 .mlalist-right-section {
-  flex: 0 0 75.5%;
-  background-color: #fff;
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
+    flex: 0 0 75.5%;
+    background-color: #fff;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
 }
 
 
@@ -1627,7 +1637,7 @@ button.modal-exit-btn .cardbottom-shadow img {
     background: #F1F1F2;
 }
 
-.mla-content-map button:focus{
+.mla-content-map button:focus {
     outline: none;
 }
 
@@ -1740,8 +1750,8 @@ button.modal-exit-btn .cardbottom-shadow img {
 }
 
 .precon-radio-btn.active {
-  color: white;
-  border-color: #0276BA;
+    color: white;
+    border-color: #0276BA;
 }
 
 .precon-btnclick-data {
@@ -1800,12 +1810,14 @@ button.modal-exit-btn .cardbottom-shadow img {
 
 
 @media only screen and (max-width: 1920px) {
-    .loginSignup-btn a{
+    .loginSignup-btn a {
         padding: 5px 12px;
     }
+
     .userlogin-sec .card-container {
         max-width: 725px;
     }
+
     .userlogin-sec .cardbottom-shadow img {
         left: -70px !important;
         width: 340px;
@@ -1830,7 +1842,7 @@ button.modal-exit-btn .cardbottom-shadow img {
         padding: 29px 28px 30px 29px;
     }
 
-    .homemock-card{
+    .homemock-card {
         max-width: 220px;
     }
 
@@ -1844,7 +1856,7 @@ button.modal-exit-btn .cardbottom-shadow img {
 }
 
 @media only screen and (max-width: 992px) {
-    .mock-container {   
+    .mock-container {
         grid-template-columns: repeat(4, minmax(100px, 1fr));
         max-width: 800px;
         gap: 40px;
@@ -1865,7 +1877,7 @@ button.modal-exit-btn .cardbottom-shadow img {
         grid-template-columns: repeat(2, 1fr);
         max-width: 650px;
     }
-    
+
 
     .homemock-card {
         margin: 0 auto;
@@ -1899,29 +1911,29 @@ button.modal-exit-btn .cardbottom-shadow img {
     .question-box {
         width: 200px;
     }
-    
+
     .question-box h3 {
         font-size: 24px;
     }
-    
+
     .note-box {
         width: 200px;
     }
-    
-    .mock-box{
+
+    .mock-box {
         width: 200px;
     }
-    
+
     .question-box .cardbottom-shadow img {
         left: -60px;
         width: 320px;
     }
-    
+
     .note-box .cardbottom-shadow img {
         left: -65px;
         width: 330px;
     }
-    
+
     .mock-box .cardbottom-shadow img {
         left: -65px;
         width: 330px;
@@ -1932,7 +1944,7 @@ button.modal-exit-btn .cardbottom-shadow img {
         grid-template-columns: repeat(2, minmax(186.79px, 1fr));
         gap: 50px;
     }
-    
+
     .headermock {
         grid-template-columns: repeat(3, minmax(20%, 1fr));
     }
@@ -1953,8 +1965,8 @@ button.modal-exit-btn .cardbottom-shadow img {
     .progress-btn button {
         margin: 15px 5px 2px 0px;
     }
-    
-    
+
+
 }
 
 @media only screen and (max-width: 600px) {
@@ -1976,17 +1988,17 @@ button.modal-exit-btn .cardbottom-shadow img {
         grid-template-columns: repeat(1, minmax(186.79px, 1fr));
         gap: 40px;
     }
-    
+
     .questions-notes-mock-sec {
         overflow: hidden;
     }
 
-    .mock-image .cardbottom-shadow img{
+    .mock-image .cardbottom-shadow img {
         width: 330px;
     }
 
     .headermock {
-        grid-template-columns:  90px calc((100% - 30px)/2) calc((100% - 30px)/2);
+        grid-template-columns: 90px calc((100% - 30px)/2) calc((100% - 30px)/2);
     }
 
     .mockquestion-navigate ul {
@@ -2030,7 +2042,7 @@ button.modal-exit-btn .cardbottom-shadow img {
         width: 100%;
     }
 
-}   
+}
 
 @media only screen and (max-width: 425px) {
     .mock-container {
@@ -2061,18 +2073,18 @@ button.modal-exit-btn .cardbottom-shadow img {
     .mock-image .cardbottom-shadow img {
         width: 420px;
     }
-    
+
 }
 
 @media only screen and (max-width: 375px) {
     .headermock {
         display: grid;
         grid-template-columns: 20% 80%;
-        gap: 1rem; 
+        gap: 1rem;
     }
 
-    .headermock > :nth-child(3) {
-        grid-column: 1 / -1; 
+    .headermock> :nth-child(3) {
+        grid-column: 1 / -1;
         justify-content: center;
     }
 

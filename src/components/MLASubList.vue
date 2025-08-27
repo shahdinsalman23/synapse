@@ -369,8 +369,11 @@
   
   .child-title {
     margin: 0;
-    font-size: 13px;
-    font-weight: 600;
+    font-weight: 300;
+    color: #231F20;
+    font-size: 14px;
+    font-family: 'Helveticacondensed';
+    letter-spacing: 0.5px;
   }
   
   .child-questions {

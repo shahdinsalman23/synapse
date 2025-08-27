@@ -90,7 +90,7 @@
           </div>
           <div>
           <div class="questions-notes-mocks">
-            <div class="mla-question-box">
+            <div class="mla-question-box"  @click="openPopup">
               <h4><img src="/images/questionmark.png" alt="img"> Questions</h4>
                <ProgressBar :progress="0" />
                <div class="cardbottom-shadow">
@@ -114,6 +114,10 @@
           </div>
           </div>
         </div>
+
+         <!-- Popup Component -->
+        <ListSearchPopup :visible="showPopup" @close="showPopup = false">
+        </ListSearchPopup>
 
         <div class="mlalist-right-section">
           <!-- 🧠 Dynamic Content based on breadcrumb -->
@@ -184,6 +188,7 @@ import MLAList from '@/components/MLAList.vue'
 import MLASubList from '@/components/MLASubList.vue'
 
 import ProgressBar from '@/components/QuestionpgProgress.vue'
+import ListSearchPopup from '@/components/ListSearchPopup.vue';
 
 export default {
   name: 'MLAListSelection',
@@ -192,10 +197,12 @@ export default {
     MLAContentMap,
     ProgressBar, 
     MLAList,
-    MLASubList
+    MLASubList,
+    ListSearchPopup 
   },
   data() {
     return {
+      showPopup: false,
       searchQuery: '',
       activeSection: 'BY AREAS',
       activeSubSection: '',
@@ -976,18 +983,6 @@ export default {
         { title: '24. Surgery', progress: '0/102' },
         { title: '24. All areas and clinical practice', progress: '0/102' },
 
-
-
-
-
-
-
-
-
-
-
-
-
       ],
 
       
@@ -1002,9 +997,9 @@ export default {
     }
   },
   methods: {
-
-    
-
+    openPopup() {
+      this.showPopup = true;
+    },
     AreaCondition(){
       this.activeSubSection = 'ByAreaCondition'
     },
