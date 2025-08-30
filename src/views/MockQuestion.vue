@@ -128,7 +128,7 @@
                 <div class="container">
                     <div class="question-option-arrows-wrapper">
                         <transition name="fade" mode="out-in">
-                            <div class="questiontext-box" v-if="currentQuestion" :key="currentQuestion.id">
+                            <div class="questiontext-box" v-if="currentQuestion" :key="currentQuestion?.id">
                                 <p class="currentquestionnumber">{{currentQuestion.number}}</p>
                                 <!-- <p>{{ currentQuestion.title }}</p> -->
                                 <p class="questionimage" v-html="currentQuestion.title"></p>
@@ -142,7 +142,7 @@
                                     </svg> -->
 
                                     <svg v-if="currentQuestion.flag"
-                                    @click="removeflage(currentQuestion.id)" width="19" height="17"
+                                    @click="removeflage(currentQuestion?.id)" width="19" height="17"
                                     viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z"
@@ -152,7 +152,7 @@
 
 
                                 <svg v-if="!currentQuestion.flag"
-                                @click="setflage(currentQuestion.id)" width="19" height="16" viewBox="0 0 19 16"
+                                @click="setflage(currentQuestion?.id)" width="19" height="16" viewBox="0 0 19 16"
                                 fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M8.49385 2.26427L8.72443 2.39603H8.74116C11.6548 3.96951 14.7462 4.01469 17.67 2.53156V13.8189C16.2175 14.6116 14.7714 14.996 13.3301 14.996C11.8326 14.996 10.3221 14.5811 8.82642 13.7279C6.28896 12.273 3.59969 12.0096 1 12.9068V1.56338C3.47425 0.631129 6.01882 0.849963 8.49385 2.26427Z"
@@ -172,7 +172,7 @@
                             </div>
                         </transition>
                         <transition name="fade" mode="out-in">
-                            <div :key="currentQuestion.id">
+                            <div :key="currentQuestion?.id">
 
 
                                 <div class="question-alloptions" v-if="currentQuestion">

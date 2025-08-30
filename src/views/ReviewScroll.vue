@@ -321,7 +321,7 @@
                                             </div>
                                             <transition @enter="enter" @leave="leave" :css="false">
                                                 <div v-if="activeOptions.includes(index)" class="option-content">
-                                                    <p>{{ option.rollingout ? option.rollingout : option.explanation }}
+                                                    <p><strong v-if="option.explanation">Explanation:</strong> {{ option.rollingout ? option.rollingout : option.explanation }}
                                                     </p>
                                                 </div>
                                             </transition>
@@ -396,13 +396,13 @@
                                             <div class="feeback-question-option">
                                                 <input type="radio" :checked="category.selectedOption === 'Incorrect'"
                                                     @click="selectOption(index, 'Incorrect')" value="Incorrect">
-                                                <p>Incorrect</p>
+                                                <p  :class="{ 'active-btn': category.selectedOption === 'Incorrect' }">Incorrect</p>
                                             </div>
                                             <div class="feeback-question-option">
                                                 <input type="radio" value="Needs improvement"
                                                     :checked="category.selectedOption === 'Needs improvement'"
                                                     @click="selectOption(index, 'Needs improvement')">
-                                                <p>Needs improvement</p>
+                                                <p  :class="{ 'active-btn': category.selectedOption === 'Needs improvement' }">Needs improvement</p>
                                             </div>
                                         </div>
 
@@ -2422,7 +2422,7 @@ export default {
 .questionright-arrow {
 
 
-    transform: translate(0px, 24px) !important;
+    transform: translate(0px, -2px) !important;
 }
 
 section.questionnumber-sec {
@@ -2695,8 +2695,8 @@ button.scroll-btn svg :hover {
 }
 
 .active-btn {
-    background-color: #9DED6C !important;
-    border-color: #20b14b !important;
+   
+    color: #20B14B !important;
     font-weight: bold;
     font-family: Avenir, Helvetica, Arial, sans-serif;
 }
@@ -2722,7 +2722,7 @@ button.scroll-btn svg :hover {
 }
 
 .feeback-question-option input[type="radio"]:checked {
-    accent-color: #6B7280;
+    accent-color: #20B14B;
 }
 
 

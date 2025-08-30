@@ -9,7 +9,7 @@
     v-else-if="$route.path !== '/mocksquestion/:id'"
   /> -->
 
- <HeaderMain v-else-if="$route.name !== 'MockQuestion' && $route.name !== 'MockReview' && $route.name !== 'MLAList' &&  $route.name !== 'QuestionsPage'  &&  $route.name !== 'QuestionBirdsEyeView'" />
+ <HeaderMain v-else-if="$route.name !== 'MockQuestion' && $route.name !== 'MockReview' && $route.name !== 'MLAList' &&  $route.name !== 'QuestionsPage'  &&  $route.name !== 'QuestionBirdsEyeView' &&  $route.name !== 'MockScore'" />
     <div>
       <main class="main-content">
       <router-view />

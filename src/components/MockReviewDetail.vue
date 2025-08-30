@@ -35,7 +35,7 @@
                         :class="{ 'active': activeIndex === index }" @click="toggleAccordion(index , tab.title)">
                         <div class="mocktab-maintext" :style="{
                             background: activeIndex === index
-                                ? (tab.title === 'Notes' || tab.title === 'Journal' ? '#FBAD18' : '#ED1C24')  // Yellow or Red
+                                ? (tab.title === 'Notes' || tab.title === 'Journal' ? '#FBAD18' : tab.title === 'Question' ? '#00A2FD' :'#ED1C24')  // Yellow or Red
                                 : '#A7A9AC'  // Gray for inactive
                         }">
                             <h4>{{ tab.title }}</h4>
@@ -66,8 +66,8 @@
                 </div>
                 <transition name="slide">
                     <div v-if="activeIndex !== null" class="mockreviewtab-detail" :style="{
-                        'border-color': (tabs[activeIndex].title === 'Notes' || tabs[activeIndex].title === 'Journal') ? '#FBAD18' : '#ED1C24',
-                        'border-top-color': (tabs[activeIndex].title === 'Notes' || tabs[activeIndex].title === 'Journal') ? '#FBAD18' : '#ED1C24'
+                        'border-color': (tabs[activeIndex].title === 'Notes' || tabs[activeIndex].title === 'Journal') ? '#FBAD18' : tabs[activeIndex].title === 'Question' ? '#00A2FD' : '#ED1C24',
+                        'border-top-color': (tabs[activeIndex].title === 'Notes' || tabs[activeIndex].title === 'Journal') ? '#FBAD18' : tabs[activeIndex].title === 'Question' ? '#00A2FD' : '#ED1C24'
                     }">
 
                         <div v-if="tabs[activeIndex].title === 'Comments'" class="comments-section">
@@ -102,7 +102,7 @@
                         </div>
 
 
-                        <div v-else-if="tabs[activeIndex].title === 'Explanation'" class="comments-section">
+                        <div v-else-if="tabs[activeIndex].title === 'Question'" class="comments-section">
                             <div class="content-block mockreviewdetail-text">
                                 {{ currentQuestion.explanation }}
                             </div>
@@ -145,11 +145,11 @@ export default {
     },
     data() {
         return {
-            activeIndex: 0,
+            activeIndex: null,
             form: {},
             tabs: [
                 {
-                    title: 'Explanation',
+                    title: 'Question',
                     content: [
                         `<p>If you are diagnosed with stage C or stage D heart failure, your health care professional will give you an NYHA Functional Classification as a baseline. Then, as you undergo treatment, your health care professional will assign another classification of your condition, allowing your care team to measure how well treatment is working.</p>
                         <p>The table below describes the different classes in the NYHA Functional Classification.</p>
@@ -225,7 +225,7 @@ export default {
     },
     methods: {
         resetActiveTab() {
-            this.activeIndex = this.tabs.findIndex(tab => tab.title === 'Explanation');
+            this.activeIndex = this.tabs.findIndex(tab => tab.title === 'Question');
         },
 
         commentsave(e) {

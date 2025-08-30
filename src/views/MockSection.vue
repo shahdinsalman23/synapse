@@ -16,13 +16,20 @@
                                 <!-- <img src="/images/mock1.png" alt="" @click="showselections(1)"> -->
                                 <img :src="`/images/mock${index + 1}.png`" alt="" @click="content(items , index)">
                                     <div class="cardbottom-shadow" :class="`shadow-${index}`">
-                                         <img src="/images/cardshadow.png" alt=""  :style="(items.score && items.score.length > 0 && !items.exit) ? { bottom: '18px' } : {}">
+                                         <img src="/images/cardshadow.png" v-if="items.exit" alt=""  style="bottom:16px">
+                                         <img src="/images/cardshadow.png" v-else alt=""  :style="(items.score && items.score.length > 0 && !items.exit) ? { bottom: '18px' } : {}">
+
                                     </div>
                                 <div class="mock-imageabslt-btn">
-                                    <button class="pause-mockabslt" v-if="items.exit" @click="content(items)" style="cursor:pointer"><i class="fa-solid fa-pause"></i></button>
+                                    <!-- <button class="pause-mockabslt" v-if="items.exit" @click="content(items)" style="cursor:pointer"><i class="fa-solid fa-pause"></i></button> -->
                                     <button class="replay-mockabslt" @click.stop="deletescore(items.id)"><img src="images/replay-icon.png" alt=""></button>
                                 </div>
+
+                              
                                 <attempt-progress-button v-if="items.score && items.score.length > 0 && !items.exit"  :item='items' />
+
+                              
+
 
                                   
 <!-- 
@@ -30,11 +37,16 @@
                                             :fontSize="16" 
                                         :color="'black'" :height="7" :Gap="8" /> -->
 
+                                    <!-- <div class="progress-btn" v-else-if="items.exit"> -->
                                     <div class="progress-btn" v-else-if="items.exit">
-                                        <!-- <button style="background:#FFF057" > Resume at {{ Math.round(items.exit.remaining_time / 60) }} min</button> -->
-                                        <button style="background:#FFF057" > PAUSED</button>
+
+                                      
+                                        <button style="background:#FBAD1F" ></button>
+                                        <img class="progressicon" src="/images/pauseyellowicon.png" />
 
                                     </div>
+
+                                    
 
                                     <!-- <div class="progress-btn"  v-else>
                                         <button>Not attempted yet</button>
@@ -322,6 +334,18 @@ export default {
 
 
 <style scoped>
+
+.progress-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+img.progressicon {
+    border: none;
+    padding: 0;
+}
 
 
 
