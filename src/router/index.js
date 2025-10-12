@@ -12,6 +12,7 @@ import ReviewScroll from "@/views/ReviewScroll.vue";
 import MLAListSelection from '../views/MLAListSelection.vue'
 import QuestionsPage from "@/views/QuestionsPage.vue";
 import QuestionBirdsEyeView from '@/views/QuestionBirdsEyeView.vue';
+import MockQuestionPreview from "@/views/MockQuestionPreview.vue";
 
 
 
@@ -30,8 +31,12 @@ const routes = [
   { path: "/reviewscroll/:id", component: ReviewScroll , name: 'MockReview', meta: { requiresAuth: true } },
   { path: "/mlalistselection", component: MLAListSelection, name: "MLAList", meta: { requiresAuth: true } },
   { path: "/questionspage", component: QuestionsPage, name: "QuestionsPage", meta: { requiresAuth: true } },
-  { path: "/questionbirdseyeview", component: QuestionBirdsEyeView, name: "QuestionBirdsEyeView", meta: { requiresAuth: true } }
+  { path: "/questionbirdseyeview", component: QuestionBirdsEyeView, name: "QuestionBirdsEyeView", meta: { requiresAuth: true } },
+
+  { path: "/mocksquestionadmin/:id", component: MockQuestionPreview, name: 'MockQuestionPreview'},
 ];
+
+
 
 const router = new VueRouter({
   mode: "history",
