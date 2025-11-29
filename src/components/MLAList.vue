@@ -10,8 +10,8 @@
             </div>
         </div>
         <div v-for="(item, index) in items" :key="index" class="mla-list-item" @click="GOtoroute">
-            <h4>{{ item.title }}</h4>
-            <h5>{{ item.progress }}</h5>
+            <h4>{{index +1}}. {{ item.title }}</h4>
+            <h5>0/{{ item.questions_count ?? 0 }}</h5>
 
           
 
@@ -70,6 +70,11 @@ export default {
   ::-webkit-scrollbar-thumb:hover {
     background: #69baff;
   }
+
+  .areas-clinical-practice {
+    height: 81vh;
+    overflow-y: scroll;
+}
 
 
 .areas-presentation-condition{

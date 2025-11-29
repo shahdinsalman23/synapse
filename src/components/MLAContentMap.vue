@@ -5,7 +5,7 @@
       <button class="mla-areas-btn mla-btn" :class="{ active: viewMode === 'areas' }"  @click="$emit('set-view-mode', 'areas')">Areas</button>
       <button class="mla-presentation-btn mla-btn" :class="{ active: viewMode === 'presentations' }" @click="$emit('set-view-mode', 'presentations')">Presentations and conditions</button>
       <p>(Only reflects all areas of clinical practice)</p>
-      <div class="precon-btnclick-data" v-if="viewMode === 'presentations'">
+      <!-- <div class="precon-btnclick-data" v-if="viewMode === 'presentations'">
         <div class="precon-radio-btn" :class="{ active: selectedOption === 'alphabetically' }" @click="selectOption('alphabetically')">
           <input type="radio" name="sortOption" value="alphabetically" v-model="selectedOption" />
           <h6>Alphabetically</h6>
@@ -14,7 +14,7 @@
           <input type="radio" name="sortOption" value="byareas" v-model="selectedOption" />
           <h6>by areas</h6>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

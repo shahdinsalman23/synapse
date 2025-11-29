@@ -106,7 +106,7 @@
                             </div>
                             <p class="progress-text">75%</p>
                         </li>
-                        <li><router-link to="/questionbirdseyeview"><span>Bird's eye view</span>
+                        <li @click="$emit('showbirds')"><span>Bird's eye view</span>
                             <svg data-v-04b99b7a="" width="18" height="18" viewBox="0 0 18 18" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path data-v-04b99b7a=""
@@ -130,19 +130,19 @@
                                 <path data-v-04b99b7a=""
                                     d="M6.40002 17.4993H1.90002C1.01002 17.4993 0.289978 16.7793 0.289978 15.8893V11.3893C0.289978 10.4993 1.01002 9.7793 1.90002 9.7793H6.40002C7.29002 9.7793 8.01001 10.4993 8.01001 11.3893V15.8893C8.01001 16.7793 7.29002 17.4993 6.40002 17.4993ZM2.17999 10.8093C1.69999 10.8093 1.32001 11.1993 1.32001 11.6693V15.5993C1.32001 16.0793 1.70999 16.4593 2.17999 16.4593H6.10999C6.57999 16.4593 6.96997 16.0693 6.96997 15.5993V11.6693C6.96997 11.1893 6.57999 10.8093 6.10999 10.8093H2.17999Z"
                                     fill="#D1D3D4"></path>
-                            </svg></router-link></li>
+                            </svg></li>
                         <li class="mock-width">
                             <span class="flaggedquestions">Flagged questions</span>
                             <svg width="14.52" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z" fill="#D1D3D4" />
                             </svg>
-                            <p>0</p>
+                            <p>{{flagcounts ??  0}}</p>
                         </li>
                         <li>
                             <div class="status-wrapper">
-                                <div class="circle split-bg">12</div>
-                                <div class="circle green-bg">6</div>
-                                <div class="circle pink-bg">4</div>
+                                <div class="circle split-bg">{{correctcount + incorrectcount}}</div>
+                                <div class="circle green-bg">{{correctcount ?? 0}}</div>
+                                <div class="circle pink-bg">{{ incorrectcount ?? 0 }}</div>
                             </div>
                         </li>
                         <li><svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -161,6 +161,19 @@
 
 <script>
 export default {
+
+
+    props: {
+    flagcounts: {
+
+    },
+    correctcount:{
+
+    },
+    incorrectcount:{
+
+    }
+},
     data() {
         return {
             showDropdown: false

@@ -20,7 +20,7 @@
           <!-- Arrow for parents with children -->
           
   
-          <h4 class="item-title">{{ item.title }}
+          <h4 class="item-title">{{pIndex + 1}}. {{ item.title }}
             <button
             v-if="item.children && item.children.length"
             class="arrow-btn"
@@ -32,10 +32,12 @@
             
           </button>
           </h4>
-          <h5 class="item-progress" v-if="item.progress">{{ item.progress }}</h5>
+          <!-- <h5 class="item-progress" v-if="item.progress">{{ item.questions_count }}</h5> -->
+          <h5 class="item-progress" >0/{{ item.questions_count ?? 0 }}</h5>
+
         </div>
   
-        <!-- SUBGRID (first-level children) -->
+        <!-- SUBGRID (first-level children) --> 
         <transition name="slide-fade">
           <div v-if="expandedParents[pIndex]" class="subgrid">
             <div  v-for="(child, cIndex) in item.children"
@@ -135,7 +137,7 @@
     },
     methods: {
       GOtoroute(item) {
-        console.log('items' , item)
+        console.log('items' , item , this.title)
         if (this.condition === 'conditionAreas') {
           this.$emit('AreaCondition', item);
           return;
@@ -146,7 +148,17 @@
             return
 
         }
-        this.$router.push('/questionspage');
+
+        localStorage.setItem("questiontitle", this.title);
+        this.$router.push(`/questionspage/${item.id}`);
+//         this.$router.push({
+//   path: '/questionspage',
+//   query: {
+//     id: item.id,
+//     area: item.area_id
+//   }
+// })
+
       },
   
       toggleParent(pIndex) {

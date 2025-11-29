@@ -1,11 +1,11 @@
 <template>
     <div>
-        <QuestionHeader />
+       
 
 
-         <section class="question-breadcrum">
+         <!-- <section class="question-breadcrum">
             <div class="container">
-                <!-- 🔹 Breadcrumb -->
+            
                 <div class="breadcrumb">
                     <span class="breadcrumb-item" :class="{ active: activeSection === 'MLA CONTENT MAP' }"
                         @click="activeSection = 'MLA CONTENT MAP'">
@@ -38,7 +38,7 @@
                         </span>
                 </div>
             </div>
-        </section>
+        </section> -->
 
 
 
@@ -48,14 +48,24 @@
                     <h6>Bird's Eye View</h6>
                 </div>
                 <div class="mockbirdseye-wrapper">
-                <div class="mockbirdseye-boxes">
-                    <h4 v-for="index in 200" :key="index">
-                        <span class="box-number">{{ index }}</span>
-                    </h4>
-                </div>
+                    <div class="mockbirdseye-boxes">
+                        <h4 v-for="(que , index) in question" :key="index" :style="{
+                            background: que.score?.correct == 1
+                            ? '#9ded6c'
+                            :( que.score?.correct == 0 ?
+                            '#ffbabe'
+                            : que.flag
+                                ? '#f1f2f2'
+                                : (que.skip
+                                    ? '#f1f2f2'
+                                    : '#f1f2f2')),
+                    }">
+                            <span class="box-number" >{{ que.question_no ?? index + 1 }}</span>
+                        </h4>
+                    </div>
                 </div>
                 <div class="mockbird-submitbtn">
-                    <button>Return</button>
+                    <button @click="$emit('showbirds')">Return</button>
                     <div class="cardbottom-shadow">
                         <img src="/images/cardshadow.png" alt="">
                     </div>
@@ -66,13 +76,15 @@
 </template>
 
 <script>
-import QuestionHeader from '@/components/QuestionHeader.vue';
 
 export default {
     name: "MockBirdsEye",
-    components: {
-        QuestionHeader,
+
+    props: {
+        question:Array,
+      
     },
+  
 }
 </script>
 

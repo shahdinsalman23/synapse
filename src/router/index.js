@@ -30,7 +30,7 @@ const routes = [
   { path: "/reviewmockbirdseye", component: ReviewMockBirdsEye , meta: { requiresAuth: true } },
   { path: "/reviewscroll/:id", component: ReviewScroll , name: 'MockReview', meta: { requiresAuth: true } },
   { path: "/mlalistselection", component: MLAListSelection, name: "MLAList", meta: { requiresAuth: true } },
-  { path: "/questionspage", component: QuestionsPage, name: "QuestionsPage", meta: { requiresAuth: true } },
+  { path: "/questionspage/:id", component: QuestionsPage, name: "QuestionsPage", meta: { requiresAuth: true } },
   { path: "/questionbirdseyeview", component: QuestionBirdsEyeView, name: "QuestionBirdsEyeView", meta: { requiresAuth: true } },
 
   { path: "/mocksquestionadmin/:id", component: MockQuestionPreview, name: 'MockQuestionPreview'},
