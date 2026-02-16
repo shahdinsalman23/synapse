@@ -73,11 +73,11 @@ export default {
     return {
       isSidebarOpen: false,
       navItems: [
-        { text: 'About MLA', path: '/' },
-        { text: 'Why choose us', path: '/' },
-        { text: 'FAQ', path: '/' },
-        { text: 'Free trial', path: '/' },
-        { text: 'About us', path: '/' }
+        { text: 'About MLA', path: '/underconstruction' },
+        { text: 'Why choose us', path: '/underconstruction' },
+        { text: 'FAQ', path: '/underconstruction' },
+        { text: 'Free trial', path: '/underconstruction' },
+        { text: 'About us', path: '/about' }
       ]
     }
   },

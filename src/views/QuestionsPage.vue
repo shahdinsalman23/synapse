@@ -1,6 +1,7 @@
 <template>
     <div>
-        <QuestionHeader @showbirds="showbirds"  :flagcounts="flagcounts" :incorrectcount="incorrectcount" :correctcount="correctcount"/>
+        <QuestionHeader @showbirds="showbirds" :flagcounts="flagcounts" :incorrectcount="incorrectcount"
+            :correctcount="correctcount" :percentage="percentage" />
 
 
         <!-- <section class="question-breadcrum">
@@ -108,7 +109,7 @@
                                     }" :class="{ 'activeindexs': isPresentIndexs(indexnav) }">
                                     <!-- <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ indexnav + 1 }}</span> -->
                                     <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{
-                                        nav.question_no ?? indexnav + 1 }}</span>
+                                         indexnav + 1 ?? nav.question_no }}</span>
 
 
                                     <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
@@ -154,8 +155,9 @@
 
 
 
-                                    <svg v-if="!currentQuestion?.flag" @click="setflage(currentQuestion?.id , currentQuestion)" width="19"
-                                        height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg v-if="!currentQuestion?.flag"
+                                        @click="setflage(currentQuestion?.id, currentQuestion)" width="19" height="16"
+                                        viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M8.49385 2.26427L8.72443 2.39603H8.74116C11.6548 3.96951 14.7462 4.01469 17.67 2.53156V13.8189C16.2175 14.6116 14.7714 14.996 13.3301 14.996C11.8326 14.996 10.3221 14.5811 8.82642 13.7279C6.28896 12.273 3.59969 12.0096 1 12.9068V1.56338C3.47425 0.631129 6.01882 0.849963 8.49385 2.26427Z"
                                             fill="transparent" stroke="#9A9898" stroke-width="2" />
@@ -172,7 +174,7 @@
 
                                 <div class="question-alloptions" v-if="currentQuestion && !currentQuestion?.score">
 
-                                    <div v-for="(option, index) in currentQuestion.options" :key="option.id">
+                                    <div v-for="(option, index) in currentQuestion?.options" :key="option.id">
 
 
                                         <div class="input-field question-options"
@@ -190,7 +192,7 @@
                                 </div>
 
                                 <div class="question-alloptions" v-else>
-                                    <div v-for="(option, index) in currentQuestion.options" :key="option"
+                                    <div v-for="(option, index) in currentQuestion?.options" :key="option"
                                         class="input-field question-option" :for="option.id"
                                         :style="getLabelStyle(option)">
 
@@ -255,7 +257,7 @@
                             </div>
                         </transition>
 
-                        <div class="questionsoptions-arrows" :class="{ 'no-submit': currentQuestion.score }">
+                        <div class="questionsoptions-arrows" :class="{ 'no-submit': currentQuestion?.score }" v-if="allquestions.length > 0">
                             <div class="questionoption-leftarrow" @click="previousQuestion()">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -263,7 +265,7 @@
                                     <path d="m15 18-6-6 6-6" />
                                 </svg>
                             </div>
-                            <div class="questionoptions-button" v-if="!currentQuestion.score">
+                            <div class="questionoptions-button" v-if="!currentQuestion?.score">
                                 <button @click="submitAnswer(currentQuestion.id, currentQuestion)">Submit</button>
                             </div>
                             <div class="questionoption-rightarrow" @click="nextQuestion()">
@@ -304,7 +306,7 @@
                     </div> -->
 
                         <div class="brake-border"></div>
-                        <MockReviewDetail />
+                        <MockReviewDetail v-if="allquestions.length > 0" />
 
                     </div>
                 </div>
@@ -406,8 +408,8 @@ export default {
     },
     data() {
         return {
-            correctcount:0,
-            incorrectcount:0,
+            correctcount: 0,
+            incorrectcount: 0,
             birdseye: false,
             correctOptionId: null,
             yourOptionId: null,
@@ -439,9 +441,15 @@ export default {
                 question_id: null,
                 option_id: null,
                 correct: null,
-                subject_id: null
+                subject_id: null,
+                condition_id: null,
+                presentation_id: null,
+                type: null,
+                sublist_id: null
 
             },
+            title: null,
+            percentage:0,
             method: 'POST',
             activeOptions: [],
             options: [
@@ -478,16 +486,56 @@ export default {
 
         console.log(this.$route.params.id)
 
+        const title = localStorage.getItem("questiontitle");
+        this.title = title
+
+        console.log('titel', title)
+        if (title == 'Conditions') {
+
+            get('/getconditionquestionclient?id=' + this.$route.params.id)
+                .then((res) => {
+                    console.log(res)
+                    this.allquestions = res.data.data
+                    this.percentage = res.data.percentage
 
 
-        get('/getchapterquestionclient?id=' + this.$route.params.id)
+                })
+
+        }
+        else if (title == 'Sublist') {
+            get('/getsubconditionquestionclient?id=' + this.$route.params.id)
+                .then((res) => {
+                    console.log(res)
+                    this.allquestions = res.data.data
+                    this.percentage = res.data.percentage
+
+
+                })
+
+        }
+
+        else if (title == 'Presentations'){
+            get(`/getpresentationquestionclient?id=${this.$route.params.id}&byfetch=${'Title'}`)
             .then((res) => {
-                console.log(res)
                 this.allquestions = res.data.data
+                this.percentage = res.data.percentage
 
-            })
+            });
+        }
+        else {
+            get('/getchapterquestionclient?id=' + this.$route.params.id)
+                .then((res) => {
+                    console.log(res)
+                    this.allquestions = res.data.data
+                    this.percentage = res.data.percentage
 
-            this.getFlaged()
+                })
+
+        }
+
+
+
+        this.getFlaged()
 
 
 
@@ -506,16 +554,19 @@ export default {
     methods: {
 
 
-        setflage(e , question) {
+        setflage(e, question) {
             this.flagedid = e;
             this.flg = true
             this.flg2 = true
-            this.flagged(this.flagedid , question)
+            this.flagged(this.flagedid, question)
             this.currentQuestion.flag = true
         },
 
-        flagged(e , question) {
+        flagged(e, question) {
             this.form.subject_id = question.subject_id
+            this.form.condition_id = question.condition_id
+            this.form.presentation_id = question.presentation_id
+            this.form.sublist_id = question.sublist_id
 
             const updatedIndex = this.currentQuestionIndex;
             console.log("Updated index:", updatedIndex);
@@ -539,13 +590,22 @@ export default {
         },
 
         getFlaged() {
-            get("/getflagedcountquestion?id=" + this.$route.params.id).then((res) => {
-                console.log(res.data.data);
-                this.flagcounts = res.data.data;
-                this.correctcount = res.data.correctcount
-                this.incorrectcount = res.data.incorrectcount
-                //   this.setData(res);
-            });
+
+            get(`/getflagedcountquestion?id=${this.$route.params.id}&title=${this.title}`)
+                .then((res) => {
+                    console.log(res.data.data);
+                    this.flagcounts = res.data.data;
+                    this.correctcount = res.data.correctcount;
+                    this.incorrectcount = res.data.incorrectcount;
+                });
+
+            // get("/getflagedcountquestion?id=" + this.$route.params.id).then((res) => {
+            //     console.log(res.data.data);
+            //     this.flagcounts = res.data.data;
+            //     this.correctcount = res.data.correctcount
+            //     this.incorrectcount = res.data.incorrectcount
+            //     //   this.setData(res);
+            // });
         },
 
         showbirds() {
@@ -568,11 +628,11 @@ export default {
 
 
 
-            if (this.currentQuestion.score) {
+            if (this.currentQuestion?.score) {
                 console.log("getLabelStyle")
 
 
-                if (option.id == this.currentQuestion.score.option_id) {
+                if (option.id == this.currentQuestion?.score.option_id) {
                     console.log("now")
                     if (option.is_correct == 1) {
                         return {
@@ -618,6 +678,7 @@ export default {
         },
 
         submitAnswer(e, question) {
+            console.log('question', question)
 
             console.log(this.seletecOptionObject)
             this.form.question_id = e;
@@ -625,6 +686,11 @@ export default {
             this.form.option_id = this.selectedOption;
             this.form.subject_id = question.subject_id
             this.form.correct = this.seletecOptionObject.is_correct
+            this.form.condition_id = question.condition_id
+            this.form.presentation_id = question.presentation_id
+            this.form.sublist_id = question.sublist_id
+            this.form.type = this.title
+
 
 
 
@@ -638,6 +704,7 @@ export default {
                         this.allquestions = res.data.data
                         this.correctcount = res.data.correctcount
                         this.incorrectcount = res.data.incorrectcount
+                        this.percentage = res.data.percentage
                         // this.nextQuestion();
                     }
                 })
@@ -821,12 +888,12 @@ export default {
 
 
         setInitialSelectedOption() {
-            if (!this.currentQuestion || !this.currentQuestion.options) {
+            if (!this.currentQuestion || !this.currentQuestion?.options) {
                 console.warn("currentQuestion or options is undefined.");
                 return; // Exit function early to prevent errors
             }
             console.log('hello', this.currentQuestion);
-            const optionWithScore = this.currentQuestion.options.find(
+            const optionWithScore = this.currentQuestion?.options.find(
                 (option) => option.score !== null
             );
             if (optionWithScore) {
@@ -941,7 +1008,7 @@ export default {
     align-items: flex-start;
     background: white;
     margin: 0px 0px 22px 0px;
-   gap:5px  
+    gap: 5px
 }
 
 .question-option {

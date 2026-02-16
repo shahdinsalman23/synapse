@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- Landing Page Header -->
-    <HeaderComponent v-if="$route.path === '/' || $route.path === '/userlogin'" />
+    <HeaderComponent v-if="$route.path === '/' || $route.path === '/userlogin' || $route.path === '/about' || $route.path === '/underconstruction'" />
     
     <!-- All Other Pages Header -->
     <!-- <HeaderMain v-else /> -->
@@ -9,7 +9,7 @@
     v-else-if="$route.path !== '/mocksquestion/:id'"
   /> -->
 
- <HeaderMain v-else-if="$route.name !== 'MockQuestion' && $route.name !== 'MockReview' && $route.name !== 'MLAList' &&  $route.name !== 'QuestionsPage'  &&  $route.name !== 'QuestionBirdsEyeView' &&  $route.name !== 'MockScore'" />
+ <HeaderMain v-else-if="$route.name !== 'MockQuestion' && $route.name !== 'MockReview' && $route.name !== 'MLAList' &&  $route.name !== 'QuestionsPage'  &&  $route.name !== 'QuestionBirdsEyeView' &&  $route.name !== 'MockScore' && $route.name !=='NotesPage' "   />
     <div>
       <main class="main-content">
       <router-view />

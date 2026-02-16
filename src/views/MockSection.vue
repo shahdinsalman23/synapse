@@ -74,7 +74,7 @@
             <div class="questions-notes-mock-sec">
                 <div class="container">
                     <div class="question-note-boxes">
-                        <div class="question-box" data-aos="fade-up" data-aos-delay="0" data-aos-duration="800">
+                        <div class="question-box" data-aos="fade-up" data-aos-delay="0" data-aos-duration="800" style="cursor:pointer" @click="openExitAlert('Question')">
                             <h3><img src="/images/questionmark.png" alt=""> Questions</h3>
                             <div class="question-score">
                                 <h6>score</h6>
@@ -118,11 +118,13 @@
                                 <h6>score</h6>
                                 <div class="progress-container">
                                     <div class="progress-bar" style="background: transparent;">
-                                        <div class="progress-fill" style="width: 66%"></div>
+                                        <!-- <div class="progress-fill" style="width: 66%"></div> -->
+                                        <div class="progress-fill" :style="{ width: averageScore + '%' }"></div>
+
                                     </div>
                                    
                                 </div>
-                                <div class="progress-text">66%</div>
+                                <div class="progress-text">{{averageScore}}%</div>
                             </div>
                             <div class="cardbottom-shadow">
                                 <img src="/images/cardshadow.png" alt="">
@@ -131,8 +133,21 @@
                     </div>
                 </div>
             </div>
+
+            <div v-if="showExitPopup" class="overlay">
+                <div class="popup">
+                  <p>Are you sure you want to exit mock screen?</p>
+          
+                  <div class="actions">
+                    <button class="yes" @click="confirmExit">Yes</button>
+                    <button class="no" @click="showExitPopup = false">No</button>
+                  </div>
+                </div>
+              </div>
         </div>
 
+        
+      
 
        
 
@@ -164,6 +179,8 @@ export default {
 
     data() {
         return {
+            exitpage:'',
+            showExitPopup:false,
             loading:true,
             showing: false,
             indexing: 0,
@@ -180,7 +197,8 @@ export default {
             showscore3: false,
             selectedItem: null,
             animationbutton: false,
-            loadershow: true
+            loadershow: true,
+            percentage:0
 
 
         }
@@ -206,7 +224,53 @@ export default {
 
     },
 
+    computed: {
+        averageScore() {
+            // Filter mocks that have scores and are not exited
+            const mocksWithScores = this.title.filter(item => 
+                item.score && 
+                item.score.length > 0 && 
+                !item.exit &&
+                item.quest &&
+                item.quest.length > 0
+            );
+
+            if (mocksWithScores.length === 0) {
+                return 0;
+            }
+
+            // Calculate score for each mock: (correct answers / total questions) * 100
+            const scores = mocksWithScores.map(item => {
+                const correctCount = item.score.filter(s => s.correct == 1).length;
+                const totalQuestions = item.quest.length;
+                return (correctCount * 100) / totalQuestions;
+            });
+
+            // Calculate average
+            const sum = scores.reduce((acc, score) => acc + score, 0);
+            const average = sum / scores.length;
+            
+            // Return rounded average
+            return Math.round(average);
+        }
+    },
+
     methods: {
+        openExitAlert(e){
+      this.exitpage = e
+      this.showExitPopup = true;
+    },
+    confirmExit() {
+      this.showExitPopup = false;
+      if(this.exitpage == 'Question'){
+        this.$router.push('/mlalistselection');
+      }
+      else{
+        this.$router.push('/mocksection');
+      }
+
+     
+    },
 
         showselections(e) {
             this.indexing = e
@@ -217,6 +281,8 @@ export default {
 
 
             Vue.set(this.$data, 'title', res.data.data)
+            Vue.set(this.$data, 'percentage', res.data.percentage)
+
 
             console.log('here', res.data.data)
             this.loadershow = false
@@ -334,6 +400,53 @@ export default {
 
 
 <style scoped>
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+  
+  .popup {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 8px;
+    width: 320px;
+    text-align: center;
+  }
+  
+  .actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .yes {
+    background: #e53935;
+    color: white;
+  }
+  
+  .no {
+    background: #ccc;
+  }
+  
+  .exit-text {
+    color: #1976d2;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
 
 .progress-btn {
     display: flex;

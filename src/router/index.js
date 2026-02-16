@@ -13,6 +13,13 @@ import MLAListSelection from '../views/MLAListSelection.vue'
 import QuestionsPage from "@/views/QuestionsPage.vue";
 import QuestionBirdsEyeView from '@/views/QuestionBirdsEyeView.vue';
 import MockQuestionPreview from "@/views/MockQuestionPreview.vue";
+import NotesListSelection from "@/views/NotesListSelection.vue";
+import NotesPage from "@/views/NotesPage.vue";
+import SignupPage from "@/views/SignupPage.vue";
+import ForgotPasswordPage from "@/views/ForgotPasswordPage.vue";
+import ResetPasswordPage from "@/views/ResetPasswordPage.vue";
+import about from "@/views/home/About.vue";
+import underconstruction from "@/views/home/underconstruction.vue";
 
 
 
@@ -20,6 +27,9 @@ Vue.use(VueRouter);
 
 const routes = [
   { path: "/", component: Home },
+  { path: "/signup", component: SignupPage },
+  { path: "/forgot-password", component: ForgotPasswordPage },
+  { path: "/reset-password", component: ResetPasswordPage },
   { path: "/userlogin", component: UserLogin , meta: { requiresAuth: true } },
   { path: "/mocksection", component: MockSection , meta: { requiresAuth: true } },
   { path: "/mockselection", component: MockSelection , meta: { requiresAuth: true } },
@@ -34,6 +44,16 @@ const routes = [
   { path: "/questionbirdseyeview", component: QuestionBirdsEyeView, name: "QuestionBirdsEyeView", meta: { requiresAuth: true } },
 
   { path: "/mocksquestionadmin/:id", component: MockQuestionPreview, name: 'MockQuestionPreview'},
+
+  { path: "/noteslistselection", component: NotesListSelection, name: "MLAList", meta: { requiresAuth: true } },
+  { path: "/notespage/:id", component: NotesPage, name: "NotesPage", meta: { requiresAuth: true } },
+
+
+  { path: "/about", component: about, name: "About", meta: { requiresAuth: true } },
+  { path: "/underconstruction", component: underconstruction, name: "Underconstruction", meta: { requiresAuth: true }},
+
+
+
 ];
 
 

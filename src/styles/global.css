@@ -159,6 +159,9 @@ header.header-main .row {
 /********** Header Main Start **********/
 
 
+.ql-toolbar.ql-snow {
+    display: none !important;
+  }
 
 .headerlogo {
     text-align: end;
@@ -167,6 +170,7 @@ header.header-main .row {
 
 .headerlogo img {
     width: 86.99px;
+    cursor: pointer;
 }
 
 .headermock {
@@ -660,6 +664,7 @@ section.login-signup-sec {
     color: #fff;
 }
 
+
 .imgdiv {
     background: #B4B6B8;
     padding: 24px 20px 24px 20px;
@@ -793,6 +798,7 @@ section.mockselection-sec {
     width: 230.80px;
     cursor: pointer;
     gap: 10px;
+    font-size: 16px;
 }
 
 button.mock-timer-btn img {
@@ -1684,7 +1690,7 @@ button.modal-exit-btn .cardbottom-shadow img {
 .areas-clinical-practice {
     width: 50%;
     border: 0.75px solid #D0D2D3;
-    padding: 13px 10px;
+    padding: 0px 10px 10px 13px;
     border-radius: 20px;
 }
 
@@ -1697,12 +1703,15 @@ button.modal-exit-btn .cardbottom-shadow img {
     background: #69BAFF;
     border-radius: 50px;
     margin: 0px 0px 20px 0px;
+    position: sticky;
+    top: 3px;
+    z-index: 10;
 }
 
 
 .areas-professional-knowledge {
     width: 50%;
-    padding: 13px 10px;
+    padding: 0px 10px 10px 13px;
     border: 0.75px solid #D0D2D3;
     border-radius: 20px;
 }
@@ -1716,7 +1725,12 @@ button.modal-exit-btn .cardbottom-shadow img {
     background: #69BAFF;
     border-radius: 50px;
 }
-
+.white-back {
+    background: white;
+    position: sticky;
+    top: 0px;
+    padding: 10px 2px 0px 2px;
+}
 
 .clinical-practice-total h4 {
     font-size: 14px;

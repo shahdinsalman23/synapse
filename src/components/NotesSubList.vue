@@ -1,29 +1,22 @@
 <template>
     <div :class="wrapperClass">
-      <div class="white-back">
-
-      
       <div class="clinical-practice-total">
-        
-
-        
         <h4>{{ title }}</h4>
         <div class="total-percentage-marks">
-          <div class="progress-bar">
+          <!-- <div class="progress-bar">
             <div class="progress-fill" :style="{ width: totalPercent }"></div>
           </div>
-          <h5>{{ total }}</h5>
+          <h5>{{ total }}</h5> -->
         </div>
-      </div>
       </div>
   
       <!-- MAIN LIST -->
       <div
         v-for="(item, pIndex) in items"
         :key="pIndex"
-        class="mla-list-item-wrapper"
+        class="notes-list-item-wrapper"
       >
-        <div class="mla-list-item" @click="GOtoroute(item)">
+        <div class="notes-list-item" @click="GOtoroute(item)">
           <!-- Arrow for parents with children -->
           
   
@@ -40,7 +33,7 @@
           </button>
           </h4>
           <!-- <h5 class="item-progress" v-if="item.progress">{{ item.questions_count }}</h5> -->
-          <h5 class="item-progress" >{{item.attempted_count ?? 0}}/{{ item.questions_count ?? 0 }}</h5>
+          <!-- <h5 class="item-progress" >0/{{ item.questions_count ?? 0 }}</h5> -->
 
         </div>
   
@@ -55,7 +48,7 @@
              
               class="subgrid-item"
             >
-              <div class="subgrid-item-row" @click="GOtorouteSublist(child)">
+              <div class="subgrid-item-row" @click="GOtoroute(child)">
                 
   
                 <div class="child-title-wrap">
@@ -103,7 +96,7 @@
   
   <script>
   export default {
-    name: "MLASubList",
+    name: "NotesSubList",
     props: {
       title: String,
       total: String,
@@ -151,14 +144,13 @@
         }
         // keep your current behavior (adjust route as needed)
 
-        if(item.children?.length > 0){
+        if(item.children){
             return
 
         }
-       
 
-        localStorage.setItem("questiontitle", this.title);
-        this.$router.push(`/questionspage/${item.id}`);
+        localStorage.setItem("notestitle", item?.title);
+        this.$router.push(`/notespage/${item.id}`);
 //         this.$router.push({
 //   path: '/questionspage',
 //   query: {
@@ -166,26 +158,6 @@
 //     area: item.area_id
 //   }
 // })
-
-      },
-
-      GOtorouteSublist(item) {
-        console.log('items' , item , this.title)
-        if (this.condition === 'conditionAreas') {
-          this.$emit('AreaCondition', item);
-          return;
-        }
-        // keep your current behavior (adjust route as needed)
-
-        if(item.children?.length > 0){
-            return
-
-        }
-       
-
-        localStorage.setItem("questiontitle", "Sublist");
-        this.$router.push(`/questionspage/${item.id}`);
-
 
       },
   
@@ -233,12 +205,12 @@
   
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #d7ebff;
+    background: #fade91;
   }
   
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: #69baff;
+    background: #f5d469;
   }
 
   .areas-clinical-practice {
@@ -254,29 +226,29 @@
   /* keep your existing look + additional layout for nested grids */
  
   
-  .mla-list-item-wrapper {
+  .notes-list-item-wrapper {
     margin-bottom: 8px;
   }
   
   /* main item row (same styling you had) */
-  .mla-list-item {
+  .notes-list-item {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #eee;
-    background: #D7EBFF;
+    background: #FADE91;
     margin: 0px 0px 7px 0px;
     padding: 17px 14px 12px 20px;
     border-radius: 10px;
     cursor: pointer;
 }
-  
-  .mla-list-item:hover {
-    background: #c2e0ff; /* hover shade */
+
+  .notes-list-item-wrapper:nth-child(even) .notes-list-item {
+    background: rgba(250, 222, 145, 0.55);
   }
   
   
 
-.mla-list-item h4 {
+.notes-list-item h4 {
     color: #231F20;
     font-size: 14px;
     font-family: 'Helveticacondensed';
@@ -284,7 +256,7 @@
     font-weight: 300;
 }
 
-.mla-list-item h5 {
+.notes-list-item h5 {
     color: #231F20;
     font-size: 14px;
     font-family: 'Helveticacondensed';
@@ -306,38 +278,38 @@
   .sublist {
     margin-top: 4px;
     padding-left: 20px; /* indentation for children */
-    border-left: 3px solid #a5d8ff; /* blue accent border */
+    border-left: 3px solid #f5d469; /* yellow accent border */
   }
   
-  .sublist .mla-list-item {
-    background: #ecf6ff; /* lighter blue for children */
+  .sublist .notes-list-item {
+    background: #fce9b8; /* lighter yellow for children */
   }
   
-  .sublist .mla-list-item:hover {
-    background: #d9eeff;
+  .sublist .notes-list-item:hover {
+    background: #f5d469;
   }
 
   .subgrid > div:nth-child(odd) .subgrid-item {
-    background: #94ccfb;
+    background: #f5d469;
   }
   .subgrid > div:nth-child(even) .subgrid-item {
-    background: #c2e0ff;
+    background: #fade91;
   }
 
   .grandchild-list > .grandchild-item:nth-child(odd) {
-    background: #c2e0ff; /* dark blue */
+    background: #fade91; /* light yellow */
   }
   .grandchild-list > .grandchild-item:nth-child(even) {
-    background: #94ccfb; /* light blue */
+    background: #f5d469; /* darker yellow */
   }
   
   
   /* Alternate background for grandchild list */
   .grandchild-list > div:nth-child(odd) .grandchild-item {
-    background: #c2e0ff; /* your original */
+    background: #fade91; /* your original */
   }
   .grandchild-list >div:nth-child(even)  .grandchild-item {
-    background: #94ccfb; /* slightly lighter */
+    background: #f5d469; /* slightly darker */
   }
   
   .item-title {
@@ -371,7 +343,7 @@
   .subgrid {
     margin-top: 10px;
     padding: 12px 0px 12px 25px;
-    background: #f5fbff;
+    background: #fef9e8;
     border-radius: 8px;
   
     display: grid;
@@ -492,6 +464,13 @@
 
   /* Alternate background for subgrid children */
 
+
+  .clinical-practice-total {
+   
+    border: 0.75px solid #b07507;
+    background: #FAAD1B;
+   
+}
   
   </style>
   

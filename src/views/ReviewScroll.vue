@@ -166,7 +166,7 @@
                                     <!-- {{ indexnav + 1 }} -->
                                     <!-- <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ indexnav + 1 }}</span> -->
                                     <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{
-                                        nav.question_no ?? indexnav + 1 }}</span>
+                                        indexnav + 1 ??  nav.question_no  }}</span>
 
 
 
@@ -383,14 +383,13 @@
                                     </span>
                                 </div>
 
-
                                 <!-- <h4>Share feedback</h4> -->
                                 <form action="">
                                     <div class="feedbackform-button" v-for="(category, index) in feedbackCategories"
                                         :key="index">
                                         <button @click="toggleOptions(index)"
-                                            :class="{ 'active-btn': category.selectedOption }" type="button"> {{
-                                                category.name }}</button>
+                                            :class="{ 'active-btn': category.selectedOption }" type="button"> 
+                                            {{category.name === 'Rullingout' ? 'Rulling out' : category.name }}</button>
                                         <div class="feeback-question-options"
                                             v-if="showOptionsIndex === index && category.name != 'Other'">
                                             <div class="feeback-question-option">

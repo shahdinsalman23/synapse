@@ -3,7 +3,7 @@
     <section class="header-sec">
       <div class="container">
         <div class="headerlogo">
-          <img src="/images/logo.png" alt="Logo">
+          <img src="/images/logo.png" alt="Logo" @click="$router.push('/userlogin')">
         </div>
         <div class="headermock">
           <div class="mockhead-hamburger">

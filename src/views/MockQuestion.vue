@@ -96,7 +96,7 @@
                                                 : '#f1f2f2')),
                                 }" :class="{ 'activeindex': isPresentIndexs(indexnav) }" >
                                     <!-- <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ indexnav + 1 }}</span> -->
-                                    <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ nav.question_no ?? indexnav + 1 }}</span>
+                                    <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ indexnav + 1 ?? nav.question_no  }}</span>
 
 
                                     <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
@@ -1481,7 +1481,7 @@ export default {
 
 
 
-                            this.nextQuestion();
+                            // this.nextQuestion();
                             }, 200);
                 
             }

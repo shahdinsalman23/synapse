@@ -64,7 +64,7 @@ export default {
           description:
             "Notes the visual aids for all MLA content map conditions",
           image: "/images/file.png",
-          route: "/mocksection",
+          route: "/noteslistselection",
         },
         {
           title: "Mocks",

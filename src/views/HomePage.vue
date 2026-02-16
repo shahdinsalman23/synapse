@@ -35,7 +35,7 @@
         <div class="container">
           <div class="loginSignup-btn">
             <button class="loginBtn" @click="showLoginModal = true">Login</button>
-            <router-link to="/" class="signupBtn">Sign up</router-link>
+            <router-link to="/signup" class="signupBtn">Sign up</router-link>
           </div>
         </div>
       </section>

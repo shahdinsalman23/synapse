@@ -28,8 +28,11 @@
           </div>
 
           <div class="login-remember">
-            <input type="checkbox" name="" id="">
+            <input type="checkbox" v-model="rememberMe" id="remember">
             <h6>Remember me</h6>
+          </div>
+          <div class="forgot-password-link">
+            <router-link to="/forgot-password">Forgot password?</router-link>
           </div>
           <button type="submit" class="submit-btn">
             Sign in
@@ -46,7 +49,7 @@
               <li class="facebook"><img src="/images/facebook.png" alt="img"></li>
             </ul>
           </div>
-          <h5>Don't have an account ? <router-link to="/">Sign up</router-link></h5>
+          <h5>Don't have an account ? <router-link to="/signup">Sign up</router-link></h5>
         </form>
       </div>
     </div>
@@ -94,9 +97,9 @@ export default {
 
 
     async login() {
-      // const baseUrl = 'http://127.0.0.1:8000/api'
-      // const baseUrl = 'https://staging.imsynapse.com/api'
-      const baseUrl = 'https://admin.imsynapse.com/api'
+      const baseUrl = 'http://127.0.0.1:8000/api'
+      // const baseUrl = 'https://dev.imsynapse.com/api'
+      // const baseUrl = 'https://admin.imsynapse.com/api'
 
 
       console.log('remember', this.rememberMe);
@@ -304,6 +307,22 @@ span.toggle-icon {
   color: #6D6E71;
   font-weight: normal;
   line-height: 8px;
+}
+
+.forgot-password-link {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.forgot-password-link a {
+  color: #1A90FF;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.forgot-password-link a:hover {
+  text-decoration: underline;
 }
 
 .submit-btn .cardbottom-shadow img {

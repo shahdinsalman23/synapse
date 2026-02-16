@@ -56,9 +56,9 @@ export default {
     methods: {
         startProgress() {
 
-            const data =  this.item.score.filter(s => s.correct === 1).length * 100 / this.item.quest.length;
+            const data =  this.item.score.filter(s => s.correct == 1).length * 100 / this.item.quest.length;
 
-            console.log('item', data)
+            console.log('item', data , this.item.score.filter(s => s.correct === 1).length , this.item.quest.length)
             if (this.isStarted) return;
 
             this.isStarted = true;
