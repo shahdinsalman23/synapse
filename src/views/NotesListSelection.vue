@@ -741,8 +741,8 @@ export default {
         }
         
         // Transform chaptersProfessional data
-        if (res.data.chaptersProfessional) {
-          this.professionalKnowledge = this.transformChaptersData(res.data.chaptersProfessional);
+        if (res.data.chaptersProfessioanl) {
+          this.professionalKnowledge = this.transformChaptersData(res.data.chaptersProfessioanl);
         }
       }).catch((error) => {
         console.error('Error fetching notes data:', error);
