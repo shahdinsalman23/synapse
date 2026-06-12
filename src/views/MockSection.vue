@@ -12,61 +12,27 @@
                 <div class="container">
                     <div class="mock-container">
                         <div class="mock-card" data-aos="fade-up" data-aos-delay="0" data-aos-duration="800" v-for="(items, index) in title" :key="index">
-                            <div class="mock-image">
-                                <!-- <img src="/images/mock1.png" alt="" @click="showselections(1)"> -->
-                                <img :src="`/images/mock${index + 1}.png`" alt="" @click="content(items , index)">
-                                    <div class="cardbottom-shadow" :class="`shadow-${index}`">
-                                         <img src="/images/cardshadow.png" v-if="items.exit" alt=""  style="bottom:16px">
-                                         <img src="/images/cardshadow.png" v-else alt=""  :style="(items.score && items.score.length > 0 && !items.exit) ? { bottom: '18px' } : {}">
-
-                                    </div>
-                                <div class="mock-imageabslt-btn">
-                                    <!-- <button class="pause-mockabslt" v-if="items.exit" @click="content(items)" style="cursor:pointer"><i class="fa-solid fa-pause"></i></button> -->
-                                    <button class="replay-mockabslt" @click.stop="deletescore(items.id)"><img src="images/replay-icon.png" alt=""></button>
+                            <div class="mock-card-wrapper">
+                                <div class="mock-image" @click="content(items, index)">
+                                    <img :src="`/images/mock${index + 1}.png`" alt="">
                                 </div>
-
-                              
-                                <attempt-progress-button v-if="items.score && items.score.length > 0 && !items.exit"  :item='items' />
-
-                              
-
-
-                                  
-<!-- 
-                                        <CircularProgress v-if="items.score && items.score.length > 0 && !items.exit" :percentage="50" 
-                                            :fontSize="16" 
-                                        :color="'black'" :height="7" :Gap="8" /> -->
-
-                                    <!-- <div class="progress-btn" v-else-if="items.exit"> -->
-                                    <div class="progress-btn" v-else-if="items.exit">
-
-                                      
-                                        <button style="background:#FBAD1F" ></button>
-                                        <img class="progressicon" src="/images/pauseyellowicon.png" />
-
+                                <div class="mock-card-footer" @click="content(items, index)">
+                                    <div class="mock-score-bar-wrap" v-if="items.score && items.score.length > 0 && !items.exit">
+                                        <div class="mock-score-bar">
+                                            <div class="mock-score-fill" :style="{ width: getMockScore(items) + '%' }"></div>
+                                        </div>
+                                        <span class="mock-score-label">{{ getMockScore(items) }}%</span>
                                     </div>
-
-                                    
-
-                                    <!-- <div class="progress-btn"  v-else>
-                                        <button>Not attempted yet</button>
-                                    </div> -->
-                                   
+                                    <div class="mock-score-bar-wrap" v-else-if="items.exit">
+                                        <div class="mock-score-bar mock-score-bar--paused">
+                                            <div class="mock-score-fill mock-score-fill--paused" style="width:40%"></div>
+                                        </div>
+                                        <img class="pause-icon-sm" src="/images/pauseyellowicon.png" alt="" />
+                                    </div>
+                                    <div class="mock-not-attempted" v-else>Not attempted yet</div>
+                                </div>
                             </div>
                         </div>
-                        <!-- <div class="mock-card" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800">
-                            <div class="mock-image">
-                                <img src="/images/mock2.png" alt="" @click="showselections(2)">
-                                <div class="mock-imageabslt-btn">
-                                    <button class="pause-mockabslt"><i class="fa-solid fa-pause"></i></button>
-                                    <button class="replay-mockabslt"><img src="images/replay-icon.png" alt=""></button>
-                                </div>
-                                <div class="progress-btn">
-                                    <button>Not attempted yet</button>
-                                </div>
-                            </div>
-                        </div> -->
-                       
                     </div>
                 </div>
             </section>
@@ -76,55 +42,77 @@
                     <div class="question-note-boxes">
                         <div class="question-box" data-aos="fade-up" data-aos-delay="0" data-aos-duration="800" style="cursor:pointer" @click="openExitAlert('Question')">
                             <h3><img src="/images/questionmark.png" alt=""> Questions</h3>
-                            <div class="question-score">
-                                <h6>score</h6>
+                            <div
+                                class="question-score questions-summary-toggle"
+                                title="Click to switch between Score and Progress"
+                                @click.stop="toggleQuestionsSummaryMode"
+                            >
+                                <h6>{{ questionsSummaryShowProgress ? 'progress' : 'score' }}</h6>
                                 <div class="progress-container">
                                     <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 54%"></div>
+                                        <div class="progress-fill" :style="{ width: questionsDisplayPercent + '%' }"></div>
                                     </div>
                                    
                                 </div>
-                                <div class="progress-text">54%</div>
+                                <div class="progress-text">{{ questionsDisplayPercent }}%</div>
                             </div>
                             <div class="cardbottom-shadow">
                                 <img src="/images/cardshadow.png" alt="">
                             </div>
                         </div>
-                        <div class="note-box" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800">
-                             <div class="imgdiv">
-                                <img src="/images/lock.png" class="lock-img" alt="">
-                                <span class="lock-hover-text">Locked section</span>
+
+                         <div class="question-box" data-aos="fade-up" data-aos-delay="0" data-aos-duration="800" style="cursor:pointer; justify-content: center;  background: #F99D1C;" @click="openExitAlert('Notes')">
+                            <h3><img src="/images/file.png" alt=""> notes</h3>
+                            <div class="question-score">
+                                <h6>progress</h6>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" :style="{ width: notesProgressPercent + '%' }"></div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="progress-text">{{ notesProgressPercent }}%</div>
                             </div>
+                            <div class="cardbottom-shadow">
+                                <img src="/images/cardshadow.png" alt="">
+                            </div>
+                        </div>
+
+                        <!-- <div class="note-box" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800" style="cursor:pointer" @click="openExitAlert('Notes')">
+                             
+
+                           
                             <h3><img src="/images/file.png" alt=""> Notes</h3> 
-                            <!-- <div class="note-score">
+                            <div class="note-score">
                                 <h6>Progress</h6>
                                 <div class="progress-container">
                                     <div class="progress-bar">
                                         <div class="progress-fill" style="width: 54%"></div>
                                     </div>
-                                    <div class="progress-text">54%</div>
+                                    <div class="progress-text">0%</div>
                                 </div>
-                            </div> -->
+                            </div>
                             <div class="cardbottom-shadow">
                                 <img src="/images/cardshadow.png" alt="">
                             </div>
 
                            
                           
-                        </div>
+                        </div> -->
                         <div class="mock-box" data-aos="fade-up" data-aos-delay="200" data-aos-duration="800">
                             <h3><img src="/images/brain.png" alt=""> Mocks</h3>
-                            <div class="question-score">
-                                <h6>score</h6>
+                            <div
+                                class="question-score mocks-summary-toggle"
+                                title="Click to switch between Score and Progress"
+                                @click="toggleMocksSummaryMode"
+                            >
+                                <h6>{{ mocksSummaryShowProgress ? 'progress' : 'score' }}</h6>
                                 <div class="progress-container">
                                     <div class="progress-bar" style="background: transparent;">
-                                        <!-- <div class="progress-fill" style="width: 66%"></div> -->
-                                        <div class="progress-fill" :style="{ width: averageScore + '%' }"></div>
-
+                                        <div class="progress-fill" :style="{ width: mocksSummaryDisplayPercent + '%' }"></div>
                                     </div>
-                                   
                                 </div>
-                                <div class="progress-text">{{averageScore}}%</div>
+                                <div class="progress-text">{{ mocksSummaryDisplayPercent }}%</div>
                             </div>
                             <div class="cardbottom-shadow">
                                 <img src="/images/cardshadow.png" alt="">
@@ -161,17 +149,22 @@
 
 
 <script>
-import AttemptProgressButton from '@/components/AttemptProgressButton.vue';
+// import AttemptProgressButton from '@/components/AttemptProgressButton.vue';
 import MockSelection from './MockSelection.vue';
 import Vue from 'vue';
 import { get } from './lib/api';
+import {
+    mocksAggregateScorePercent as calcMocksScorePercent,
+    mocksAggregateProgressPercent as calcMocksProgressPercent,
+} from './lib/mocksAggregate';
+import { hydrateNoteUserState, notesProgressStats } from './lib/notesUserPrefs';
 import Loadingcircle from '@/components/Loadingcircle.vue';
 // import CircularProgress from '@/components/CircularProgress.vue'
 
 export default {
     name: "MockSection",
     components: {
-        AttemptProgressButton,
+        // AttemptProgressButton,
         MockSelection,
         Loadingcircle,
         // CircularProgress
@@ -198,9 +191,16 @@ export default {
             selectedItem: null,
             animationbutton: false,
             loadershow: true,
-            percentage:0
-
-
+            percentage:0,
+            clinicalAreas: [],
+            professionalKnowledge: [],
+            notesClinicalAreas: [],
+            notesProfessionalKnowledge: [],
+            notesReadRev: 0,
+            /** false = Score (correct / all), true = Progress (attempted / all) */
+            questionsSummaryShowProgress: false,
+            /** false = Score (correct / all mock questions), true = Progress (attempted / all) */
+            mocksSummaryShowProgress: false,
         }
     },
 
@@ -218,58 +218,159 @@ export default {
 
             })
 
+        get('/getsubjectclient')
+            .then((res) => {
+                this.clinicalAreas = res.data.clinical || []
+                this.professionalKnowledge = res.data.professional || []
+            })
+
+        hydrateNoteUserState();
+
+        get('/notesclient')
+            .then((res) => {
+                if (res.data.chaptersClinical) {
+                    this.notesClinicalAreas = this.transformNotesChapters(res.data.chaptersClinical);
+                }
+                if (res.data.chaptersProfessioanl) {
+                    this.notesProfessionalKnowledge = this.transformNotesChapters(res.data.chaptersProfessioanl);
+                }
+            })
+            .catch((err) => {
+                console.error('Error fetching notes data:', err);
+            });
 
 
 
 
     },
 
-    computed: {
-        averageScore() {
-            // Filter mocks that have scores and are not exited
-            const mocksWithScores = this.title.filter(item => 
-                item.score && 
-                item.score.length > 0 && 
-                !item.exit &&
-                item.quest &&
-                item.quest.length > 0
-            );
-
-            if (mocksWithScores.length === 0) {
-                return 0;
+    mounted() {
+        this._notesPrefsStorage = (ev) => {
+            if (ev && ev.key && String(ev.key).indexOf('notesUserPrefs_') === 0) {
+                this.notesReadRev += 1;
             }
+        };
+        window.addEventListener('storage', this._notesPrefsStorage);
+    },
 
-            // Calculate score for each mock: (correct answers / total questions) * 100
-            const scores = mocksWithScores.map(item => {
-                const correctCount = item.score.filter(s => s.correct == 1).length;
-                const totalQuestions = item.quest.length;
-                return (correctCount * 100) / totalQuestions;
-            });
+    activated() {
+        this.notesReadRev += 1;
+    },
 
-            // Calculate average
-            const sum = scores.reduce((acc, score) => acc + score, 0);
-            const average = sum / scores.length;
-            
-            // Return rounded average
-            return Math.round(average);
+    beforeDestroy() {
+        if (this._notesPrefsStorage) {
+            window.removeEventListener('storage', this._notesPrefsStorage);
         }
     },
 
+    computed: {
+        questionsScorePercent() {
+            const all = [...this.clinicalAreas, ...this.professionalKnowledge];
+            const total = all.reduce((s, i) => s + (parseInt(i.questions_count) || 0), 0);
+            const correct = all.reduce((s, i) => s + (parseInt(i.correct_count) || 0), 0);
+            if (!total) return 0;
+            return Math.round((correct / total) * 100);
+        },
+
+        questionsProgressPercent() {
+            const all = [...this.clinicalAreas, ...this.professionalKnowledge];
+            const total = all.reduce((s, i) => s + (parseInt(i.questions_count) || 0), 0);
+            const attempted = all.reduce((s, i) => s + (parseInt(i.attempted_count) || 0), 0);
+            if (!total) return 0;
+            return Math.round((attempted / total) * 100);
+        },
+
+        questionsDisplayPercent() {
+            return this.questionsSummaryShowProgress
+                ? this.questionsProgressPercent
+                : this.questionsScorePercent;
+        },
+
+        notesSidebarProgress() {
+            void this.notesReadRev;
+            void this.notesClinicalAreas.length;
+            void this.notesProfessionalKnowledge.length;
+            return notesProgressStats(this.$store, [
+                ...this.notesClinicalAreas,
+                ...this.notesProfessionalKnowledge,
+            ]);
+        },
+
+        notesProgressPercent() {
+            return this.notesSidebarProgress.percent;
+        },
+
+        mocksAggregateScorePercent() {
+            return calcMocksScorePercent(this.title);
+        },
+
+        mocksAggregateProgressPercent() {
+            return calcMocksProgressPercent(this.title);
+        },
+
+        mocksSummaryDisplayPercent() {
+            return this.mocksSummaryShowProgress
+                ? this.mocksAggregateProgressPercent
+                : this.mocksAggregateScorePercent;
+        },
+    },
+
     methods: {
+        toggleQuestionsSummaryMode() {
+            this.questionsSummaryShowProgress = !this.questionsSummaryShowProgress;
+        },
+
+        toggleMocksSummaryMode() {
+            this.mocksSummaryShowProgress = !this.mocksSummaryShowProgress;
+        },
+
+        transformNotesChapters(chapters) {
+            if (!chapters || !Array.isArray(chapters)) return [];
+
+            return chapters.map((chapter) => {
+                const transformedChapter = {
+                    id: chapter.id || null,
+                    title: chapter.title || '',
+                    index_number: chapter.index_number || null,
+                };
+
+                if (chapter.notes && Array.isArray(chapter.notes) && chapter.notes.length > 0) {
+                    transformedChapter.children = chapter.notes.map((note) => {
+                        const transformedNote = {
+                            id: note.id || null,
+                            title: note.title || '',
+                            index_number: note.index_number || null,
+                        };
+
+                        if (note.sub_notes && Array.isArray(note.sub_notes) && note.sub_notes.length > 0) {
+                            transformedNote.children = note.sub_notes.map((subNote) => ({
+                                id: subNote.id || null,
+                                title: subNote.title || '',
+                                index_number: subNote.index_number || null,
+                            }));
+                        }
+
+                        return transformedNote;
+                    });
+                }
+
+                return transformedChapter;
+            });
+        },
+
         openExitAlert(e){
       this.exitpage = e
       this.showExitPopup = true;
     },
     confirmExit() {
       this.showExitPopup = false;
-      if(this.exitpage == 'Question'){
+      if (this.exitpage == 'Question') {
         this.$router.push('/mlalistselection');
-      }
-      else{
+      } else if (this.exitpage == 'Notes') {
+        this.$router.push('/noteslistselection');
+      } else {
         this.$router.push('/mocksection');
       }
-
-     
     },
 
         showselections(e) {
@@ -343,8 +444,13 @@ export default {
 
         },
         getButtonColor(items) {
-            // Return green if score exists and has length > 0, otherwise red
             return items.score && items.score.length > 0 ? '#63B045' : 'red';
+        },
+
+        getMockScore(item) {
+            if (!item.score || !item.quest || item.quest.length === 0) return 0;
+            const correctCount = item.score.filter(s => s.correct == 1).length;
+            return Math.round((correctCount * 100) / item.quest.length);
         },
 
        
@@ -541,6 +647,12 @@ img {
     align-items: center;
 }
 
+.mocks-summary-toggle,
+.questions-summary-toggle {
+    cursor: pointer;
+    user-select: none;
+}
+
 
 [data-aos] {
     visibility: hidden;
@@ -553,65 +665,99 @@ img {
 
 .mock-image {
     position: relative;
+    line-height: 0;
 }
 
-.mock-imageabslt-btn {
-    position: absolute;
-    top: 57%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.mock-image img {
+    width: 100%;
+    display: block;
+   
+        padding: 10px !important;
+}
+
+/* Red-border wrapper that contains image + status bar */
+.mock-card-wrapper {
+    /* border: 1.5px solid #ED1C24; */
+    
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+        padding: 15px;
+}
+
+.mock-card-wrapper:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(237, 28, 36, 0.2);
+}
+
+/* Footer sits below the image, inside the red border */
+.mock-card-footer {
+       padding: 10px 0px 0px;
+    background: #fff;
+}
+
+.mock-score-bar-wrap {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 20px;
+    gap: 6px;
 }
 
-
-.mock-imageabslt-btn .replay-mockabslt img {
-    width: 25px;
-    height: 25px;
-    border: none;
-    padding: 0px;
-}
-
-.mock-imageabslt-btn .replay-mockabslt {
-    background: transparent;
-    border: none;
-}
-
-
-.mock-imageabslt-btn .pause-mockabslt {
-    width: 40px;
-    height: 40px;
-    font-size: 24px;
+.mock-score-bar {
+    flex: 1;
+    height: 20px;
+    background: #D1D3D4;
     border-radius: 20px;
-    background: #FFF057;
-    border: none;
-    line-height: 10px;
+    overflow: hidden;
+    border: 1px solid #aaa;
 }
 
-
-.mock-image .cardbottom-shadow img {
-    border: none;
-    padding: 0px;
-    bottom: -22px;
-    left: 50%;
-    transform: translate(-50%);
-    width: 290px;
-    z-index: 0;
-    opacity: 0.7;
+.mock-score-fill {
+    height: 100%;
+    background: #9DED6C;
+    border-radius: 20px;
+    transition: width 0.4s ease;
 }
 
+.mock-score-bar--paused {
+    background: rgba(251, 173, 31, 0.15);
+    border-color: #FBAD1F;
+}
 
-/* 
-@media only screen and (max-width: 2698px) {
-    .shadow-1 img {
-        width: 270px !important;
-        bottom: 13.5% !important;
-    }
-} */
+.mock-score-fill--paused {
+    background: #FBAD1F;
+}
 
+.mock-score-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #231F20;
+    min-width: 26px;
+    text-align: right;
+    position: absolute;
+    left: 30%;
+}
+
+.pause-icon-sm {
+    width: 16px;
+    height: 16px;
+    border: none !important;
+    padding: 0 !important;
+    cursor: default;
+}
+
+.mock-not-attempted {
+    background: #D1D3D4;
+    color: #58595B;
+    font-size: 9px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 20px;
+    padding: 4px 8px;
+    white-space: nowrap;
+    border: 1px solid #aaa;
+}
 
 
 </style>

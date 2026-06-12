@@ -355,8 +355,23 @@
                                 </div>
                             </div>
                             <div class="brake-border"></div>
-                            <MockReviewDetail ref="reviewDetailRef" :currentQuestion="currentQuestion"
-                                @commentsave="commentsave" />
+                            <NotesLinkedQuestions
+                                v-if="currentQuestion"
+                                ref="reviewDetailRef"
+                                variant="links"
+                                :title="currentQuestion.number || 'Mock question'"
+                                :questions="linkedSubjectQuestions"
+                                :questions-loading="linkedQuestionsLoading"
+                                :linked-notes="linkedNotes"
+                                :notes-loading="linkedNotesLoading"
+                                :note-record-id="String(currentQuestion.id)"
+                                note-record-type="mock"
+                                :current-question="currentQuestion"
+                                comment-api="mock"
+                                @question-click="navigateToLinkedSubjectQuestion"
+                                @note-click="navigateToLinkedNote"
+                                @comment-saved="reloadMockQuestionsForReview"
+                            />
                         </div>
                     </div>
                 </section>
@@ -368,11 +383,13 @@
                     <div class="modal-overlays" v-if="showPauseModal">
                         <div class="modal-contents" ref="draggable" @mousedown="startDrag">
                             <div class="feedback-form-box">
-                                <div class="cross">
-                                    <p class="currentquestionnumber" style="padding-bottom: 10px;">
-                                        {{ currentQuestion.number }}</p>
-                                    <h4>Share feedback</h4>
-                                    <span class="crossspan" @click="showPauseModal = false">
+                                <div class="cross feedback-modal-header">
+                                    <div class="feedback-modal-header-main">
+                                        <p v-if="currentQuestion && currentQuestion.number" class="feedback-modal-meta currentquestionnumber">
+                                            {{ currentQuestion.number }}</p>
+                                        <h4 class="feedback-modal-title">Feedback</h4>
+                                    </div>
+                                    <span class="crossspan feedback-modal-close" @click="showPauseModal = false">
                                         <svg width="12" height="12" viewBox="0 0 9 9" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path d="M1.38013 0.75L8.1701 7.54001" stroke="#6D6E71"
@@ -389,18 +406,16 @@
                                         :key="index">
                                         <button @click="toggleOptions(index)"
                                             :class="{ 'active-btn': category.selectedOption }" type="button"> 
-                                            {{category.name === 'Rullingout' ? 'Rulling out' : category.name }}</button>
+                                            {{ category.name }}</button>
                                         <div class="feeback-question-options"
                                             v-if="showOptionsIndex === index && category.name != 'Other'">
-                                            <div class="feeback-question-option">
-                                                <input type="radio" :checked="category.selectedOption === 'Incorrect'"
-                                                    @click="selectOption(index, 'Incorrect')" value="Incorrect">
+                                            <div class="feeback-question-option" @click="selectOption(index, 'Incorrect')">
+                                                <input type="radio" :checked="category.selectedOption === 'Incorrect'" tabindex="-1" readonly>
                                                 <p  :class="{ 'active-btn': category.selectedOption === 'Incorrect' }">Incorrect</p>
                                             </div>
-                                            <div class="feeback-question-option">
-                                                <input type="radio" value="Needs improvement"
-                                                    :checked="category.selectedOption === 'Needs improvement'"
-                                                    @click="selectOption(index, 'Needs improvement')">
+                                            <div class="feeback-question-option" @click="selectOption(index, 'Needs improvement')">
+                                                <input type="radio" tabindex="-1" readonly
+                                                    :checked="category.selectedOption === 'Needs improvement'">
                                                 <p  :class="{ 'active-btn': category.selectedOption === 'Needs improvement' }">Needs improvement</p>
                                             </div>
                                         </div>
@@ -412,8 +427,9 @@
                                     </div>
                                     <div class="feedback-textarea-box" ref="feedbackForm">
                                         <textarea name="" id="" ref="feedbackArea" v-model="form.optionfeedback"
-                                            @focus="expandTextarea" class="feedback-textarea"
-                                            placeholder="Please write your suggestions here!"></textarea>
+                                            @input="onFeedbackTextareaInput"
+                                            class="feedback-textarea"
+                                            placeholder="Your feedback..." rows="1"></textarea>
                                     </div>
                                     <!-- <textarea name="" id="" v-model="form.optionfeedback" class="feedback-textarea" placeholder="Please write your suggestions here!"></textarea> -->
 
@@ -438,16 +454,24 @@
 
 <script>
 
-import MockReviewDetail from "../components/MockReviewDetail.vue"
+import NotesLinkedQuestions from '@/components/NotesLinkedQuestions.vue';
 // import FeedbackFormModal from "../components/FeedbackFormModal.vue"
 import ReviewMockBirdsEye from "@/components/ReviewMockBirdsEye.vue";
 import { get, byMethod } from "./lib/api";
+import {
+    autoGrowFeedbackTextarea,
+    resetFeedbackTextareaHeight,
+} from "./lib/feedbackTextareaAutoGrow";
+import {
+    createQuestionFeedbackCategories,
+    hydrateQuestionFeedbackCategories,
+} from "./lib/questionFeedbackCategories";
 import HeaderQuestion from "@/components/HeaderQuestion.vue";
 import Loadingcircle from "@/components/Loadingcircle.vue";
 
 export default {
     components: {
-        MockReviewDetail,
+        NotesLinkedQuestions,
         // FeedbackFormModal,
         ReviewMockBirdsEye,
         HeaderQuestion,
@@ -610,15 +634,7 @@ export default {
             openIndexes: [],
             activeOptions: [],
 
-            feedbackCategories: [
-                { name: "Question", selectedOption: null },
-                { name: "Answer", selectedOption: null },
-                { name: "Rullingout", selectedOption: null },
-                { name: "Condition", selectedOption: null },
-                { name: "Explanation", selectedOption: null },
-                { name: "Notes", selectedOption: null },
-
-            ],
+            feedbackCategories: createQuestionFeedbackCategories(),
             // Track which category's options are currently visible
             showOptionsIndex: null,
             scores: [
@@ -627,6 +643,10 @@ export default {
                     options: ["Paris", "London", "Berlin", "Madrid"],
                 },
             ],
+            linkedSubjectQuestions: [],
+            linkedNotes: [],
+            linkedQuestionsLoading: false,
+            linkedNotesLoading: false,
         }
     },
 
@@ -738,9 +758,31 @@ export default {
         currentQuestion: {
             handler(newVal) {
                 if (!this.loading && newVal) {
-
                     this.setInitialSelectedOption();
                 }
+
+                // Reset accordions then auto-open based on score
+                this.activeOptions = [];
+
+                if (!newVal || !newVal.options) return;
+
+                const options = newVal.options;
+                const score = newVal.score;
+
+                const correctIdx = options.findIndex(o => o.correct == 1);
+
+                // Always open the correct option's explanation
+                if (correctIdx !== -1) this.activeOptions.push(correctIdx);
+
+                // If wrong answer, also open the selected (wrong) option's rolling out
+                if (score && score.correct == 0) {
+                    const selectedIdx = options.findIndex(o => o.id == score.option_id);
+                    if (selectedIdx !== -1 && selectedIdx !== correctIdx) {
+                        this.activeOptions.push(selectedIdx);
+                    }
+                }
+
+                this.fetchLinkedRecordsForMock(newVal);
             },
             deep: true,
             immediate: true,
@@ -1067,20 +1109,17 @@ export default {
 
         },
 
-        expandTextarea() {
-            this.$refs.feedbackArea.style.height = "64px";
-
-            this.toggleOptions(null)
+        onFeedbackTextareaInput() {
+            autoGrowFeedbackTextarea(this.$refs.feedbackArea);
+            this.toggleOptions(null);
         },
-
 
         shrinkTextareaOnClickOutside(event) {
             const textarea = this.$refs.feedbackArea;
             const form = this.$refs.feedbackForm;
 
-            // Only run if both refs are available
             if (textarea && form && !form.contains(event.target)) {
-                textarea.style.height = "13px"; // Reset to initial height
+                resetFeedbackTextareaHeight(textarea);
             }
         },
 
@@ -1298,25 +1337,15 @@ export default {
 
         openfeedbackpop() {
             const response = this.currentQuestion.feedback || '';
-            const keyMap = {
-                Question: 'question',
-                Answer: 'answer',
-                Rullingout: 'rulling_out',
-                Condition: 'condition',
-                Explanation: 'explanation',
-                Notes: 'notes',
-            };
-
-            this.feedbackCategories = this.feedbackCategories.map(category => {
-                const key = keyMap[category.name] || this.toSnakeCase(category.name);
-                if (response[key]) {
-                    category.selectedOption = response[key];
-                }
-                return category;
-            });
-
+            this.feedbackCategories = hydrateQuestionFeedbackCategories(
+                createQuestionFeedbackCategories(),
+                response,
+            );
             this.form.optionfeedback = this.currentQuestion.feedback?.optionfeedback || '';
             this.showPauseModal = true;
+            this.$nextTick(() => {
+                resetFeedbackTextareaHeight(this.$refs.feedbackArea);
+            });
         },
 
 
@@ -1877,32 +1906,78 @@ export default {
             }
         },
 
-        commentsave(e, comment) {
-            console.log("id", e);
-            this.form.question_id = e;
-            this.form.comments = comment;
-
-            byMethod(this.method, "/addmockcomment", this.form)
+        fetchLinkedRecordsForMock(q) {
+            const mqId = q && q.id ? Number(q.id) : null;
+            if (!mqId) {
+                this.linkedSubjectQuestions = [];
+                this.linkedNotes = [];
+                return;
+            }
+            this.linkedQuestionsLoading = true;
+            this.linkedNotesLoading = true;
+            get('/mock-linked-subject-questions', { mock_question_id: mqId })
                 .then((res) => {
-                    if (res.data.saved) {
-                        console.log(res.data.saved);
-                        this.$toast.success("Comment saved successfully")
-
-
-
-                        get("/getmockquestion?id=" + this.id).then((res) => {
-                            this.setData(res);
-                            this.form.question_id = null;
-                            this.form.comments = "";
-                        });
-                    }
+                    this.linkedSubjectQuestions = res.data.data || [];
                 })
-                .catch((error) => {
-                    if (error.response.status === 422) {
-                        this.errors = error.response.data.errors;
-                    }
-                    this.isProcessing = false;
+                .catch(() => {
+                    this.linkedSubjectQuestions = [];
+                })
+                .finally(() => {
+                    this.linkedQuestionsLoading = false;
                 });
+            get('/mock-linked-notes', { mock_question_id: mqId })
+                .then((res) => {
+                    this.linkedNotes = res.data.data || [];
+                })
+                .catch(() => {
+                    this.linkedNotes = [];
+                })
+                .finally(() => {
+                    this.linkedNotesLoading = false;
+                });
+        },
+        navigateToLinkedSubjectQuestion(que) {
+            let title;
+            let entityId;
+            if (que.sublist_id) {
+                title = 'Sublist';
+                entityId = que.sublist_id;
+            } else if (que.condition_id) {
+                title = 'Conditions';
+                entityId = que.condition_id;
+            } else if (que.presentation_id) {
+                title = 'Presentations';
+                entityId = que.presentation_id;
+            } else {
+                title = 'Chapter';
+                entityId = que.subject_id;
+            }
+            localStorage.setItem('questiontitle', title);
+            localStorage.setItem('questionStartCode', que.code);
+            this.$router.push({ name: 'QuestionsPage', params: { id: entityId } });
+        },
+        navigateToLinkedNote(note) {
+            if (!note || note.record_id == null) return;
+            const type = note.type === 'subnotes' ? 'subnotes' : 'notes';
+            this.$router.push({
+                path: '/notespage',
+                query: { id: String(note.record_id), type },
+            });
+        },
+        reloadMockQuestionsForReview() {
+            const about = localStorage.getItem('question');
+            const getquestionid = localStorage.getItem('questionid');
+            if (about === 'normal' || about === 'exitmock') {
+                get('/getmockquestion?id=' + this.id).then((res) => this.setData(res));
+            } else if (about === 'flaged') {
+                get('/getflagedquestion?id=' + this.id).then((res) => this.setData(res));
+            } else if (about === 'unanswer') {
+                get('/getunaswerquestion?id=' + this.id).then((res) => this.setData(res));
+            } else if (about === 'unanswersolo') {
+                get('/getunaswersoloquestion?id=' + getquestionid).then((res) => this.setData(res));
+            } else if (about === 'unflagsolo') {
+                get('/getflagedsoloquestion?id=' + getquestionid).then((res) => this.setData(res));
+            }
         },
 
 
@@ -1966,8 +2041,9 @@ export default {
                 console.log("sss");
                 if (this.currentQuestionIndex < this.questions.length - 1) {
                     this.currentQuestionIndex++;
+                    this.activeOptions = [];
                     this.centerSelectedIndex(this.currentQuestionIndex)
-                    this.$refs.reviewDetailRef.resetActiveTab();
+                    this.$refs.reviewDetailRef?.resetActiveTab();
                     // this.resetSelectedOption();
                 } else {
                     // this.stopTimerAndSaveDuration()
@@ -1982,16 +2058,7 @@ export default {
 
             this.selectedOptions = null
 
-            this.feedbackCategories = [
-
-
-                { name: "Question", selectedOption: null },
-                { name: "Answer", selectedOption: null },
-                { name: "Rullingout", selectedOption: null },
-                { name: "Condition", selectedOption: null },
-                { name: "Explanation", selectedOption: null },
-                { name: "Notes", selectedOption: null },
-            ]
+            this.feedbackCategories = createQuestionFeedbackCategories()
 
             this.showOptionsIndex = null
         },
@@ -2010,6 +2077,7 @@ export default {
 
                 this.reviewquestioncheck()
                 this.currentQuestionIndex--;
+                this.activeOptions = [];
                 // this.resetSelectedOption();
             }
 
@@ -2019,18 +2087,7 @@ export default {
 
             this.selectedOptions = null
 
-            this.feedbackCategories = [
-
-
-                { name: "Question", selectedOption: null },
-                { name: "Answer", selectedOption: null },
-                { name: "Rullingout", selectedOption: null },
-                { name: "Condition", selectedOption: null },
-                { name: "Explanation", selectedOption: null },
-                { name: "Notes", selectedOption: null },
-
-
-            ]
+            this.feedbackCategories = createQuestionFeedbackCategories()
 
             this.showOptionsIndex = null
 
@@ -2234,14 +2291,7 @@ export default {
 
                 this.selectedOptions = null
 
-                this.feedbackCategories = [
-                    { name: "Question", selectedOption: null },
-                    { name: "Answer", selectedOption: null },
-                    { name: "Rullingout", selectedOption: null },
-                    { name: "Condition", selectedOption: null },
-                    { name: "Explanation", selectedOption: null },
-                    { name: "Notes", selectedOption: null },
-                ]
+                this.feedbackCategories = createQuestionFeedbackCategories()
 
                 this.showOptionsIndex = null
 
@@ -2306,14 +2356,7 @@ export default {
 
                 this.selectedOptions = null
 
-                this.feedbackCategories = [
-                    { name: "Question", selectedOption: null },
-                    { name: "Answer", selectedOption: null },
-                    { name: "Rullingout", selectedOption: null },
-                    { name: "Condition", selectedOption: null },
-                    { name: "Explanation", selectedOption: null },
-                    { name: "Notes", selectedOption: null },
-                ]
+                this.feedbackCategories = createQuestionFeedbackCategories()
 
                 this.showOptionsIndex = null
             }
@@ -2606,126 +2649,6 @@ button.scroll-btn svg :hover {
     pointer-events: auto;
 }
 
-.feedback-form-box {
-    border: 1px solid #93959875;
-    width: 250px;
-    border-radius: 50px;
-    background: #fff;
-    box-shadow: 0 0 11.34px #00000080;
-    padding: 16px 20px 29px 20px;
-}
-
-.feedback-form-box h4 {
-    padding: 0px 0px 19px 0px;
-    color: #231F20;
-    font-size: 18px;
-}
-
-.feedbackform-button button {
-    font-family: Helvetica, Arial, sans-serif;
-    border: none;
-    padding: 7px 20px;
-    width: 100%;
-    color: #231F20;
-    cursor: pointer;
-    background: transparent;
-    text-align: -webkit-auto;
-    font-size: 16px;
-    transition: all .6s ease;
-}
-
-.feedbackform-button button:hover {
-    background: #F1F2F2;
-}
-
-.feedbackform-button {
-    border-bottom: 1px solid #939598;
-}
-
-
-.feedback-textarea-box textarea::placeholder {
-    color: #808285;
-}
-
-.feedbackform-submitbtn {
-    margin: 19px 0px 0px 0px;
-    position: relative;
-}
-
-.feedbackform-submitbtn .cardbottom-shadow img {
-    width: 150px;
-    bottom: -25px;
-    left: 50%;
-    transform: translate(-50%);
-    z-index: 9;
-}
-
-.feedbackform-submitbtn button {
-    border: 1px solid #20b14b82;
-    background: #9DED6C;
-    padding: 4px 10px;
-    width: 81.96px;
-    height: 23.02px;
-    border-radius: 30px;
-    color: #2F292B;
-    font-size: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    position: relative;
-    z-index: 99;
-}
-
-.feeback-question-options {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin: 0px 0px 10px 0px;
-}
-
-.feeback-question-option p {
-    font-size: 11px;
-}
-
-.feeback-question-option {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-}
-
-.active-btn {
-   
-    color: #20B14B !important;
-    font-weight: bold;
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-}
-
-
-.feeback-question-option input {
-    border: 1px solid #8082857d;
-    background: #EAEBEC;
-    padding: 3px 25px 3px 10px;
-    border-radius: 30px;
-    font-size: 12px;
-}
-
-.feeback-question-option input:focus {
-    outline: none;
-}
-
-
-.feeback-question-option.selected {
-    background: #FFF9C4;
-    border-radius: 15px;
-    padding: 2px 8px;
-}
-
-.feeback-question-option input[type="radio"]:checked {
-    accent-color: #20B14B;
-}
-
-
-
 @keyframes fade-in {
     from {
         opacity: 0;
@@ -2878,77 +2801,6 @@ button.scroll-btn svg :hover {
     height: 100%;
 }
 
-
-.feedback-textarea {
-    font-size: 13px;
-    resize: none;
-    font-family: Helvetica;
-    border: none;
-    width: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    background: transparent;
-    font-style: italic;
-    padding: 3px 3px 3px 3px;
-    color: black;
-    font-weight: 300;
-    font-family: Helvetica;
-    height: 12px;
-}
-
-.feedback-textarea::-webkit-scrollbar {
-    width: 3px;
-}
-
-/* Track */
-.feedback-textarea::-webkit-scrollbar-track {
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.feedback-textarea::-webkit-scrollbar-thumb {
-    background: #808285;
-    border-radius: 10px;
-}
-
-.feedback-textarea:focus {
-    outline: none;
-}
-
-.feedback-textarea-box {
-    width: 70%;
-    margin: 0 auto;
-    border: 1px solid #20b14bb8;
-    border-radius: 13px;
-    padding: 3px 8px;
-    background: #ffffff94;
-    font-size: 14px;
-    color: black;
-    margin-top: 10px;
-}
-
-textarea.feedback-textarea::placeholder {
-    color: black;
-    font-size: 10px;
-}
-
-
-.cross {
-
-    padding-top: 5px;
-    padding-right: 4px;
-    position: relative
-}
-
-span.crossspan {
-    cursor: pointer;
-    font-weight: bold;
-    position: absolute;
-    right: 4px;
-    top: 5px;
-
-}
 
 #sectiontop {
 

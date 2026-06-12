@@ -97,9 +97,10 @@ export default {
 
 
     async login() {
-      const baseUrl = 'http://127.0.0.1:8000/api'
+      // const baseUrl = 'http://127.0.0.1:8000/api'
       // const baseUrl = 'https://dev.imsynapse.com/api'
       // const baseUrl = 'https://admin.imsynapse.com/api'
+        const baseUrl = 'https://admin.uksynapse.com/api'
 
 
       console.log('remember', this.rememberMe);

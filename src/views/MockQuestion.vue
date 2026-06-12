@@ -12,7 +12,7 @@
         <HeaderQuestion :flagcounts="flagcounts" :remainingTimeInSeconds="remainingTimeInSeconds"
             :formattedTime="formattedTime" @birdseye="Showbirdeye" @showstoptimer="showstoptime"
             @startagain="startTimeing" @exitmock="exit" :stoptimerpopup="stoptimerpopup" :fillicon="fillicon"
-            @returnquestion="getBackindexheader" @globalhelp="globalhelp"  />
+            @returnquestion="getBackindexheader" @globalhelp="globalhelp" :hideMockHome="hasAttempted" />
         <div v-if="eye">
 
 
@@ -694,11 +694,11 @@ export default {
 
 
 
-            if (this.currentQuestion.score) {
+            if (this.currentQuestion?.score) {
                 console.log("getLabelStyle")
 
 
-                if (option.id == this.currentQuestion.score.option_id) {
+                if (option.id == this.currentQuestion?.score?.option_id) {
                     console.log("now")
                     return {
                         border: '2px solid #63b045',
@@ -1796,8 +1796,8 @@ export default {
     mounted() {
 
         this.setInitialSelectedOption();
-        if (this.currentQuestion.score && this.currentQuestion.score.option_id) {
-            this.selectedOptions = this.currentQuestion.score.option_id;
+        if (this.currentQuestion?.score && this.currentQuestion?.score?.option_id) {
+            this.selectedOptions = this.currentQuestion?.score?.option_id;
         }
         this.calculateVisibleNumbers();
         window.addEventListener('resize', this.calculateVisibleNumbers);
@@ -1827,6 +1827,10 @@ export default {
 
         currentQuestion() {
             return this.questions[this.currentQuestionIndex];
+        },
+
+        hasAttempted() {
+            return this.allquestions.some(q => q.score);
         },
 
         formattedTime() {

@@ -94,7 +94,7 @@
                       fill="#231F20" stroke="#231F20" stroke-width="0.46" stroke-miterlimit="10" />
                   </svg>
                   <span class="lispan">
-                  User ▸
+                  {{ user ? user.username : 'User' }} ▸
                   </span>
                 </router-link>
                 <!-- Nested Dropdown -->

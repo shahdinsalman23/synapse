@@ -113,7 +113,8 @@ export default {
     font-size: 14px;
     font-family: 'Helveticacondensed';
     letter-spacing: 0.5px;
-    font-weight: 300;
+    font-weight: 600;
+    text-align: start;
 }
 
 .notes-list-item h5 {

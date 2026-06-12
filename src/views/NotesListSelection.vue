@@ -6,8 +6,7 @@
       <div class="container">
 
         <!-- 🔹 Breadcrumb -->
-        <div class="breadcrumb-wrapper" @mouseenter="showBreadcrumb = true" @mouseleave="showBreadcrumb = false"
-          :class="{ visible: showBreadcrumb }">
+        <div class="breadcrumb-wrapper" :class="{ visible: showBreadcrumb }">
           <div class="breadcrumb">
             <span class="breadcrumb-item" :class="{ active: activeSection === 'MLA CONTENT MAP' }"
               @click="activeSection = 'MLA CONTENT MAP'">
@@ -19,7 +18,7 @@
             <template v-if="showAreaBreadcrumbs">
               <span class="breadcrumb-item" :class="{ active: activeSection === 'BY AREAS' }"
                 @click="activeSection = 'BY AREAS'">
-                BY AREAS
+                By areas
               </span>
               <!-- <span class="breadcrumb-arrow">›</span>
           <span class="breadcrumb-item" :class="{ active: activeSection === 'BY CONDITIONS' }"
@@ -44,7 +43,7 @@
               <span v-if="activeSection === 'BY AREAS PRESENTATION'" class="breadcrumb-item"
                 :class="{ active: activeSection === 'BY AREAS PRESENTATION' && activeSubSection == '' }"
                 @click="activeSection = 'BY AREAS PRESENTATION'">
-                BY AREAS
+                By areas
               </span>
               <span v-if="activeSection === 'BY AREAS PRESENTATION' && activeSubSection == 'ByAreaCondition'"
                 class="breadcrumb-arrow">›</span>
@@ -58,14 +57,14 @@
         </div>
 
         <!-- 🔹 Content -->
-        <div class="mla-list-layout">
+        <div class="mla-list-layout" :class="{ 'mla-list-layout--sidebar-collapsed': leftPanelCollapsed }">
           <div class="mlalist-left-section">
             <div @mouseenter="showBreadcrumb = true" @mouseleave="showBreadcrumb = false">
               <NotesContentMap :viewMode="viewMode" @set-view-mode="setViewMode" @sort-changed="handleSortChange"
                 @update-active-section="activeSection = $event" />
-              <div class="mla-content-searchbar">
-                <input type="search" v-model="searchQuery" id="search" placeholder="Search..." name="search" />
-                <div class="search-mla-icon">
+              <div class="mla-content-searchbar" @click="openSearch">
+                <input type="search" v-model="searchQuery" id="search" placeholder="Search..." name="search" @click.stop="openSearch" @keyup.enter="openSearch" />
+                <div class="search-mla-icon" @click.stop="openSearch">
                   <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M2.14941 5.6517C2.14941 8.3617 4.30942 10.5417 6.96942 10.5417C9.62942 10.5417 11.7894 8.3517 11.7894 5.6517C11.7894 2.9517 9.62942 0.761719 6.96942 0.761719C4.29942 0.761719 2.14941 2.9417 2.14941 5.6517ZM3.61942 5.6517C3.61942 3.7717 5.09942 2.25171 6.96942 2.25171C8.81942 2.25171 10.3194 3.79171 10.3194 5.66171C10.3194 7.53171 8.80942 9.06171 6.96942 9.06171C5.12942 9.06171 3.61942 7.5217 3.61942 5.6517Z"
@@ -93,21 +92,32 @@
               <div class="questions-notes-mocks">
                 <div class="mla-question-box" style="cursor:pointer" @click="openExitAlert('Question')">
                   <h4><img src="/images/questionmark.png" alt="img"> Questions</h4>
-                  <ProgressBar :progress="0" />
+                  <ProgressBar :progress="globalScorePercent" label="Score" />
+                  <div class="score-detail">{{ globalAttempted }}/{{ globalTotalQuestions }}</div>
                   <div class="cardbottom-shadow">
                     <img src="/images/cardshadow.png" alt="">
                   </div>
                 </div>
                 <div class="mla-question-box mla-note-box">
                   <h4><img src="/images/file.png" alt="img"> Notes</h4>
-                  <ProgressBar :progress="38" />
+                  <ProgressBar :progress="notesProgressPercent" />
+                  <div class="score-detail">{{ notesProgressRead }}/{{ notesProgressTotal }}</div>
                   <div class="cardbottom-shadow">
                     <img src="/images/cardshadow.png" alt="">
                   </div>
                 </div>
-                <div class="mla-question-box mla-mock-box" style="cursor:pointer" @click="openExitAlert('Mocks')">
-                  <h4><img src="/images/brain.png" alt="img"> Mocks</h4>
-                  <ProgressBar :progress="66" label="Score" />
+                <div class="mla-question-box mla-mock-box">
+                  <h4 style="cursor:pointer" @click="openExitAlert('Mocks')"><img src="/images/brain.png" alt="img"> Mocks</h4>
+                  <div
+                    class="mocks-summary-toggle"
+                    title="Click to switch between Score and Progress"
+                    @click.stop="toggleMocksSidebarScoreMode"
+                  >
+                    <ProgressBar
+                      :progress="mocksSummaryDisplayPercent"
+                      :label="mocksSidebarShowProgress ? 'Progress' : 'Score'"
+                    />
+                  </div>
                   <div class="cardbottom-shadow">
                     <img src="/images/cardshadow.png" alt="">
                   </div>
@@ -116,17 +126,25 @@
             </div>
           </div>
 
-          <!-- Popup Component -->
-          <ListSearchPopup :visible="showPopup" @close="showPopup = false">
-          </ListSearchPopup>
-
           <div class="mlalist-right-section">
+            <button
+              type="button"
+              class="notes-sidebar-toggle"
+              :class="{ 'notes-sidebar-toggle--collapsed': leftPanelCollapsed }"
+              :title="leftPanelCollapsed ? 'Show sidebar' : 'Hide sidebar'"
+              :aria-label="leftPanelCollapsed ? 'Show sidebar' : 'Hide sidebar'"
+              :aria-expanded="!leftPanelCollapsed"
+              @click="toggleLeftPanel"
+            >
+              <span class="notes-sidebar-toggle-tab" aria-hidden="true"></span>
+            </button>
             <!-- 🧠 Dynamic Content based on breadcrumb -->
             <template v-if="activeSection === 'MLA CONTENT MAP'"></template>
             <template v-if="activeSection === 'BY AREAS'">
               <div class="listing" @mouseenter="showBreadcrumb = true" @mouseleave="showBreadcrumb = false">
 
-
+                
+                  
                 <NotesSubList title="All areas of clinical practice" total="0/1750" :items="clinicalAreas"
                   wrapperClass="areas-clinical-practice" />
                 <NotesSubList title="All areas of professional knowledge" total="0/887" :items="professionalKnowledge"
@@ -196,9 +214,13 @@ import NotesList from '@/components/NotesList.vue'
 import NotesSubList from '@/components/NotesSubList.vue'
 
 import ProgressBar from '@/components/QuestionpgProgress.vue'
-import ListSearchPopup from '@/components/ListSearchPopup.vue';
 
 import  {get}  from './lib/api';
+import { hydrateNoteUserState, notesProgressStats } from './lib/notesUserPrefs';
+import {
+  mocksAggregateScorePercent,
+  mocksAggregateProgressPercent,
+} from './lib/mocksAggregate';
 
 export default {
   name: 'NotesListSelection',
@@ -208,13 +230,11 @@ export default {
     ProgressBar,
     NotesList,
     NotesSubList,
-    ListSearchPopup
   },
   data() {
     return {
       exitpage:'',
       showExitPopup:false,
-      showPopup: false,
       searchQuery: '',
       activeSection: 'BY AREAS',
       activeSubSection: '',
@@ -222,6 +242,12 @@ export default {
       showBreadcrumb: false,
       clinicalAreas: [],
       professionalKnowledge: [],
+      subjectClinical: [],
+      subjectProfessional: [],
+      mocksData: [],
+      mocksSidebarShowProgress: false,
+      leftPanelCollapsed: false,
+      notesReadRev: 0,
 
       conditionsList: [
         { title: '1. Diabetes', progress: '0/200' },
@@ -732,14 +758,30 @@ export default {
   },
 
   created(){
+    hydrateNoteUserState();
+    try {
+      const sec = localStorage.getItem('notesListRestoreSection');
+      if (sec) {
+        this.activeSection = sec;
+        localStorage.removeItem('notesListRestoreSection');
+      }
+      const vm = localStorage.getItem('notesListRestoreViewMode');
+      if (vm) {
+        this.viewMode = vm;
+        localStorage.removeItem('notesListRestoreViewMode');
+      }
+    } catch (e) {
+      /* ignore */
+    }
+
     get("/notesclient").then((res) => {
         console.log('data', res.data)
-        
+
         // Transform chaptersClinical data
         if (res.data.chaptersClinical) {
           this.clinicalAreas = this.transformChaptersData(res.data.chaptersClinical);
         }
-        
+
         // Transform chaptersProfessional data
         if (res.data.chaptersProfessioanl) {
           this.professionalKnowledge = this.transformChaptersData(res.data.chaptersProfessioanl);
@@ -748,7 +790,34 @@ export default {
         console.error('Error fetching notes data:', error);
       });
 
+    get("/getsubjectclient").then((res) => {
+        this.subjectClinical = res.data.clinical || []
+        this.subjectProfessional = res.data.professional || []
+      });
+
+    get("/getmocks").then((res) => {
+        this.mocksData = res.data.data || []
+      });
     },
+
+  mounted() {
+    this._notesPrefsStorage = (ev) => {
+      if (ev && ev.key && String(ev.key).indexOf('notesUserPrefs_') === 0) {
+        this.notesReadRev += 1;
+      }
+    };
+    window.addEventListener('storage', this._notesPrefsStorage);
+  },
+
+  activated() {
+    this.notesReadRev += 1;
+  },
+
+  beforeDestroy() {
+    if (this._notesPrefsStorage) {
+      window.removeEventListener('storage', this._notesPrefsStorage);
+    }
+  },
 
   // No API calls - using static data only
 
@@ -759,9 +828,61 @@ export default {
     },
     showPresentationBreadcrumbs() {
       return this.viewMode === 'presentations';
-    }
+    },
+
+    globalScorePercent() {
+      const all = [...this.subjectClinical, ...this.subjectProfessional];
+      const total = all.reduce((s, i) => s + (parseInt(i.questions_count) || 0), 0);
+      const correct = all.reduce((s, i) => s + (parseInt(i.correct_count) || 0), 0);
+      if (!total) return 0;
+      return Math.round((correct / total) * 100);
+    },
+
+    globalAttempted() {
+      const all = [...this.subjectClinical, ...this.subjectProfessional];
+      return all.reduce((s, i) => s + (parseInt(i.attempted_count) || 0), 0);
+    },
+
+    globalTotalQuestions() {
+      const all = [...this.subjectClinical, ...this.subjectProfessional];
+      return all.reduce((s, i) => s + (parseInt(i.questions_count) || 0), 0);
+    },
+
+    mocksSummaryDisplayPercent() {
+      return this.mocksSidebarShowProgress
+        ? mocksAggregateProgressPercent(this.mocksData)
+        : mocksAggregateScorePercent(this.mocksData);
+    },
+
+    notesSidebarProgress() {
+      void this.notesReadRev;
+      void this.clinicalAreas.length;
+      void this.professionalKnowledge.length;
+      return notesProgressStats(this.$store, [
+        ...this.clinicalAreas,
+        ...this.professionalKnowledge,
+      ]);
+    },
+
+    notesProgressPercent() {
+      return this.notesSidebarProgress.percent;
+    },
+
+    notesProgressRead() {
+      return this.notesSidebarProgress.read;
+    },
+
+    notesProgressTotal() {
+      return this.notesSidebarProgress.total;
+    },
   },
   methods: {
+    toggleMocksSidebarScoreMode() {
+      this.mocksSidebarShowProgress = !this.mocksSidebarShowProgress;
+    },
+    toggleLeftPanel() {
+      this.leftPanelCollapsed = !this.leftPanelCollapsed;
+    },
     openExitAlert(e){
       this.exitpage = e
       this.showExitPopup = true;
@@ -777,8 +898,15 @@ export default {
 
      
     },
-    openPopup() {
-      this.showPopup = true;
+    openSearch() {
+      this.$router.push({
+        path: '/search',
+        query: {
+          from: this.$route.fullPath,
+          q: this.searchQuery || undefined,
+          source: 'notes',
+        },
+      });
     },
     AreaCondition() {
       this.activeSubSection = 'ByAreaCondition'
@@ -819,12 +947,11 @@ export default {
         
         // Transform notes array to children array
         if (chapter.notes && Array.isArray(chapter.notes) && chapter.notes.length > 0) {
-          transformedChapter.children = chapter.notes.map(note => {
+            transformedChapter.children = chapter.notes.map(note => {
             const transformedNote = {
               id: note.id || null,
               title: note.title || '',
               index_number: note.index_number || null,
-              content: note.content || null
             };
             
             // Transform sub_notes array to children array (only if sub_notes exist)
@@ -925,6 +1052,91 @@ button {
   gap: 20px;
 }
 
+.mla-list-layout {
+  position: relative;
+  align-items: stretch;
+  min-height: calc(100vh - 150px);
+  transition: gap 0.35s ease;
+}
+
+.mla-list-layout--sidebar-collapsed {
+  gap: 0;
+}
+
+.mlalist-left-section {
+  transition: flex-basis 0.35s ease, opacity 0.3s ease, transform 0.35s ease, max-width 0.35s ease;
+}
+
+.mla-list-layout--sidebar-collapsed .mlalist-left-section {
+  flex: 0 0 0 !important;
+  max-width: 0;
+  opacity: 0;
+  transform: translateX(-24px);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.mlalist-right-section {
+  position: relative;
+  overflow: visible;
+  transition: flex-basis 0.35s ease, max-width 0.35s ease;
+}
+
+.mla-list-layout--sidebar-collapsed .mlalist-right-section {
+  flex: 1 1 100% !important;
+  max-width: 100%;
+}
+
+.notes-sidebar-toggle {
+  position: absolute;
+  top: 50%;
+  left: -30px;
+  z-index: 25;
+  width: 14px;
+  height: 56px;
+  padding: 0 8px 0 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: left 0.35s ease, padding 0.35s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: content-box;
+}
+
+.notes-sidebar-toggle--collapsed {
+  left: 0;
+  padding: 0 8px 0 0;
+  justify-content: flex-start;
+}
+
+.notes-sidebar-toggle-tab {
+  display: block;
+  width: 14px;
+  height: 36px;
+  background: linear-gradient(to left, #fde68a 0%, #f5c04a 45%, #faad1b 100%);
+  clip-path: polygon(0 50%, 100% 12%, 100% 88%);
+  filter: drop-shadow(-4px 0 7px rgba(250, 173, 27, 0.45));
+  transition: clip-path 0.35s ease, filter 0.35s ease, transform 0.35s ease;
+}
+
+.notes-sidebar-toggle:hover .notes-sidebar-toggle-tab {
+  background: linear-gradient(to left, #fff0b3 0%, #fad060 45%, #fbad18 100%);
+  filter: drop-shadow(-5px 0 9px rgba(250, 173, 27, 0.55));
+}
+
+.notes-sidebar-toggle--collapsed .notes-sidebar-toggle-tab {
+  clip-path: polygon(100% 50%, 0 12%, 0 88%);
+  filter: drop-shadow(4px 0 7px rgba(250, 173, 27, 0.45));
+}
+
+.notes-sidebar-toggle--collapsed:hover .notes-sidebar-toggle-tab {
+  filter: drop-shadow(5px 0 9px rgba(250, 173, 27, 0.55));
+}
+
 .areas-presentation-condition {
   width: 100%;
   border: 0.75px solid #D0D2D3;
@@ -952,8 +1164,8 @@ button {
 }
 
 .breadcrumb-item.active {
-  background-color: #FADE91;
-  color: #231F20;
+  background-color: #faad1b;
+  color: white;
 }
 
 .breadcrumb-item.inactive {
@@ -1004,9 +1216,22 @@ button {
   border-color: #FBAD1F;
 }
 
+.score-detail {
+  font-size: 11px;
+  color: rgba(255,255,255,0.85);
+  text-align: right;
+  margin-top: 3px;
+  font-family: HelveticaBoldcont, sans-serif;
+}
+
 .mla-mock-box {
   background-color: #ED1C24;
   border-color: #ED1C24;
+}
+
+.mocks-summary-toggle {
+  cursor: pointer;
+  user-select: none;
 }
 
 .mla-content-searchbar input {

@@ -13,7 +13,7 @@
       <div class="breadcrumb" >
         <span class="breadcrumb-item" :class="{ active: activeSection === 'MLA CONTENT MAP' }"
           @click="activeSection = 'MLA CONTENT MAP'">
-          MLA CONTENT MAP
+          ML Content Map
         </span>
         <span class="breadcrumb-arrow" v-if="showAreaBreadcrumbs">›</span>
 
@@ -21,7 +21,7 @@
         <template v-if="showAreaBreadcrumbs">
           <span class="breadcrumb-item" :class="{ active: activeSection === 'BY AREAS' }"
             @click="activeSection = 'BY AREAS'">
-            BY AREAS
+            By areas
           </span>
           <!-- <span class="breadcrumb-arrow">›</span>
           <span class="breadcrumb-item" :class="{ active: activeSection === 'BY CONDITIONS' }"
@@ -35,17 +35,17 @@
           <span class="breadcrumb-arrow">›</span>
           <span class="breadcrumb-item" :class="{ active: activeSection === 'PRESENTATIONS AND CONDITIONS' }"
             @click="activeSection = 'PRESENTATIONS AND CONDITIONS'">
-            PRESENTATIONS AND CONDITIONS
+            Presentations and Conditions
           </span>
           <span class="breadcrumb-arrow">›</span>
           <span v-if="activeSection === 'ALPHABETICALLY'" class="breadcrumb-item" :class="{ active: activeSection === 'ALPHABETICALLY' }"
             @click="activeSection = 'ALPHABETICALLY'">
-            ALPHABETICALLY
+            Alphabetically
           </span>
 
           <span v-if="activeSection === 'BY AREAS PRESENTATION'" class="breadcrumb-item" :class="{ active: activeSection === 'BY AREAS PRESENTATION' && activeSubSection == '' }"
           @click="activeSection = 'BY AREAS PRESENTATION'">
-          BY AREAS
+          By areas
         </span>
         <span v-if="activeSection === 'BY AREAS PRESENTATION' && activeSubSection == 'ByAreaCondition'" class="breadcrumb-arrow">›</span>
         <span v-if="activeSection === 'BY AREAS PRESENTATION' && activeSubSection == 'ByAreaCondition'" class="breadcrumb-item" :class="{ active: activeSection === 'BY AREAS PRESENTATION' }"
@@ -57,14 +57,14 @@
       </div>
 
       <!-- 🔹 Content -->
-      <div class="mla-list-layout">
+      <div class="mla-list-layout" :class="{ 'mla-list-layout--sidebar-collapsed': leftPanelCollapsed }">
         <div class="mlalist-left-section">
           <div  @mouseenter="showBreadcrumb = true"
           @mouseleave="showBreadcrumb = false">
           <MLAContentMap  :viewMode="viewMode" @set-view-mode="setViewMode"  @sort-changed="handleSortChange"  @update-active-section="activeSection = $event"/>
-          <div class="mla-content-searchbar">
-            <input type="search" v-model="searchQuery" id="search" placeholder="Search..." name="search" @click="openPopup" />
-            <div class="search-mla-icon">
+          <div class="mla-content-searchbar" @click="openSearch">
+            <input type="search" v-model="searchQuery" id="search" placeholder="Search..." name="search" @click.stop="openSearch" @keyup.enter="openSearch" />
+            <div class="search-mla-icon" @click.stop="openSearch">
               <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M2.14941 5.6517C2.14941 8.3617 4.30942 10.5417 6.96942 10.5417C9.62942 10.5417 11.7894 8.3517 11.7894 5.6517C11.7894 2.9517 9.62942 0.761719 6.96942 0.761719C4.29942 0.761719 2.14941 2.9417 2.14941 5.6517ZM3.61942 5.6517C3.61942 3.7717 5.09942 2.25171 6.96942 2.25171C8.81942 2.25171 10.3194 3.79171 10.3194 5.66171C10.3194 7.53171 8.80942 9.06171 6.96942 9.06171C5.12942 9.06171 3.61942 7.5217 3.61942 5.6517Z"
@@ -90,23 +90,43 @@
           </div>
           <div>
           <div class="questions-notes-mocks">
-            <div class="mla-question-box"  >
+            <div
+              class="mla-question-box"
+              style="cursor: pointer"
+              title="Click to switch between Progress and Score"
+              @click="toggleQuestionsSidebarScoreMode"
+            >
               <h4><img src="/images/questionmark.png" alt="img"> Questions</h4>
-               <ProgressBar :progress="0" />
+               <ProgressBar
+                 :progress="questionsSidebarScoreMode ? globalScorePercent : globalProgressPercent"
+                 :label="questionsSidebarScoreMode ? 'Score' : 'Progress'"
+                 :mode="questionsSidebarScoreMode ? 'score' : 'progress'"
+               />
+               <div class="score-detail">{{ globalAttempted }}/{{ globalTotalQuestions }}</div>
                <div class="cardbottom-shadow">
                         <img src="/images/cardshadow.png" alt="">
                     </div>
             </div>
             <div class="mla-question-box mla-note-box" style="cursor:pointer" @click="openExitAlert('Notes')">
               <h4><img src="/images/file.png" alt="img"> Notes</h4>
-               <ProgressBar :progress="38" />
+               <ProgressBar :progress="0" />
                <div class="cardbottom-shadow">
                         <img src="/images/cardshadow.png" alt="">
                     </div>
             </div>
-            <div class="mla-question-box mla-mock-box" style="cursor:pointer" @click="openExitAlert('Mocks')">
-              <h4><img src="/images/brain.png" alt="img"> Mocks</h4>
-               <ProgressBar :progress="66"  label="Score"/>
+            <div class="mla-question-box mla-mock-box">
+              <h4 style="cursor:pointer" @click="openExitAlert('Mocks')"><img src="/images/brain.png" alt="img"> Mocks</h4>
+              <div
+                class="mocks-summary-toggle"
+                title="Click to switch between Score and Progress"
+                @click.stop="toggleMocksSidebarScoreMode"
+              >
+                <ProgressBar
+                  :progress="mocksSummaryDisplayPercent"
+                  :label="mocksSidebarShowProgress ? 'Progress' : 'Score'"
+                  :mode="mocksSidebarShowProgress ? 'progress' : 'score'"
+                />
+              </div>
                <div class="cardbottom-shadow">
                         <img src="/images/cardshadow.png" alt="">
                     </div>
@@ -115,12 +135,18 @@
           </div>
         </div>
 
-         <!-- Popup Component -->
-        <ListSearchPopup :visible="showPopup" @close="showPopup = false">
-        </ListSearchPopup>
-
         <div class="mlalist-right-section">
-          <!-- 🧠 Dynamic Content based on breadcrumb -->
+          <button
+            type="button"
+            class="mla-sidebar-toggle"
+            :class="{ 'mla-sidebar-toggle--collapsed': leftPanelCollapsed }"
+            :title="leftPanelCollapsed ? 'Show sidebar' : 'Hide sidebar'"
+            :aria-label="leftPanelCollapsed ? 'Show sidebar' : 'Hide sidebar'"
+            :aria-expanded="!leftPanelCollapsed"
+            @click="toggleLeftPanel"
+          >
+            <span class="mla-sidebar-toggle-tab" aria-hidden="true"></span>
+          </button>
           <template v-if="activeSection === 'MLA CONTENT MAP'"></template>
           <template v-if="activeSection === 'BY AREAS'" >
             <div class="listing"
@@ -128,10 +154,10 @@
             @mouseleave="showBreadcrumb = false">
 
            
-            <MLASubList title="All areas of clinical practice" total="0/1750" :items="clinicalAreas"
-              wrapperClass="areas-clinical-practice" />
-            <MLASubList title="All areas of professional knowledge" total="0/887" :items="professionalKnowledge"
-              wrapperClass="areas-professional-knowledge" />
+            <MLASubList title="All areas of clinical practice" :total="clinicalTotal" :items="clinicalAreas"
+              wrapperClass="areas-clinical-practice" :show-score-detail="questionsSidebarScoreMode" />
+            <MLASubList title="All areas of professional knowledge" :total="professionalTotal" :items="professionalKnowledge"
+              wrapperClass="areas-professional-knowledge" :show-score-detail="questionsSidebarScoreMode" />
             </div>
           </template>
 
@@ -145,9 +171,10 @@
             @mouseenter="showBreadcrumb = true"
             @mouseleave="showBreadcrumb = false">
             <MLAList title="Presentations" total="0/974" :items="PresentationsList"
-              wrapperClass="areas-clinical-practice" />
+              wrapperClass="areas-clinical-practice" :show-score-detail="questionsSidebarScoreMode" />
             <MLASubList title="Conditions" total="0/1140" :items="AlphaConditionsList"
-            wrapperClass="areas-professional-knowledge" />
+            wrapperClass="areas-professional-knowledge" :show-score-detail="questionsSidebarScoreMode"
+            list-section="ALPHABETICALLY" />
             </div>
           </template>
 
@@ -200,8 +227,11 @@ import MLAList from '@/components/MLAList.vue'
 import MLASubList from '@/components/MLASubList.vue'
 
 import ProgressBar from '@/components/QuestionpgProgress.vue'
-import ListSearchPopup from '@/components/ListSearchPopup.vue';
 import  {get}  from './lib/api';
+import {
+  mocksAggregateScorePercent,
+  mocksAggregateProgressPercent,
+} from './lib/mocksAggregate';
 
 export default {
   name: 'MLAListSelection',
@@ -211,11 +241,9 @@ export default {
     ProgressBar, 
     MLAList,
     MLASubList,
-    ListSearchPopup 
   },
   data() {
     return {
-      showPopup: false,
       exitpage:'',
       showExitPopup:false,
       searchQuery: '',
@@ -223,8 +251,14 @@ export default {
       activeSubSection: '',
       viewMode: 'areas',
       showBreadcrumb:false,
+      leftPanelCollapsed: false,
+      /** false = Progress (default), true = Score — toggled by clicking the Questions card */
+      questionsSidebarScoreMode: false,
       clinicalAreas:[],
       professionalKnowledge:[],
+      mocksData: [],
+      /** false = Score, true = Progress on Mocks sidebar card */
+      mocksSidebarShowProgress: false,
   //     clinicalAreas: [
   //       { title: '1. Acute and emergency', progress: '0/134' },
   // //       {
@@ -1021,13 +1055,29 @@ export default {
   },
 
   created(){
+    // Restore the section/viewMode the user was on when they navigated to a question
+    try {
+      const restoreSection = localStorage.getItem('questionListRestore_section');
+      if (restoreSection) {
+        if (restoreSection === 'BY AREAS') {
+          this.activeSection = 'BY AREAS';
+          this.viewMode = 'areas';
+        } else if (restoreSection === 'ALPHABETICALLY') {
+          this.activeSection = 'ALPHABETICALLY';
+          this.viewMode = 'presentations';
+        }
+        localStorage.removeItem('questionListRestore_section');
+      }
+    } catch (e) { /* ignore */ }
+
     get("/getsubjectclient").then((res) => {
         console.log('data', res.data)
         this.clinicalAreas = res.data.clinical
         this.professionalKnowledge = res.data.professional
+      });
 
-       
-
+    get("/getmocks").then((res) => {
+        this.mocksData = res.data.data || []
       });
 
       get("/getpresentationconditionclient").then((res) => {
@@ -1050,9 +1100,64 @@ export default {
     },
     showPresentationBreadcrumbs() {
       return this.viewMode === 'presentations';
-    }
+    },
+
+    clinicalTotal() {
+      const total = this.clinicalAreas.reduce((s, i) => s + (parseInt(i.questions_count) || 0), 0);
+      const attempted = this.clinicalAreas.reduce((s, i) => s + (parseInt(i.attempted_count) || 0), 0);
+      return `${attempted}/${total}`;
+    },
+    professionalTotal() {
+      const total = this.professionalKnowledge.reduce((s, i) => s + (parseInt(i.questions_count) || 0), 0);
+      const attempted = this.professionalKnowledge.reduce((s, i) => s + (parseInt(i.attempted_count) || 0), 0);
+      return `${attempted}/${total}`;
+    },
+
+    globalTotalQuestions() {
+      return (
+        this.clinicalAreas.reduce((s, i) => s + (parseInt(i.questions_count) || 0), 0) +
+        this.professionalKnowledge.reduce((s, i) => s + (parseInt(i.questions_count) || 0), 0)
+      );
+    },
+    globalCorrect() {
+      return (
+        this.clinicalAreas.reduce((s, i) => s + (parseInt(i.correct_count) || 0), 0) +
+        this.professionalKnowledge.reduce((s, i) => s + (parseInt(i.correct_count) || 0), 0)
+      );
+    },
+    globalAttempted() {
+      return (
+        this.clinicalAreas.reduce((s, i) => s + (parseInt(i.attempted_count) || 0), 0) +
+        this.professionalKnowledge.reduce((s, i) => s + (parseInt(i.attempted_count) || 0), 0)
+      );
+    },
+    globalScorePercent() {
+      if (!this.globalTotalQuestions) return 0;
+      return Math.round((this.globalCorrect / this.globalTotalQuestions) * 100);
+    },
+
+    /** Attempted / total, for Progress label on the Questions card (matches Notes-style “Progress” bar) */
+    globalProgressPercent() {
+      if (!this.globalTotalQuestions) return 0;
+      return Math.round((this.globalAttempted / this.globalTotalQuestions) * 100);
+    },
+
+    mocksSummaryDisplayPercent() {
+      return this.mocksSidebarShowProgress
+        ? mocksAggregateProgressPercent(this.mocksData)
+        : mocksAggregateScorePercent(this.mocksData);
+    },
   },
   methods: {
+    toggleMocksSidebarScoreMode() {
+      this.mocksSidebarShowProgress = !this.mocksSidebarShowProgress;
+    },
+    toggleQuestionsSidebarScoreMode() {
+      this.questionsSidebarScoreMode = !this.questionsSidebarScoreMode;
+    },
+    toggleLeftPanel() {
+      this.leftPanelCollapsed = !this.leftPanelCollapsed;
+    },
     openExitAlert(e){
       this.exitpage = e
       this.showExitPopup = true;
@@ -1068,8 +1173,15 @@ export default {
 
      
     },
-    openPopup() {
-      this.showPopup = true;
+    openSearch() {
+      this.$router.push({
+        path: '/search',
+        query: {
+          from: this.$route.fullPath,
+          q: this.searchQuery || undefined,
+          source: 'questions',
+        },
+      });
     },
     AreaCondition(){
       this.activeSubSection = 'ByAreaCondition'
@@ -1177,6 +1289,91 @@ button {
   gap: 20px;
 }
 
+.mla-list-layout {
+  position: relative;
+  align-items: stretch;
+  min-height: calc(100vh - 150px);
+  transition: gap 0.35s ease;
+}
+
+.mla-list-layout--sidebar-collapsed {
+  gap: 0;
+}
+
+.mlalist-left-section {
+  transition: flex-basis 0.35s ease, opacity 0.3s ease, transform 0.35s ease, max-width 0.35s ease;
+}
+
+.mla-list-layout--sidebar-collapsed .mlalist-left-section {
+  flex: 0 0 0 !important;
+  max-width: 0;
+  opacity: 0;
+  transform: translateX(-24px);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.mlalist-right-section {
+  position: relative;
+  overflow: visible;
+  transition: flex-basis 0.35s ease, max-width 0.35s ease;
+}
+
+.mla-list-layout--sidebar-collapsed .mlalist-right-section {
+  flex: 1 1 100% !important;
+  max-width: 100%;
+}
+
+.mla-sidebar-toggle {
+  position: absolute;
+  top: 50%;
+  left: -30px;
+  z-index: 25;
+  width: 14px;
+  height: 56px;
+  padding: 0 8px 0 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: left 0.35s ease, padding 0.35s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: content-box;
+}
+
+.mla-sidebar-toggle--collapsed {
+  left: 0;
+  padding: 0 8px 0 0;
+  justify-content: flex-start;
+}
+
+.mla-sidebar-toggle-tab {
+  display: block;
+  width: 14px;
+  height: 36px;
+  background: linear-gradient(to left, #9ed4f7 0%, #7ec4ef 45%, #6ab8ea 100%);
+  clip-path: polygon(0 50%, 100% 12%, 100% 88%);
+  filter: drop-shadow(-4px 0 7px rgba(106, 184, 234, 0.45));
+  transition: clip-path 0.35s ease, filter 0.35s ease, transform 0.35s ease;
+}
+
+.mla-sidebar-toggle:hover .mla-sidebar-toggle-tab {
+  background: linear-gradient(to left, #b0ddf9 0%, #8ecbf5 45%, #79c0eb 100%);
+  filter: drop-shadow(-5px 0 9px rgba(106, 184, 234, 0.55));
+}
+
+.mla-sidebar-toggle--collapsed .mla-sidebar-toggle-tab {
+  clip-path: polygon(100% 50%, 0 12%, 0 88%);
+  filter: drop-shadow(4px 0 7px rgba(106, 184, 234, 0.45));
+}
+
+.mla-sidebar-toggle--collapsed:hover .mla-sidebar-toggle-tab {
+  filter: drop-shadow(5px 0 9px rgba(106, 184, 234, 0.55));
+}
+
 .areas-presentation-condition{
   width: 100%;
   border: 0.75px solid #D0D2D3;
@@ -1249,6 +1446,14 @@ button {
 }
 
 
+.score-detail {
+    font-size: 11px;
+    color: rgba(255,255,255,0.85);
+    text-align: right;
+    margin-top: 3px;
+    font-family: HelveticaBoldcont, sans-serif;
+}
+
 .mla-note-box {
  background-color: #F59C00;
  border-color: #F59C00;
@@ -1257,6 +1462,11 @@ button {
 .mla-mock-box {
   background-color: #ED1C24;
   border-color: #ED1C24;
+}
+
+.mocks-summary-toggle {
+  cursor: pointer;
+  user-select: none;
 }
 
 

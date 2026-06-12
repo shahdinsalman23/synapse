@@ -1,7 +1,7 @@
 <template>
   <div class="progress-wrapper">
     <span class="label">{{ label }}</span>
-    <div class="progress-bar">
+    <div class="progress-bar" :class="{ 'progress-bar--score': mode === 'score' }">
       <div class="progress-fill" :style="{ width: progress + '%' }"></div>
     </div>
     <span class="percentage">{{ progress }}%</span>
@@ -18,6 +18,11 @@ export default {
     label: {
       type: String,
       default: 'Progress'
+    },
+    mode: {
+      type: String,
+      default: 'progress',
+      validator: (v) => ['progress', 'score'].includes(v),
     }
   }
 }
@@ -55,6 +60,10 @@ export default {
   height: 100%;
   background-color: #9DED6C;
   transition: width 0.3s ease;
+}
+
+.progress-bar--score {
+  background-color: #DF001B;
 }
 
 .percentage {

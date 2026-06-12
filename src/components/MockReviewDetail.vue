@@ -149,7 +149,7 @@ export default {
             form: {},
             tabs: [
                 {
-                    title: 'Question',
+                    title: 'Questions',
                     content: [
                         `<p>If you are diagnosed with stage C or stage D heart failure, your health care professional will give you an NYHA Functional Classification as a baseline. Then, as you undergo treatment, your health care professional will assign another classification of your condition, allowing your care team to measure how well treatment is working.</p>
                         <p>The table below describes the different classes in the NYHA Functional Classification.</p>

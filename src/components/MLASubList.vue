@@ -9,7 +9,7 @@
         
         <h4>{{ title }}</h4>
         <div class="total-percentage-marks">
-          <div class="progress-bar">
+          <div class="progress-bar" :class="{ 'progress-bar--score': showScoreDetail }">
             <div class="progress-fill" :style="{ width: totalPercent }"></div>
           </div>
           <h5>{{ total }}</h5>
@@ -23,7 +23,7 @@
         :key="pIndex"
         class="mla-list-item-wrapper"
       >
-        <div class="mla-list-item" @click="GOtoroute(item)">
+        <div class="mla-list-item" :class="{ 'mla-row-highlight': isHighlighted(item) }" @click="GOtoroute(item, pIndex)">
           <!-- Arrow for parents with children -->
           
   
@@ -39,8 +39,33 @@
             
           </button>
           </h4>
-          <!-- <h5 class="item-progress" v-if="item.progress">{{ item.questions_count }}</h5> -->
-          <h5 class="item-progress" >{{item.attempted_count ?? 0}}/{{ item.questions_count ?? 0 }}</h5>
+          <!-- Score progress (correct/total) -->
+          <div class="item-score-wrap">
+            <template v-if="!showScoreDetail">
+              <div class="item-progress-wrap">
+                <div class="item-progress-bar">
+                  <div class="item-progress-fill" :style="{ width: progressPercent(item) }"></div>
+                </div>
+                <span class="item-progress-only">{{ progressFraction(item) }}</span>
+              </div>
+            </template>
+            <template v-else-if="hasAttemptedForScoreBar(item)">
+              <div class="attemptscore">
+              <span class="item-score-pct">{{ scorePercent(item) }}</span>
+              
+              <span class="item-score-counts">{{ item.correct_count }}/{{ item.questions_count ?? 0 }}</span>
+              </div>
+              <div class="item-score-bar">
+                <div
+                  class="item-score-fill"
+                  :style="{ width: scorePercent(item) }"
+                ></div>
+              </div>
+            </template>
+            <template v-else>
+              <span class="item-score-zero">0/{{ item.questions_count ?? 0 }}</span>
+            </template>
+          </div>
 
         </div>
   
@@ -52,10 +77,10 @@
 
            
             <div
-             
               class="subgrid-item"
+              :class="{ 'mla-row-highlight': isHighlighted(child) }"
             >
-              <div class="subgrid-item-row" @click="GOtorouteSublist(child)">
+              <div class="subgrid-item-row" @click="GOtorouteSublist(child, item, pIndex, cIndex)">
                 
   
                 <div class="child-title-wrap">
@@ -87,7 +112,8 @@
                     v-for="(g, gIndex) in child.children"
                     :key="gIndex"
                     class="grandchild-item"
-                    @click="GOtoroute(g)"
+                    :class="{ 'mla-row-highlight': isHighlighted(g) }"
+                    @click="GOtorouteGrandchild(g, child, item, pIndex, cIndex, gIndex)"
                   >
                     <h5 class="gc-title">{{ g.title }}</h5>
                     <!-- <small v-if="g.questions" class="gc-questions"> ({{ g.questions.join(', ') }})</small>ss -->
@@ -116,16 +142,48 @@
         default: ""
       },
       condition: String,
+      /** false: list shows attempted/total only; true: score bars (only rows with attempts) */
+      showScoreDetail: {
+        type: Boolean,
+        default: true
+      },
+      /**
+       * Internal section key used for restoring activeSection on back-nav.
+       * 'BY AREAS' (default) or 'ALPHABETICALLY' for the Conditions column.
+       */
+      listSection: {
+        type: String,
+        default: 'BY AREAS'
+      }
     },
     data() {
       return {
-        // track which parent items are expanded (keyed by parent index)
         expandedParents: {},
-        // track expanded children per parent: { parentIndex: { childIndex: true } }
-        expandedChildren: {}
+        expandedChildren: {},
+        highlightItemId: null,
+        restoreApplied: false,
       };
     },
+    watch: {
+      items: {
+        handler() {
+          this.$nextTick(() => this.applyQuestionListRestore());
+        },
+        deep: true,
+      },
+    },
+    mounted() {
+      this.$nextTick(() => this.applyQuestionListRestore());
+    },
+    activated() {
+      this.restoreApplied = false;
+      this.$nextTick(() => this.applyQuestionListRestore());
+    },
     computed: {
+      breadcrumbSectionLabel() {
+        if (this.listSection === 'ALPHABETICALLY') return 'Presentations and conditions';
+        return 'By areas';
+      },
       // small helper to show total percent in progress-fill width,
       // expects total like '0/134' or you can pass float like '20%'
       totalPercent() {
@@ -143,21 +201,140 @@
       }
     },
     methods: {
-      GOtoroute(item) {
+      isHighlighted(item) {
+        if (!item || this.highlightItemId == null) return false;
+        const hid = item.id != null ? String(item.id) : '';
+        return hid !== '' && hid === String(this.highlightItemId);
+      },
+
+      persistQuestionListRestore({ pIndex, pId, cIndex, cId, gIndex, gId }) {
+        try {
+          localStorage.setItem('questionListRestore_section', this.listSection || 'BY AREAS');
+          localStorage.setItem('questionListRestore_column', this.title || '');
+          localStorage.setItem('questionListRestore_parentIndex', String(pIndex ?? ''));
+          localStorage.setItem('questionListRestore_parentId', String(pId ?? ''));
+          localStorage.setItem('questionListRestore_childIndex', cIndex != null ? String(cIndex) : '');
+          localStorage.setItem('questionListRestore_childId', cId != null ? String(cId) : '');
+          localStorage.setItem('questionListRestore_grandIndex', gIndex != null ? String(gIndex) : '');
+          localStorage.setItem('questionListRestore_grandId', gId != null ? String(gId) : '');
+        } catch (e) { /* ignore */ }
+      },
+
+      applyQuestionListRestore() {
+        if (this.restoreApplied) return;
+
+        const col = localStorage.getItem('questionListRestore_column');
+        if (!col || col !== this.title) return;
+
+        const pidRaw = localStorage.getItem('questionListRestore_parentIndex');
+        if (pidRaw === null || pidRaw === '') return;
+
+        const pIndex = parseInt(pidRaw, 10);
+        if (Number.isNaN(pIndex) || !this.items || !this.items.length || !this.items[pIndex]) return;
+
+        const highlightId = localStorage.getItem('questionPendingHighlightId');
+        const suppress = localStorage.getItem('questionSuppressListHighlight') === '1';
+
+        if (!suppress && !highlightId) return;
+
+        this.restoreApplied = true;
+
+        // Only expand the parent row if we're restoring a child/grandchild underneath it.
+        // If the user clicked a top-level leaf (no children), expanding would show an empty subgrid.
+        const cidRaw = localStorage.getItem('questionListRestore_childIndex');
+        const gidRaw = localStorage.getItem('questionListRestore_grandIndex');
+        const hasChild = cidRaw !== null && cidRaw !== '';
+
+        if (hasChild) {
+          this.expandedParents = { ...this.expandedParents, [pIndex]: true };
+
+          const cIndex = parseInt(cidRaw, 10);
+          if (!Number.isNaN(cIndex) && (gidRaw !== null && gidRaw !== '')) {
+            // Expand the child panel so grandchild list is visible
+            this.expandedChildren = {
+              ...this.expandedChildren,
+              [pIndex]: { ...(this.expandedChildren[pIndex] || {}), [cIndex]: true },
+            };
+          }
+        }
+
+        this.highlightItemId = (suppress || !highlightId) ? null : String(highlightId);
+
+        if (this.highlightItemId) {
+          this.$nextTick(() => {
+            const el = this.$el && this.$el.querySelector('.mla-row-highlight');
+            if (el && typeof el.scrollIntoView === 'function') {
+              el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+          });
+        }
+
+        try {
+          [
+            'questionListRestore_column', 'questionListRestore_parentIndex', 'questionListRestore_parentId',
+            'questionListRestore_childIndex', 'questionListRestore_childId',
+            'questionListRestore_grandIndex', 'questionListRestore_grandId',
+            'questionPendingHighlightId', 'questionSuppressListHighlight',
+          ].forEach(k => localStorage.removeItem(k));
+        } catch (e) { /* ignore */ }
+      },
+
+      scorePercent(item) {
+        const correct = Number(item.correct_count) || 0;
+        const total   = Number(item.questions_count) || 1;
+        return Math.round((correct / total) * 100) + '%';
+      },
+
+      progressFraction(item) {
+        const attempted = Number(item.attempted_count);
+        const total = Number(item.questions_count) || 0;
+        const a = Number.isFinite(attempted) ? attempted : 0;
+        return `${a}/${total}`;
+      },
+
+      progressPercent(item) {
+        const attempted = Number(item.attempted_count) || 0;
+        const total = Number(item.questions_count) || 0;
+        if (!total) return '0%';
+        return Math.min(Math.round((attempted / total) * 100), 100) + '%';
+      },
+
+      /** Show scoring bar only when the user has attempted at least one question in this row */
+      hasAttemptedForScoreBar(item) {
+        if (item.attempted_count !== undefined && item.attempted_count !== null) {
+          return (Number(item.attempted_count) || 0) > 0;
+        }
+        return (Number(item.correct_count) || 0) > 0;
+      },
+
+      setQuestionBreadcrumb(labels) {
+        try {
+          localStorage.setItem('questionBreadcrumbLabels', JSON.stringify(labels));
+        } catch (e) {
+          /* ignore quota / private mode */
+        }
+      },
+
+      GOtoroute(item, pIndex) {
         console.log('items' , item , this.title)
         if (this.condition === 'conditionAreas') {
           this.$emit('AreaCondition', item);
           return;
         }
-        // keep your current behavior (adjust route as needed)
 
         if(item.children?.length > 0){
             return
-
         }
-       
+
+        this.persistQuestionListRestore({ pIndex, pId: item.id, cIndex: null, cId: null, gIndex: null });
 
         localStorage.setItem("questiontitle", this.title);
+        this.setQuestionBreadcrumb([
+          'ML Content Map',
+          this.breadcrumbSectionLabel,
+          this.title,
+          item.title || 'Questions'
+        ]);
         this.$router.push(`/questionspage/${item.id}`);
 //         this.$router.push({
 //   path: '/questionspage',
@@ -169,22 +346,28 @@
 
       },
 
-      GOtorouteSublist(item) {
-        console.log('items' , item , this.title)
+      GOtorouteSublist(child, parentItem, pIndex, cIndex) {
+        console.log('items' , child , this.title)
         if (this.condition === 'conditionAreas') {
-          this.$emit('AreaCondition', item);
+          this.$emit('AreaCondition', child);
           return;
         }
-        // keep your current behavior (adjust route as needed)
 
-        if(item.children?.length > 0){
+        if(child.children?.length > 0){
             return
-
         }
-       
+
+        this.persistQuestionListRestore({ pIndex, pId: parentItem?.id, cIndex, cId: child.id, gIndex: null });
 
         localStorage.setItem("questiontitle", "Sublist");
-        this.$router.push(`/questionspage/${item.id}`);
+        this.setQuestionBreadcrumb([
+          'ML Content Map', 
+          this.breadcrumbSectionLabel,
+          this.title,
+          (parentItem && parentItem.title) || '',
+          child.title || 'Questions'
+        ].filter(Boolean));
+        this.$router.push(`/questionspage/${child.id}`);
 
 
       },
@@ -214,6 +397,23 @@
         if (!q) return "";
         if (Array.isArray(q)) return q.join(', ');
         return String(q);
+      },
+
+      GOtorouteGrandchild(g, child, parentItem, pIndex, cIndex, gIndex) {
+        if (this.condition === 'conditionAreas') {
+          return;
+        }
+        this.persistQuestionListRestore({ pIndex, pId: parentItem?.id, cIndex, cId: child?.id, gIndex, gId: g?.id });
+        localStorage.setItem("questiontitle", this.title);
+        this.setQuestionBreadcrumb([
+          'ML Content Map', 
+          this.breadcrumbSectionLabel,
+          this.title,
+          (parentItem && parentItem.title) || '',
+          (child && child.title) || '',
+          g.title || 'Questions'
+        ].filter(Boolean));
+        this.$router.push(`/questionspage/${g.id}`);
       }
     }
   };
@@ -357,6 +557,63 @@
     font-weight: 300;
     margin: 0;
   }
+
+  /* ── Per-row score progress ── */
+  .item-score-wrap {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 110px;
+    flex-shrink: 0;
+    align-content: center;
+  }
+
+  .item-score-pct {
+    font-size: 13px;
+    font-weight: 700;
+    color: #231F20;
+    line-height: 1;
+  }
+
+  .item-score-bar {
+    width: 100%;          /* fills the fixed 90px column */
+    height: 6px;
+    background: #DF001B;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .item-score-fill {
+    height: 100%;
+    background: #9DED6C;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+
+  .item-score-counts {
+    font-size: 10px;
+    color: #555;
+    line-height: 0;
+  }
+
+  .attemptscore {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 5px;
+    gap: 5px;
+}
+
+  /* zero state: keep the same column width, right-aligned like scored rows */
+  .item-score-zero {
+    font-size: 13px;
+    color: #231F20;
+    font-weight: 300;
+    text-align: right;
+    width: 100%;
+  }
   
   /* arrow button */
   .arrow-btn {
@@ -409,7 +666,7 @@
   
   .child-title {
     margin: 0;
-    font-weight: 300;
+    font-weight: 600;
     color: #231F20;
     font-size: 14px;
     font-family: 'Helveticacondensed';
@@ -472,13 +729,71 @@
     background: #9DED6C;
     height: 100%;
   }
+
+  .progress-bar--score {
+    background: #DF001B;
+  }
   
   .total-percentage-marks {
     display: flex;
     align-items: center;
     gap: 5px;
   }
+
+  .total-fraction-plain {
+    margin: 0;
+    color: #231f20;
+    font-size: 14px;
+    font-family: 'Helveticacondensed', sans-serif;
+    font-weight: 300;
+  }
+
+  .item-progress-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .item-progress-bar {
+    width: 70px;
+    height: 6px;
+    background: #9ebfdf;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .item-progress-fill {
+    height: 100%;
+    background: #9DED6C;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+
+  .item-progress-only {
+    font-size: 10px;
+    font-weight: 300;
+    color: #231f20;
+    text-align: right;
+    width: 100%;
+  }
   
+  /* ── Back-navigation highlight ── */
+  .mla-row-highlight {
+    outline: 2px solid #1A90FF;
+    outline-offset: -2px;
+  }
+  .mla-list-item.mla-row-highlight {
+    border-radius: 10px;
+  }
+  .subgrid-item.mla-row-highlight {
+    border-radius: 8px;
+  }
+  .grandchild-item.mla-row-highlight {
+    border-radius: 6px;
+  }
+
   /* transitions */
   .slide-fade-enter-active,
   .slide-fade-leave-active {

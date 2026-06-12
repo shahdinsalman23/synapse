@@ -1,45 +1,29 @@
 <template>
     <div>
-        <QuestionHeader @showbirds="showbirds" :flagcounts="flagcounts" :incorrectcount="incorrectcount"
+        <QuestionHeader @showbirds="showbirds" @back="returnFromQuestionViaHeaderBack"
+            :flagcounts="flagcounts" :incorrectcount="incorrectcount"
             :correctcount="correctcount" :percentage="percentage" />
 
 
-        <!-- <section class="question-breadcrum">
+        <section class="question-breadcrum">
             <div class="container">
-              
                 <div class="breadcrumb">
-                    <span class="breadcrumb-item" :class="{ active: activeSection === 'MLA CONTENT MAP' }"
-                        @click="activeSection = 'MLA CONTENT MAP'">
-                        MLA CONTENT MAP
-                    </span>
-                    <span class="breadcrumb-arrow">›</span>
-                    <span class="breadcrumb-item" :class="{ active: activeSection === 'BY AREAS' }"
-                        @click="activeSection = 'BY AREAS'">
-                        PRESENTATIONS AND CONDITIONS
-                    </span>
-                    <span class="breadcrumb-arrow">›</span>
-                    <span class="breadcrumb-item" :class="{ active: activeSection === 'BY AREAS' }"
-                        @click="activeSection = 'BY AREAS'">
-                        BY AREAS
-                    </span>
-                    <span class="breadcrumb-arrow">›</span>
-                    <span class="breadcrumb-item" :class="{ active: activeSection === 'BY AREAS' }"
-                        @click="activeSection = 'BY AREAS'">
-                        CARDIOLOGY
-                    </span>
-                    <span class="breadcrumb-arrow">›</span>
-                    <span class="breadcrumb-item" :class="{ active: activeSection === 'BY AREAS' }"
-                        @click="activeSection = 'BY AREAS'">
-                        PRESENTATIONS
-                    </span>
-                    <span class="breadcrumb-arrow">›</span>
-                    <span class="breadcrumb-item" :class="{ active: activeSection === 'BY AREAS' }"
-                        @click="activeSection = 'BY AREAS'">
-                        ABDOMINAL MASS
+                    <span
+                        v-for="(label, idx) in breadcrumbItems"
+                        :key="'breadcrumb-seg-' + idx"
+                        class="breadcrumb-segment"
+                    >
+                        <span v-if="idx > 0" class="breadcrumb-arrow">›</span>
+                        <span
+                            class="breadcrumb-item"
+                            :class="{ active: idx === breadcrumbItems.length - 1 }"
+                            :style="idx < breadcrumbItems.length - 1 ? 'cursor:pointer' : ''"
+                            @click="handleBreadcrumbClick(idx)"
+                        >{{ label }}</span>
                     </span>
                 </div>
             </div>
-        </section> -->
+        </section>
 
 
         <!-- <section class="questionnumber-sec">
@@ -92,30 +76,49 @@
                                         <path d="m15 18-6-6 6-6" />
                                     </svg></div>
                             </div>
-                            <div class="questionnumber-slide  scrollmenus" ref="scrollContainer"
+                            <div class="questionnumber-slide scrollmenus" ref="scrollContainer"
+                                :class="{ 'scrollmenus--dragging': isDragging }"
                                 @mousedown="handleMouseDown" @mousemove="handleMouseMove" @mouseup="handleMouseUp"
-                                @mouseleave="handleMouseLeave" :style="slideStyle">
+                                :style="slideStyle">
                                 <span v-for="(nav, indexnav) in allquestions" :key="indexnav" class="questionnumber"
                                     :style="{
-                                        background: nav.score?.correct == 1
+                                        background: Number(nav.score?.correct) === 1
                                             ? '#9ded6c'
-                                            : (nav.score?.correct == 0 ?
+                                            : (nav.score?.correct != null && Number(nav.score?.correct) !== 1 ?
                                                 '#ffbabe'
                                                 : nav.flag
                                                     ? '#f1f2f2'
                                                     : (nav.skip
                                                         ? '#f1f2f2'
                                                         : '#f1f2f2')),
-                                    }" :class="{ 'activeindexs': isPresentIndexs(indexnav) }">
-                                    <!-- <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{ indexnav + 1 }}</span> -->
-                                    <span @click="getBackindex(indexnav)" style="cursor:pointer; width: 100%;">{{
-                                         indexnav + 1 ?? nav.question_no }}</span>
-
-
-                                    <svg v-if="nav.flag" class="red-flag" width="11" viewBox="0 0 19 17">
+                                    }"
+                                    :class="{ 'activeindexs': isPresentIndexs(indexnav) }"
+                                    @click="onScrollerItemClick(indexnav)">
+                                    <svg class="scroller-flag-icon" :style="{ opacity: nav.flag ? 1 : 0 }" width="9"
+                                        viewBox="0 0 19 17">
                                         <path
                                             d="M9.09 1.53C6.15-0.15 3.06-0.31 0.1 1.03v13.53C2.84 13.13 5.71 13.17 8.43 14.73c1.63.93 3.31 1.4 5 1.4 1.69 0 3.36-.47 5-1.4l.34-.19V.96l-1 .57c-2.84 1.62-5.83 1.62-8.67 0z"
                                             fill="#ED1C24" />
+                                    </svg>
+
+                                    <span class="scroller-num">{{
+                                         indexnav + 1 ?? nav.question_no }}</span>
+
+                                    <svg class="scroller-feedback-icon" :style="{ opacity: nav.feedback ? 1 : 0 }"
+                                        width="10" height="11" viewBox="0 0 20 21" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M2.41003 1.45117C1.79003 1.45117 1.29004 1.95117 1.29004 2.57117V13.6912C1.29004 14.3112 1.79003 14.8112 2.41003 14.8112H3.73999C4.03999 14.8112 4.28003 15.0512 4.28003 15.3512V18.8812L7.75 14.9912C7.85 14.8812 8.00002 14.8112 8.15002 14.8112H17.25C17.87 14.8112 18.37 14.3112 18.37 13.6912V2.57117C18.37 1.95117 17.87 1.45117 17.25 1.45117H2.40002H2.41003Z"
+                                            fill="#FFF200" />
+                                        <path
+                                            d="M3.75 20.8213C3.69 20.8213 3.62006 20.8113 3.56006 20.7813C3.35006 20.7013 3.20996 20.5013 3.20996 20.2813V15.8813H2.41003C1.20003 15.8813 0.209961 14.8913 0.209961 13.6813V2.56134C0.209961 1.35134 1.20003 0.361328 2.41003 0.361328H17.26C18.47 0.361328 19.46 1.35134 19.46 2.56134V13.6813C19.46 14.8913 18.47 15.8813 17.26 15.8813H8.40002L4.15002 20.6413C4.05002 20.7613 3.9 20.8213 3.75 20.8213ZM2.42004 1.45132C1.80004 1.45132 1.30005 1.95132 1.30005 2.57132V13.6913C1.30005 14.3113 1.80004 14.8113 2.42004 14.8113H3.75C4.05 14.8113 4.29004 15.0513 4.29004 15.3513V18.8813L7.76001 14.9913C7.86001 14.8813 8.01003 14.8113 8.16003 14.8113H17.26C17.88 14.8113 18.38 14.3113 18.38 13.6913V2.57132C18.38 1.95132 17.88 1.45132 17.26 1.45132H2.41003H2.42004Z"
+                                            fill="#FBAD18" />
+                                        <path
+                                            d="M14.7601 10.1913H5.66016C5.36016 10.1913 5.12012 9.95134 5.12012 9.65134C5.12012 9.35134 5.36016 9.11133 5.66016 9.11133H14.7601C15.0601 9.11133 15.3002 9.35134 15.3002 9.65134C15.3002 9.95134 15.0601 10.1913 14.7601 10.1913Z"
+                                            fill="#FBAD18" />
+                                        <path
+                                            d="M14.7601 6.69135H5.66016C5.36016 6.69135 5.12012 6.45134 5.12012 6.15134C5.12012 5.85134 5.36016 5.61133 5.66016 5.61133H14.7601C15.0601 5.61133 15.3002 5.85134 15.3002 6.15134C15.3002 6.45134 15.0601 6.69135 14.7601 6.69135Z"
+                                            fill="#FBAD18" />
                                     </svg>
                                 </span>
                             </div>
@@ -140,7 +143,9 @@
                     <div class="question-option-arrows-wrapper">
                         <transition name="fade" mode="out-in">
                             <div class="questiontext-box" v-if="currentQuestion" :key="currentQuestion?.id">
-                                <p class="currentquestionnumber">{{ currentQuestion.number }}</p>
+                                <p v-if="currentQuestionCodeLabel" class="currentquestionnumber">
+                                    {{ currentQuestionCodeLabel }}
+                                </p>
                                 <p class="questionimage" v-html="currentQuestion.question_text"></p>
                                 <span class="questionflag">
 
@@ -166,6 +171,24 @@
 
                                     <span class="flag-hover-text" v-if="bubbles == 1">Flag Question</span>
                                 </span>
+
+                                <!-- Feedback icon — only shown after question is attempted -->
+                                <div v-if="currentQuestion?.score" class="questioncomment">
+                                    <button @click="openFeedbackPopup" class="feedbackbutton">
+                                        <svg v-if="currentQuestion.feedback" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.41003 1.45117C1.79003 1.45117 1.29004 1.95117 1.29004 2.57117V13.6912C1.29004 14.3112 1.79003 14.8112 2.41003 14.8112H3.73999C4.03999 14.8112 4.28003 15.0512 4.28003 15.3512V18.8812L7.75 14.9912C7.85 14.8812 8.00002 14.8112 8.15002 14.8112H17.25C17.87 14.8112 18.37 14.3112 18.37 13.6912V2.57117C18.37 1.95117 17.87 1.45117 17.25 1.45117H2.40002H2.41003Z" fill="#FFF200" />
+                                            <path d="M3.75 20.8213C3.69 20.8213 3.62006 20.8113 3.56006 20.7813C3.35006 20.7013 3.20996 20.5013 3.20996 20.2813V15.8813H2.41003C1.20003 15.8813 0.209961 14.8913 0.209961 13.6813V2.56134C0.209961 1.35134 1.20003 0.361328 2.41003 0.361328H17.26C18.47 0.361328 19.46 1.35134 19.46 2.56134V13.6813C19.46 14.8913 18.47 15.8813 17.26 15.8813H8.40002L4.15002 20.6413C4.05002 20.7613 3.9 20.8213 3.75 20.8213ZM2.42004 1.45132C1.80004 1.45132 1.30005 1.95132 1.30005 2.57132V13.6913C1.30005 14.3113 1.80004 14.8113 2.42004 14.8113H3.75C4.05 14.8113 4.29004 15.0513 4.29004 15.3513V18.8813L7.76001 14.9913C7.86001 14.8813 8.01003 14.8113 8.16003 14.8113H17.26C17.88 14.8113 18.38 14.3113 18.38 13.6913V2.57132C18.38 1.95132 17.88 1.45132 17.26 1.45132H2.41003H2.42004Z" fill="#FBAD18" />
+                                            <path d="M14.7601 10.1913H5.66016C5.36016 10.1913 5.12012 9.95134 5.12012 9.65134C5.12012 9.35134 5.36016 9.11133 5.66016 9.11133H14.7601C15.0601 9.11133 15.3002 9.35134 15.3002 9.65134C15.3002 9.95134 15.0601 10.1913 14.7601 10.1913Z" fill="#FBAD18" />
+                                            <path d="M14.7601 6.69135H5.66016C5.36016 6.69135 5.12012 6.45134 5.12012 6.15134C5.12012 5.85134 5.36016 5.61133 5.66016 5.61133H14.7601C15.0601 5.61133 15.3002 5.85134 15.3002 6.15134C15.3002 6.45134 15.0601 6.69135 14.7601 6.69135Z" fill="#FBAD18" />
+                                        </svg>
+                                        <svg v-else width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M3.75 20.8584C3.69 20.8584 3.62006 20.8485 3.56006 20.8185C3.35006 20.7385 3.20996 20.5385 3.20996 20.3185V15.9185H2.41003C1.20003 15.9185 0.209961 14.9284 0.209961 13.7184V2.59845C0.209961 1.38845 1.20003 0.398438 2.41003 0.398438H17.26C18.47 0.398438 19.46 1.38845 19.46 2.59845V13.7184C19.46 14.9284 18.47 15.9185 17.26 15.9185H8.40002L4.15002 20.6784C4.05002 20.7984 3.9 20.8584 3.75 20.8584ZM2.42004 1.48843C1.80004 1.48843 1.30005 1.98843 1.30005 2.60843V13.7285C1.30005 14.3485 1.80004 14.8484 2.42004 14.8484H3.75C4.05 14.8484 4.29004 15.0885 4.29004 15.3885V18.9185L7.76001 15.0284C7.86001 14.9184 8.01003 14.8484 8.16003 14.8484H17.26C17.88 14.8484 18.38 14.3485 18.38 13.7285V2.60843C18.38 1.98843 17.88 1.48843 17.26 1.48843H2.41003H2.42004Z" fill="#8698A2" />
+                                            <path d="M14.7601 10.2285H5.66016C5.36016 10.2285 5.12012 9.98845 5.12012 9.68845C5.12012 9.38845 5.36016 9.14844 5.66016 9.14844H14.7601C15.0601 9.14844 15.3002 9.38845 15.3002 9.68845C15.3002 9.98845 15.0601 10.2285 14.7601 10.2285Z" fill="#8698A2" />
+                                            <path d="M14.7601 6.72845H5.66016C5.36016 6.72845 5.12012 6.48845 5.12012 6.18845C5.12012 5.88845 5.36016 5.64844 5.66016 5.64844H14.7601C15.0601 5.64844 15.3002 5.88845 15.3002 6.18845C15.3002 6.48845 15.0601 6.72845 14.7601 6.72845Z" fill="#8698A2" />
+                                        </svg>
+                                        <span class="feedback-hover-text" v-if="bubbles == 1">Give Feedback</span>
+                                    </button>
+                                </div>
                             </div>
                         </transition>
                         <transition name="fade" mode="out-in">
@@ -216,7 +239,7 @@
                                         </div>
                                         <transition @enter="enter" @leave="leave" :css="false">
                                             <div v-if="activeOptions.includes(index)" class="option-content">
-                                                <p><strong v-if="option.explanation">Explanation:</strong> {{
+                                                <p><strong v-if="option.explanation"></strong> {{
                                                     option.rollingout ? option.rollingout : option.explanation }}
                                                 </p>
                                             </div>
@@ -306,7 +329,25 @@
                     </div> -->
 
                         <div class="brake-border"></div>
-                        <MockReviewDetail v-if="allquestions.length > 0" />
+                        <NotesLinkedQuestions
+                            v-if="currentQuestion"
+                            variant="links"
+                            :title="currentQuestion.number || currentQuestion.code"
+                            :questions="linkedQuestions"
+                            :questions-loading="linkedQuestionsLoading"
+                            :linked-notes="linkedNotes"
+                            :notes-loading="linkedNotesLoading"
+                            :mock-questions="linkedMocks"
+                            :mocks-loading="linkedMocksLoading"
+                            :note-record-id="String(currentQuestion.id)"
+                            note-record-type="question"
+                            :current-question="currentQuestion"
+                            comment-api="subject"
+                            @question-click="navigateToLinkedQuestion"
+                            @note-click="navigateToLinkedNote"
+                            @mock-click="navigateToLinkedMock"
+                            @comment-saved="reloadCurrentQuestionList"
+                        />
 
                     </div>
                 </div>
@@ -314,7 +355,12 @@
         </div>
 
         <div v-if="birdseye">
-            <QuestionBirdsEyeView @showbirds="showbirds" :question="allquestions" />
+            <QuestionBirdsEyeView
+                @showbirds="showbirds"
+                @goto-question="gotoFromBirdsEye"
+                :question="allquestions"
+                :current-question-index="currentQuestionIndex"
+            />
         </div>
 
 
@@ -388,23 +434,86 @@
         </div> -->
 
 
+        <!-- Feedback modal -->
+        <transition name="slide-modal">
+            <div class="modal-overlays" v-if="showFeedbackModal">
+                <div class="modal-contents" ref="feedbackDraggable" @mousedown="startFeedbackDrag">
+                    <div class="feedback-form-box">
+                        <div class="cross feedback-modal-header">
+                            <div class="feedback-modal-header-main">
+                                <p v-if="currentQuestion && currentQuestion.number" class="feedback-modal-meta currentquestionnumber">{{ currentQuestion.number }}</p>
+                                <h4 class="feedback-modal-title">Feedback</h4>
+                            </div>
+                            <span class="crossspan feedback-modal-close" @click="showFeedbackModal = false">
+                                <svg width="12" height="12" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.38013 0.75L8.1701 7.54001" stroke="#6D6E71" stroke-miterlimit="10" stroke-linecap="round" />
+                                    <path d="M8.1701 0.75L1.38013 7.54001" stroke="#6D6E71" stroke-miterlimit="10" stroke-linecap="round" />
+                                </svg>
+                            </span>
+                        </div>
+                        <form action="">
+                            <div class="feedbackform-button" v-for="(category, index) in feedbackCategories" :key="index">
+                                <button @click="toggleFeedbackOptions(index)" :class="{ 'active-btn': category.selectedOption }" type="button">
+                                    {{ category.name }}
+                                </button>
+                                <div class="feeback-question-options" v-if="feedbackShowOptionsIndex === index && category.name !== 'Other'">
+                                    <div class="feeback-question-option" @click="selectFeedbackOption(index, 'Incorrect')">
+                                        <input type="radio" :checked="category.selectedOption === 'Incorrect'" tabindex="-1" readonly>
+                                        <p :class="{ 'active-btn': category.selectedOption === 'Incorrect' }">Incorrect</p>
+                                    </div>
+                                    <div class="feeback-question-option" @click="selectFeedbackOption(index, 'Needs improvement')">
+                                        <input type="radio" :checked="category.selectedOption === 'Needs improvement'" tabindex="-1" readonly>
+                                        <p :class="{ 'active-btn': category.selectedOption === 'Needs improvement' }">Needs improvement</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feedback-textarea-box" ref="qFeedbackForm">
+                                <textarea
+                                    ref="qFeedbackArea"
+                                    v-model="feedbackForm.optionfeedback"
+                                    @input="onFeedbackTextareaInput"
+                                    class="feedback-textarea"
+                                    placeholder="Your feedback..."
+                                    rows="1"
+                                ></textarea>
+                            </div>
+                            <div class="feedbackform-submitbtn">
+                                <button type="button" @click="submitQuestionFeedback" :disabled="isFeedbackSubmitDisabled" :class="{ 'disabled-btn': isFeedbackSubmitDisabled }">Submit</button>
+                                <div class="cardbottom-shadow">
+                                    <img src="/images/cardshadow.png" alt="">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 
 
 <script>
 import QuestionHeader from '@/components/QuestionHeader.vue';
-import MockReviewDetail from "@/components/MockReviewDetail.vue"
 import { get, byMethod } from './lib/api';
+import {
+    autoGrowFeedbackTextarea,
+    resetFeedbackTextareaHeight,
+} from './lib/feedbackTextareaAutoGrow';
+import {
+    createQuestionFeedbackCategories,
+    hydrateQuestionFeedbackCategories,
+    buildQuestionFeedbackLocalState,
+} from './lib/questionFeedbackCategories';
 import QuestionBirdsEyeView from './QuestionBirdsEyeView.vue';
+import NotesLinkedQuestions from '@/components/NotesLinkedQuestions.vue';
 
 
 export default {
     name: 'QuestionsPage',
     components: {
         QuestionHeader,
-        MockReviewDetail,
-        QuestionBirdsEyeView
+        QuestionBirdsEyeView,
+        NotesLinkedQuestions,
     },
     data() {
         return {
@@ -417,8 +526,10 @@ export default {
             seletecOptionObject: null,
 
             isDragging: false,
+            scrollerDragMoved: false,
             dragStartX: 0,
             scrollLeftStart: 0,
+            scrollerDragRaf: null,
             activeNumber: 1,
             scrollInterval: null,
             scrollSpeed: 10,
@@ -452,6 +563,17 @@ export default {
             percentage:0,
             method: 'POST',
             activeOptions: [],
+            showFeedbackModal: false,
+            feedbackForm: { optionfeedback: '' },
+            feedbackCategories: createQuestionFeedbackCategories(),
+            feedbackShowOptionsIndex: null,
+            feedbackDragState: { isDragging: false, startX: 0, startY: 0, origLeft: 0, origTop: 0 },
+            linkedQuestions: [],
+            linkedQuestionsLoading: false,
+            linkedNotes: [],
+            linkedNotesLoading: false,
+            linkedMocks: [],
+            linkedMocksLoading: false,
             options: [
                 {
                     label: 'A. Primary biliary cholangitis',
@@ -497,7 +619,7 @@ export default {
                     console.log(res)
                     this.allquestions = res.data.data
                     this.percentage = res.data.percentage
-
+                    this.jumpToStartQuestion()
 
                 })
 
@@ -508,7 +630,7 @@ export default {
                     console.log(res)
                     this.allquestions = res.data.data
                     this.percentage = res.data.percentage
-
+                    this.jumpToStartQuestion()
 
                 })
 
@@ -519,6 +641,7 @@ export default {
             .then((res) => {
                 this.allquestions = res.data.data
                 this.percentage = res.data.percentage
+                this.jumpToStartQuestion()
 
             });
         }
@@ -528,6 +651,7 @@ export default {
                     console.log(res)
                     this.allquestions = res.data.data
                     this.percentage = res.data.percentage
+                    this.jumpToStartQuestion()
 
                 })
 
@@ -541,18 +665,293 @@ export default {
 
     },
 
-    watch: {
-        currentQuestion: {
-            handler() {
-                this.setInitialSelectedOption();
+    beforeDestroy() {
+        this.handleMouseUp();
+    },
 
+    watch: {
+        '$route.params.id'() {
+            this.title = localStorage.getItem('questiontitle');
+        },
+        currentQuestion: {
+            handler(q) {
+                this.setInitialSelectedOption();
+                this.fetchLinkedRecordsForQuestion(q);
             },
             deep: true,
             immediate: true,
         },
     },
     methods: {
+        fetchLinkedRecordsForQuestion(q) {
+            const code = q && q.code ? String(q.code).trim() : '';
+            if (!code) {
+                this.linkedQuestions = [];
+                this.linkedNotes = [];
+                this.linkedMocks = [];
+                return;
+            }
+            this.linkedQuestionsLoading = true;
+            this.linkedNotesLoading = true;
+            this.linkedMocksLoading = true;
+            get('/question-linked-questions', { code })
+                .then((res) => {
+                    this.linkedQuestions = res.data.data || [];
+                })
+                .catch(() => {
+                    this.linkedQuestions = [];
+                })
+                .finally(() => {
+                    this.linkedQuestionsLoading = false;
+                });
+            get('/question-linked-notes', { code })
+                .then((res) => {
+                    this.linkedNotes = res.data.data || [];
+                })
+                .catch(() => {
+                    this.linkedNotes = [];
+                })
+                .finally(() => {
+                    this.linkedNotesLoading = false;
+                });
+            get('/question-linked-mocks', { code })
+                .then((res) => {
+                    this.linkedMocks = res.data.data || [];
+                })
+                .catch(() => {
+                    this.linkedMocks = [];
+                })
+                .finally(() => {
+                    this.linkedMocksLoading = false;
+                });
+        },
+        navigateToLinkedQuestion(que) {
+            let title;
+            let entityId;
+            if (que.sublist_id) {
+                title = 'Sublist';
+                entityId = que.sublist_id;
+            } else if (que.condition_id) {
+                title = 'Conditions';
+                entityId = que.condition_id;
+            } else if (que.presentation_id) {
+                title = 'Presentations';
+                entityId = que.presentation_id;
+            } else {
+                title = 'Chapter';
+                entityId = que.subject_id;
+            }
+            localStorage.setItem('questiontitle', title);
+            localStorage.setItem('questionStartCode', que.code);
+            const cur = this.currentQuestion;
+            const curLabel = cur && (cur.number || cur.code) ? String(cur.number || cur.code) : 'Question';
+            try {
+                localStorage.setItem(
+                    'questionBreadcrumbLabels',
+                    JSON.stringify(['MLA CONTENT MAP', this.title || 'Questions', curLabel])
+                );
+            } catch (e) { /* ignore */ }
+            this.$router.push({ name: 'QuestionsPage', params: { id: entityId } });
+        },
+        navigateToLinkedNote(note) {
+            if (!note || note.record_id == null) return;
+            const type = note.type === 'subnotes' ? 'subnotes' : 'notes';
+            this.$router.push({
+                path: '/notespage',
+                query: { id: String(note.record_id), type },
+            });
+        },
+        navigateToLinkedMock(que) {
+            if (!que || que.mock_id == null) return;
+            localStorage.setItem('question', 'normal');
+            localStorage.setItem('mockObject', JSON.stringify({
+                id: que.mock_id,
+                title: que.mock_title || '',
+                duration: que.mock_duration || 0,
+            }));
+            localStorage.setItem('mockStartQuestionId', String(que.id));
+            this.$router.push({ name: 'MockQuestionPreview', params: { id: que.mock_id } });
+        },
+        reloadCurrentQuestionList() {
+            const id = this.$route.params.id;
+            const title = this.title || localStorage.getItem('questiontitle');
+            let req;
+            if (title === 'Conditions') {
+                req = get('/getconditionquestionclient?id=' + id);
+            } else if (title === 'Sublist') {
+                req = get('/getsubconditionquestionclient?id=' + id);
+            } else if (title === 'Presentations') {
+                req = get(`/getpresentationquestionclient?id=${id}&byfetch=Title`);
+            } else {
+                req = get('/getchapterquestionclient?id=' + id);
+            }
+            req.then((res) => {
+                this.allquestions = res.data.data;
+                if (res.data.percentage != null) {
+                    this.percentage = res.data.percentage;
+                }
+            }).catch(() => { /* ignore */ });
+        },
 
+        goToMlaHome() {
+            this.handleBreadcrumbClick(0);
+        },
+
+        /**
+         * Header back arrow: navigate to the list and highlight the exact row the user came from.
+         * The restore indices (parent/child expansion) are already stored from when they clicked the list item.
+         */
+        returnFromQuestionViaHeaderBack() {
+            try {
+                localStorage.removeItem('questionSuppressListHighlight');
+                const leafId = this.$route.params.id;
+                if (leafId) {
+                    localStorage.setItem('questionPendingHighlightId', String(leafId));
+                }
+            } catch (e) { /* ignore */ }
+            this.$router.push('/mlalistselection');
+        },
+
+        clearQuestionListRestoreState() {
+            try {
+                [
+                    'questionListRestore_section', 'questionListRestore_column',
+                    'questionListRestore_parentIndex', 'questionListRestore_parentId',
+                    'questionListRestore_childIndex', 'questionListRestore_childId',
+                    'questionListRestore_grandIndex', 'questionListRestore_grandId',
+                    'questionPendingHighlightId', 'questionSuppressListHighlight',
+                ].forEach(k => localStorage.removeItem(k));
+            } catch (e) { /* ignore */ }
+        },
+
+        handleBreadcrumbClick(idx) {
+            const labels = this.breadcrumbItems;
+            const lastIdx = labels.length - 1;
+            if (idx >= lastIdx) return; // current page — do nothing
+
+            if (idx === 0) {
+                // MLA CONTENT MAP — clear everything, go to list
+                this.clearQuestionListRestoreState();
+                this.$router.push('/mlalistselection');
+                return;
+            }
+
+            // For idx >= 1: preserve the stored section so MLAListSelection restores it
+            // (it was already written by the list component when navigating forward)
+
+            if (idx === 1) {
+                // Section label (BY AREAS / PRESENTATIONS AND CONDITIONS) — restore section only
+                // Clear all indices and highlight so nothing expands
+                try {
+                    localStorage.removeItem('questionListRestore_column');
+                    localStorage.removeItem('questionListRestore_parentIndex');
+                    localStorage.removeItem('questionListRestore_parentId');
+                    localStorage.removeItem('questionListRestore_childIndex');
+                    localStorage.removeItem('questionListRestore_childId');
+                    localStorage.removeItem('questionListRestore_grandIndex');
+                    localStorage.removeItem('questionPendingHighlightId');
+                    localStorage.removeItem('questionSuppressListHighlight');
+                } catch (e) { /* ignore */ }
+                this.$router.push('/mlalistselection');
+                return;
+            }
+
+            if (idx === 2) {
+                // Column/list title (e.g. "All areas of clinical practice", "Presentations")
+                // Expand the parent so user sees where they were, but no orange highlight
+                try {
+                    localStorage.setItem('questionSuppressListHighlight', '1');
+                    localStorage.removeItem('questionPendingHighlightId');
+                } catch (e) { /* ignore */ }
+                this.$router.push('/mlalistselection');
+                return;
+            }
+
+            // idx >= 3: a named row in the list — highlight that row
+            try {
+                localStorage.removeItem('questionSuppressListHighlight');
+
+                if (idx === 3) {
+                    // Chapter (parent item) — highlight the parent row
+                    const parentId = localStorage.getItem('questionListRestore_parentId');
+                    localStorage.setItem('questionPendingHighlightId', parentId || '');
+                    localStorage.removeItem('questionListRestore_childIndex');
+                    localStorage.removeItem('questionListRestore_childId');
+                    localStorage.removeItem('questionListRestore_grandIndex');
+                } else if (idx === 4) {
+                    // Sub-chapter (child item) — highlight child, keep parent expanded
+                    const childId = localStorage.getItem('questionListRestore_childId');
+                    localStorage.setItem('questionPendingHighlightId', childId || '');
+                    localStorage.removeItem('questionListRestore_grandIndex');
+                    localStorage.removeItem('questionListRestore_grandId');
+                } else if (idx >= 5) {
+                    // Grandchild — highlight grandchild, keep parent + child expanded
+                    const grandId = localStorage.getItem('questionListRestore_grandId');
+                    localStorage.setItem('questionPendingHighlightId', grandId || '');
+                }
+            } catch (e) { /* ignore */ }
+
+            this.$router.push('/mlalistselection');
+        },
+
+        parseStoredBreadcrumb() {
+            try {
+                const raw = localStorage.getItem('questionBreadcrumbLabels');
+                if (!raw) return [];
+                const p = JSON.parse(raw);
+                return Array.isArray(p) ? p.map((x) => String(x).trim()).filter(Boolean) : [];
+            } catch (e) {
+                return [];
+            }
+        },
+
+        buildFallbackBreadcrumb() {
+            const root = ['MLA CONTENT MAP'];
+            const t = this.title;
+            if (t === 'Conditions') return [...root, 'By areas', 'Conditions', 'Questions'];
+            if (t === 'Sublist') return [...root, 'By areas', 'Sub-condition', 'Questions'];
+            if (t === 'Presentations') return [...root, 'Presentations and conditions', 'Presentations', 'Questions'];
+            if (t === 'Chapter') return [...root, 'Chapters', 'Questions'];
+            if (t) return [...root, 'By areas', t, 'Questions'];
+            return [...root, 'Questions'];
+        },
+
+        pickTopicLabelFromQuestion(q) {
+            if (!q || typeof q !== 'object') return null;
+            return (
+                q.condition_title ||
+                q.condition_name ||
+                q.presentation_title ||
+                q.presentation_name ||
+                q.subject_title ||
+                q.subject_name ||
+                q.chapter_title ||
+                q.sublist_title ||
+                q.topic_title ||
+                null
+            );
+        },
+
+        /**
+         * If the user navigated here by clicking a linked question from NotesPage,
+         * jump straight to that question and clear the stored code.
+         */
+        jumpToStartQuestion() {
+            const code = localStorage.getItem('questionStartCode');
+            if (!code) return;
+
+            const idx = this.allquestions.findIndex(q => q.code === code);
+            if (idx !== -1) {
+                this.currentQuestionIndex = idx;
+                this.$nextTick(() => {
+                    if (typeof this.centerSelectedIndex === 'function') {
+                        this.centerSelectedIndex(idx);
+                    }
+                });
+            }
+            // Consume the key so normal navigation isn't affected
+            localStorage.removeItem('questionStartCode');
+        },
 
         setflage(e, question) {
             this.flagedid = e;
@@ -615,6 +1014,16 @@ export default {
 
         },
 
+        gotoFromBirdsEye(index) {
+            this.currentQuestionIndex = index;
+            this.birdseye = false;
+            this.$nextTick(() => {
+                if (typeof this.centerSelectedIndex === 'function') {
+                    this.centerSelectedIndex(index);
+                }
+            });
+        },
+
         toggleAccordion(index) {
             const i = this.activeOptions.indexOf(index);
             if (i !== -1) {
@@ -634,7 +1043,7 @@ export default {
 
                 if (option.id == this.currentQuestion?.score.option_id) {
                     console.log("now")
-                    if (option.is_correct == 1) {
+                    if (Number(option.is_correct) === 1) {
                         return {
 
                             background: '#9DED6C',
@@ -650,7 +1059,7 @@ export default {
                         };
                     }
                 } else {
-                    if (option.is_correct == 1) {
+                    if (Number(option.is_correct) === 1) {
                         return {
 
                             background: '#9DED6C',
@@ -691,8 +1100,9 @@ export default {
             this.form.sublist_id = question.sublist_id
             this.form.type = this.title
 
-
-
+            // Capture before API overwrites the question
+            const wasCorrect      = Number(this.seletecOptionObject.is_correct) === 1;
+            const selectedOptId   = this.selectedOption;
 
             // handle answer submission logic
             console.log("Selected option:", this.selectedOption, "selected question", question);
@@ -705,7 +1115,11 @@ export default {
                         this.correctcount = res.data.correctcount
                         this.incorrectcount = res.data.incorrectcount
                         this.percentage = res.data.percentage
-                        // this.nextQuestion();
+
+                        // Auto-expand explanations after DOM updates with new question data
+                        this.$nextTick(() => {
+                            this.autoExpandExplanations(wasCorrect, selectedOptId);
+                        });
                     }
                 })
                 .catch((error) => {
@@ -714,6 +1128,110 @@ export default {
                     }
                     this.isProcessing = false;
                 });
+        },
+
+        /**
+         * After submit, open the right accordion panels:
+         * - Correct answer → expand correct option only
+         * - Wrong answer   → expand selected (wrong) option + correct option
+         */
+        autoExpandExplanations(wasCorrect, selectedOptId) {
+            const options = this.currentQuestion?.options;
+            if (!options) return;
+
+            const correctIdx  = options.findIndex(o => Number(o.is_correct) === 1);
+            const selectedIdx = options.findIndex(o => o.id == selectedOptId);
+
+            // Start fresh so manual toggles before submit don't interfere
+            this.activeOptions = [];
+
+            // Always open the correct option's explanation
+            if (correctIdx !== -1) this.activeOptions.push(correctIdx);
+
+            // If wrong answer, also open the selected (wrong) option's rolling out
+            if (!wasCorrect && selectedIdx !== -1 && selectedIdx !== correctIdx) {
+                this.activeOptions.push(selectedIdx);
+            }
+        },
+
+        openFeedbackPopup() {
+            const fb = this.currentQuestion?.feedback || null;
+            this.feedbackCategories = hydrateQuestionFeedbackCategories(createQuestionFeedbackCategories(), fb);
+            this.feedbackForm.optionfeedback = fb?.optionfeedback || '';
+            this.feedbackShowOptionsIndex = null;
+            this.showFeedbackModal = true;
+            this.$nextTick(() => {
+                resetFeedbackTextareaHeight(this.$refs.qFeedbackArea);
+            });
+        },
+
+        toggleFeedbackOptions(index) {
+            this.feedbackShowOptionsIndex = this.feedbackShowOptionsIndex === index ? null : index;
+        },
+
+        selectFeedbackOption(index, option) {
+            this.feedbackCategories[index].selectedOption =
+                this.feedbackCategories[index].selectedOption === option ? null : option;
+        },
+
+        onFeedbackTextareaInput() {
+            autoGrowFeedbackTextarea(this.$refs.qFeedbackArea);
+            this.toggleFeedbackOptions(null);
+        },
+
+        submitQuestionFeedback() {
+            const selectedFeedback = this.feedbackCategories.map(cat => ({
+                name: cat.name,
+                selectedOption: cat.selectedOption,
+            }));
+            const payload = {
+                question_id:      this.currentQuestion.id,
+                parent_id:        null,
+                optionfeedback:   this.feedbackForm.optionfeedback,
+                selectedFeedback,
+            };
+            byMethod('POST', '/savefeedback', payload).then((res) => {
+                if (res.data.saved) {
+                    this.showFeedbackModal = false;
+                    this.toggleFeedbackOptions(null);
+                    const idx = this.currentQuestionIndex;
+                    if (this.allquestions[idx]) {
+                        this.$set(
+                            this.allquestions[idx],
+                            'feedback',
+                            buildQuestionFeedbackLocalState(selectedFeedback, this.feedbackForm.optionfeedback),
+                        );
+                    }
+                }
+            });
+        },
+
+        startFeedbackDrag(e) {
+            const el = this.$refs.feedbackDraggable;
+            if (!el) return;
+            const rect = el.getBoundingClientRect();
+            this.feedbackDragState = {
+                isDragging: true,
+                startX: e.clientX,
+                startY: e.clientY,
+                origLeft: rect.left,
+                origTop: rect.top,
+            };
+            const onMove = (ev) => {
+                if (!this.feedbackDragState.isDragging) return;
+                const dx = ev.clientX - this.feedbackDragState.startX;
+                const dy = ev.clientY - this.feedbackDragState.startY;
+                el.style.left = (this.feedbackDragState.origLeft + dx) + 'px';
+                el.style.top  = (this.feedbackDragState.origTop  + dy) + 'px';
+                el.style.right = 'auto';
+            };
+            const onUp = () => {
+                this.feedbackDragState.isDragging = false;
+                window.removeEventListener('mousemove', onMove);
+                window.removeEventListener('mouseup', onUp);
+            };
+            window.addEventListener('mousemove', onMove);
+            window.addEventListener('mouseup', onUp);
         },
 
         previousQuestion() {
@@ -817,21 +1335,50 @@ export default {
 
 
         handleMouseDown(event) {
+            if (event.button !== 0) return;
             this.isDragging = true;
+            this.scrollerDragMoved = false;
             this.dragStartX = event.pageX;
             this.scrollLeftStart = this.$refs.scrollContainer.scrollLeft;
+
+            this._onScrollerMouseMove = (e) => this.handleMouseMove(e);
+            this._onScrollerMouseUp = () => this.handleMouseUp();
+            document.addEventListener('mousemove', this._onScrollerMouseMove);
+            document.addEventListener('mouseup', this._onScrollerMouseUp);
         },
         handleMouseMove(event) {
             if (!this.isDragging) return;
             const delta = event.pageX - this.dragStartX;
-            const speedMultiplier = 1; // Increase this value for faster scroll
-            this.$refs.scrollContainer.scrollLeft = this.scrollLeftStart - delta * speedMultiplier;
+            if (Math.abs(delta) > 4) {
+                this.scrollerDragMoved = true;
+            }
+
+            if (this.scrollerDragRaf) cancelAnimationFrame(this.scrollerDragRaf);
+            this.scrollerDragRaf = requestAnimationFrame(() => {
+                const container = this.$refs.scrollContainer;
+                if (container) {
+                    container.scrollLeft = this.scrollLeftStart - delta;
+                }
+            });
         },
         handleMouseUp() {
             this.isDragging = false;
+            if (this.scrollerDragRaf) {
+                cancelAnimationFrame(this.scrollerDragRaf);
+                this.scrollerDragRaf = null;
+            }
+            if (this._onScrollerMouseMove) {
+                document.removeEventListener('mousemove', this._onScrollerMouseMove);
+                this._onScrollerMouseMove = null;
+            }
+            if (this._onScrollerMouseUp) {
+                document.removeEventListener('mouseup', this._onScrollerMouseUp);
+                this._onScrollerMouseUp = null;
+            }
         },
-        handleMouseLeave() {
-            this.isDragging = false;
+        onScrollerItemClick(index) {
+            if (this.scrollerDragMoved) return;
+            this.getBackindex(index);
         },
 
 
@@ -890,15 +1437,26 @@ export default {
         setInitialSelectedOption() {
             if (!this.currentQuestion || !this.currentQuestion?.options) {
                 console.warn("currentQuestion or options is undefined.");
-                return; // Exit function early to prevent errors
+                return;
             }
             console.log('hello', this.currentQuestion);
             const optionWithScore = this.currentQuestion?.options.find(
                 (option) => option.score !== null
             );
             if (optionWithScore) {
-                // Set selectedOption to option.id, not the whole option
                 this.selectedOption = optionWithScore.id;
+                // Always open correct option; also open wrong one if answer was incorrect
+                const options = this.currentQuestion.options;
+                const correctIdx  = options.findIndex(o => Number(o.is_correct) === 1);
+                const selectedIdx = options.findIndex(o => o.id == optionWithScore.id);
+                this.activeOptions = [];
+                if (correctIdx !== -1) this.activeOptions.push(correctIdx);
+                if (Number(optionWithScore.is_correct) !== 1 && selectedIdx !== -1 && selectedIdx !== correctIdx) {
+                    this.activeOptions.push(selectedIdx);
+                }
+            } else {
+                // Unanswered question — close all accordions
+                this.activeOptions = [];
             }
         },
         toggleOption(index) {
@@ -968,8 +1526,57 @@ export default {
 
     computed: {
 
+        breadcrumbItems() {
+            void this.allquestions.length;
+            void this.currentQuestionIndex;
+            let labels = this.parseStoredBreadcrumb();
+            if (!labels.length) {
+                labels = this.buildFallbackBreadcrumb();
+            }
+            const leaf = this.pickTopicLabelFromQuestion(this.currentQuestion);
+            const last = labels[labels.length - 1];
+            if (leaf && last === 'Questions') {
+                labels = [...labels];
+                labels[labels.length - 1] = leaf;
+            }
+            return labels;
+        },
+
+        currentQuestionCodeLabel() {
+            void (this.currentQuestion && this.currentQuestion.score);
+            void this.currentQuestionIndex;
+            const q = this.currentQuestion;
+            if (!q) return null;
+
+            const code = q.code != null ? String(q.code).trim() : (q.number ? String(q.number).trim() : '');
+            if (!code) return null;
+
+            let title = this.pickTopicLabelFromQuestion(q);
+            if (!title) {
+                let labels = this.parseStoredBreadcrumb();
+                if (!labels.length) {
+                    labels = this.buildFallbackBreadcrumb();
+                }
+                const storedLast = labels[labels.length - 1];
+                if (storedLast && storedLast !== 'Questions') {
+                    title = storedLast;
+                }
+            }
+
+            if (q.score && title) {
+                return `${code} - ${title}`;
+            }
+            return code;
+        },
+
         currentQuestion() {
             return this.allquestions[this.currentQuestionIndex];
+        },
+
+        isFeedbackSubmitDisabled() {
+            const hasCategory = this.feedbackCategories.some(c => c.selectedOption);
+            const hasText = this.feedbackForm.optionfeedback.trim().length > 0;
+            return !hasCategory && !hasText;
         },
     }
 
@@ -986,6 +1593,15 @@ export default {
     font-weight: bold !important;
     border: 2px solid #949393 !important;
     font-size: 16px !important;
+}
+
+.questiontext-box .currentquestionnumber {
+    margin: 0 0 10px 0;
+    display: block;
+}
+
+.questiontext-box .questionimage {
+    margin: 0;
 }
 
 .questionnumber-slide {
@@ -1116,7 +1732,7 @@ export default {
 .questionnumber {
     min-width: 23.65px;
     text-align: center;
-    padding: 15px 0px;
+    padding: 3px 0;
     border: none;
     border-radius: 4px;
     flex-shrink: 0;
@@ -1127,12 +1743,35 @@ export default {
     color: #000;
     height: 49.27px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    box-sizing: border-box;
+}
+
+.scroller-flag-icon,
+.scroller-feedback-icon {
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+.scroller-num {
+    flex: 1;
+    display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    text-align: center;
+    line-height: 1;
+    pointer-events: none;
 }
 
 .questionnumber-slide {
-    padding: 20px 0px 20px 0px;
+    padding: 20px 0;
+    align-items: center;
 }
 
 .questionleft-arrow,
@@ -1239,8 +1878,12 @@ section.questionnumber-sec {
 
 .scrollmenus {
     user-select: none;
-    /* Prevents text selection during drag */
     cursor: grab;
+}
+
+.scrollmenus--dragging {
+    cursor: grabbing !important;
+    scroll-behavior: auto !important;
 }
 
 div.scrollmenus {
@@ -1253,9 +1896,7 @@ div.scrollmenus {
     overflow-y: hidden;
     height: 100px;
     scrollbar-width: none;
-    /* Firefox */
     -ms-overflow-style: none;
-    /* Internet Explorer */
 }
 
 div.scrollmenus::-webkit-scrollbar {
@@ -1339,7 +1980,59 @@ div.scrollmenu a:hover {
 
 .wrong {
     background-color: #f8d7da;
-    /* light red */
     border-color: #dc3545;
+}
+
+/* ── Feedback icon & modal ── */
+.questioncomment {
+        position: absolute;
+    right: 30px;
+    bottom: 20px;
+    cursor: pointer;
+}
+
+.feedbackbutton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.feedback-hover-text {
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    font-size: 10px;
+    white-space: nowrap;
+    padding: 2px 6px;
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.modal-overlays {
+    width: 100%;
+}
+
+.modal-contents {
+    position: fixed;
+    right: 43%;
+    top: 30%;
+    z-index: 9999;
+    cursor: grab;
+}
+
+.slide-modal-enter-active,
+.slide-modal-leave-active {
+    transition: opacity 0.2s ease;
+}
+.slide-modal-enter,
+.slide-modal-leave-to {
+    opacity: 0;
 }
 </style>

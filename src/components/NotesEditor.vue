@@ -3,6 +3,7 @@
     <quill-editor
       v-model="content"
       :options="editorOptions"
+      :disabled="readOnly"
       class="quill-editor-full">
     </quill-editor>
   </div>
@@ -23,19 +24,20 @@ export default {
     value: {
       type: String,
       default: ''
+    },
+    readOnly: {
+      type: Boolean,
+      default: false
     }
   },
-  data() {
-    return {
-      editorOptions: {
-        theme: 'snow',
-        modules: {
-         
-        },
-      },
-    };
-  },
   computed: {
+    editorOptions() {
+      return {
+        theme: 'snow',
+        readOnly: this.readOnly,
+        modules: {}
+      };
+    },
     content: {
       get() {
         return this.value;

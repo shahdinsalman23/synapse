@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "@/views/lib/vuex";
 import Home from "@/views/HomePage.vue";
 import UserLogin from "@/views/UserLogin.vue";
 import MockSection from "@/views/MockSection.vue";
@@ -15,6 +16,7 @@ import QuestionBirdsEyeView from '@/views/QuestionBirdsEyeView.vue';
 import MockQuestionPreview from "@/views/MockQuestionPreview.vue";
 import NotesListSelection from "@/views/NotesListSelection.vue";
 import NotesPage from "@/views/NotesPage.vue";
+import SearchPage from "@/views/SearchPage.vue";
 import SignupPage from "@/views/SignupPage.vue";
 import ForgotPasswordPage from "@/views/ForgotPasswordPage.vue";
 import ResetPasswordPage from "@/views/ResetPasswordPage.vue";
@@ -46,7 +48,11 @@ const routes = [
   { path: "/mocksquestionadmin/:id", component: MockQuestionPreview, name: 'MockQuestionPreview'},
 
   { path: "/noteslistselection", component: NotesListSelection, name: "MLAList", meta: { requiresAuth: true } },
-  { path: "/notespage/:id", component: NotesPage, name: "NotesPage", meta: { requiresAuth: true } },
+  // { path: "/notespage/:id", component: NotesPage, name: "NotesPage", meta: { requiresAuth: true } },
+  { path: "/notespage", component: NotesPage, name: "NotesPage", meta: { requiresAuth: true } },
+
+  { path: "/search", component: SearchPage, name: "SearchPage", meta: { requiresAuth: true } },
+
 
 
   { path: "/about", component: about, name: "About", meta: { requiresAuth: true } },
@@ -65,17 +71,28 @@ const router = new VueRouter({
 
 
 router.beforeEach((to, from, next) => {
+  // Show global loader on every navigation
+  store.dispatch('setPageLoading', true);
+
   const token = localStorage.getItem("token");
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!token) {
-      next("/"); // Redirect to homepage if not authenticated
+      store.dispatch('setPageLoading', false);
+      next("/");
     } else {
       next();
     }
   } else {
     next();
   }
+});
+
+// Hide loader once the incoming route component has finished rendering
+router.afterEach(() => {
+  setTimeout(() => {
+    store.dispatch('setPageLoading', false);
+  }, 300);
 });
 
 export default router;

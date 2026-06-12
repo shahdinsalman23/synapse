@@ -202,6 +202,24 @@
                         </div>
 
                     </div>
+
+                    <div class="brake-border"></div>
+                    <NotesLinkedQuestions
+                        v-if="currentQuestion"
+                        variant="links"
+                        :title="currentQuestion.number || 'Mock question'"
+                        :questions="linkedSubjectQuestions"
+                        :questions-loading="linkedQuestionsLoading"
+                        :linked-notes="linkedNotes"
+                        :notes-loading="linkedNotesLoading"
+                        :note-record-id="String(currentQuestion.id)"
+                        note-record-type="mock"
+                        :current-question="currentQuestion"
+                        comment-api="mock"
+                        @question-click="navigateToLinkedSubjectQuestion"
+                        @note-click="navigateToLinkedNote"
+                        @comment-saved="reloadMockQuestions"
+                    />
                 </div>
             </div>
 
@@ -235,6 +253,7 @@ import { get, byMethod } from './lib/api';
 import MockBirdsEye from './MockBirdsEye.vue';
 import Loadingcircle from '@/components/Loadingcircle.vue';
 import SubmittingMockModal from '@/components/SubmittingMockModal.vue';
+import NotesLinkedQuestions from '@/components/NotesLinkedQuestions.vue';
 
 export default {
     components: {
@@ -242,7 +261,8 @@ export default {
         // HeaderQuestion,
         MockBirdsEye,
         Loadingcircle,
-        SubmittingMockModal
+        SubmittingMockModal,
+        NotesLinkedQuestions,
     },
 
 
@@ -354,6 +374,10 @@ export default {
             unansweredmain: 0,
             bubbles: null,
             noClick:false,
+            linkedSubjectQuestions: [],
+            linkedQuestionsLoading: false,
+            linkedNotes: [],
+            linkedNotesLoading: false,
 
             scores: [
                 {
@@ -387,6 +411,7 @@ export default {
         if (getabout == "normal") {
             get("/getmockquestionpreview?id=" + this.id).then((res) => {
                 this.setData(res);
+                this.jumpToStartMockQuestion();
             });
         }
 
@@ -445,9 +470,9 @@ export default {
 
     watch: {
         currentQuestion: {
-            handler() {
+            handler(q) {
                 this.setInitialSelectedOption();
-             
+                this.fetchLinkedRecordsForMock(q);
             },
             deep: true,
             immediate: true,
@@ -457,6 +482,95 @@ export default {
 
 
     methods: {
+        fetchLinkedRecordsForMock(q) {
+            const mqId = q && q.id ? Number(q.id) : null;
+            if (!mqId) {
+                this.linkedSubjectQuestions = [];
+                this.linkedNotes = [];
+                return;
+            }
+            this.linkedQuestionsLoading = true;
+            this.linkedNotesLoading = true;
+            get('/mock-linked-subject-questions', { mock_question_id: mqId })
+                .then((res) => {
+                    this.linkedSubjectQuestions = res.data.data || [];
+                })
+                .catch(() => {
+                    this.linkedSubjectQuestions = [];
+                })
+                .finally(() => {
+                    this.linkedQuestionsLoading = false;
+                });
+            get('/mock-linked-notes', { mock_question_id: mqId })
+                .then((res) => {
+                    this.linkedNotes = res.data.data || [];
+                })
+                .catch(() => {
+                    this.linkedNotes = [];
+                })
+                .finally(() => {
+                    this.linkedNotesLoading = false;
+                });
+        },
+        navigateToLinkedSubjectQuestion(que) {
+            let title;
+            let entityId;
+            if (que.sublist_id) {
+                title = 'Sublist';
+                entityId = que.sublist_id;
+            } else if (que.condition_id) {
+                title = 'Conditions';
+                entityId = que.condition_id;
+            } else if (que.presentation_id) {
+                title = 'Presentations';
+                entityId = que.presentation_id;
+            } else {
+                title = 'Chapter';
+                entityId = que.subject_id;
+            }
+            localStorage.setItem('questiontitle', title);
+            localStorage.setItem('questionStartCode', que.code);
+            this.$router.push({ name: 'QuestionsPage', params: { id: entityId } });
+        },
+        navigateToLinkedNote(note) {
+            if (!note || note.record_id == null) return;
+            const type = note.type === 'subnotes' ? 'subnotes' : 'notes';
+            this.$router.push({
+                path: '/notespage',
+                query: { id: String(note.record_id), type },
+            });
+        },
+        reloadMockQuestions() {
+            const about = localStorage.getItem('question');
+            if (about === 'normal' || about === 'exitmock') {
+                get('/getmockquestionpreview?id=' + this.id).then((res) => this.setData(res));
+            } else if (about === 'flaged') {
+                get('/getflagedquestion?id=' + this.id).then((res) => this.setData(res));
+            } else if (about === 'unanswer') {
+                get('/getunaswerquestion?id=' + this.id).then((res) => this.setData(res));
+            }
+        },
+
+        /**
+         * If navigated from NotesPage by clicking a linked mock question,
+         * jump straight to that question and clear the stored key.
+         * Uses mockStartQuestionId (the mockquestion.id) set by NotesPage.
+         */
+        jumpToStartMockQuestion() {
+            const targetId = localStorage.getItem('mockStartQuestionId');
+            if (!targetId) return;
+
+            const idx = this.questions.findIndex(q => String(q.id) === String(targetId));
+            if (idx !== -1) {
+                this.currentQuestionIndex = idx;
+                this.$nextTick(() => {
+                    if (typeof this.centerSelectedIndex === 'function') {
+                        this.centerSelectedIndex(idx);
+                    }
+                });
+            }
+            localStorage.removeItem('mockStartQuestionId');
+        },
 
         globalhelp(){
     //         get("/getglobalhelp").then((res) => {

@@ -1027,6 +1027,12 @@ button.begin-btn a {
     padding: 0px 16px 0px 0px;
 }
 
+.questionheader .mockquestion-navigate ul {
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: nowrap;
+}
+
 .mockquestion-navigate ul li {
     list-style: none;
     position: relative;
@@ -1038,6 +1044,11 @@ button.begin-btn a {
     gap: 3px;
     font-size: 15px;
     cursor: pointer;
+}
+
+.questionheader .mockquestion-navigate ul li {
+    width: auto;
+    flex: 0 0 auto;
 }
 
 .mockquestion-navigate ul li p {
@@ -1698,11 +1709,12 @@ button.modal-exit-btn .cardbottom-shadow img {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 9px 20px 5px 20px;
+    padding: 14px 20px 14px 20px;
+
     border: 0.75px solid #1A90FF;
-    background: #69BAFF;
+    background: #1a90ff;
     border-radius: 50px;
-    margin: 0px 0px 20px 0px;
+    margin: 0px 0px 10px 0px;
     position: sticky;
     top: 3px;
     z-index: 10;
@@ -1729,7 +1741,7 @@ button.modal-exit-btn .cardbottom-shadow img {
     background: white;
     position: sticky;
     top: 0px;
-    padding: 10px 2px 0px 2px;
+    padding: 10px 2px 1px 2px;
 }
 
 .clinical-practice-total h4 {
@@ -1879,6 +1891,30 @@ button.modal-exit-btn .cardbottom-shadow img {
     .mockbirdseye-boxes {
         grid-template-columns: repeat(12, 1fr) !important;
     }
+
+    .questionheader .mockquestion-navigate ul {
+        gap: 12px;
+        padding-right: 8px;
+    }
+
+    .questionheader .mocktxt {
+        font-size: 18px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .questionheader .mockquestion-navigate ul {
+        gap: 10px;
+        padding-right: 6px;
+    }
+
+    .questionheader .mockquestion-navigate ul li p {
+        font-size: 12px;
+    }
+
+    .questionheader .mocktxt {
+        font-size: 16px;
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -1965,6 +2001,16 @@ button.modal-exit-btn .cardbottom-shadow img {
 
     .mockquestion-navigate ul {
         width: 75%;
+    }
+
+    .questionheader .mockquestion-navigate ul {
+        width: 100%;
+        gap: 8px;
+        padding-right: 4px;
+    }
+
+    .questionheader .mocktxt {
+        font-size: 14px;
     }
 
     .mockbirdseye-boxes {
@@ -2148,4 +2194,131 @@ button.modal-exit-btn .cardbottom-shadow img {
         padding-bottom: 2px;
     }
 
+}
+
+/********** Breadcrumb responsive **********/
+
+.question-breadcrum .container .breadcrumb,
+.mla-list-sec .breadcrumb-wrapper .breadcrumb,
+.notes-page-sec .breadcrumb-wrapper .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    row-gap: 8px;
+    column-gap: 0;
+    max-width: 100%;
+    width: 100%;
+}
+
+.breadcrumb-segment {
+    display: contents;
+}
+
+.question-breadcrum .container .breadcrumb-item,
+.mla-list-sec .breadcrumb-wrapper .breadcrumb-item,
+.notes-page-sec .breadcrumb-wrapper .breadcrumb-item {
+    flex-shrink: 0;
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+.question-breadcrum .container .breadcrumb-arrow,
+.mla-list-sec .breadcrumb-wrapper .breadcrumb-arrow,
+.notes-page-sec .breadcrumb-wrapper .breadcrumb-arrow {
+    flex-shrink: 0;
+}
+
+.mla-list-sec .breadcrumb-wrapper.visible,
+.notes-page-sec .breadcrumb-wrapper.visible {
+    height: auto;
+    min-height: 40px;
+    overflow: visible;
+}
+
+.mla-list-sec .breadcrumb-wrapper.visible .breadcrumb,
+.notes-page-sec .breadcrumb-wrapper.visible .breadcrumb {
+    height: auto;
+    min-height: 40px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .question-breadcrum .container .breadcrumb,
+    .mla-list-sec .breadcrumb-wrapper .breadcrumb,
+    .notes-page-sec .breadcrumb-wrapper .breadcrumb {
+        padding-top: 8px;
+        padding-bottom: 4px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .question-breadcrum .container .breadcrumb,
+    .mla-list-sec .breadcrumb-wrapper .breadcrumb,
+    .notes-page-sec .breadcrumb-wrapper .breadcrumb {
+        row-gap: 6px;
+        padding-top: 6px;
+        padding-bottom: 2px;
+    }
+
+    .question-breadcrum .container .breadcrumb-item,
+    .mla-list-sec .breadcrumb-wrapper .breadcrumb-item,
+    .notes-page-sec .breadcrumb-wrapper .breadcrumb-item {
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 5px;
+    }
+
+    .question-breadcrum .container .breadcrumb-arrow,
+    .mla-list-sec .breadcrumb-wrapper .breadcrumb-arrow,
+    .notes-page-sec .breadcrumb-wrapper .breadcrumb-arrow {
+        padding: 0 4px;
+        font-size: 14px;
+    }
+
+    .question-breadcrum .container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .question-breadcrum .container .breadcrumb-item,
+    .mla-list-sec .breadcrumb-wrapper .breadcrumb-item,
+    .notes-page-sec .breadcrumb-wrapper .breadcrumb-item {
+        font-size: 10px;
+        padding: 2px 6px;
+    }
+
+    .question-breadcrum .container .breadcrumb-arrow,
+    .mla-list-sec .breadcrumb-wrapper .breadcrumb-arrow,
+    .notes-page-sec .breadcrumb-wrapper .breadcrumb-arrow {
+        padding: 0 3px;
+        font-size: 12px;
+    }
+
+    .question-breadcrum .container .breadcrumb-item:not(.active),
+    .mla-list-sec .breadcrumb-wrapper .breadcrumb-item:not(.active),
+    .notes-page-sec .breadcrumb-wrapper .breadcrumb-item:not(.active) {
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .question-breadcrum .container .breadcrumb-item:not(.active),
+    .mla-list-sec .breadcrumb-wrapper .breadcrumb-item:not(.active),
+    .notes-page-sec .breadcrumb-wrapper .breadcrumb-item:not(.active) {
+        max-width: 88px;
+    }
+
+    .question-breadcrum .container .breadcrumb-item.active,
+    .mla-list-sec .breadcrumb-wrapper .breadcrumb-item.active,
+    .notes-page-sec .breadcrumb-wrapper .breadcrumb-item.active {
+        white-space: normal;
+        text-align: center;
+        max-width: 100%;
+        overflow: visible;
+        text-overflow: unset;
+    }
 }

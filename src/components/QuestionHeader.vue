@@ -91,7 +91,8 @@
                                         d="M14.3598 8.78117C14.3598 8.67117 14.3598 8.56117 14.3598 8.45117H11.8198C11.8198 8.56117 11.8398 8.67117 11.8398 8.78117C11.8398 11.1212 9.92981 13.0312 7.58981 13.0312C5.24981 13.0312 3.33981 11.1212 3.33981 8.78117C3.33981 8.67117 3.33982 8.56117 3.35982 8.45117H0.819824C0.819824 8.56117 0.819824 8.67117 0.819824 8.78117C0.819824 12.0812 3.18982 14.8312 6.31982 15.4312V18.8712H8.87982V15.4312C12.0098 14.8312 14.3798 12.0812 14.3798 8.78117H14.3598Z"
                                         fill="#231F20" />
                                 </svg> About us</a></li>
-                        <li><a href="#">
+                        <li class="has-user-submenu" @click.stop="showUserSubMenu = !showUserSubMenu">
+                            <a href="#" @click.prevent>
                                 <svg width="17" height="20" viewBox="0 0 17 20" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -100,7 +101,13 @@
                                     <path
                                         d="M8.57964 9.83015C6.11964 9.83015 4.12963 7.83015 4.11963 5.37015C4.11963 2.91015 6.11964 0.910156 8.57964 0.910156C11.0396 0.910156 13.0296 2.91015 13.0396 5.37015C13.0396 7.83015 11.0396 9.83015 8.57964 9.83015ZM8.57964 1.61015C6.49964 1.61015 4.80963 3.30016 4.80963 5.38016C4.80963 7.46016 6.49964 9.15015 8.57964 9.15015C10.6596 9.15015 12.3496 7.46016 12.3496 5.38016C12.3496 3.30016 10.6596 1.61015 8.57964 1.61015Z"
                                         fill="#231F20" stroke="#231F20" stroke-width="0.46" stroke-miterlimit="10" />
-                                </svg> User ▸</a></li>
+                                </svg> User ▸
+                            </a>
+                            <!-- User sub-menu -->
+                            <ul class="user-submenu" v-show="showUserSubMenu">
+                                <li class="user-submenu-name">{{ currentUser ? currentUser.username : '' }}</li>
+                            </ul>
+                        </li>
                         <li><a @click="logout" style="cursor:pointer">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -149,7 +156,7 @@
                                     d="M6.40002 17.4993H1.90002C1.01002 17.4993 0.289978 16.7793 0.289978 15.8893V11.3893C0.289978 10.4993 1.01002 9.7793 1.90002 9.7793H6.40002C7.29002 9.7793 8.01001 10.4993 8.01001 11.3893V15.8893C8.01001 16.7793 7.29002 17.4993 6.40002 17.4993ZM2.17999 10.8093C1.69999 10.8093 1.32001 11.1993 1.32001 11.6693V15.5993C1.32001 16.0793 1.70999 16.4593 2.17999 16.4593H6.10999C6.57999 16.4593 6.96997 16.0693 6.96997 15.5993V11.6693C6.96997 11.1893 6.57999 10.8093 6.10999 10.8093H2.17999Z"
                                     fill="#D1D3D4"></path>
                             </svg></li>
-                        <li class="mock-width">
+                        <li class="mock-width" style="cursor: default;">
                             <span class="flaggedquestions">Flagged questions</span>
                             <svg width="14.52" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.08997 1.53079C6.14997 -0.149209 3.05998 -0.309209 0.0999756 1.03079V14.5608C2.83998 13.1308 5.71005 13.1708 8.43005 14.7308C10.0601 15.6608 11.7401 16.1308 13.4301 16.1308C15.1201 16.1308 16.7901 15.6608 18.4301 14.7308L18.77 14.5408V0.960784L17.77 1.53079C14.93 3.15079 11.94 3.15079 9.09998 1.53079H9.08997Z" fill="#D1D3D4" />
@@ -164,7 +171,7 @@
                                 <div class="circle pink-bg">{{ incorrectcount ?? 0 }}</div>
                             </div>
                         </li>
-                        <li><svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <li @click="$emit('back')"><svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M4.98962 17.0108C4.64962 17.3508 4.10965 17.3508 3.76965 17.0108L0.309687 13.5508C-0.0303125 13.2108 -0.0303125 12.6708 0.309687 12.3308L3.76965 8.87078C4.10965 8.53078 4.64962 8.53078 4.98962 8.87078C5.32962 9.21078 5.32962 9.75078 4.98962 10.0908L3.00964 12.0708H13.5996C14.6896 12.0708 15.4497 12.0708 16.0497 12.0208C16.6297 11.9708 16.9596 11.8708 17.2096 11.7308C17.5996 11.5008 17.9297 11.1808 18.1597 10.7808C18.2997 10.5308 18.3996 10.2008 18.4496 9.62078C18.4996 9.03078 18.4996 8.27078 18.4996 7.17078C18.4996 6.08078 18.4996 5.32078 18.4496 4.72078C18.3996 4.14078 18.2997 3.81078 18.1597 3.56078C17.9297 3.17078 17.6096 2.84078 17.2096 2.61078C16.9596 2.47078 16.6297 2.37078 16.0497 2.32078C15.4597 2.27078 14.6996 2.27078 13.5996 2.27078H12.6296C12.1496 2.27078 11.7696 1.88078 11.7696 1.41078C11.7696 0.930782 12.1596 0.550781 12.6296 0.550781H13.6396C14.6796 0.550781 15.5196 0.550783 16.1996 0.610783C16.8996 0.670783 17.5097 0.810783 18.0597 1.13078C18.7197 1.51078 19.2596 2.05078 19.6396 2.71078C19.9596 3.26078 20.0897 3.88078 20.1597 4.57078C20.2197 5.25078 20.2196 6.09078 20.2196 7.13078V7.21078C20.2196 8.25078 20.2197 9.09078 20.1597 9.77078C20.0997 10.4708 19.9596 11.0808 19.6396 11.6308C19.2596 12.2908 18.7197 12.8308 18.0597 13.2108C17.5097 13.5308 16.8896 13.6608 16.1996 13.7308C15.5196 13.7908 14.6796 13.7908 13.6396 13.7908H3.00964L4.98962 15.7708C5.32962 16.1108 5.32962 16.6508 4.98962 16.9908V17.0108Z" fill="#D1D3D4"/>
                             </svg>
                         </li>
@@ -194,12 +201,29 @@ export default {
     },
     percentage:{
 
-    }
+    },
+   
 },
+    computed: {
+        currentUser() {
+            return this.$store.getters.user;
+        },
+    },
     data() {
         return {
-            showDropdown: false
+            showDropdown: false,
+            showUserSubMenu: false,
+            headertitle:'Question'
         };
+
+
+    },
+
+    created(){
+
+          this.headertitle = localStorage.getItem('questiontitle');
+
+
     },
     methods: {
         toggleDropdown() {
@@ -229,13 +253,46 @@ export default {
 
 .question-header {
     display: grid;
-    grid-template-columns: repeat(3, minmax(30%, 1fr));
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 8px;
     text-align: start;
     background: #1A90FF;
     color: #fff;
     border-radius: 15px;
     padding: 5px 10px 5px 20px;
-   
+}
+
+.mockhead-hamburger {
+    grid-column: 1;
+    justify-self: start;
+    z-index: 2;
+    position: relative;
+    display: inline-block;
+}
+
+.mocktxt {
+    grid-column: 2;
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    max-width: 100%;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 24px;
+    letter-spacing: 0;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.mockquestion-navigate {
+    grid-column: 3;
+    min-width: 0;
+    max-width: 100%;
+    justify-self: end;
+    z-index: 2;
 }
 
 .header-icon-wrapper {
@@ -290,12 +347,6 @@ export default {
 
 .mocktxt img {
     width: 29px !important;
-}
-
-.mockhead-hamburger {
-    position: relative;
-    display: inline-block;
-  
 }
 
 .main-dropdown {
@@ -362,6 +413,7 @@ export default {
   display: flex;
   gap: 18px;
   align-items: center;
+  cursor: default;
 }
 
 .circle {
@@ -392,11 +444,194 @@ export default {
 
 .mockquestion-navigate ul {
     gap: 20px !important;
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: nowrap;
+}
+
+.mockquestion-navigate ul li {
+    width: auto;
+    flex: 0 0 auto;
 }
 
 .mockquestion-navigate ul li span {
     right: -72px;
 }
 
+@media only screen and (max-width: 1024px) {
+    .question-header {
+        column-gap: 6px;
+        padding: 5px 8px 5px 14px;
+    }
+
+    .mocktxt {
+        font-size: 18px;
+        gap: 6px;
+    }
+
+    .mocktxt img {
+        width: 24px !important;
+    }
+
+    .mockquestion-navigate ul {
+        gap: 14px !important;
+        padding-right: 6px !important;
+    }
+
+    .progress-bar {
+        width: 64px;
+    }
+
+    .status-wrapper {
+        gap: 10px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .mocktxt {
+        font-size: 16px;
+        gap: 5px;
+    }
+
+    .mockquestion-navigate ul {
+        gap: 10px !important;
+    }
+
+    .progress-bar {
+        width: 52px;
+        height: 8px;
+    }
+
+    .progress-text {
+        font-size: 12px;
+    }
+
+    .status-wrapper {
+        gap: 8px;
+    }
+
+    .circle {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .question-header {
+        padding: 5px 6px 5px 10px;
+    }
+
+    .mocktxt {
+        font-size: 14px;
+    }
+
+    .mocktxt img {
+        width: 20px !important;
+    }
+
+    .mockquestion-navigate ul {
+        gap: 8px !important;
+        padding-right: 4px !important;
+    }
+
+    .progress-bar {
+        width: 44px;
+    }
+
+    .status-wrapper {
+        gap: 6px;
+    }
+
+    .circle {
+        width: 18px;
+        height: 18px;
+        font-size: 9px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .question-header {
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        grid-template-rows: auto auto;
+        row-gap: 6px;
+        padding: 6px 8px 8px 10px;
+    }
+
+    .mockhead-hamburger {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .mocktxt {
+        grid-column: 2;
+        grid-row: 1;
+        font-size: 16px;
+    }
+
+    .mockquestion-navigate {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        justify-self: stretch;
+    }
+
+    .mockquestion-navigate ul {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px 12px !important;
+        padding-right: 0 !important;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .mocktxt {
+        font-size: 14px;
+        gap: 4px;
+    }
+
+    .mockquestion-navigate ul {
+        gap: 8px 10px !important;
+    }
+
+    .progress-bar {
+        width: 40px;
+    }
+
+    .circle {
+        width: 16px;
+        height: 16px;
+        font-size: 8px;
+    }
+}
+
+.has-user-submenu {
+    position: relative;
+    cursor: pointer;
+}
+
+.user-submenu {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background: #fff;
+    min-width: 160px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    border: 0.31px solid #8698A2;
+    padding: 6px 0;
+    z-index: 1001;
+    list-style: none;
+    margin: 0;
+}
+
+.user-submenu-name {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: Helvetica;
+    color: #231F20;
+    white-space: nowrap;
+}
 
 </style>
