@@ -1,9 +1,6 @@
 <template>
   <div>
-    <NotesHeader
-      :title="noteTitle"
-      @back="returnFromNoteViaHeaderBack"
-    />
+    <NotesHeader @back="returnFromNoteViaHeaderBack" />
 
     <section class="notes-page-sec">
       <div class="container">
@@ -51,11 +48,15 @@
                 <button type="button" class="notes-search-btn" @click="runSearchHighlight">Highlight</button>
                 <button type="button" class="notes-search-clear" @click="clearSearchMarks">Clear</button>
               </div>
-              <div
-                class="editor-wrapper note-html-content"
-                :style="editorZoomStyle"
-                v-html="editorContent"
-              ></div>
+              <div class="editor-wrapper">
+                <div
+                  class="note-html-content"
+                  :style="editorZoomStyle"
+                >
+                  <h1 v-if="noteTitle" class="note-page-main-heading">{{ noteTitle }}</h1>
+                  <div class="note-html-body" v-html="editorContent"></div>
+                </div>
+              </div>
             </div>
             <div class="brake-border"></div>
             <NotesLinkedQuestions
@@ -398,7 +399,7 @@ export default {
       if (!q) return;
       const root = this.$refs.noteBodyRoot;
       if (!root) return;
-      const contentEl = root.querySelector('.note-html-content');
+      const contentEl = root.querySelector('.note-html-body');
       if (!contentEl) return;
 
       const textNodes = [];
@@ -550,8 +551,14 @@ export default {
 
     /**
      * Header back: same chapter/sublist expanded + orange outline on the note row only.
+     * When opened from Search, return to that search URL instead.
      */
     returnFromNoteViaHeaderBack() {
+      const from = this.$route.query.from;
+      if (from && typeof from === 'string' && from.startsWith('/')) {
+        this.$router.push(from);
+        return;
+      }
       const id = this.$route.query.id;
       try {
         localStorage.removeItem('notesSuppressListHighlight');
@@ -992,7 +999,16 @@ export default {
   text-align: left;
   color: #000;
   padding: 20px;
-    line-height: 1.42;
+  line-height: 1.42;
+}
+
+.note-page-main-heading {
+  margin: 0 0 1.25rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #000;
+  line-height: 1.25;
+  text-align: left;
 }
 
 .note-html-content :deep(h4) {

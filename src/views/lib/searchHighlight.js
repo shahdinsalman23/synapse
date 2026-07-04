@@ -17,7 +17,11 @@ export function highlightHtml(html, query) {
   if (!q) return html;
 
   const re = new RegExp(escapeRegExp(q), 'gi');
-  return String(html).replace(re, (m) => `<mark class="search-hit">${m}</mark>`);
+  // Only wrap text nodes so we never inject marks inside tags/attributes.
+  return String(html).replace(/(<[^>]*>)|([^<]+)/g, (match, tag, text) => {
+    if (tag) return tag;
+    return text.replace(re, (m) => `<mark class="search-hit">${m}</mark>`);
+  });
 }
 
 function escapeHtml(str) {

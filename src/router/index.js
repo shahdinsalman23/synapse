@@ -10,6 +10,8 @@ import MockBirdsEye from "@/views/MockBirdsEye.vue";
 import MockScore from "@/views/MockScore.vue";
 import ReviewMockBirdsEye from "@/components/ReviewMockBirdsEye.vue";
 import ReviewScroll from "@/views/ReviewScroll.vue";
+import ReviewScrollModal from "@/views/ReviewScroll.vue";
+
 import MLAListSelection from '../views/MLAListSelection.vue'
 import QuestionsPage from "@/views/QuestionsPage.vue";
 import QuestionBirdsEyeView from '@/views/QuestionBirdsEyeView.vue';
@@ -41,6 +43,8 @@ const routes = [
   { path: "/mockscore/:id", component: MockScore ,  name: 'MockScore', meta: { requiresAuth: true } },
   { path: "/reviewmockbirdseye", component: ReviewMockBirdsEye , meta: { requiresAuth: true } },
   { path: "/reviewscroll/:id", component: ReviewScroll , name: 'MockReview', meta: { requiresAuth: true } },
+  { path: "/reviewscrollmodal/:id", component: ReviewScrollModal , name: 'ReviewScrollModal' },
+
   { path: "/mlalistselection", component: MLAListSelection, name: "MLAList", meta: { requiresAuth: true } },
   { path: "/questionspage/:id", component: QuestionsPage, name: "QuestionsPage", meta: { requiresAuth: true } },
   { path: "/questionbirdseyeview", component: QuestionBirdsEyeView, name: "QuestionBirdsEyeView", meta: { requiresAuth: true } },

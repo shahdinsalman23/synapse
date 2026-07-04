@@ -181,7 +181,7 @@ export default {
                 localStorage.setItem(
                     'questionBreadcrumbLabels',
                     JSON.stringify([
-                        'ML Content Map', 
+                        'MLA Content Map', 
                         'Presentations and Conditions',
                         this.title,
                         item.title || 'Questions',
@@ -221,14 +221,14 @@ export default {
 }
 
 .areas-clinical-practice {
-    height: 81vh;
+    height: 83vh;
     overflow-y: scroll;
 }
 
 
 .areas-presentation-condition {
 
-    height: 81vh;
+    height: 83vh;
     overflow-y: scroll;
 }
 

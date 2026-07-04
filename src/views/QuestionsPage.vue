@@ -605,64 +605,12 @@ export default {
     },
 
     created() {
-
-        console.log(this.$route.params.id)
-
-        const title = localStorage.getItem("questiontitle");
-        this.title = title
-
-        console.log('titel', title)
-        if (title == 'Conditions') {
-
-            get('/getconditionquestionclient?id=' + this.$route.params.id)
-                .then((res) => {
-                    console.log(res)
-                    this.allquestions = res.data.data
-                    this.percentage = res.data.percentage
-                    this.jumpToStartQuestion()
-
-                })
-
+        const title = localStorage.getItem('questiontitle');
+        this.title = title;
+        this.loadInitialQuestions();
+        if (!this.isLinkedQuestionPreview) {
+            this.getFlaged();
         }
-        else if (title == 'Sublist') {
-            get('/getsubconditionquestionclient?id=' + this.$route.params.id)
-                .then((res) => {
-                    console.log(res)
-                    this.allquestions = res.data.data
-                    this.percentage = res.data.percentage
-                    this.jumpToStartQuestion()
-
-                })
-
-        }
-
-        else if (title == 'Presentations'){
-            get(`/getpresentationquestionclient?id=${this.$route.params.id}&byfetch=${'Title'}`)
-            .then((res) => {
-                this.allquestions = res.data.data
-                this.percentage = res.data.percentage
-                this.jumpToStartQuestion()
-
-            });
-        }
-        else {
-            get('/getchapterquestionclient?id=' + this.$route.params.id)
-                .then((res) => {
-                    console.log(res)
-                    this.allquestions = res.data.data
-                    this.percentage = res.data.percentage
-                    this.jumpToStartQuestion()
-
-                })
-
-        }
-
-
-
-        this.getFlaged()
-
-
-
     },
 
     beforeDestroy() {
@@ -683,6 +631,160 @@ export default {
         },
     },
     methods: {
+        loadInitialQuestions() {
+            const id = this.$route.params.id;
+            const title = this.title;
+            let req;
+            if (title === 'Conditions') {
+                req = get('/getconditionquestionclient?id=' + id);
+            } else if (title === 'Sublist') {
+                req = get('/getsubconditionquestionclient?id=' + id);
+            } else if (title === 'Presentations') {
+                req = get(`/getpresentationquestionclient?id=${id}&byfetch=Title`);
+            } else {
+                req = get('/getchapterquestionclient?id=' + id);
+            }
+
+            req.then(async (res) => {
+                this.allquestions = res.data.data || [];
+                this.percentage = res.data.percentage;
+                if (this.isLinkedQuestionPreview) {
+                    await this.applyLinkedPreviewQuestions();
+                } else {
+                    this.jumpToStartQuestion();
+                }
+            });
+        },
+
+        getLinkedPreviewCodes() {
+            const raw = this.$route.query.linkedCodes;
+            if (!raw) return [];
+            return String(raw).split(',').map((c) => c.trim()).filter(Boolean);
+        },
+
+        filterToLinkedQuestions(list, codes) {
+            if (!codes || !codes.length) return list || [];
+            const allowed = new Set(codes);
+            return (list || []).filter((q) => allowed.has(q.code));
+        },
+
+        mergeLinkedSubmitResponse(fullList, codes) {
+            if (!codes || !codes.length) return this.allquestions;
+            const allowed = new Set(codes);
+            const updatedByCode = {};
+            (fullList || []).forEach((q) => {
+                if (allowed.has(q.code)) updatedByCode[q.code] = q;
+            });
+            return this.allquestions.map((q) => updatedByCode[q.code] || q);
+        },
+
+        resolveQuestionEntity(que) {
+            if (que.sublist_id) return { title: 'Sublist', entityId: que.sublist_id };
+            if (que.condition_id) return { title: 'Conditions', entityId: que.condition_id };
+            if (que.presentation_id) return { title: 'Presentations', entityId: que.presentation_id };
+            return { title: 'Chapter', entityId: que.subject_id };
+        },
+
+        fetchQuestionsForEntity(title, entityId) {
+            if (title === 'Conditions') {
+                return get('/getconditionquestionclient?id=' + entityId).then((r) => r.data.data || []);
+            }
+            if (title === 'Sublist') {
+                return get('/getsubconditionquestionclient?id=' + entityId).then((r) => r.data.data || []);
+            }
+            if (title === 'Presentations') {
+                return get(`/getpresentationquestionclient?id=${entityId}&byfetch=Title`).then((r) => r.data.data || []);
+            }
+            return get('/getchapterquestionclient?id=' + entityId).then((r) => r.data.data || []);
+        },
+
+        fetchFullLinkedQuestionsByItems(items) {
+            const groups = new Map();
+            (items || []).forEach((item) => {
+                const target = this.resolveQuestionEntity(item);
+                if (!target.entityId) return;
+                const key = `${target.title}:${target.entityId}`;
+                if (!groups.has(key)) {
+                    groups.set(key, { ...target, codes: new Set() });
+                }
+                if (item.code) groups.get(key).codes.add(item.code);
+            });
+
+            const tasks = [...groups.values()].map(async ({ title, entityId, codes }) => {
+                const list = await this.fetchQuestionsForEntity(title, entityId);
+                return list.filter((q) => codes.has(q.code));
+            });
+
+            return Promise.all(tasks).then((results) => {
+                const seen = new Set();
+                return results.flat().filter((q) => {
+                    if (seen.has(q.id)) return false;
+                    seen.add(q.id);
+                    return true;
+                });
+            });
+        },
+
+        async applyLinkedPreviewQuestions() {
+            let codes = this.getLinkedPreviewCodes();
+            const linkedFromCode = this.$route.query.linkedFromCode;
+
+            if (!codes.length && linkedFromCode) {
+                try {
+                    const res = await get('/question-linked-questions', { code: linkedFromCode });
+                    codes = (res.data.data || []).map((q) => q.code).filter(Boolean);
+                } catch (e) { /* ignore */ }
+            }
+
+            let filtered = this.filterToLinkedQuestions(this.allquestions, codes);
+
+            if (!filtered.length) {
+                try {
+                    const fromCode = linkedFromCode || null;
+                    const res = fromCode
+                        ? await get('/question-linked-questions', { code: fromCode })
+                        : { data: { data: [] } };
+                    const items = res.data.data || [];
+                    const itemCodes = codes.length
+                        ? items.filter((q) => codes.includes(q.code))
+                        : items;
+                    if (itemCodes.length) {
+                        filtered = await this.fetchFullLinkedQuestionsByItems(itemCodes);
+                    }
+                } catch (e) { /* ignore */ }
+            }
+
+            if (filtered.length) {
+                this.allquestions = filtered;
+            }
+
+            this.recalculateLinkedPreviewCounts();
+            this.jumpToStartQuestion();
+        },
+
+        recalculateLinkedPreviewCounts() {
+            if (!this.isLinkedQuestionPreview) return;
+
+            let correct = 0;
+            let incorrect = 0;
+            let flagged = 0;
+
+            this.allquestions.forEach((q) => {
+                if (q.flag) flagged += 1;
+                if (q.score) {
+                    if (Number(q.score.correct) === 1) correct += 1;
+                    else incorrect += 1;
+                }
+            });
+
+            this.correctcount = correct;
+            this.incorrectcount = incorrect;
+            this.flagcounts = flagged;
+            this.percentage = this.allquestions.length
+                ? Math.round((correct / this.allquestions.length) * 100)
+                : 0;
+        },
+
         fetchLinkedRecordsForQuestion(q) {
             const code = q && q.code ? String(q.code).trim() : '';
             if (!code) {
@@ -773,6 +875,10 @@ export default {
             this.$router.push({ name: 'MockQuestionPreview', params: { id: que.mock_id } });
         },
         reloadCurrentQuestionList() {
+            if (this.isLinkedQuestionPreview) {
+                this.loadInitialQuestions();
+                return;
+            }
             const id = this.$route.params.id;
             const title = this.title || localStorage.getItem('questiontitle');
             let req;
@@ -800,8 +906,14 @@ export default {
         /**
          * Header back arrow: navigate to the list and highlight the exact row the user came from.
          * The restore indices (parent/child expansion) are already stored from when they clicked the list item.
+         * When opened from Search, return to that search URL instead.
          */
         returnFromQuestionViaHeaderBack() {
+            const from = this.$route.query.from;
+            if (from && typeof from === 'string' && from.startsWith('/')) {
+                this.$router.push(from);
+                return;
+            }
             try {
                 localStorage.removeItem('questionSuppressListHighlight');
                 const leafId = this.$route.params.id;
@@ -937,10 +1049,10 @@ export default {
          * jump straight to that question and clear the stored code.
          */
         jumpToStartQuestion() {
-            const code = localStorage.getItem('questionStartCode');
+            const code = this.$route.query.startCode || localStorage.getItem('questionStartCode');
             if (!code) return;
 
-            const idx = this.allquestions.findIndex(q => q.code === code);
+            const idx = this.allquestions.findIndex((q) => q.code === code);
             if (idx !== -1) {
                 this.currentQuestionIndex = idx;
                 this.$nextTick(() => {
@@ -949,8 +1061,10 @@ export default {
                     }
                 });
             }
-            // Consume the key so normal navigation isn't affected
-            localStorage.removeItem('questionStartCode');
+
+            if (!this.isLinkedQuestionPreview) {
+                localStorage.removeItem('questionStartCode');
+            }
         },
 
         setflage(e, question) {
@@ -989,6 +1103,10 @@ export default {
         },
 
         getFlaged() {
+            if (this.isLinkedQuestionPreview) {
+                this.recalculateLinkedPreviewCounts();
+                return;
+            }
 
             get(`/getflagedcountquestion?id=${this.$route.params.id}&title=${this.title}`)
                 .then((res) => {
@@ -1110,11 +1228,19 @@ export default {
             byMethod(this.method, "/questionScore", this.form)
                 .then((res) => {
                     if (res.data.saved) {
-                        console.log(res.data.saved);
-                        this.allquestions = res.data.data
-                        this.correctcount = res.data.correctcount
-                        this.incorrectcount = res.data.incorrectcount
-                        this.percentage = res.data.percentage
+                        if (this.isLinkedQuestionPreview) {
+                            const codes = this.getLinkedPreviewCodes();
+                            const filtered = this.filterToLinkedQuestions(res.data.data || [], codes);
+                            this.allquestions = filtered.length
+                                ? filtered
+                                : this.mergeLinkedSubmitResponse(res.data.data || [], codes);
+                            this.recalculateLinkedPreviewCounts();
+                        } else {
+                            this.allquestions = res.data.data;
+                            this.correctcount = res.data.correctcount;
+                            this.incorrectcount = res.data.incorrectcount;
+                            this.percentage = res.data.percentage;
+                        }
 
                         // Auto-expand explanations after DOM updates with new question data
                         this.$nextTick(() => {
@@ -1526,6 +1652,11 @@ export default {
 
     computed: {
 
+        isLinkedQuestionPreview() {
+            return this.$route.query.embeddedPreview === '1'
+                && (Boolean(this.$route.query.linkedCodes) || Boolean(this.$route.query.linkedFromCode));
+        },
+
         breadcrumbItems() {
             void this.allquestions.length;
             void this.currentQuestionIndex;
@@ -1669,6 +1800,7 @@ export default {
     line-height: 1.4;
     text-align: left;
     padding: 2px 0 0 0px;
+    font-weight: 400;
 }
 
 
@@ -1987,7 +2119,7 @@ div.scrollmenu a:hover {
 .questioncomment {
         position: absolute;
     right: 30px;
-    bottom: 20px;
+    top: 50px;
     cursor: pointer;
 }
 

@@ -123,7 +123,7 @@
                 <div class="mocktxt"><img src="/images/questionheader-icon.png" alt="question"> Questions </div>
                 <div v-if="$route.name == 'QuestionsPage'" class="mockquestion-navigate">
                     <ul>
-                        <li>
+                        <li style="cursor: default;">
                             <div class="progress-bar">
                                 <!-- <div class="progress-fill" style="width: 75%"></div> -->
                                 <div class="progress-fill" :style="{ width: percentage + '%' }"></div>
@@ -292,7 +292,7 @@ export default {
     min-width: 0;
     max-width: 100%;
     justify-self: end;
-    z-index: 2;
+    z-index: 1;
 }
 
 .header-icon-wrapper {

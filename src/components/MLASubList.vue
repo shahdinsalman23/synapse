@@ -330,7 +330,7 @@
 
         localStorage.setItem("questiontitle", this.title);
         this.setQuestionBreadcrumb([
-          'ML Content Map',
+          'MLA Content Map',
           this.breadcrumbSectionLabel,
           this.title,
           item.title || 'Questions'
@@ -361,7 +361,7 @@
 
         localStorage.setItem("questiontitle", "Sublist");
         this.setQuestionBreadcrumb([
-          'ML Content Map', 
+          'MLA Content Map', 
           this.breadcrumbSectionLabel,
           this.title,
           (parentItem && parentItem.title) || '',
@@ -406,7 +406,7 @@
         this.persistQuestionListRestore({ pIndex, pId: parentItem?.id, cIndex, cId: child?.id, gIndex, gId: g?.id });
         localStorage.setItem("questiontitle", this.title);
         this.setQuestionBreadcrumb([
-          'ML Content Map', 
+          'MLA Content Map', 
           this.breadcrumbSectionLabel,
           this.title,
           (parentItem && parentItem.title) || '',
@@ -443,12 +443,12 @@
 
   .areas-clinical-practice {
    
-    height: 81vh;
+    height: 83vh;
     overflow-y: scroll;
 }
 
 .areas-professional-knowledge {
-    height: 81vh;
+    height: 83vh;
     overflow-y: scroll;
 }
   /* keep your existing look + additional layout for nested grids */

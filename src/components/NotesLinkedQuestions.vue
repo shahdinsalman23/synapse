@@ -1,5 +1,5 @@
 <template>
-  <div class="nlq-sec">
+  <div v-if="!isEmbeddedPreview" class="nlq-sec">
     <!-- Accordion tab strip -->
     <div class="nlq-tabs">
       <div
@@ -12,7 +12,7 @@
           class="nlq-tab-header"
           :style="{ background: activeIndex === i ? tab.activeColor : '#A7A9AC' }"
         >
-          <h4>{{ tab.label }}</h4>
+          <h4>{{ tabLabel(tab) }}</h4>
           <div class="nlq-tab-icon">
             <svg v-if="activeIndex === i" width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M5 12H19" stroke="#fff" stroke-width="2" stroke-linecap="round" />
@@ -56,10 +56,10 @@
                   :key="que.id"
                   class="nlq-birdeye-box"
                   :style="{ background: boxColor(que) }"
-                  @click="$emit('question-click', que)"
-                  title="Click to attempt this question"
+                  @click="openPreview('question', que)"
+                  title="Click to view this question"
                 >
-                  <span>{{ index + 1 }}</span>
+                  <span>{{ displayNumber(que, index, 'question') }}</span>
                 </div>
               </div>
               <div class="nlq-legend">
@@ -97,10 +97,10 @@
                   :key="que.id"
                   class="nlq-birdeye-box"
                   :style="{ background: boxColor(que) }"
-                  @click="$emit('mock-click', que)"
+                  @click="openPreview('mock', que)"
                   title="Click to view this mock question"
                 >
-                  <span>{{ index + 1 }}</span>
+                  <span>{{ displayNumber(que, index, 'mock') }}</span>
                 </div>
               </div>
               <div class="nlq-legend">
@@ -137,10 +137,10 @@
                   v-for="(note, index) in linkedNotes"
                   :key="note.record_id + '-' + note.type"
                   class="nlq-birdeye-box nlq-birdeye-box--note"
-                  @click="$emit('note-click', note)"
+                  @click="openPreview('note', note)"
                   :title="note.label || note.display_code"
                 >
-                  <span>{{ index + 1 }}</span>
+                  <span>{{ displayNumber(note, index, 'note') }}</span>
                 </div>
               </div>
             </div>
@@ -205,6 +205,57 @@
         </div>
       </div>
     </transition>
+
+    <transition name="nlq-modal-fade">
+      <div v-if="previewOpen" class="nlq-preview-overlay" @click.self="closePreview">
+        <div class="nlq-preview-modal" role="dialog" aria-modal="true">
+          <div class="nlq-preview-header" :style="{ borderColor: previewColor }">
+            <div>
+              <p class="nlq-preview-type">{{ previewTypeLabel }}</p>
+              <h3>{{ previewTitle }}</h3>
+            </div>
+            <button type="button" class="nlq-preview-close" aria-label="Close" @click="closePreview">
+              <svg width="14" height="14" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.38013 0.75L8.1701 7.54001" stroke="currentColor" stroke-miterlimit="10" stroke-linecap="round" />
+                <path d="M8.1701 0.75L1.38013 7.54001" stroke="currentColor" stroke-miterlimit="10" stroke-linecap="round" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- <div class="nlq-preview-frame-wrap">
+  <iframe
+    :src="previewSrc"
+    class="nlq-preview-frame"
+    :title="previewTitle"
+  ></iframe>
+
+  <div
+    class="nlq-preview-click-blocker"
+    @click.prevent
+    @mousedown.prevent
+    @mouseup.prevent
+  ></div>
+</div> -->
+
+          <div class="nlq-preview-frame-wrap">
+            <div v-if="previewError" class="nlq-state">{{ previewError }}</div>
+            <iframe
+  ref="previewFrame"
+  :src="previewSrc"
+  class="nlq-preview-frame"
+  :title="previewTitle"
+
+></iframe>
+            <!-- <iframe
+              v-else-if="previewSrc"
+              :src="previewSrc"
+              class="nlq-preview-frame"
+              :title="previewTitle"
+            ></iframe> -->
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -241,6 +292,11 @@ export default {
       journalSaveTimer: null,
       commentDraft: '',
       commentSaving: false,
+      previewOpen: false,
+      previewKind: '',
+      previewItem: null,
+      previewSrc: '',
+      previewError: '',
       tabDefs: {
         questions:     { label: 'Questions', activeColor: '#00A2FD' },
         mocks:           { label: 'Mocks',     activeColor: '#ED1C24' },
@@ -294,6 +350,26 @@ export default {
       const tab = this.visibleTabs[this.activeIndex];
       return tab ? tab.key : null;
     },
+    isEmbeddedPreview() {
+      return this.$route && this.$route.query && this.$route.query.embeddedPreview === '1';
+    },
+    previewColor() {
+      if (this.previewKind === 'note') return this.tabColor('linked-notes');
+      if (this.previewKind === 'mock') return this.tabColor('mocks');
+      return this.tabColor('questions');
+    },
+    previewTypeLabel() {
+      if (this.previewKind === 'note') return 'Note';
+      if (this.previewKind === 'mock') return 'Mock';
+      return 'Question';
+    },
+    previewTitle() {
+      const item = this.previewItem || {};
+      if (this.previewKind === 'note') {
+        return item.label || item.display_code || item.title || 'Linked note';
+      }
+      return item.number || item.question_no || item.code || item.display_code || 'Linked question';
+    },
   },
   watch: {
     noteRecordId: {
@@ -316,6 +392,30 @@ export default {
     if (this.journalSaveTimer) clearTimeout(this.journalSaveTimer);
   },
   methods: {
+
+   makeReadonly() {
+  const iframe = this.$refs.previewFrame;
+
+  try {
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+
+    // Disable all mouse interactions
+    const style = doc.createElement('style');
+    style.innerHTML = `
+      * {
+        pointer-events: none !important;
+      }
+
+      body {
+        pointer-events: auto !important;
+      }
+    `;
+
+    doc.head.appendChild(style);
+  } catch (e) {
+    console.error(e);
+  }
+},
     recordTypeNorm() {
       return this.noteRecordType === 'subnotes' ? 'subnotes' : 'notes';
     },
@@ -425,6 +525,101 @@ export default {
       if (que.score && que.score.correct == 1) return '#9ded6c';
       if (que.score && que.score.correct == 0) return '#ffbabe';
       return '#f1f2f2';
+    },
+    displayNumber(item, index, type) {
+      if (!item) return index + 1;
+      if (type === 'note') {
+        return item.display_code || item.code || item.number || item.record_id || index + 1;
+      }
+      if (type === 'question') {
+        return item.number || item.code || item.display_code || item.question_no || index + 1;
+      }
+      return item.number || item.question_no || item.code || item.display_code || index + 1;
+    },
+    tabLabel(tab) {
+      if (!tab) return '';
+      if (tab.key === 'questions') return `${tab.label} (${this.questions.length})`;
+      if (tab.key === 'linked-notes') return `${tab.label} (${this.linkedNotes.length})`;
+      if (tab.key === 'mocks') return `${tab.label} (${this.mockQuestions.length})`;
+      return tab.label;
+    },
+    closePreview() {
+      this.previewOpen = false;
+      this.previewKind = '';
+      this.previewItem = null;
+      this.previewSrc = '';
+      this.previewError = '';
+    },
+    openPreview(kind, item) {
+      if (kind === 'mock') {
+
+        if (item.score == null) {
+
+          this.$toast.error("Please Attempt Mock First to Review!")
+          return;
+        }
+
+      }
+      this.previewKind = kind;
+      this.previewItem = item;
+      this.previewError = '';
+      this.previewSrc = this.buildPreviewSrc(kind, item);
+      if (!this.previewSrc) {
+        this.previewError = `Could not open this ${kind}.`;
+      }
+      this.previewOpen = true;
+    },
+    buildPreviewSrc(kind, item) {
+      if (!item) return '';
+      if (kind === 'note') {
+        if (item.record_id == null) return '';
+        const type = item.type === 'subnotes' ? 'subnotes' : 'notes';
+        localStorage.setItem('notestype', type);
+        localStorage.setItem('notestitle', item.label || item.display_code || 'Notes');
+        return this.resolveHref({ path: '/notespage', query: { id: String(item.record_id), type, embeddedPreview: '1' } });
+      }
+      if (kind === 'mock') {
+        if (item.mock_id == null) return '';
+        
+        localStorage.setItem('question', 'normal');
+        localStorage.setItem('mockObject', JSON.stringify({
+          id: item.mock_id,
+          title: item.mock_title || '',
+          duration: item.mock_duration || 0,
+        }));
+        localStorage.setItem('mockStartQuestionId', String(item.id));
+        return this.resolveHref({ name: 'MockReview', params: { id: item.mock_id }, query: { embeddedPreview: '1' } });
+      }
+      const questionTarget = this.linkedQuestionTarget(item);
+      if (!questionTarget.entityId) return '';
+      localStorage.setItem('questiontitle', questionTarget.title);
+      const query = { embeddedPreview: '1' };
+      const linkedCodes = (this.questions || []).map((q) => q.code).filter(Boolean);
+      if (linkedCodes.length) {
+        query.linkedCodes = linkedCodes.join(',');
+      }
+      if (this.variant === 'links' && this.title) {
+        query.linkedFromCode = String(this.title);
+      }
+      if (item.code) {
+        query.startCode = item.code;
+      }
+      return this.resolveHref({
+        name: 'QuestionsPage',
+        params: { id: questionTarget.entityId },
+        query,
+      });
+    },
+    linkedQuestionTarget(que) {
+      if (que.sublist_id) return { title: 'Sublist', entityId: que.sublist_id };
+      if (que.condition_id) return { title: 'Conditions', entityId: que.condition_id };
+      if (que.presentation_id) return { title: 'Presentations', entityId: que.presentation_id };
+      return { title: 'Chapter', entityId: que.subject_id };
+    },
+    resolveHref(location) {
+      if (!this.$router || typeof this.$router.resolve !== 'function') return '';
+      const resolved = this.$router.resolve(location);
+      return resolved && resolved.href ? resolved.href : '';
     },
   },
 };
@@ -548,6 +743,111 @@ export default {
 .nlq-birdeye-box--note {
   background: #fbad18a8;
   font-size: 12px;
+}
+
+.nlq-preview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.nlq-preview-modal {
+  width: min(1380px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow: hidden;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+}
+
+.nlq-preview-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border-top: 5px solid;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.nlq-preview-type {
+  margin: 0 0 4px;
+  color: #6d6e71;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.nlq-preview-header h3 {
+  margin: 0;
+  color: #231f20;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.nlq-preview-close {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #d6d6d6;
+  border-radius: 50%;
+  background: #fff;
+  color: #6d6e71;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nlq-preview-close:hover {
+  color: #231f20;
+  background: #f6f6f6;
+}
+
+.nlq-preview-body {
+  padding: 18px;
+  overflow-y: auto;
+}
+
+.nlq-preview-frame-wrap {
+  height: min(78vh, 820px);
+  min-height: 520px;
+  overflow: hidden;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.nlq-preview-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+   
+}
+
+.nlq-preview-click-blocker {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  cursor: not-allowed;
+}
+
+.nlq-modal-fade-enter-active,
+.nlq-modal-fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.nlq-modal-fade-enter,
+.nlq-modal-fade-leave-to {
+  opacity: 0;
 }
 
 /* ── Legend ── */
@@ -730,6 +1030,28 @@ export default {
   .nlq-birdeye-box {
     height: 36px;
     font-size: 12px;
+  }
+
+  .nlq-preview-overlay {
+    padding: 12px;
+    align-items: flex-start;
+  }
+
+  .nlq-preview-modal {
+    max-height: calc(100vh - 24px);
+  }
+
+  .nlq-preview-header h3 {
+    font-size: 17px;
+  }
+
+  .nlq-preview-body {
+    padding: 10px;
+  }
+
+  .nlq-preview-frame-wrap {
+    height: calc(100vh - 120px);
+    min-height: 0;
   }
 }
 </style>

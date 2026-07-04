@@ -6,7 +6,7 @@
       <div class="container">
 
         <!-- 🔹 Breadcrumb -->
-        <div class="breadcrumb-wrapper" :class="{ visible: showBreadcrumb }">
+        <div class="breadcrumb-wrapper visible" :class="{ visible: showBreadcrumb }">
           <div class="breadcrumb">
             <span class="breadcrumb-item" :class="{ active: activeSection === 'MLA CONTENT MAP' }"
               @click="activeSection = 'MLA CONTENT MAP'">

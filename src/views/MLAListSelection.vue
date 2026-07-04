@@ -7,13 +7,13 @@
 
       <!-- 🔹 Breadcrumb -->
       <div 
-      class="breadcrumb-wrapper" 
-      :class="{ visible: showBreadcrumb }"
+      class="breadcrumb-wrapper visible" 
+
     >
       <div class="breadcrumb" >
         <span class="breadcrumb-item" :class="{ active: activeSection === 'MLA CONTENT MAP' }"
           @click="activeSection = 'MLA CONTENT MAP'">
-          ML Content Map
+          MLA Content Map
         </span>
         <span class="breadcrumb-arrow" v-if="showAreaBreadcrumbs">›</span>
 

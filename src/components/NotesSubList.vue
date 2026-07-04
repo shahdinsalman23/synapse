@@ -505,12 +505,12 @@
 
   .areas-clinical-practice {
    
-    height: 81vh;
+    height: 83vh;
     overflow-y: scroll;
 }
 
 .areas-professional-knowledge {
-    height: 81vh;
+    height: 83vh;
     overflow-y: scroll;
 }
   /* keep your existing look + additional layout for nested grids */

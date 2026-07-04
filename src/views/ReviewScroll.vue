@@ -321,7 +321,7 @@
                                             </div>
                                             <transition @enter="enter" @leave="leave" :css="false">
                                                 <div v-if="activeOptions.includes(index)" class="option-content">
-                                                    <p><strong v-if="option.explanation">Explanation:</strong> {{ option.rollingout ? option.rollingout : option.explanation }}
+                                                    <p><strong v-if="option.explanation"></strong> {{ option.rollingout ? option.rollingout : option.explanation }}
                                                     </p>
                                                 </div>
                                             </transition>

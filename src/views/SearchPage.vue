@@ -71,6 +71,12 @@
 
       <main v-if="selectedHit" class="search-main">
         <div class="search-detail-panel">
+          <button type="button" class="search-detail-back" @click="clearSelection">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            Back to results
+          </button>
           <div v-if="detailLoading" class="search-state">Loading…</div>
           <div v-else-if="detailError" class="search-state search-state--error">{{ detailError }}</div>
           <div v-else-if="detail" class="search-detail-body">
@@ -264,8 +270,13 @@ export default {
     }
   },
   methods: {
-    highlightHtml,
-    highlightPlain,
+    highlightHtml(html) {
+      return highlightHtml(html, this.lastQuery || this.query);
+    },
+
+    highlightPlain(text) {
+      return highlightPlain(text, this.lastQuery || this.query);
+    },
 
     goBack() {
       this.$router.push(this.returnPath);
@@ -275,6 +286,12 @@ export default {
       this.selectedHit = null;
       this.detail = null;
       this.detailError = '';
+    },
+
+    syncSearchQueryToRoute(q) {
+      const nextQuery = { ...this.$route.query, q };
+      if (this.$route.query.q === q) return;
+      this.$router.replace({ path: this.$route.path, query: nextQuery }).catch(() => {});
     },
 
     async runSearch() {
@@ -299,6 +316,7 @@ export default {
         });
         this.lastQuery = res.data.query || q;
         this.results = res.data.results || {};
+        this.syncSearchQueryToRoute(this.lastQuery);
       } catch (e) {
         this.results = {};
         this.searchError = 'Search failed. Please try again.';
@@ -334,25 +352,54 @@ export default {
       }
     },
 
+    /**
+     * QuestionsPage loads a list by entity id (presentation/condition/sublist/chapter),
+     * not by question id — same pattern as NotesPage.navigateToQuestion.
+     */
     openQuestionInApp() {
       const q = this.detail && this.detail.question;
-      if (!q || !q.id) return;
-      const ctx = {};
-      if (q.presentation_id) {
-        ctx.presentation_id = q.presentation_id;
-        ctx.type = 'presentation';
-      } else if (q.sublist_id) {
-        ctx.sublist_id = q.sublist_id;
-        ctx.type = 'sublist';
-      } else if (q.condition_id) {
-        ctx.condition_id = q.condition_id;
-        ctx.type = 'condition';
-      } else if (q.subject_id) {
-        ctx.subject_id = q.subject_id;
-        ctx.type = 'subject';
+      if (!q) return;
+      const hit = (this.selectedHit && this.selectedHit.item) || {};
+      const src = { ...hit, ...q };
+
+      let title;
+      let entityId;
+      if (src.sublist_id) {
+        title = 'Sublist';
+        entityId = src.sublist_id;
+      } else if (src.condition_id) {
+        title = 'Conditions';
+        entityId = src.condition_id;
+      } else if (src.presentation_id) {
+        title = 'Presentations';
+        entityId = src.presentation_id;
+      } else if (src.subject_id) {
+        title = 'Chapter';
+        entityId = src.subject_id;
+      } else {
+        return;
       }
-      localStorage.setItem('questionListContext', JSON.stringify(ctx));
-      this.$router.push({ path: `/questionspage/${q.id}`, query: { from: this.$route.fullPath } });
+
+      const startCode = src.code || q.code || '';
+      localStorage.setItem('questiontitle', title);
+      if (startCode) {
+        localStorage.setItem('questionStartCode', startCode);
+      }
+      try {
+        localStorage.setItem(
+          'questionBreadcrumbLabels',
+          JSON.stringify(['MLA CONTENT MAP', 'Search', title])
+        );
+      } catch (e) { /* ignore */ }
+
+      this.$router.push({
+        name: 'QuestionsPage',
+        params: { id: entityId },
+        query: {
+          from: this.$route.fullPath,
+          ...(startCode ? { startCode } : {}),
+        },
+      });
     },
 
     openNoteInApp() {
@@ -649,6 +696,29 @@ export default {
   max-height: calc(100vh - 180px);
 }
 
+.search-detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  border: none;
+  background: transparent;
+  color: #1A90FF;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: Helveticacondensed, Helvetica, sans-serif;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.search-page--notes .search-detail-back {
+  color: #faad1b;
+}
+
+.search-detail-back:hover {
+  text-decoration: underline;
+}
+
 .search-detail-body {
   max-width: 900px;
 }
@@ -682,6 +752,8 @@ export default {
   border-radius: 8px;
   padding: 10px 14px;
   margin-bottom: 8px;
+  display: flex;
+  gap: 8px;
 }
 
 .search-open-full {
@@ -714,8 +786,11 @@ export default {
 }
 
 .search-page >>> .search-hit,
-.search-page ::v-deep .search-hit {
-  background: #fff3a0;
+.search-page ::v-deep .search-hit,
+.search-page >>> mark.search-hit,
+.search-page ::v-deep mark.search-hit {
+  background: #ffe566;
+  color: inherit;
   padding: 0 2px;
   border-radius: 2px;
 }
